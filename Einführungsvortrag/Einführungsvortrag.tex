@@ -1,0 +1,31 @@
+%!TEX TS-program = pdflatex
+\documentclass[wide,xcolor={x11names},hyperref={colorlinks=false},pantone312]{beamer}
+\input{configBeamer.tex}
+\author{Joschka Strüber (\texttt{j.st@wwu.de})}
+\title{Titel}
+\subtitle{Untertitel}
+\date{\today}
+\begin{document}
+\setbeamertemplate{section in toc}[sections numbered]
+
+\begin{frame}[plain]
+  \maketitle
+\end{frame}
+
+\begin{frame}[t]{}
+\tableofcontents[hidesubsections, hideothersubsections]
+\end{frame}
+
+\AtBeginSection[]
+{
+	\begin{frame}[t]
+		\tableofcontents[currentsection, hidesubsections, hideothersubsections,sectionstyle=show/shaded]
+	\end{frame}
+}
+
+\section{1. Abschnitt}
+
+\begin{frame}[t]{1. Folie}
+\end{frame}
+
+\end{document}
