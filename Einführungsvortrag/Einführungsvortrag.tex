@@ -2,8 +2,8 @@
 \documentclass[wide,xcolor={x11names},hyperref={colorlinks=false},pantone312]{beamer}
 \input{configBeamer.tex}
 \author{Joschka Strüber (\texttt{j.st@wwu.de})}
-\title{Titel}
-\subtitle{Untertitel}
+\title{Ein graphtheoretischer Ansatz für das \\ \textit{multiple sequence Alignment}-Problem}
+\subtitle{\glqq Effiziente Algorithmen\grqq{} in einer Bachelorarbeit}
 \date{\today}
 \begin{document}
 \setbeamertemplate{section in toc}[sections numbered]
@@ -23,9 +23,203 @@
 	\end{frame}
 }
 
-\section{1. Abschnitt}
+\section{Motivation}
 
-\begin{frame}[t]{1. Folie}
+\begin{frame}[t]{Das \textit{multiple sequence Alignment}-Problem}
+	\begin{itemize}
+		\item Gegeben ist eine Menge von Zeichenketten.
+		\item Beispiel:
+		\begin{enumerate}
+			\ttfamily
+			\item TCGTCTGCACGCGCTCTGCGAT
+			\item AGTCGTCTGCACGGGATCTGCGA
+			\item AATAGTCATGGACGCGTGCTCTA
+			\item ATAGTCATGGACGCGTGCGCGAT
+			\normalfont
+		\end{enumerate}
+		\item Frage: Wie kann man einzelne Symbole oder ganze Abschnitte dieser Sequenzen einander zuordnen, sodass diejenigen Bereiche übereinander stehen, die sich möglichst ähnlich sind? \pause
+		\item In unserem Beispiel könnte das beispielsweise so aussehen:
+		\begin{enumerate}
+			\ttfamily
+			\item --TCGTC-TGCACGC--GCTCTGCGAT
+			\item AGTCGTC-TGCACG-G-GATCTGCGA-
+			\item AATAGTCATGGACGCGTGCTC---TA-
+			\item -ATAGTCATGGACGCGTGCGC---GAT
+			\normalfont
+		\end{enumerate}		
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Wofür wird MSA benötigt?}
+	\begin{figure}[htbp]
+		\begin{minipage}[t]{5cm}
+			\vspace{0pt}
+			\centering
+			\includegraphics[scale=0.35]{Spektrum}
+		\end{minipage}
+		\hfill
+		\begin{minipage}[t]{7cm}
+			\small
+			\begin{itemize}
+				\item Multiples Sequenzalignment wird hauptsächlich in der Bioinformatik benutzt.
+				\item Verglichen werden üblicherweise DNA- oder Proteinsequenzen.
+				\item Wird zum Beispiel benutzt, wenn man einen gemeinsamen evolutionären Ursprung zwischen mehreren Sequenzen vermutet, oder allgemein, um mögliche Resultate von Mutationen zu finden.
+				\item Gefunden werden können beispielsweise Punktmutationen (Änderungen einzelner Basen oder Aminosäuren), sowie eingefügte oder gelöschte Abschnitte.
+			\end{itemize}
+			\normalsize
+		\end{minipage}
+	\end{figure}
+\end{frame}
+
+\begin{frame}[t]{Komplexität I}
+	\begin{itemize}
+		\item Problem: Unter allen auch nur halbwegs realistischen Annahmen ist das \textit{multiple sequence Alignment}-Problem NP-schwer mit Laufzeit $\oh(length^ n)$, wobei n die Anzahl der alignierten Sequenzen ist.
+		\item Beweisskizze mit Hilfe des Algorithmus von Needleman-Wunsch:
+		\item Kosten für alignieren von Zeichen $a$ mit Zeichen $b$ kostet $\alpha_{a,b}$, wobei typischerweise $\alpha_{a,a} = 0$ gilt.
+		\item Gap Penalty $\delta$, wenn wir die beiden Zeichen nicht miteinander alignieren und stattdessen in eine der Sequenzen eine Lücke einfügen.
+		\item Gesamtkosten lassen sich mit dynamischer Programmierung und dieser Rekursionsgleichung lösen: \\
+			$O[i,j] \coloneqq min\{\alpha(X[i], Y[j]) + O[i-1, j-1], \delta + O[i-1, j], \delta + O[i, j-1]\}$
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t, fragile]{Komplexität II}
+	\footnotesize
+	\begin{tikzcd}
+		O[1,1] \arrow[r] \arrow[d] \arrow[rd] & ... \arrow[d] \arrow[rd] & ... \arrow[d] & O[1,m] \arrow[d] \\
+		... \arrow[r] \arrow[rd] & O[i-1,j-1] \arrow{rd}[near start, sloped]{\alpha_{X[i],Y[j]}} \arrow{d}{\delta} \arrow{r}{\delta} & O[i-1,j] \arrow[r] \arrow[rd] \arrow{d}{\delta} & ... \\
+		... \arrow[r] \arrow[rd] & O[i,j-1] \arrow[d] \arrow[rd] \arrow{r}{\delta} & O[i,j] \arrow[d] \arrow[rd] \arrow[r] & ... \arrow[d] \\
+		O[n,1] \arrow[r] & ... & ... \arrow[r] & O[n,m]
+	\end{tikzcd}
+	\normalsize
+	\begin{itemize}			
+		\item Alignment mit minimalen Kosten entspricht Pfad mit geringsten Kosten durch diesen Pfad, der in $\oh(n*m)$ berechnbar ist.
+		\item Vorgehen lässt sich auch mit n-vielen Sequenzen durchführen $\rightarrow$ Pfad durch n-dimensionale Matrix 
+	\end{itemize}
+\end{frame}
+
+\section{Das DIALIGN-Verfahren mit einem Min-Cut-Ansatz für das Konsistenzproblem}
+
+\begin{frame}[t]{Grundidee hinter DIALIGN}
+\end{frame}
+
+\begin{frame}[t]{Beispielsequenzen und Gewichtsfunktionen}
+\end{frame}
+
+\begin{frame}[t]{1. paarweises Alignment}
+\end{frame}
+
+\begin{frame}[t]{2. paarweises Alignment}
+\end{frame}
+
+\begin{frame}[t]{3. paarweises Alignment}
+\end{frame}
+
+\begin{frame}[t]{Konsistenz und Zwischenstand}
+\end{frame}
+
+\begin{frame}[t]{Gieriges multiples Alignment}
+\end{frame}
+
+\begin{frame}[t]{Flussnetzwerke}
+\end{frame}
+
+\begin{frame}[t]{Inzidenzgraph}
+\end{frame}
+
+\begin{frame}[t]{Minimaler Schnitt auf Zusammenhangskomponenten}
+\end{frame}
+
+\begin{frame}[t]{Beispiele nichtkonsistenter Zuweisungen}
+\end{frame}
+
+\begin{frame}[t]{Unser Graph mit gelöschten Kanten}
+\end{frame}
+
+\begin{frame}[t]{Sukzessionsgraph}
+\end{frame}
+
+\begin{frame}[t]{Zyklen im Sukzessionsgraph und wie wir diese entfernen}
+\end{frame}
+
+\begin{frame}[t]{Das Dilemma}
+\end{frame}
+
+\begin{frame}[t]{Erschummelter DAG}
+\end{frame}
+
+\begin{frame}[t]{Folge der längsten Kette}
+\end{frame}
+
+\begin{frame}[t]{Das resultierende multiple Alignment}
+\end{frame}
+
+\begin{frame}[t]{Vereinfachungen, die ich vorgenommen habe}
+\end{frame}
+
+\section{Umsetzung in der Bachelorarbeit}
+
+\begin{frame}[t]{Gierige Algorithmen und Dynamische Programmierung}
+	\begin{itemize}
+		\item Gierige Algorithmen:
+		\begin{itemize}
+			\item Treffe lokal die bestmögliche Entscheidung und verwerfe diese danach nicht wieder
+			\item Gute Laufzeit, aber liefern oft nicht das optimale Ergebnis ($\rightarrow$ gut geeignet für Heuristiken)
+			\item Wird in DIALIGN beim Zusammensetzen des multiplen Alignments benutzt
+			\item Beispiele: Algorithmus von Prim, Fractional Knapsack-Problem
+		\end{itemize} \pause
+		\item Dynamische Programmierung:
+		\begin{itemize}
+			\item Berechnung der optimalen Lösung durch Kombination von optimalen Lösungen sich überlappender Teilprobleme, wobei diese gespeichert werden und bei Bedarf abgerufen werden können
+			\item Beispiele: Algorithmus von Needleman-Wunsch, Knapsack-Problem
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Flussnetze und der Push-Relabel-Algorithmus}
+	\begin{itemize}
+		\item Flussnetze:
+		\begin{itemize}
+			\item gerichteter, gewichteter Graph mit ausgewiesener Quelle und Senke; Gewichte der Kante entsprechen maximaler Kapazität an Fluss, die über diese fließen können
+			\item Ziel: Maximierung des Gesamtflusses eines Flussnetzwerkes von der Quelle zur Senke
+			\item Min-Cut-Max-Flow-Satz: der Wert eines maximalen Flusses entspricht dem Wert des minimalen Schnitts $\rightarrow$ benötigen wir zum Auflösen von Inkosistenzen im Inzidenzgraphen 
+		\end{itemize} \pause
+		\item Push-Relabel-Algorithmus:
+		\begin{itemize}
+			\item Vorgehen:
+			\item besitzt eine bessere Laufzeit, als der in der Veröffentlichung benutzte Edmonds-Karps-Algorithmus
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Algorithmus im Detail}
+	\begin{itemize}
+		\item Gewichtsfunktionen für DNA- und Proteinsequenzen (BLOSUM62)
+		\item Berechnung von paarweisen Alignments mit Hilfe von dynamischer Programmierung
+		\item Aufbau des Inzidenzgraphen und Min-Cut auf den Zusammenhangskomponenten
+		\item Aufbau des Sukzessionsgraphen und Löschen von Sites, um Konsistenz herzustellen
+		\item Verwendung der so gefundenen alignierten Spalten als Ankerpunkte, um zwischen diesen das klassische DIALIGN laufen zu lassen
+		\item Wenn mir am Ende noch langweilig ist: Blick auf DIALIGN TX, um dieses gegebenfalls zwischen den Ankerpunkten zu verwenden
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Programmierung}
+	\begin{itemize}
+		\item Programmiersprache C++
+		\item Boost Graph Library, die bereits ausgeklügelte Graphen, Flussnetzwerke und Algorithmen zur Berechnung des maximalen Flusses bereitstellt
+		\item variabelster Teil der Bachelorarbeit:
+		\begin{itemize}
+			\item bei wenig Zeit am Ende: Ein- und Ausgabe über simple Textdateien
+			\item bei viel Zeit: Umsetzung mit Formaten wie Clustal und FASTA, sowie Visualisierung über externe Visualisierungssoftware
+		\end{itemize}
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Beurteilung der Güte der Ergebnisse}
+	\begin{itemize}
+		\item Bewertung des Algorithmus ist schwierig, weil er definitiv nicht das perfekte Alignment berechnet, ich aber nicht das Expertenwissen besitze, um die Güte eines Alignments wirklich beurteilen zu können
+		\item Test auf BAliBase für global und (D)IRMBASE für lokal verwandte Sequenzen $\rightarrow$ bereits ausgewertete Sequenzen für die ein richtiges Alignment bekannt ist
+		\item Erfordert noch Einarbeitung
+	\end{itemize}
 \end{frame}
 
 \end{document}
