@@ -1,0 +1,4 @@
+\select@language {ngerman}
+\beamer@sectionintoc {1}{Motivation}{3}{0}{1}
+\beamer@sectionintoc {2}{Das DIALIGN-Verfahren mit einem Min-Cut-Ansatz f\IeC {\"u}r das Konsistenzproblem}{9}{0}{2}
+\beamer@sectionintoc {3}{Umsetzung in der Bachelorarbeit}{29}{0}{3}

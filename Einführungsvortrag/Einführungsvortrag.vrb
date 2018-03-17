@@ -1,0 +1,13 @@
+\frametitle{Komplexität II}
+\footnotesize
+	\begin{tikzcd}
+		O[1,1] \arrow[r] \arrow[d] \arrow[rd] & ... \arrow[d] \arrow[rd] & ... \arrow[d] & O[1,m] \arrow[d] \\
+		... \arrow[r] \arrow[rd] & O[i-1,j-1] \arrow{rd}[near start, sloped]{\alpha_{X[i],Y[j]}} \arrow{d}{\delta} \arrow{r}{\delta} & O[i-1,j] \arrow[r] \arrow[rd] \arrow{d}{\delta} & ... \\
+		... \arrow[r] \arrow[rd] & O[i,j-1] \arrow[d] \arrow[rd] \arrow{r}{\delta} & O[i,j] \arrow[d] \arrow[rd] \arrow[r] & ... \arrow[d] \\
+		O[n,1] \arrow[r] & ... & ... \arrow[r] & O[n,m]
+	\end{tikzcd}
+	\normalsize
+	\begin{itemize}
+		\item Alignment mit minimalen Kosten entspricht Pfad mit geringsten Kosten durch diesen Pfad, der in $\oh(n*m)$ berechnbar ist.
+		\item Vorgehen lässt sich auch mit n-vielen Sequenzen durchführen $\rightarrow$ Pfad durch n-dimensionale Matrix
+	\end{itemize}
