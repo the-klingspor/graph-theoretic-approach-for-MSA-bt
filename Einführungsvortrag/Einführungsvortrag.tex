@@ -2,7 +2,7 @@
 \documentclass[wide,xcolor={x11names},hyperref={colorlinks=false},pantone312]{beamer}
 \input{configBeamer.tex}
 \author{Joschka Strüber (\texttt{j.st@wwu.de})}
-\title{Ein graphtheoretischer Ansatz für das \\ \textit{multiple sequence Alignment}-Problem}
+\title{Ein graphtheoretischer Ansatz für das \textit{multiple \\ sequence Alignment}-Problem}
 \subtitle{\glqq Effiziente Algorithmen\grqq{} in einer Bachelorarbeit}
 \date{\today}
 \begin{document}
@@ -51,19 +51,20 @@
 \end{frame}
 
 \begin{frame}[t]{Wofür wird MSA benötigt?}
-	\begin{figure}[htbp]
-		\begin{minipage}[t]{5cm}
+	\begin{figure}[tbp]
+		\vspace{-0.5cm}
+		\begin{minipage}[t]{4cm}
 			\vspace{0pt}
-			\centering
 			\includegraphics[scale=0.35]{Spektrum}
+			\cite{Reno18}
 		\end{minipage}
 		\hfill
 		\begin{minipage}[t]{7cm}
 			\small
 			\begin{itemize}
-				\item Multiples Sequenzalignment wird hauptsächlich in der Bioinformatik benutzt.
+				\item Multiples Sequenzalignment wird hauptsächlich in der Bioinformatik angewendet.  \cite{MDW96}
 				\item Verglichen werden üblicherweise DNA- oder Proteinsequenzen.
-				\item Wird zum Beispiel benutzt, wenn man einen gemeinsamen evolutionären Ursprung zwischen mehreren Sequenzen vermutet, oder allgemein, um mögliche Resultate von Mutationen zu finden.
+				\item Wird zum Beispiel benutzt, wenn man einen gemeinsamen evolutionären Ursprung zwischen mehreren Sequenzen vermutet oder allgemein, um mögliche Resultate von Mutationen zu finden.
 				\item Gefunden werden können beispielsweise Punktmutationen (Änderungen einzelner Basen oder Aminosäuren), sowie eingefügte oder gelöschte Abschnitte.
 			\end{itemize}
 			\normalsize
@@ -73,87 +74,953 @@
 
 \begin{frame}[t]{Komplexität I}
 	\begin{itemize}
-		\item Problem: Unter allen auch nur halbwegs realistischen Annahmen ist das \textit{multiple sequence Alignment}-Problem NP-schwer mit Laufzeit $\oh(length^ n)$, wobei n die Anzahl der alignierten Sequenzen ist.
+		\item Problem: Unter allen auch nur halbwegs realistischen Annahmen ist das \textit{multiple sequence Alignment}-Problem NP-schwer mit Laufzeit $\oh(length^ n)$, wobei n die Anzahl der alignierten Sequenzen ist. \cite{WJ94}
 		\item Beweisskizze mit Hilfe des Algorithmus von Needleman-Wunsch:
 		\item Kosten für alignieren von Zeichen $a$ mit Zeichen $b$ kostet $\alpha_{a,b}$, wobei typischerweise $\alpha_{a,a} = 0$ gilt.
-		\item Gap Penalty $\delta$, wenn wir die beiden Zeichen nicht miteinander alignieren und stattdessen in eine der Sequenzen eine Lücke einfügen.
-		\item Gesamtkosten lassen sich mit dynamischer Programmierung und dieser Rekursionsgleichung lösen: \\
-			$O[i,j] \coloneqq min\{\alpha(X[i], Y[j]) + O[i-1, j-1], \delta + O[i-1, j], \delta + O[i, j-1]\}$
+		\item \emph{Gap Penalty} $\delta$, wenn wir die beiden Zeichen nicht miteinander alignieren und stattdessen in eine der Sequenzen eine Lücke einfügen.
+		\item Gesamtkosten lassen sich mit dynamischer Programmierung und dieser Rekursionsgleichung berechnen:  \cite{NW70}
+		\begin{equation}
+			O[i,j] \coloneqq min\{\alpha(X[i], Y[j]) + O[i-1, j-1], \delta + O[i-1, j], \delta + O[i, j-1]\}
+		\end{equation}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[t, fragile]{Komplexität II}
-	\footnotesize
+	\small
 	\begin{tikzcd}
 		O[1,1] \arrow[r] \arrow[d] \arrow[rd] & ... \arrow[d] \arrow[rd] & ... \arrow[d] & O[1,m] \arrow[d] \\
 		... \arrow[r] \arrow[rd] & O[i-1,j-1] \arrow{rd}[near start, sloped]{\alpha_{X[i],Y[j]}} \arrow{d}{\delta} \arrow{r}{\delta} & O[i-1,j] \arrow[r] \arrow[rd] \arrow{d}{\delta} & ... \\
 		... \arrow[r] \arrow[rd] & O[i,j-1] \arrow[d] \arrow[rd] \arrow{r}{\delta} & O[i,j] \arrow[d] \arrow[rd] \arrow[r] & ... \arrow[d] \\
 		O[n,1] \arrow[r] & ... & ... \arrow[r] & O[n,m]
 	\end{tikzcd}
-	\normalsize
+	\footnotesize
 	\begin{itemize}			
-		\item Alignment mit minimalen Kosten entspricht Pfad mit geringsten Kosten durch diesen Pfad, der in $\oh(n*m)$ berechnbar ist.
-		\item Vorgehen lässt sich auch mit n-vielen Sequenzen durchführen $\rightarrow$ Pfad durch n-dimensionale Matrix 
+		\item Alignment mit minimalen Kosten entspricht Pfad mit geringsten Kosten durch diese Matrix, der in $\oh(n*m)$ berechenbar ist.
+		\item Vorgehen lässt sich auch mit n-vielen Sequenzen durchführen $\rightarrow$ Pfad durch n-dimensionale Matrix \pause
+		\item große multiple Alignments lassen sich nicht exakt, sondern nur heuristisch berechnen
 	\end{itemize}
+	\normalsize
 \end{frame}
 
 \section{Das DIALIGN-Verfahren mit einem Min-Cut-Ansatz für das Konsistenzproblem}
 
 \begin{frame}[t]{Grundidee hinter DIALIGN}
+	\begin{enumerate}
+		\item Weise den zu alignierenden Abschnitten Gewichte zu. \pause
+		\item Maximiere die Summe der Gewichte bei paarweisen Alignments durch dynamische Programmierung. \pause
+		\item Sortiere alle so entstandenen paarweisen Zuweisungen (Diagonalen in der Matrix von Needleman-Wunsch, daher DIALIGN für \glqq DIagonal ALIGNment \grqq) anhand ihrer Gewichte. \pause
+		\item Wähle gierig nacheinander Diagonalen aus, die zu allen bisher gewählten Diagonalen \emph{konsistent} sind. \cite{MDW96}
+	\end{enumerate}
 \end{frame}
 
 \begin{frame}[t]{Beispielsequenzen und Gewichtsfunktionen}
+	\begin{enumerate}
+		\ttfamily
+		\item TCGTCTGCACG
+		\item AGTCGTCCGC
+		\item AATAGTCAT
+		\normalfont
+	\end{enumerate}
+	\begin{itemize}
+		\item Wahrscheinlichkeit, dass es in einem Abschnitt der Länge $l$ mindestens $m$ viele Übereinstimmungen gibt: 
+			\begin{equation}
+				P(l,m) \coloneqq \sum_{i=m}^{l} {l \choose i} * p^i * (1-p)^{l-i}
+			\end{equation}
+		\item Gewichtsfunktion mit Korrekturterm $K \coloneqq \ln{l_1} + \ln{l_2}$: 
+			\begin{equation}
+				w^* \coloneqq -\ln(P(l,m)) - K
+			\end{equation}
+		\cite{MAHD98}
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[t]{1. paarweises Alignment}
+	\small
+	\ttfamily
+	\begin{enumerate}
+		\item TCGTCTGCACG
+		\item AGTCGTCGCG
+		\normalfont
+	\end{enumerate}
+	\begin{tabular*}{12cm}{lllll}
+		\rule{0pt}{4ex}
+		$ \scriptsize \left. \begin{array}{c} \mbox{GT}\\\mbox{GT} \end{array} \right \} \mbox{0,5}$ & $ \scriptsize \left. \begin{array}{c} \mbox{GTC\textcolor{red}{TG}C\textcolor{red}{A}CG}\\ \mbox{GTC\textcolor{red}{GT}C\textcolor{red}{G}CG} \end{array} \right \} \mbox{2,1}$ &
+		$ \scriptsize \left. \begin{array}{c} \mbox{GTC} \\ \mbox{GTC} \end{array} \right \} \mbox{1,9}$ & $ \scriptsize \left. \begin{array}{c} \mbox{TCGTC} \\ \mbox{TCGTC} \end{array} \right \} \mbox{4,6}$ & $ \scriptsize \left. \begin{array}{c} \mbox{C\textcolor{red}{A}CG} \\ \mbox{C\textcolor{red}{G}CG} \end{array} \right \} \mbox{0,5}$ \\
+		\rule{0pt}{4ex}
+		$ \scriptsize \left. \begin{array}{c} \mbox{GTC\textcolor{red}{TG}C}\\ \mbox{GTC\textcolor{red}{GT}C} \end{array} \right \} \mbox{0,7}$ & $ \scriptsize \left. \begin{array}{c} \mbox{GTC\textcolor{red}{TG}C\textcolor{red}{A}}\\ \mbox{GTC\textcolor{red}{GT}C\textcolor{red}{G}} \end{array} \right \} \mbox{0,2}$ & $ \scriptsize \left. \begin{array}{c} \mbox{GTC\textcolor{red}{TG}C\textcolor{red}{A}C}\\ \mbox{GTC\textcolor{red}{GT}C\textcolor{red}{G}C} \end{array} \right \} \mbox{1,1}$ & $ \scriptsize \left. \begin{array}{c} \mbox{CG}\\\mbox{CG} \end{array} \right \} \mbox{0,5}$ & $ \scriptsize \left. \begin{array}{c} \mbox{TC}\\\mbox{TC} \end{array} \right \} \mbox{0,5}$ \\
+		\rule{0pt}{4ex}
+		$ \scriptsize \left. \begin{array}{c} \mbox{\textcolor{red}{C}GTC} \\ \mbox{\textcolor{red}{A}GTC} \end{array} \right \} \mbox{0,5}$ & $ \scriptsize \left. \begin{array}{c} \mbox{GTC\textcolor{red}{T}} \\ \mbox{GTC\textcolor{red}{G}} \end{array} \right \} \mbox{0,5}$ & $ \scriptsize \left. \begin{array}{c} \mbox{TCGTC\textcolor{red}{T}} \\ \mbox{TCGTC\textcolor{red}{G}} \end{array} \right \} \mbox{2,8}$ & $ \scriptsize \left. \begin{array}{c} \mbox{TCGTC\textcolor{red}{TG}} \\ \mbox{TCGTC\textcolor{red}{GC}} \end{array} \right \} \mbox{1,8}$ & $ \scriptsize \left. \begin{array}{c} \mbox{TCGTC\textcolor{red}{TGC}} \\ \mbox{TCGTC\textcolor{red}{GCG}} \end{array} \right \} \mbox{1,1}$ 
+	\end{tabular*} \pause
+	\begin{itemize}
+		\item Resultierendes Alignment: \\
+		\ttfamily
+		\begin{tabular}{l}
+			--TCGTCtgcaCG \\
+			agTCGTCg---CG
+		\end{tabular}	
+		\item Score: 5,1	
+	\end{itemize}
+	\normalfont
+	\normalsize
+
 \end{frame}
 
 \begin{frame}[t]{2. paarweises Alignment}
+	\small
+	\ttfamily
+	\begin{enumerate}
+		\item TCGTCTGCACG
+		\item AATAGTCAT
+		\normalfont
+	\end{enumerate}
+	\begin{tabular*}{12cm}{lllll}
+		\rule{0pt}{4ex}
+		$ \scriptsize \left. \begin{array}{c} \mbox{TC}\\\mbox{TC} \end{array} \right \} \mbox{0,5}$ & $ \scriptsize \left. \begin{array}{c} \mbox{GT}\\\mbox{GT} \end{array} \right \} \mbox{0,5}$ &
+		$ \scriptsize \left. \begin{array}{c} \mbox{CA}\\\mbox{CA} \end{array} \right \} \mbox{0,5}$ & $ \scriptsize \left. \begin{array}{c} \mbox{GTC}\\\mbox{GTC} \end{array} \right \} \mbox{1,9}$ &
+		$ \scriptsize \left. \begin{array}{c} \mbox{T\textcolor{red}{C}GT}\\\mbox{T\textcolor{red}{A}GT} \end{array} \right \} \mbox{0,5}$ \\
+		\rule{0pt}{4ex}
+		$ \scriptsize \left. \begin{array}{c} \mbox{T\textcolor{red}{C}GTC}\\\mbox{T\textcolor{red}{A}GTC} \end{array} \right \} \mbox{1,6}$ & $ \scriptsize \left. \begin{array}{c} \mbox{GTC\textcolor{red}{T}}\\\mbox{GTC\textcolor{red}{A}} \end{array} \right \} \mbox{0,5}$ & 
+	\end{tabular*} \pause
+	\begin{itemize}
+		\item Resultierendes Alignment: \\
+		\ttfamily
+		\begin{tabular}{l}
+			--tcGTCtgcacg \\
+			aataGTCat----
+		\end{tabular}
+		\normalfont
+		\item Score: 1,9
+	\end{itemize}
+	\normalfont
+	\normalsize	
 \end{frame}
 
 \begin{frame}[t]{3. paarweises Alignment}
+	\small
+	\ttfamily
+	\begin{enumerate}
+		\item AGTCGTCGCG
+		\item AATAGTCAT
+		\normalfont
+	\end{enumerate}
+	\begin{tabular*}{12cm}{lllll}
+		\rule{0pt}{4ex}
+		$ \scriptsize \left. \begin{array}{c} \mbox{TC}\\\mbox{TC} \end{array} \right \} \mbox{0,5}$ & $ \scriptsize \left. \begin{array}{c} \mbox{GTC}\\\mbox{GTC} \end{array} \right \} \mbox{1,9}$ &
+		$ \scriptsize \left. \begin{array}{c} \mbox{AGTC}\\\mbox{AGTC} \end{array} \right \} \mbox{3,2}$ & $ \scriptsize \left. \begin{array}{c} \mbox{AGTC\textcolor{red}{G}}\\\mbox{AGTC\textcolor{red}{A}} \end{array} \right \} \mbox{1,6}$ & $ \scriptsize \left. \begin{array}{c} \mbox{AGTC\textcolor{red}{G}T}\\\mbox{AGTC\textcolor{red}{A}T} \end{array} \right \} \mbox{2,8}$ \\
+		\rule{0pt}{4ex}
+		$ \scriptsize \left. \begin{array}{c} \mbox{GTC\textcolor{red}{G}T}\\\mbox{GTC\textcolor{red}{A}T} \end{array} \right \} \mbox{1,6}$ &
+		$ \scriptsize \left. \begin{array}{c} \mbox{TC\textcolor{red}{G}T}\\\mbox{TC\textcolor{red}{A}T} \end{array} \right \} \mbox{0,5}$ &
+		$ \scriptsize \left. \begin{array}{c} \mbox{AGT}\\\mbox{AGT} \end{array} \right \} \mbox{1,9}$
+	\end{tabular*} \pause
+	\begin{itemize}
+		\item Resultierendes Alignment: \\
+		\ttfamily
+		\begin{tabular}{l}
+			---AGTCgtcgcg\\
+			aatAGTCac----
+		\end{tabular}
+		\normalfont
+		\item Score: 3,2
+	\end{itemize}
+	\normalfont
+	\normalsize	
 \end{frame}
 
-\begin{frame}[t]{Konsistenz und Zwischenstand}
+\begin{frame}[t, fragile]{Konsistenz und Zwischenstand}
+	\vspace{1cm}
+	\footnotesize
+	\begin{tikzcd}
+		T \arrow[rrd, no head] & C \arrow[rrd, no head] & G \arrow[rrd, no head] \arrow[rrdd, no head] & T \arrow[rrd, no head] \arrow[rrdd, no head] & C \arrow[rrd, no head] \arrow[rrdd, no head] & T & G & C & A & C \arrow[ld, no head] & G \arrow[ld, no head] \\
+		A \arrow[rrrd, no head] & G \arrow[rrrd, no head] & T \arrow[rrrd, no head] & C \arrow[rrrd, no head] & G & T & C & G & C & G &  \\
+		A & A & T & A & G & T & C & A & T &  & 
+	\end{tikzcd}
+	\normalsize
+	\begin{itemize}
+		\item nicht \emph{konsistent}, denn \glqq\texttt{TC}\grqq \ aus der dritten Sequenz sind transitiv zwei \glqq\texttt{TC}\grqq-Abschnitte aus der ersten Sequenz zugeordnet und es gibt Überkreuzungen.
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[t]{Gieriges multiples Alignment}
+	\footnotesize
+	\begin{itemize}
+		\item Sortiere alle Abschnitte aus den paarweisen Alignments nach ihrem Score.
+		\item Wähle solange den Abschnitt mit dem höchsten Score, der mit allen bisher gewählten \emph{konsistent} ist, bis es keinen solchen mehr gibt. \pause
+		\item
+			\begin{tabular}{lllc}
+				Sequenzen & Abschnitte & Score & zu den bisher gewählten \emph{konsistent}? \\
+				\hline
+				1 & \texttt{TCGTC} & \multirow{2}{*}{4,6} & \multirow{2}{*}{ja} \\
+				2 & \texttt{TCGTC} &  &  \\
+				2 & \texttt{AGTC}  & \multirow{2}{*}{3,2} & \multirow{2}{*}{ja} \\
+				3 & \texttt{AGTC}  &  &  \\
+				1 & \texttt{GTC}   & \multirow{2}{*}{1,9} & \multirow{2}{*}{nein} \\
+				3 & \texttt{GTC}   &  &  \\
+				1 & \texttt{CG}    & \multirow{2}{*}{0,5} & \multirow{2}{*}{ja} \\
+				2 & \texttt{CG}    &  &  
+			\end{tabular} \pause
+		\item Resultierendes gieriges Alignment:
+		\ttfamily
+			\begin{tabular}{l}
+				-----TCGTCtgcaCG \\
+				---AGTCGTCg---CG \\
+				aatAGTCat------- 
+			\end{tabular}
+		\normalfont
+	\end{itemize}
+	\normalsize
 \end{frame}
 
-\begin{frame}[t]{Flussnetzwerke}
+\begin{frame}[t]{Erweiterung mit Min-Cut-Ansatz}
+	\begin{itemize}
+		\item Problem: Das gierige Konstruieren des multiplen Alignments zieht nur paarweise ähnliche Abschnitte in Betracht. \cite{CPM10}
+		\item Wir wollen aber Ähnlichenkeiten über möglichst viele Sequenzen hinweg. \pause
+		\item Alternativer Ansatz: \\
+		\begin{enumerate}
+			\item Konstruiere Graph über alle aligierten \emph{Sites} aus dem paarweisen Alignment (Inzidenzgraph).
+			\item Entferne mit Hilfe von Flussnetzen Kanten aus den Zusammenhangskomponenten, um Inkosistenzen aufzulösen.
+			\item Konstruiere Graph über die Zusammenhangskomponenten des Inzidenzgraphen (Sukzessionsgraph) und entferne geschickt Kanten und \emph{Sites} aus dem Graph, bis alle Inkosistenzen aufgelöst sind.
+		\end{enumerate}		
+	\end{itemize}
 \end{frame}
 
-\begin{frame}[t]{Inzidenzgraph}
+\begin{frame}[t]{Flussnetzwerke I}
+	\footnotesize
+	\begin{itemize}
+		\item Ein Flussnetzwerk ist ein gerichteter Graph $G = (V,E)$ mit zwei ausgewiesenen Knoten $s, t \in V$, genannt Quelle und Senke. Zusätzlich hat jede Kante $(u,v) \in E$ ein Kapazität genanntes, nichtnegatives Kantengewicht. \cite{CLRS92} \\
+		\begin{center}
+    	\begin{tikzpicture}[
+			mycircle/.style={
+				circle,
+				draw=black,
+				fill=gray,
+				fill opacity = 0.3,
+				text opacity=1,
+				inner sep=0pt,
+				minimum size=20pt,
+				font=\footnotesize},
+			myarrow/.style={-Stealth},
+			node distance=0.6cm and 1.2cm
+			]
+			\node[mycircle] (c1) {$s$};
+			\node[mycircle,below right=of c1] (c2) {$v_2$};
+			\node[mycircle,right=of c2] (c3) {$v_4$};
+			\node[mycircle,above right=of c1] (c4) {$v_1$};
+			\node[mycircle,right=of c4] (c5) {$v_3$};
+			\node[mycircle,below right=of c5] (c6) {$t$};
+			
+			\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+				c1/c2/8/below,
+				c1/c4/11/above,
+				c2/c3/11/below,
+				c3/c6/4/below,
+				c4/c5/12/above,
+				c5/c6/15/above,
+				c5/c2/4/below,
+				c3/c5/7/below,
+				c2.70/c4.290/1/below}
+			\draw [myarrow] (\i) -- node[sloped,font=\footnotesize,\p] {\txt} (\j);
+			
+			
+			% draw this outside loop to get proper orientation of 10
+			\draw [myarrow] (c4.250) -- node[sloped,font=\small,above,rotate=180] {10} (c2.110);
+		\end{tikzpicture}
+		\end{center}
+		\item Ziel: Berechnung des maximalen Flusses von der Quelle zur Senke. 
+		\item Jeder Kante wird ein Wert zugeordnet, der die Kapazität nicht überschreiten darf (Kapazitätsbeschränkung) und für jeden Knoten muss die Summe der einfließenden Flüsse der Summe der ausfließenden entsprechen (Flusserhaltung).
+		\normalsize
+	\end{itemize}
 \end{frame}
 
-\begin{frame}[t]{Minimaler Schnitt auf Zusammenhangskomponenten}
+\begin{frame}[t]{Flussnetzwerke II}
+	\begin{itemize}
+		\item Ein \emph{($s$-$t$-)Schnitt} ist eine Partitionierung der Knotenmenge $V$ in zwei Mengen $A$ und $B$, bei der die Quelle $s \in A$ und die Senke $t \in B$ ist.
+		\item Die Kapazität eines \emph{($s$-$t$-)Schnitts} ist die Summe der Kapazitäten aller Kanten, die von Knoten aus $A$ nach $B$ gehen.
+		\item Der \emph{Min-Cut-Max-Flow-Satz} besagt, dass die Kapazität des minimalen Schnitts dem Wert des maximalen Flusses entspricht.
+		\item Es lässt sich zeigen, dass nach Berechnung des maximalen Flusses auch der minimale Schnitt bekannt ist. \cite{CLRS92}
+	\end{itemize}
 \end{frame}
 
-\begin{frame}[t]{Beispiele nichtkonsistenter Zuweisungen}
+\begin{frame}[t, fragile]{Inzidenzgraph}
+	\tiny
+	\begin{tikzcd}
+		(1,1) \arrow[rrd, no head, red] & (1,2) \arrow[rrd, no head, blue] & (1,3) \arrow[rrd, no head, green] \arrow[rrdd, no head, green] & (1,4) \arrow[rrdd, no head, red] \arrow[rrd, no head, red] & (1,5) \arrow[rrd, no head, blue] \arrow[rrdd, no head, blue] & (1,6) & (1,7) & (1,8) & (1,9) & (1,10) \arrow[ld, no head, orange] & (1,11) \arrow[ld, no head, teal] \\
+		(2,1) \arrow[rrrd, no head, purple] & (2,2) \arrow[rrrd, no head, green] & (2,3) \arrow[rrrd, no head, red] & (2,4) \arrow[rrrd, no head, blue] & (2,5) & (2,6) & (2,7) & (2,8) & (2,9) & (2,10) &  \\
+		(3,1) & (3,2) & (3,3) & (3,4) & (3,5) & (3,6) & (3,7) & (3,8) & (3,9) &  & 
+	\end{tikzcd}
+	\normalsize
+	\begin{itemize}
+		\item Konstruiere Inzidenzgraph:\\
+		Alle \emph{Sites} entsprechen Knoten und zwischen zwei Knoten existiert genau dann eine Kante, wenn die entsprechenden Sites in einem der paarweisen DIALIGN-Fragmenten einander zugeordnet waren.
+		\item Zusammenhangskomponenten sind farbig markiert.
+		\item Eine Zusammenhangskomponente wird als \emph{mehrdeutig} bezeichnet, wenn in ihr zwei oder mehr \emph{Sites} aus der selben Sequenz existieren $\rightarrow$ Inkonsistenz. Genauso werden diese \emph{Sites} als \emph{mehrdeutig} bezeichnet. \cite{CPM10}
+	\end{itemize}
 \end{frame}
 
-\begin{frame}[t]{Unser Graph mit gelöschten Kanten}
+\begin{frame}[t]{Minimaler Schnitt auf Zusammenhangskomponenten I}
+	\begin{itemize}
+		\item Fasse Zusammenhangskomponenten des Inzidenzgraphen als Flussnetzwerke auf.
+		\item Ersetze ungerichtete Kanten durch zwei gerichtete mit Kapazität 1.
+		\item Setze jeweils zwei \emph{mehrdeutige} Knoten aus der selben Sequenz als Quelle und Senke.
+		\item Berechne den minimalen Schnitt und lösche die entsprechenden Kanten.
+		\item Wiederhole dies, bis es keine \emph{mehrdeutigen} Zusammenhangskomponenten mehr gibt. \\
+			\begin{center}
+			\begin{tikzpicture}[
+			mycircle/.style={
+				circle,
+				draw=black,
+				fill=gray,
+				fill opacity = 0.3,
+				text opacity=1,
+				inner sep=0pt,
+				minimum size=15pt,
+				font=\footnotesize},
+			myarrow/.style={-Stealth},
+			node distance=0.6cm and 1.2cm
+			]
+			\node[mycircle] (c1) {$(2,2)$};
+			\node[mycircle,right=of c1] (c2) {$(3,5)$};
+			\node[mycircle,right=of c2] (c3) {$(1,3)$};
+			\node[mycircle,right=of c3] (c4) {$(2,5)$};
+			
+			\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+				c1.20/c2.160/1 \textcolor{red}{X}/above,
+				c2.200/c1.340/1 \textcolor{red}{X}/below,
+				c2.20/c3.160/1/above,
+				c3.200/c2.340/1/below,
+				c3.20/c4.160/1/above,
+				c4.200/c3.340/1/below}
+			\draw [myarrow] (\i) -- node[sloped,font=\footnotesize,\p] {\txt} (\j);
+			\end{tikzpicture}
+			\end{center}
+	\end{itemize}
 \end{frame}
 
-\begin{frame}[t]{Sukzessionsgraph}
+\begin{frame}[t]{Minimaler Schnitt auf Zusammenhangskomponenten II}
+	\vspace{-0.3cm}
+	\footnotesize
+	\begin{center}
+		\begin{tikzpicture}[
+		mycircle/.style={
+			circle,
+			draw=black,
+			fill=gray,
+			fill opacity = 0.3,
+			text opacity=1,
+			inner sep=0pt,
+			minimum size=15pt,
+			font=\tiny},
+		myarrow/.style={-Stealth},
+		node distance=0.6cm and 1.2cm
+		]
+		\node[mycircle] (c1) {$(1,1)$};
+		\node[mycircle,right=of c1] (c2) {$(2,3)$};
+		\node[mycircle,right=of c2] (c3) {$(3,6)$};
+		\node[mycircle,right=of c3] (c4) {$(1,4)$};
+		\node[mycircle,below=of c3] (c5) {$(2,6)$};
+		
+		\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+			c1.20/c2.160/1 \textcolor{red}{X}/above,
+			c2.200/c1.340/1 \textcolor{red}{X}/below,
+			c2.20/c3.160/1/above,
+			c3.200/c2.340/1/below,
+			c3.20/c4.160/1/above,
+			c4.200/c3.340/1/below,
+			c5.55/c4.215/1/above,
+			c4.255/c5.15/1/below}
+		\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+		\end{tikzpicture}
+	\end{center} \pause
+	\begin{itemize}
+		\item Nach wie vor zwei \emph{mehrdeutige} Sites in der Zusammenhangskomponente: (2,3) und (2,6).
+		\item Berechne nächsten Min-Cut nach Entfernen der ersten Kante.
+	\end{itemize}
+	\begin{center}
+		\begin{tikzpicture}[
+		mycircle/.style={
+			circle,
+			draw=black,
+			fill=gray,
+			fill opacity = 0.3,
+			text opacity=1,
+			inner sep=0pt,
+			minimum size=15pt,
+			font=\tiny},
+		myarrow/.style={-Stealth},
+		node distance=0.6cm and 1.2cm
+		]
+		\node[mycircle] (c1) {$(2,6)$};
+		\node[mycircle,right=of c1] (c2) {$(1,4)$};
+		\node[mycircle,right=of c2] (c3) {$(3,6)$};
+		\node[mycircle,right=of c3] (c4) {$(2,3)$};
+		
+		\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+			c1.20/c2.160/1 \textcolor{red}{X}/above,
+			c2.200/c1.340/1 \textcolor{red}{X}/below,
+			c2.20/c3.160/1/above,
+			c3.200/c2.340/1/below,
+			c3.20/c4.160/1/above,
+			c4.200/c3.340/1/below}
+		\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+		\end{tikzpicture}
+	\end{center} \pause
+	\begin{center}
+		\begin{tikzpicture}[
+		mycircle/.style={
+			circle,
+			draw=black,
+			fill=gray,
+			fill opacity = 0.3,
+			text opacity=1,
+			inner sep=0pt,
+			minimum size=15pt,
+			font=\tiny},
+		myarrow/.style={-Stealth},
+		node distance=0.6cm and 1.2cm
+		]
+		\node[mycircle] (c1) {$(2,7)$};
+		\node[mycircle,right=of c1] (c2) {$(1,5)$};
+		\node[mycircle,right=of c2] (c3) {$(3,7)$};
+		\node[mycircle,right=of c3] (c4) {$(2,4)$};
+		\node[mycircle,below=of c3] (c5) {$(1,2)$};
+		
+		\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+			c1.20/c2.160/1/above,
+			c2.200/c1.340/1/below,
+			c2.20/c3.160/1 \textcolor{red}{X}/above,
+			c3.200/c2.340/1 \textcolor{red}{X}/below,
+			c3.20/c4.160/1/above,
+			c4.200/c3.340/1/below,
+			c5.55/c4.215/1/above,
+			c4.255/c5.15/1/below}
+		\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+		\end{tikzpicture}
+	\end{center}
+	\normalsize
+\end{frame}
+
+\begin{frame}[t, fragile]{Unser Graph mit gelöschten Kanten}
+	\vspace{1cm}
+	\tiny
+	\begin{tikzcd}
+		(1,1) \arrow[rrd, no head, dotted] & (1,2) \arrow[rrd, no head, blue] & (1,3) \arrow[rrd, no head, green] \arrow[rrdd, no head, green] & (1,4) \arrow[rrdd, no head, red] \arrow[rrd, no head, dotted] & (1,5) \arrow[rrd, no head, olive] \arrow[rrdd, no head, dotted] & (1,6) & (1,7) & (1,8) & (1,9) & (1,10) \arrow[ld, no head, orange] & (1,11) \arrow[ld, no head, teal] \\
+		(2,1) \arrow[rrrd, no head, purple] & (2,2) \arrow[rrrd, no head, dotted] & (2,3) \arrow[rrrd, no head, red] & (2,4) \arrow[rrrd, no head, blue] & (2,5) & (2,6) & (2,7) & (2,8) & (2,9) & (2,10) &  \\
+		(3,1) & (3,2) & (3,3) & (3,4) & (3,5) & (3,6) & (3,7) & (3,8) & (3,9) &  & 
+	\end{tikzcd}
+	\normalsize
+	\begin{itemize}
+		\item Resultat: immer noch nicht \emph{konsistent}.
+		\item Grund: Überkreuzungen z.B. bei (1,2) $\rightarrow$ (2,4) $\rightarrow$ (3,7) und (1,3) $\rightarrow$ (3,5).
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t, fragile]{Zwei Arten nichtkonsistenter Zuweisungen}
+	\tiny
+	\begin{center}
+	\begin{tikzcd}
+		V \arrow[d, no head] & L \arrow[d, no head] & F \arrow[d, no head] & A \arrow[d, no head] & E \arrow[ldd, no head] & D \arrow[ldd, no head] &  \\
+		V \arrow[rd, no head] & I \arrow[rd, no head] & F \arrow[rd, no head] & G & S &  &  \\
+		d & V & T & F & D & a & e
+	\end{tikzcd} \\
+	\end{center}
+	\small
+	Implizite, transitive Mehrfachzuweisung von F: kann mit Flussnetzen und Inzidenzgraphen behoben werden. \\
+	\tiny
+	\begin{center}
+	\begin{tikzcd}
+		A \arrow[d, no head] & V \arrow[d, no head] & L \arrow[d, no head] & F \arrow[d, no head] & A \arrow[d, no head] & E \arrow[llllldd, no head] & D \arrow[llllldd, no head] \\
+		A & V \arrow[rd, no head] & I \arrow[rd, no head] & F \arrow[rd, no head] & G & S &  \\
+		D & D & V & T & F &  & 
+	\end{tikzcd} \\
+	\end{center}
+	\small
+	Überkreuzungen: können wir noch nicht auflösen.
+	\normalsize
+\end{frame}
+
+\begin{frame}[t]{Sukzessionsgraph I}
+	\small
+	\begin{itemize}
+		\item Im Sukzessionsgraph sind die Zusammenhangskomponenten des Inzidenzgraphen Knoten. \cite{PDC10}
+		\item Es existiert eine Kante zwischen zwei Knoten $C$ und $C'$ genau dann, wenn eine Sequenz $S_i$ exisitiert, sodass \emph{Sites} $(i,p) \in C$ und $(i,p') \in C'$ existieren mit $p < p'$, ohne dass $C''$ existiert mit $(i,p'') \in C''$ und $p < p'' < p'$.
+		\item Das Gewicht jeder Kante ist die Anzahl der Sequenzen für die die obige Bedingung gilt. \pause
+		\item Wenn der Sukzessionsgraph keine Zyklen enthält, ist das Alignment \emph{konsistent}.
+		\item Falls doch, müssen wir sukzessive \emph{Sites} und Kanten entfernen, bis das der Fall ist.
+	\end{itemize}
+	\normalsize
+\end{frame}
+
+\begin{frame}[t]{Sukzessionsgraph II}
+	\vspace{-6pt}
+	\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 0.6cm
+	]
+
+	% 1. Zeile
+	\node[mycircle] (c1) {$(1,1)$};
+	\node[mycircle,right=of c1] (c2) {\begin{tabular}{c} $(1,2)$ \\ $(2,4)$ \\ $(3,7)$ \end{tabular}};
+	\node[mycircle,right=of c2] (c3) {\begin{tabular}{c} $(1,3)$ \\ $(2,5)$ \\ $(3,5)$ \end{tabular}};		
+	\node[mycircle,right=of c3] (c4) {\begin{tabular}{c} $(1,5)$ \\ $(2,7)$ \end{tabular}};
+	\node[mycircle,right=of c4] (c5) {$(1,6)$};
+	\node[mycircle,right=of c5] (c6) {$(1,7)$};
+	\node[mycircle,right=of c6] (c7) {$(1,8)$};
+	\node[mycircle,right=of c7] (c8) {$(1,9)$};
+	\node[mycircle,right=of c8] (c9) {\begin{tabular}{c} $(1,10)$ \\ $(2,9)$ \end{tabular}};
+	\node[mycircle,right=of c9] (c10) {\begin{tabular}{c} $(1,11)$ \\ $(2,10)$ \end{tabular}};	
+	
+	% 2. Zeile
+	\node[mycircle,below=of c1] (c11) {\begin{tabular}{c} $(2,1)$ \\ $(3,4)$ \end{tabular}};	
+	\node[mycircle,below=of c3] (c12) {\begin{tabular}{c} $(1,4)$ \\ $(2,3)$ \\ $(3,6)$ \end{tabular}};
+	\node[mycircle,above=of c4] (c13) {$(2,6)$};
+	\node[mycircle,below=of c7] (c14) {$(2,8)$};
+	\node[mycircle,below=of c2] (c15) {$(2,2)$};	
+	
+	% 3. Zeile
+	\node[mycircle,below=of c11] (c16) {$(3,3)$};
+	\node[mycircle,right=of c16] (c17) {$(3,2)$};		
+	\node[mycircle,right=of c17] (c18) {$(3,1)$};
+	
+	% verlorene Knoten
+	\node[mycircle,above=of c2] (c19) {$(3,8)$};
+	\node[mycircle,left=of c19] (c20) {$(3,9)$};
+						
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1/c2/1/above,
+		c2/c3/2/above,
+		c4/c5/1/above,
+		c5/c6/1/above,	
+		c6/c7/1/above,
+		c7/c8/1/above,
+		c8/c9/1/above,
+		c3/c12/2/above,
+		c12/c2/2/above,
+		c12/c4/1/above,
+		c3/c13/1/above,
+		c13/c4/1/above,
+		c4/c14/1/below,
+		c14/c9/1/below,
+		c11/c3/1/below,
+		c11/c15/1/below,
+		c16/c11/1/above,
+		c17/c16/1/above,
+		c18/c17/1/above,
+		c15/c12/1/above,
+		c2/c19/1/below,
+		c19/c20/1/above,
+		c9/c10/1/above}
+	\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	\end{tikzpicture}
+	\end{center}
 \end{frame}
 
 \begin{frame}[t]{Zyklen im Sukzessionsgraph und wie wir diese entfernen}
+	\begin{itemize}
+		\item Herstellen von \emph{Konsistenz} durch Löschen von Kanten und \emph{Sites} aus dem Sukzessionsgraph. \cite{PDC10}
+		\item Optimal wäre Löschen von Kanten mit minimalem Kantengewicht, um alle Zyklen aufzulösen.
+		\item Problem: \pause Das ist das NP-schwere \emph{minimal weighted feedback arc set}-Problem. \pause
+		\item Stattdessen löschen wir solange die Kanten mit dem geringsten Kantengewicht, bis der Graph zyklenfrei ist: \\
+		$E_k \coloneqq \{(u,v) \in E | w(u,v) > k\}$ und $k^* \coloneqq min\{k>0 | (V, E_k) \mbox{ist azyklisch}\}$ \
+		\item Zusätzlich fügen wir Start- und Endknoten ein, die mit den \enquote{Anfangs-} und \enquote{Abschlussknoten} aller Zusammenhangskomponenten nach dem Löschen verbunden sind. \pause
+		\item Leider gilt bei uns $k^* = 2$ $\rightarrow$ alle Kanten zwischen den ursprünglichen Knoten wurden gelöscht.
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[t]{Das Dilemma}
+	\vspace{-5pt}
+	\begin{center}
+	\scalebox{0.7}{
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=10pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=3cm and 0.2cm
+	]
+	\node[mycircle] (c1) {$(1,1)$};
+	\node[mycircle,right=of c1] (c2) {\begin{tabular}{c}
+		$(1,2)$ \\ $(2,4)$ \\ $(3,7)$
+		\end{tabular}};
+	\node[mycircle,right=of c2] (c3) {\begin{tabular}{c}
+		$(1,3)$ \\ $(2,5)$ \\ $(3,5)$
+		\end{tabular}};
+	\node[mycircle,right=of c3] (c4) {\begin{tabular}{c}
+		$(1,5)$ \\ $(2,7)$
+		\end{tabular}};
+	\node[mycircle,right=of c4] (c5) {$(1,6)$};
+	\node[mycircle,right=of c5] (c6) {$(1,7)$};
+	\node[mycircle,right=of c6] (c7) {$(1,8)$};
+	\node[mycircle,right=of c7] (c8) {$(1,9)$};
+	\node[mycircle,right=of c8] (c9) {\begin{tabular}{c}
+		$(1,10)$ \\ $(2,9)$
+		\end{tabular}};
+	\node[mycircle,right=of c9] (c10) {\begin{tabular}{c}
+		$(1,11)$ \\ $(2,10)$
+		\end{tabular}};
+	\node[mycircle,right=of c10] (c11) {$(2,6)$};
+	\node[mycircle,right=of c11] (c12) {\begin{tabular}{c}
+		$(2,1)$ \\ $(3,4)$
+		\end{tabular}};
+	\node[mycircle,right=of c12] (c13) {$(2,2)$};
+	\node[mycircle,right=of c13] (c14) {\begin{tabular}{c}
+		$(1,4)$ \\ $(2,3)$ \\ $(3,6)$
+		\end{tabular}};
+	\node[mycircle,right=of c14] (c15) {$(2,8)$};
+	\node[mycircle,right=of c15] (c16) {$(3,1)$};
+	\node[mycircle,right=of c16] (c17) {$(3,2)$};
+	\node[mycircle,right=of c17] (c18) {$(3,3)$};
+	\node[mycircle,right=of c18] (c19) {$(3,8)$};
+	\node[mycircle,right=of c19] (c20) {$(3,9)$};
+	
+	\node[mycircle,above=of c10] (c21) {$v_{start}$};
+	\node[mycircle,below=of c10] (c22) {$v_{end}$};
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+	c21/c1.80//,
+	c21/c2//,
+	c21/c3//,
+	c21/c4//,
+	c21/c5//,
+	c21/c6//,
+	c21/c7//,
+	c21/c8//,
+	c21/c9//,
+	c21/c10//,
+	c21/c11//,
+	c21/c12//,
+	c21/c13//,
+	c21/c14//,
+	c21/c15//,
+	c21/c16//,
+	c21/c17//,
+	c21/c18//,
+	c21/c19//,
+	c21/c20.100//,
+	c1.280/c22//,
+	c2/c22//,
+	c3/c22//,
+	c4/c22//,
+	c5/c22//,
+	c6/c22//,
+	c7/c22//,
+	c8/c22//,
+	c9/c22//,
+	c10/c22//,
+	c11/c22//,
+	c12/c22//,
+	c13/c22//,
+	c14/c22//,
+	c15/c22//,
+	c16/c22//,
+	c17/c22//,
+	c18/c22//,
+	c19/c22//,
+	c20.260/c22//}
+	\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	\end{tikzpicture}}
+	\end{center}
 \end{frame}
 
 \begin{frame}[t]{Erschummelter DAG}
+	\vspace{-6pt}
+	\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 0.6cm
+	]
+	
+	% 1. Zeile
+	\node[mycircle] (c1) {$(1,1)$};
+	\node[mycircle,right=of c1] (c2) {\begin{tabular}{c} $(1,2)$ \\ $(2,4)$ \\ $(3,7)$ \end{tabular}};
+	\node[mycircle,right=of c2] (c3) {\begin{tabular}{c} $(1,3)$ \\ $(2,5)$ \\ $(3,5)$ \end{tabular}};		
+	\node[mycircle,right=of c3] (c4) {\begin{tabular}{c} $(1,5)$ \\ $(2,7)$ \end{tabular}};
+	\node[mycircle,right=of c4] (c5) {$(1,6)$};
+	\node[mycircle,right=of c5] (c6) {$(1,7)$};
+	\node[mycircle,right=of c6] (c7) {$(1,8)$};
+	\node[mycircle,right=of c7] (c8) {$(1,9)$};
+	\node[mycircle,right=of c8] (c9) {\begin{tabular}{c} $(1,10)$ \\ $(2,9)$ \end{tabular}};
+	\node[mycircle,right=of c9] (c10) {\begin{tabular}{c} $(1,11)$ \\ $(2,10)$ \end{tabular}};	
+	
+	% 2. Zeile
+	\node[mycircle,below=of c1] (c11) {\begin{tabular}{c} $(2,1)$ \\ $(3,4)$ \end{tabular}};	
+	\node[mycircle,below=of c3] (c12) {\begin{tabular}{c} $(1,4)$ \\ $(2,3)$ \\ $(3,6)$ \end{tabular}};
+	\node[mycircle,above=of c4] (c13) {$(2,6)$};
+	\node[mycircle,below=of c7] (c14) {$(2,8)$};
+	\node[mycircle,below=of c2] (c15) {$(2,2)$};	
+	
+	% 3. Zeile
+	\node[mycircle,below=of c11] (c16) {$(3,3)$};
+	\node[mycircle,right=of c16] (c17) {$(3,2)$};		
+	\node[mycircle,right=of c17] (c18) {$(3,1)$};
+	
+	% verlorene Knoten
+	\node[mycircle,above=of c2] (c19) {$(3,8)$};
+	\node[mycircle,left=of c19] (c20) {$(3,9)$};
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1/c2/1/above,
+		c4/c5/1/above,
+		c5/c6/1/above,	
+		c6/c7/1/above,
+		c7/c8/1/above,
+		c8/c9/1/above,
+		c3/c12/2/above,
+		c12/c4/1/above,
+		c3/c13/1/above,
+		c13/c4/1/above,
+		c12/c2/2/above,
+		c4/c14/1/below,
+		c14/c9/1/below,
+		c11/c3/1/below,
+		c11/c15/1/below,
+		c16/c11/1/above,
+		c17/c16/1/above,
+		c18/c17/1/above,
+		c15/c12/1/above,
+		c2/c19/1/below,
+		c19/c20/1/above,
+		c9/c10/1/above}
+	\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	\end{tikzpicture}
+\end{center}
 \end{frame}
 
-\begin{frame}[t]{Folge der längsten Kette}
+\begin{frame}[t]{Folge der längsten Kette I}
+	\small
+	\begin{itemize}
+		\item Erstelle vom modifizierten Sukzessionsgraphen die transitive Hülle.
+		\item Folge der längsten Kette für jede Sequenz $S_i$; dabei können nur Kanten $(C,C')$ besucht werden, falls $(i,p) \in C$ und $(i,p') \in C'$ mit $p < p'$.
+		\item Lösche alle \emph{Sites} aus den Knoten, die nicht besucht wurden. \cite{PDC10}
+	\end{itemize} \pause
+	\vspace{-10pt}
+	\begin{center}
+		\begin{tikzpicture}[
+		mycircle/.style={
+			circle,
+			draw=black,
+			fill=gray,
+			fill opacity = 0.3,
+			text opacity=1,
+			inner sep=0pt,
+			minimum size=15pt,
+			font=\tiny},
+		myarrow/.style={-Stealth},
+		node distance=0.6cm and 0.8cm
+		]
+		\node[mycircle] (c1) {$v_{start}$};
+		\node[mycircle,right=of c1] (c2) {\textcolor{red}{$(1,1)$}};
+		\node[mycircle,right=of c2] (c3) {\textcolor{red}{$(1,2)$}};
+		\node[mycircle,below right=of c1] (c4) {$(1,3)$};
+		\node[mycircle,right=of c4] (c5) {$(1,4)$};
+		\node[mycircle,right=of c5] (c6) {$(1,5)$};
+		\node[mycircle,right=of c6] (c7) {$(1,6)$};
+		\node[mycircle,right=of c7] (c8) {$(1,7)$};
+		\node[mycircle,right=of c8] (c9) {$(1,8)$};
+		\node[mycircle,right=of c9] (c10) {$(1,9)$};
+		\node[mycircle,right=of c10] (c11) {$(1,10)$};
+		\node[mycircle,right=of c11] (c12) {$(1,11)$};
+		\node[mycircle,above right=of c12] (c13) {$v_{end}$};
+	
+		\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+			c1/c2//above,
+			c2/c3//above,
+			c3/c13//above,
+			c1/c4/$\rightarrow$/below,
+			c4/c5/$\rightarrow$/below,
+			c5/c6/$\rightarrow$/below,
+			c6/c7/$\rightarrow$/below,
+			c7/c8/$\rightarrow$/below,
+			c8/c9/$\rightarrow$/below,
+			c9/c10/$\rightarrow$/below,
+			c10/c11/$\rightarrow$/below,
+			c11/c12/$\rightarrow$/below,
+			c12/c13/$\rightarrow$/below}
+		\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+		\end{tikzpicture}
+	\end{center}
+	\begin{itemize}
+		\item Lösche $(1,1)$ und $(1,2)$ aus den Knoten im Sukzessionsgraph.
+	\end{itemize}
+\end{frame}
+
+\begin{frame}[t]{Folge der längsten Kette II}
+	\vspace{-5pt}
+	\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 0.8cm
+	]
+	\node[mycircle] (c1) {$v_{start}$};
+	\node[mycircle,right=of c1] (c2) {$(2,1)$};
+	\node[mycircle,right=of c2] (c3) {$(2,2)$};
+	\node[mycircle,right=of c3] (c4) {$(2,5)$};
+	\node[mycircle,above right=of c4] (c5) {$(2,6)$};
+	\node[mycircle,below right=of c5] (c6) {$(2,7)$};
+	\node[mycircle,above right=of c6] (c7) {$(2,8)$};
+	\node[mycircle,below right=of c7] (c8) {$(2,9)$};
+	\node[mycircle,right=of c8] (c9) {$(2,10)$};
+	\node[mycircle,below right=of c3] (c10) {\textcolor{red}{$(2,3)$}};
+	\node[mycircle,right=of c10] (c11) {\textcolor{red}{$(2,4)$}};
+	\node[mycircle,below right=of c9] (c12) {$v_{end}$};
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1/c2/$\rightarrow$/above,
+		c2/c3/$\rightarrow$/above,
+		c3/c4/$\rightarrow$/above,
+		c4/c5/$\rightarrow$/above,
+		c4/c6//above,
+		c5/c6/$\rightarrow$/above,
+		c6/c7/$\rightarrow$/above,
+		c6/c8//above,
+		c7/c8/$\rightarrow$/above,
+		c8/c9/$\rightarrow$/above,
+		c9/c12/$\rightarrow$/above,
+		c3/c10//above,
+		c10/c11//above,
+		c11/c12//below}
+	\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	\end{tikzpicture}
+	\end{center}
+	\begin{itemize}
+		\item Lösche $(2,3)$ und $(2,4)$.
+	\end{itemize} \pause
+
+	\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 0.7cm
+	]
+	\node[mycircle] (c1) {$v_{start}$};
+	\node[mycircle,right=of c1] (c2) {$(3,1)$};
+	\node[mycircle,right=of c2] (c3) {$(3,2)$};
+	\node[mycircle,right=of c3] (c4) {$(3,3)$};
+	\node[mycircle,right=of c4] (c5) {$(3,4)$};
+	\node[mycircle,right=of c5] (c6) {$(3,5)$};
+	\node[mycircle,right=of c6] (c7) {$(3,6)$};
+	\node[mycircle,right=of c7] (c8) {$(3,7)$};
+	\node[mycircle,right=of c8] (c9) {$(3,8)$};
+	\node[mycircle,right=of c9] (c10) {$(3,9)$};
+	\node[mycircle,right=of c10] (c11) {$v_{end}$};
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1/c2/$\rightarrow$/above,
+		c2/c3/$\rightarrow$/above,
+		c3/c4/$\rightarrow$/above,
+		c4/c5/$\rightarrow$/above,
+		c5/c6/$\rightarrow$/above,
+		c6/c7/$\rightarrow$/above,
+		c7/c8/$\rightarrow$/above,
+		c8/c9/$\rightarrow$/above,
+		c9/c10/$\rightarrow$/above,
+		c10/c11/$\rightarrow$/above}
+	\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	\end{tikzpicture}
+	\end{center}
+	\begin{itemize}
+		\item Nichts zu löschen.
+	\end{itemize}
+	\normalsize
 \end{frame}
 
 \begin{frame}[t]{Das resultierende multiple Alignment}
+	\begin{itemize}
+		\item Damit bleiben nach dem Löschen die folgenden Alignments bestehen: \\
+		\begin{center}
+			\begin{tikzpicture}[
+			mycircle/.style={
+				circle,
+				draw=black,
+				fill=gray,
+				fill opacity = 0.3,
+				text opacity=1,
+				inner sep=0pt,
+				minimum size=15pt,
+				font=\tiny},
+			myarrow/.style={-Stealth},
+			node distance=0.6cm and 0.8cm
+			]
+			\node[mycircle] (c2) {\begin{tabular}{c}
+				$(2,1)$ \\ $(3,4)$
+				\end{tabular}};
+			\node[mycircle,right=of c2] (c3) {\begin{tabular}{c}
+				$(1,3)$ \\ $(2,5)$ \\ $(3,5)$
+				\end{tabular}};
+			\node[mycircle,right=of c3] (c4) {\begin{tabular}{c}
+				$(1,4)$, $(3,6)$
+				\end{tabular}};
+			\node[mycircle,right=of c4] (c5) {\begin{tabular}{c}
+				$(1,5)$ \\ $(2,7)$
+				\end{tabular}};
+			\node[mycircle,right=of c5] (c6) {\begin{tabular}{c}
+				$(1,10)$ \\ $(2,9)$
+				\end{tabular}};
+			\node[mycircle,right=of c6] (c7) {\begin{tabular}{c}
+				$(1,11)$ \\ $(2,10)$
+				\end{tabular}};
+			\end{tikzpicture}
+			\end{center}
+		\item Resultierendes Alignment:
+			\ttfamily
+			\begin{enumerate}
+				\item -----tcGTCtgcaCG
+				\item ---AgtcGtCg---CG
+				\item aatA---GTcat----
+			\end{enumerate}
+		\normalfont
+		\item Schlechteres Alignment als gieriger Ansatz; funktioniert bei größeren Sequenzen hoffentlich besser.
+	\end{itemize}
 \end{frame}
 
 \begin{frame}[t]{Vereinfachungen, die ich vorgenommen habe}
+	\begin{itemize}
+		\item Es werden nicht nur die Gewichte der Fragmente selbst betrachtet, sondern zusätzlich die Überschneidungen mit anderen (\emph{Überlappgewichte}).
+		\item Der Korrekturterm $K$ wurde von mir halbiert. Er funktioniert wohl eher bei langen Sequenzen.
+		\item Das aktualisieren der Konsistenzgrenzen ist recht kompliziert. Das Verfahren wurde hier nicht vorgestellt. \cite{MDW96}
+		\item Besserer Ansatz von Abdeddaim. \cite{A97}
+		\item Nach dem Min-Cut-Ansatz werden diese Zuweisungsspalten als Ankerpunkte für das normale DIALIGN benutzt. \cite{MPPS06}
+	\end{itemize}
 \end{frame}
 
 \section{Umsetzung in der Bachelorarbeit}
@@ -162,14 +1029,14 @@
 	\begin{itemize}
 		\item Gierige Algorithmen:
 		\begin{itemize}
-			\item Treffe lokal die bestmögliche Entscheidung und verwerfe diese danach nicht wieder
-			\item Gute Laufzeit, aber liefern oft nicht das optimale Ergebnis ($\rightarrow$ gut geeignet für Heuristiken)
-			\item Wird in DIALIGN beim Zusammensetzen des multiplen Alignments benutzt
+			\item Treffe lokal die bestmögliche Entscheidung und verwerfe diese danach nicht wieder.
+			\item Gute Laufzeit, aber liefern oft nicht das optimale Ergebnis ($\rightarrow$ gut geeignet für Heuristiken).
+			\item Wird in DIALIGN beim Zusammensetzen des multiplen Alignments benutzt.
 			\item Beispiele: Algorithmus von Prim, Fractional Knapsack-Problem
 		\end{itemize} \pause
 		\item Dynamische Programmierung:
 		\begin{itemize}
-			\item Berechnung der optimalen Lösung durch Kombination von optimalen Lösungen sich überlappender Teilprobleme, wobei diese gespeichert werden und bei Bedarf abgerufen werden können
+			\item Berechnung der optimalen Lösung durch Kombination von optimalen Lösungen sich überlappender Teilprobleme, wobei diese gespeichert werden und bei Bedarf abgerufen werden können.
 			\item Beispiele: Algorithmus von Needleman-Wunsch, Knapsack-Problem
 		\end{itemize}
 	\end{itemize}
@@ -179,27 +1046,29 @@
 	\begin{itemize}
 		\item Flussnetze:
 		\begin{itemize}
-			\item gerichteter, gewichteter Graph mit ausgewiesener Quelle und Senke; Gewichte der Kante entsprechen maximaler Kapazität an Fluss, die über diese fließen können
-			\item Ziel: Maximierung des Gesamtflusses eines Flussnetzwerkes von der Quelle zur Senke
-			\item Min-Cut-Max-Flow-Satz: der Wert eines maximalen Flusses entspricht dem Wert des minimalen Schnitts $\rightarrow$ benötigen wir zum Auflösen von Inkosistenzen im Inzidenzgraphen 
+			\item gerichteter, gewichteter Graph mit ausgewiesener Quelle und Senke; Gewichte der Kante entsprechen maximaler Kapazität an Fluss, die über diese fließen können.
+			\item Ziel: Maximierung des Gesamtflusses eines Flussnetzwerkes von der Quelle zur Senke.
+			\item Min-Cut-Max-Flow-Satz: der Wert eines maximalen Flusses entspricht dem Wert des minimalen Schnitts $\rightarrow$ benötigen wir zum Auflösen von Inkosistenzen im Inzidenzgraphen.
 		\end{itemize} \pause
 		\item Push-Relabel-Algorithmus:
 		\begin{itemize}
-			\item Vorgehen:
-			\item besitzt eine bessere Laufzeit, als der in der Veröffentlichung benutzte Edmonds-Karps-Algorithmus
+			\item Zur Berechnung des maximalen Flusses.
+			\item besitzt eine bessere Laufzeit, als der in der Veröffentlichung benutzte Edmonds-Karps-Algorithmus.
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[t]{Algorithmus im Detail}
+	\small
 	\begin{itemize}
-		\item Gewichtsfunktionen für DNA- und Proteinsequenzen (BLOSUM62)
-		\item Berechnung von paarweisen Alignments mit Hilfe von dynamischer Programmierung
-		\item Aufbau des Inzidenzgraphen und Min-Cut auf den Zusammenhangskomponenten
-		\item Aufbau des Sukzessionsgraphen und Löschen von Sites, um Konsistenz herzustellen
-		\item Verwendung der so gefundenen alignierten Spalten als Ankerpunkte, um zwischen diesen das klassische DIALIGN laufen zu lassen
-		\item Wenn mir am Ende noch langweilig ist: Blick auf DIALIGN TX, um dieses gegebenfalls zwischen den Ankerpunkten zu verwenden
+		\item Gewichtsfunktionen für DNA- und Proteinsequenzen (BLOSUM62) mit Überlappgewichten.
+		\item Berechnung von paarweisen Alignments mit Hilfe von dynamischer Programmierung.
+		\item Aufbau des Inzidenzgraphen und Min-Cut auf den Zusammenhangskomponenten.
+		\item Aufbau des Sukzessionsgraphen und Löschen von Sites, um Konsistenz herzustellen.
+		\item Verwendung der so gefundenen alignierten Spalten als Ankerpunkte, um zwischen diesen das klassische DIALIGN laufen zu lassen.
+		\item Wenn mir am Ende noch langweilig ist: Blick auf DIALIGN TX, um dieses gegebenfalls zwischen den Ankerpunkten zu verwenden.
 	\end{itemize}
+	\normalsize
 \end{frame}
 
 \begin{frame}[t]{Programmierung}
@@ -208,18 +1077,41 @@
 		\item Boost Graph Library, die bereits ausgeklügelte Graphen, Flussnetzwerke und Algorithmen zur Berechnung des maximalen Flusses bereitstellt
 		\item variabelster Teil der Bachelorarbeit:
 		\begin{itemize}
-			\item bei wenig Zeit am Ende: Ein- und Ausgabe über simple Textdateien
-			\item bei viel Zeit: Umsetzung mit Formaten wie Clustal und FASTA, sowie Visualisierung über externe Visualisierungssoftware
+			\item bei wenig Zeit am Ende: Ein- und Ausgabe über simple Textdateien.
+			\item bei viel Zeit: Umsetzung mit Formaten wie Clustal und FASTA, sowie Visualisierung über externe Visualisierungssoftware.
 		\end{itemize}
 	\end{itemize}
 \end{frame}
 
 \begin{frame}[t]{Beurteilung der Güte der Ergebnisse}
 	\begin{itemize}
-		\item Bewertung des Algorithmus ist schwierig, weil er definitiv nicht das perfekte Alignment berechnet, ich aber nicht das Expertenwissen besitze, um die Güte eines Alignments wirklich beurteilen zu können
-		\item Test auf BAliBase für global und (D)IRMBASE für lokal verwandte Sequenzen $\rightarrow$ bereits ausgewertete Sequenzen für die ein richtiges Alignment bekannt ist
-		\item Erfordert noch Einarbeitung
+		\item Bewertung des Algorithmus ist schwierig, weil er definitiv nicht das perfekte Alignment berechnet, ich aber nicht das Expertenwissen besitze, um die Güte eines Alignments wirklich beurteilen zu können.
+		\item Test auf BAliBase für global und (D)IRMBASE für lokal verwandte Sequenzen $\rightarrow$ bereits ausgewertete Sequenzen für die ein richtiges Alignment bekannt ist.
+		\item Erfordert noch Einarbeitung.
 	\end{itemize}
+\end{frame}
+
+\begin{frame}[c]{Fragen, Anregungen, Wünsche?}
+	\begin{center}
+		Vielen Dank für Ihre Aufmerksamkeit!
+	\end{center}	
+\end{frame}
+
+\begin{frame}[t]{Quellenangaben}
+	\tiny
+	\begin{thebibliography}{10cm}
+		\bibitem[CLRS92]{CLRS92} \emph{Introduction to Algorithms}. Cormen et all, MIT Press 1992
+		\bibitem[MPPS06]{MPPS06} \emph{Multiple Sequence Alignment with user-defined achor points}. Morgenstern et all, Algorithms for Molecular Biology 2006
+		\bibitem[PDC10]{PDC10} \emph{Automatic detection of anchor points for multiple sequence alignment}. Pitschi at all, BMC Bioinformatics 2010
+		\bibitem[MAHD98]{MAHD98} \emph{Segment-based scores for pairwise and multiple sequence alignments}. Morgenstern at all, ISMB-98 Proceedings
+		\bibitem[Abdedda\"{i}m97]{A97} \emph{On Incremental Computation of Transitive Closure and Greedy Alignment}. Abdedda\"{i}m, in \emph{Proceedings of the 8th Annual Symposium on Combinatorial Pattern Matching} 1997
+		\bibitem[CPM10]{CPM10} \emph{A min-cut algorithm for the consistency problem in multiple sequence alignment}. Corel et all, Oxford University Press 2010
+		\bibitem[MDW96]{MDW96} \emph{Multiple DNA and protein sequence alignment based on segment-to-segment comparison}. Morgenstern et all, 1996
+		\bibitem[Reno18]{Reno18} \emph{Per DNA-Verlust zum Menschen?}. Reno, Spektrum der Wissenschaft Februar 2018
+		\bibitem[WJ94]{WJ94} \emph{On the complexity of multiple sequence alignment}. Wang et all, Journal of Computational Biology 1994
+		\bibitem[NW70]{NW70} \emph{A general method applicable to the search for similarities in the amino acid sequence of two proteins}. Needleman und Wunsch, Journal of Molecular Biology 1970
+	\end{thebibliography}
+	\normalsize
 \end{frame}
 
 \end{document}

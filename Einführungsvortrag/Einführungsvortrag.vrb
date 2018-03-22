@@ -1,13 +1,22 @@
-\frametitle{Komplexität II}
-\footnotesize
+\frametitle{Zwei Arten nichtkonsistenter Zuweisungen}
+\tiny
+	\begin{center}
 	\begin{tikzcd}
-		O[1,1] \arrow[r] \arrow[d] \arrow[rd] & ... \arrow[d] \arrow[rd] & ... \arrow[d] & O[1,m] \arrow[d] \\
-		... \arrow[r] \arrow[rd] & O[i-1,j-1] \arrow{rd}[near start, sloped]{\alpha_{X[i],Y[j]}} \arrow{d}{\delta} \arrow{r}{\delta} & O[i-1,j] \arrow[r] \arrow[rd] \arrow{d}{\delta} & ... \\
-		... \arrow[r] \arrow[rd] & O[i,j-1] \arrow[d] \arrow[rd] \arrow{r}{\delta} & O[i,j] \arrow[d] \arrow[rd] \arrow[r] & ... \arrow[d] \\
-		O[n,1] \arrow[r] & ... & ... \arrow[r] & O[n,m]
-	\end{tikzcd}
+		V \arrow[d, no head] & L \arrow[d, no head] & F \arrow[d, no head] & A \arrow[d, no head] & E \arrow[ldd, no head] & D \arrow[ldd, no head] &  \\
+		V \arrow[rd, no head] & I \arrow[rd, no head] & F \arrow[rd, no head] & G & S &  &  \\
+		d & V & T & F & D & a & e
+	\end{tikzcd} \\
+	\end{center}
+	\small
+	Implizite, transitive Mehrfachzuweisung von F: kann mit Flussnetzen und Inzidenzgraphen behoben werden. \\
+	\tiny
+	\begin{center}
+	\begin{tikzcd}
+		A \arrow[d, no head] & V \arrow[d, no head] & L \arrow[d, no head] & F \arrow[d, no head] & A \arrow[d, no head] & E \arrow[llllldd, no head] & D \arrow[llllldd, no head] \\
+		A & V \arrow[rd, no head] & I \arrow[rd, no head] & F \arrow[rd, no head] & G & S &  \\
+		D & D & V & T & F &  &
+	\end{tikzcd} \\
+	\end{center}
+	\small
+	Überkreuzungen: können wir noch nicht auflösen.
 	\normalsize
-	\begin{itemize}
-		\item Alignment mit minimalen Kosten entspricht Pfad mit geringsten Kosten durch diesen Pfad, der in $\oh(n*m)$ berechnbar ist.
-		\item Vorgehen lässt sich auch mit n-vielen Sequenzen durchführen $\rightarrow$ Pfad durch n-dimensionale Matrix
-	\end{itemize}

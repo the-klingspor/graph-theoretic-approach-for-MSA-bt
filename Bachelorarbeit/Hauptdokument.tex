@@ -1,0 +1,190 @@
+%---------------------------------------------------------------------------
+%
+%                          Vorlage der Arbeitsgruppe
+%             Computer Vision and Pattern Recognition Group (CVPR)
+%                           der Universität Münster
+%                         http://cvpr.uni-muenster.de
+%
+%---------------------------------------------------------------------------
+% Geeignet für:
+%  - Seminararbeiten
+%  - Bachelorarbeiten
+%  - Masterarbeiten
+%---------------------------------------------------------------------------
+% Autoren:
+%  - Daniel Tenbrinck
+%  - Fabian Gigengack
+%  - Michael Schmeing
+%  - Lucas Franek
+%  - Andreas Nienkötter
+%---------------------------------------------------------------------------
+% Version:
+%  - 1.0.3 (05.10.2016)
+%	 - Ersetzung von veralteten Befehlen durch Aktuelle
+%	 - Einige ausführlichere Beispiele
+%    - Einführung von listings
+%    - Aktuelle Version der Eidesstattlichen Erklärung
+%  - 1.0.2 (09.09.2011)
+%    - Titelblatt um Matrikelnummer und Studiengang ergänzt
+%  - 1.0.1 (05.07.2011)
+%---------------------------------------------------------------------------
+% 
+% "THE BEER-WARE LICENSE" (Revision 42):
+% The above mentioned authors wrote this file. As long as you retain this
+% notice you can do whatever you want with this stuff. If we meet some day,
+% and you think this stuff is worth it, you can buy us a beer in return.
+%  --------------------------------------------------------------------------
+
+\documentclass[a4paper, twoside, 12pt, ngerman]{scrbook} % Layout-Einstellungen für das Dokument
+
+\usepackage[utf8]{inputenc} % UTF-8 Codierung
+\usepackage[ngerman]{babel} % Deutsche Beschriftung
+
+\usepackage{graphicx} % Um Bilder einzufügen
+\usepackage{subfigure} % Um mehrere Bilder in eine figure einzufügen
+\usepackage{verbatim} % Um Quellcode in das Dokument einzufügen.
+\usepackage{algorithmic} % Für Pseudo-Code
+\usepackage{algorithm} % Wrapper für Pseudo-Code
+\usepackage[font={small}, labelfont=bf]{caption} % kleine Bildunterschriften
+\usepackage{geometry} % Für Feinanpassungen des Layouts
+
+\usepackage{listings} % Für Code-Listings
+\renewcommand{\lstlistingname}{Quelltext} %Ändert die Überschrift von Listing nach Quelltext
+
+\usepackage[T1]{fontenc}
+\usepackage[german=quotes]{csquotes}
+\usepackage{scrtime}
+\usepackage{etex}
+\usepackage{shellesc}
+\usepackage{wrapfig}
+% ===========================================================
+
+
+% Fonts und Typographie
+% ===========================================================
+\usepackage{sourcecodepro}
+\usepackage[default]{sourcesanspro}
+\usepackage{nimbusmononarrow}
+\usepackage{ellipsis}
+\newcommand{\bet}[1]{\textbf{\color{maincolor}#1}}
+\newcommand{\minor}[1]{\textcolor{black!50}{#1}}
+\newcommand{\minoritem}{\item[{\footnotesize \textcolor{black!50}{$\blacktriangleright$}}]}
+\newcommand{\code}[1]{\texttt{#1}}
+\usepackage{xspace}
+\makeatletter 
+\xspaceaddexceptions{\grqq \grq \csq@qclose@i \} } 
+\makeatother
+\usepackage{multicol}
+\usepackage{multirow}
+% ===========================================================
+
+% Farben	
+% ===========================================================
+\usepackage{xcolor}
+\definecolor{fbblau}{HTML}{3078AB}
+\definecolor{mediumgray}{gray}{.65}
+\definecolor{blackberry}{rgb}{0.53, 0.0, 0.25}
+% ===========================================================
+
+
+% Mathe-Pakete
+% ===========================================================
+\usepackage{mathtools}
+\usepackage{amssymb}
+\usepackage[bigdelims]{newtxmath}
+
+\input{MathCmds.tex}
+\usepackage{wasysym}
+
+\newcommand{\zerodisplayskips}{%
+	%\setlength{\abovedisplayskip}{0pt}%
+	%\setlength{\belowdisplayskip}{0pt}%
+	%\setlength{\abovedisplayshortskip}{0pt}%
+	%\setlength{\belowdisplayshortskip}{0pt}
+	%\setlength{\multicolsep}{0pt}
+}
+\appto{\normalsize}{\zerodisplayskips}
+\appto{\small}{\zerodisplayskips}
+\appto{\footnotesize}{\zerodisplayskips}
+% ===========================================================
+
+% TikZ
+% ===========================================================
+\usepackage{tikz}
+\usepackage{tikz-cd}					% kommutative Diagramme
+\usetikzlibrary{arrows.meta}			% mehr Pfeile!
+\usetikzlibrary{shadows}
+\usetikzlibrary{calc}
+\tikzset{>=Latex}						% Standard-Pfeilspitze
+\usetikzlibrary{automata,positioning}
+\usetikzlibrary{matrix}
+% ===========================================================
+
+% minted
+% ===========================================================
+\usepackage{minted}
+\setminted{%
+	style=default,
+	fontsize=\footnotesize,
+	breaklines,
+	breakanywhere=false,
+	breakbytoken=false,
+	breakbytokenanywhere=false,
+	breakafter={.,},
+	autogobble,
+	numbers=left,
+	numbersep=3mm,
+	tabsize=4,
+	frame=lines
+}
+\setmintedinline{%
+	fontsize=\normalsize,
+	numbers=none,
+	numbersep=12pt,
+	tabsize=4,
+	%bgcolor=gray!15,
+}
+% ===========================================================
+
+% Einstellungen für Abstand an den Rändern
+\geometry{a4paper,left=35mm,right=35mm,top=20mm,bottom=20mm, includeheadfoot}
+
+\begin{document}
+\pagenumbering{roman}
+
+% Titelblatt
+\begin{titlepage}
+\include{chapter/Titelblatt}
+\end{titlepage}
+
+% Inhaltsverzeichnis
+\tableofcontents
+
+\cleardoublepage
+\pagenumbering{arabic}
+
+% Die Hauptkapitel der Arbeit
+\include{chapter/Einleitung}
+
+\include{chapter/DP}
+
+\include{chapter/dialign}
+
+\include{chapter/Flussnetze}
+
+\include{chapter/min-cut}
+
+\include{chapter/Programmierung}
+
+\include{chapter/Validierung}
+
+\include{chapter/Fazit}
+
+% Literaturverzeichnis
+\bibliographystyle{unsrtdin}
+\bibliography{Quellen}
+
+% Eidesstattliche Erklärung
+\include{chapter/EidesstattlicheErklaerung}
+
+\end{document}
