@@ -1,0 +1,24 @@
+\begin{thebibliography}{3}
+\providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Abdedda\"{i}m und Morgenstern(2000)}]{am00}
+Abdedda\"{i}m, S. und Morgenstern, B.
+\newblock {Speeding up the DIALIGN multiple alignment program by using the
+  `Greedy Alignment of BIOlogical Sequences LIBrary' (GABIOS-LIB}.
+\newblock In \emph{Computational Biology: First International Conference on
+  Biology, Informatics, and Mathematics}, Seiten 1--11 (2000).
+
+\bibitem[{Corel \emph{et~al.}(2010)Corel, Pitschi und Morgenstern}]{cpm10}
+Corel, E., Pitschi, F. und Morgenstern, B.
+\newblock A \textit{min-cut} algorithm for the consistency problem in multiple
+  sequence alignment.
+\newblock \emph{Bioinformatics}, Band 26:8:1015--1021 (2010).
+
+\bibitem[{Morgenstern \emph{et~al.}(1996)Morgenstern, Dress und Werner}]{mdw96}
+Morgenstern, B., Dress, A. und Werner, T.
+\newblock Multiple {DNA} and protein sequence alignment based on
+  segment-to-segment comparison.
+\newblock In \emph{Proceedings of the National Academy of Sciences, USA},
+  Band~93, Seiten 12098--12103. Natl. Acad. Sci. USA (1996).
+
+\end{thebibliography}

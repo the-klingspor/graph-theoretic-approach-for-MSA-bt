@@ -35,7 +35,7 @@
 % and you think this stuff is worth it, you can buy us a beer in return.
 %  --------------------------------------------------------------------------
 
-\documentclass[a4paper, twoside, 12pt, ngerman]{scrbook} % Layout-Einstellungen für das Dokument
+\documentclass[a4paper, twoside, 11pt, ngerman]{scrbook} % Layout-Einstellungen für das Dokument
 
 \usepackage[utf8]{inputenc} % UTF-8 Codierung
 \usepackage[ngerman]{babel} % Deutsche Beschriftung
@@ -44,7 +44,7 @@
 \usepackage{subfigure} % Um mehrere Bilder in eine figure einzufügen
 \usepackage{verbatim} % Um Quellcode in das Dokument einzufügen.
 \usepackage{algorithmic} % Für Pseudo-Code
-\usepackage{algorithm} % Wrapper für Pseudo-Code
+\usepackage[Algorithmus]{algorithm} % Wrapper für Pseudo-Code
 \usepackage[font={small}, labelfont=bf]{caption} % kleine Bildunterschriften
 \usepackage{geometry} % Für Feinanpassungen des Layouts
 
@@ -57,6 +57,9 @@
 \usepackage{etex}
 \usepackage{shellesc}
 \usepackage{wrapfig}
+\usepackage{hyperref}
+\hypersetup{linktoc=all}
+\usepackage[authoryear]{natbib}
 % ===========================================================
 
 
@@ -91,6 +94,7 @@
 % ===========================================================
 \usepackage{mathtools}
 \usepackage{amssymb}
+\usepackage{amsthm}
 \usepackage[bigdelims]{newtxmath}
 
 \input{MathCmds.tex}
@@ -149,6 +153,70 @@
 % Einstellungen für Abstand an den Rändern
 \geometry{a4paper,left=35mm,right=35mm,top=20mm,bottom=20mm, includeheadfoot}
 
+%-- Theorem-Pakete und Konfiguration
+\usepackage{thmtools}
+
+\usepackage{bookmark} 
+% Theoreme als PDF-Lesezeichen
+\bookmarksetup{open,numbered}
+\makeatletter
+\newcommand*{\theorembookmark}{%
+	\bookmark[
+	dest=\@currentHref,
+	rellevel=1,
+	keeplevel,
+	]{%
+		\thmt@thmname\space\csname the\thmt@envname\endcsname
+		\ifx\thmt@shortoptarg\@empty
+		\else
+		\space(\thmt@shortoptarg)%
+		\fi
+	}%
+}   
+\makeatother
+
+\declaretheoremstyle[%
+headfont=\sffamily\bfseries,
+notefont=\normalfont\sffamily,
+bodyfont=\normalfont,
+headformat=\NUMBER\ \NAME\NOTE,
+headpunct={},
+postheadspace=\newline,
+postheadhook=\theorembookmark,
+%spaceabove=15pt,
+%spacebelow=10pt,
+mdframed={
+	backgroundcolor=gray!20,
+	linecolor=gray,
+	topline=false,
+	bottomline=false,
+	rightline=false,
+	leftline=false,
+	innerbottommargin=6pt,
+	innertopmargin=6pt,
+}]%
+{mainstyle}
+
+\declaretheoremstyle[%
+headfont=\itshape,
+bodyfont=\normalfont,
+headformat=\NAME \NOTE,
+headpunct=.,
+postheadspace=1ex,
+spacebelow=12pt,spaceabove=2pt,
+qed=\qedsymbol]%
+{beweise}
+
+\declaretheorem[name=Definition,parent=section,style=mainstyle]{definition}
+\declaretheorem[name=Satz,sharenumber=definition,style=mainstyle]{satz}
+\declaretheorem[name=Korollar,sharenumber=definition,style=mainstyle]{korollar}
+\declaretheorem[name=Lemma,sharenumber=definition,style=mainstyle]{lemma}
+\declaretheorem[name=Proposition,sharenumber=definition,style=mainstyle]{proposition}
+
+\declaretheorem[name=Beweis,numbered=no,style=beweise]{beweis}
+
+\newenvironment{beispiel}{}{\par\medskip}
+
 \begin{document}
 \pagenumbering{roman}
 
@@ -170,8 +238,6 @@
 
 \include{chapter/dialign}
 
-\include{chapter/Flussnetze}
-
 \include{chapter/min-cut}
 
 \include{chapter/Programmierung}
@@ -181,7 +247,7 @@
 \include{chapter/Fazit}
 
 % Literaturverzeichnis
-\bibliographystyle{unsrtdin}
+\bibliographystyle{german}
 \bibliography{Quellen}
 
 % Eidesstattliche Erklärung

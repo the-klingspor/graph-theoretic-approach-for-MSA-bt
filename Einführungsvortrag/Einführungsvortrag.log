@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.3.17)  20 MAR 2018 13:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.3.17)  29 MAR 2018 18:39
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -3392,10 +3392,10 @@ LaTeX Warning: Label(s) may have changed. Rerun to get cross-references right.
 
  ) 
 Here is how much of TeX's memory you used:
- 34516 strings out of 492982
- 687165 string characters out of 6136225
- 921550 words of memory out of 5000000
- 36922 multiletter control sequences out of 15000+600000
+ 34518 strings out of 492982
+ 687181 string characters out of 6136225
+ 921766 words of memory out of 5000000
+ 36924 multiletter control sequences out of 15000+600000
  266638 words of font info for 284 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  64i,20n,91p,811b,1446s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -3422,7 +3422,7 @@ ts/txsya.pfb><c:/texlive/2016/texmf-dist/fonts/type1/public/txfonts/txsyc.pfb><
 c:/texlive/2016/texmf-dist/fonts/type1/public/newtx/txsys.pfb><c:/texlive/2016/
 texmf-dist/fonts/type1/urw/times/utmri8a.pfb><c:/texlive/2016/texmf-dist/fonts/
 type1/public/nimbus15/zcoN-Regular.pfb>
-Output written on Einführungsvortrag.pdf (61 pages, 569885 bytes).
+Output written on Einführungsvortrag.pdf (61 pages, 569760 bytes).
 PDF statistics:
  611 PDF objects out of 1000 (max. 8388607)
  494 compressed objects within 5 object streams

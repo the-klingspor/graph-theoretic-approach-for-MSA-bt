@@ -1,6 +1,43 @@
 \chapter{DIALIGN}
 \label{ch:DIALIGN}
-skizzierter Ablauf
+In diesem Kapitel stelle ich zunächst das DIALIGN-Verfahren für multiples Sequenzalignment nach \cite{mdw96} vor. Dabei werde ich alle Anpassungen und Verbesserungen des Verfahrens vorstellen, die bis zur Version 2.2 umgesetzt wurden. Anders als der im letzten Kapitel vorgestellte Algorithmus von Needleman-Wunsch aligniert DIALIGN keine einzelnen Symbole, sondern gleich ganze Segmente der Eingabesequenzen. Das hat die Vorteile, dass man zum einen auf die Kosten zum Einfügen von Lücken verzichten kann und dadurch weitgehend von nutzerdefinierten Eingaben unabhängig wird, und weiterhin ist man so in der Lage sowohl global, als auch lokal verwandte Sequenzen einander auszurichten: Wenn man feststellt, dass in einem Bereich keine Segmente vorliegen, die einander ähnlich sind, dann verzichtet man darauf diese sich gegenseitig zuzuweisen und sie werden nicht Teil des Alignments. 
+
+DIALIGN	kann genau wie Needleman-Wunsch im Sinne der jeweiligen Zielfunktion mathematisch optimale paarweise Alignments berechnen. Anders als bei letzterem, kann man aber auch mit Hilfe einer Heuristik effizient multiple Alignments berechnen, die aus drei oder mehr Sequenzen bestehen. Das grobe Vorgehen sieht dabei wie folgt aus:
+
+\begin{algorithm}
+	\caption{DIALIGN}
+	\label{alg:dialign}
+	\begin{algorithmic}[1]
+		\algsetup{indent=2em}
+		
+		\REQUIRE Menge $S$ von Sequenzen mit $|S| = n$
+		\STATE Weise allen möglichen Fragmenten $D$ ein Gewicht $w^*(D)$ zu
+		\STATE Berechne mit dynamischer Programmierung alle möglichen ${n}\choose{2}$ paarweisen \\ Alignments aus $S$
+		\STATE Sortiere alle Fragmente der paarweisen Alignments nach ihrem Gewicht als $D_{1, \dots, n}$
+		\STATE Initialisisiere Ausgabe für Alignment $A \coloneqq \emptyset$
+		\FOR {i=1, \dots , n} 
+			\IF {$D_i$ ist zu allen bisher gewählten Fragmenten \emph{konsistent}}
+				\STATE $A \cup \{D_i\}$
+			\ENDIF
+		\ENDFOR
+		\RETURN $A$
+	\end{algorithmic}
+\end{algorithm}
+
+\section{Theoretische Grundlagen}
+
+Um multiple Sequenzalignments genauer zu verstehen und die dazu nötigen Algorithmen analysieren zu können, brauchen wir zunächst einige Definitionen. Diese sind \citet{mdw96}, \citet{am00} und \citet{cpm10} entnommen. Dazu betrachten wir im Folgenden eine $n$-stellige Menge von Sequenzen $S$ über einem endlichen Alphabet. Dabei gibt $l(i)$ die Länge der $i$-ten Sequenz an.
+
+\begin{definition}[Stelle und Stellenraum]
+	Eine \emph{Stelle} ist ein Tupel $(i,p)$, bei dem $i$ die Sequenz und $p$ die Position eines Zeichens innerhalb dieser Sequenz angibt. Als \emph{Stellenraum} bezeichnen wir die Menge aller Stellen über unseren Sequenzen $S$: $\mathcal{S} \coloneqq \{(i,p)|1 \leq i \leq n, 1 \leq p \leq l(i) \}$ \\
+	Der Einfachheit identifizieren wir die \emph{Stellen} der $i$-ten Sequenz als $\mathcal{S}_i$. Auf dem \emph{Stellenraum} existiert eine Halbordnung `$\preceq$', wobei $(i,p) \preceq (i',p')$ genau dann gilt, falls $i=i'$ und $p\leq p'$.
+\end{definition}
+
+Nachdem wir bis jetzt nur umgangssprachlich mit \emph{Alignments} und \emph{Konsistenz} zu tun hatten, möchte ich diese Begriffe nun formalisieren.
+
+\begin{definition}[Alignment und Konsitenz]
+	Ein \emph{Alignment} $\mathcal{A}$ ist eine Äquivalenzrelation auf der Menge $\mathcal{S}$, die ein bestimmtes \emph{Konsistenzkriterium} erfüllt. Sei zunächst $\mathcal{R}$ eine beliebige binäre Relation auf $\mathcal{S}$. Wir können diese mit `$\preceq$' zu einer 
+\end{definition}
 
 \section{Gewichtsfunktionen und Substitutionsmatrizen}
 
@@ -17,9 +54,9 @@ $\oh(n^3*l + n^2*l^2)$
 \section{Gieriges multiples Alignment}
 
 \subsection{Laufzeit}
-$\oh(n^3 log n^3)$
+$\oh(n^2*l*log(n^2*l))$
 
 \section{Gesamtkomplexität}
-$\oh()$
+$\oh(n^3*l*log l + n^2*l^2)$
 
 \section{Probleme}

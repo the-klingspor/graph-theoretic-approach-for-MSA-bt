@@ -1,23 +1,39 @@
 \babel@toc {ngerman}{}
-\contentsline {chapter}{\numberline {1}Einleitung}{1}
-\contentsline {section}{\numberline {1.1}Multiple Sequence Alignments}{1}
-\contentsline {section}{\numberline {1.2}Einsatzgebiete}{1}
-\contentsline {section}{\numberline {1.3}Komplexit\IeC {\"a}t}{1}
-\contentsline {chapter}{\numberline {2}Dynamische Programmierung}{3}
-\contentsline {section}{\numberline {2.1}Trivia}{3}
-\contentsline {section}{\numberline {2.2}Das Paradigma}{3}
-\contentsline {section}{\numberline {2.3}Der Algorithmus von Needleman und Wunsch}{3}
-\contentsline {chapter}{\numberline {3}DIALIGN}{5}
-\contentsline {section}{\numberline {3.1}Paarweise Alignments mit dyanmischer Programmierung}{5}
-\contentsline {section}{\numberline {3.2}Konsistenz}{5}
-\contentsline {section}{\numberline {3.3}Gieriges multiples Alignment}{5}
-\contentsline {section}{\numberline {3.4}Ankerpunkte}{5}
-\contentsline {section}{\numberline {3.5}DIALIGN TX}{5}
-\contentsline {chapter}{\numberline {4}Flussnetzwerke und Push Relabel-Algorithmen}{7}
-\contentsline {section}{\numberline {4.1}Flussnetzwerke}{7}
-\contentsline {section}{\numberline {4.2}Push Relabel Algorithmen}{7}
-\contentsline {section}{\numberline {4.3}Der push-to-front-Algorithmus}{7}
-\contentsline {chapter}{\numberline {5}Ein Min-Cut-Ansatz f\IeC {\"u}r das Konsistenzproblem}{9}
-\contentsline {chapter}{\numberline {6}Programmierung}{11}
-\contentsline {chapter}{\numberline {7}Validierung der Ergebnisse}{13}
-\contentsline {chapter}{\numberline {8}Fazit}{15}
+\contentsline {chapter}{\numberline {1}Einleitung und Motivation}{1}{chapter.1}
+\contentsline {section}{\numberline {1.1}Multiple Sequence Alignments}{1}{section.1.1}
+\contentsline {section}{\numberline {1.2}Einsatzgebiete}{1}{section.1.2}
+\contentsline {section}{\numberline {1.3}Komplexit\IeC {\"a}t}{1}{section.1.3}
+\contentsline {chapter}{\numberline {2}Dynamische Programmierung}{3}{chapter.2}
+\contentsline {section}{\numberline {2.1}Trivia}{3}{section.2.1}
+\contentsline {section}{\numberline {2.2}Das Paradigma}{3}{section.2.2}
+\contentsline {section}{\numberline {2.3}Der Algorithmus von Needleman und Wunsch}{3}{section.2.3}
+\contentsline {chapter}{\numberline {3}DIALIGN}{5}{chapter.3}
+\contentsline {section}{\numberline {3.1}Theoretische Grundlagen}{5}{section.3.1}
+\contentsline {section}{\numberline {3.2}Gewichtsfunktionen und Substitutionsmatrizen}{6}{section.3.2}
+\contentsline {section}{\numberline {3.3}Paarweise Alignments mit dynamischer Programmierung}{6}{section.3.3}
+\contentsline {subsection}{\numberline {3.3.1}Laufzeit}{6}{subsection.3.3.1}
+\contentsline {section}{\numberline {3.4}Konsistenz}{6}{section.3.4}
+\contentsline {subsection}{\numberline {3.4.1}Laufzeit}{6}{subsection.3.4.1}
+\contentsline {section}{\numberline {3.5}Gieriges multiples Alignment}{6}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Laufzeit}{6}{subsection.3.5.1}
+\contentsline {section}{\numberline {3.6}Gesamtkomplexit\IeC {\"a}t}{6}{section.3.6}
+\contentsline {section}{\numberline {3.7}Probleme}{6}{section.3.7}
+\contentsline {chapter}{\numberline {4}Ein Min-Cut-Ansatz f\IeC {\"u}r das Konsistenzproblem}{7}{chapter.4}
+\contentsline {section}{\numberline {4.1}Flussnetzwerke}{7}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Einf\IeC {\"u}hrung}{7}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Wichtige Algorithmen}{7}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Der \emph {Max-Flow-Min-Cut-Satz}}{7}{subsection.4.1.3}
+\contentsline {section}{\numberline {4.2}Inzidenzgraphen und das Aufl\IeC {\"o}sen von Inkosistenzen mit Hilfe von Flussnetzwerken}{7}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Komplexit\IeC {\"a}t}{7}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}Sukzessorgraphen und der Algorithmus von Pitschi}{7}{section.4.3}
+\contentsline {section}{\numberline {4.4}Ankerpunkte}{7}{section.4.4}
+\contentsline {section}{\numberline {4.5}Gesamtkomplexit\IeC {\"a}t}{7}{section.4.5}
+\contentsline {chapter}{\numberline {5}Programmierung}{9}{chapter.5}
+\contentsline {section}{\numberline {5.1}Speichereffiziente Umsetzung der dynamischen Programmierung}{9}{section.5.1}
+\contentsline {chapter}{\numberline {6}Validierung der Ergebnisse}{11}{chapter.6}
+\contentsline {section}{\numberline {6.1}Vorstellung BAliBase und (D)IRMBASE}{11}{section.6.1}
+\contentsline {section}{\numberline {6.2}Test auf BAliBase}{11}{section.6.2}
+\contentsline {section}{\numberline {6.3}Test auf DIRMBASE und IRMBASE}{11}{section.6.3}
+\contentsline {chapter}{\numberline {7}Fazit}{13}{chapter.7}
+\contentsline {section}{\numberline {7.1}Zusammenfassung}{13}{section.7.1}
+\contentsline {section}{\numberline {7.2}Future Works}{13}{section.7.2}
