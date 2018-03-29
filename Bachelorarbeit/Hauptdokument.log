@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.3.17)  21 MAR 2018 16:35
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.3.17)  22 MAR 2018 15:08
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1930,13 +1930,15 @@ Package pdftex.def Info: ./img/wwu-logo-neu.pdf  used on input line 3.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/n' will be
 (Font)              scaled to size 20.74pt on input line 7.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/b/n' will be
-(Font)              scaled to size 20.74pt on input line 9.
+(Font)              scaled to size 20.74pt on input line 8.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/b/it' will be
+(Font)              scaled to size 20.74pt on input line 8.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/n' will be
-(Font)              scaled to size 14.4pt on input line 12.
+(Font)              scaled to size 14.4pt on input line 11.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/n' will be
-(Font)              scaled to size 17.28pt on input line 20.
+(Font)              scaled to size 17.28pt on input line 19.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/b/n' will be
-(Font)              scaled to size 17.28pt on input line 21.
+(Font)              scaled to size 17.28pt on input line 20.
 ) [1
 
 
@@ -2009,81 +2011,21 @@ Class scrbook Warning: \float@addtolists detected!
 (scrbook)              a package that still implements the
 (scrbook)              deprecated \float@addtolist interface .
 
-
-Overfull \hbox (4.05684pt too wide) in paragraph at lines 6--7
-\T1/SourceSansPro-LF/m/n/12 Auch Zu-sam-men-fas-sung, Dank-sa-gung, ei-des-stat
-t-li-che Er-klä-rung, Abbildungs- und
- []
-
-LaTeX Font Info:    Try loading font information for T1+NimbusMonoN on input li
-ne 11.
-(c:/texlive/2016/texmf-dist/tex/latex/nimbus15/t1nimbusmonon.fd
-File: T1NimbusMonoN.fd 2016/01/08 Font definitions for T1/NimbusMonoN (msharpe)
-.
-)
-LaTeX Font Info:    Font shape `T1/NimbusMonoN/m/n' will be
-(Font)              scaled to size 12.0pt on input line 11.
-
-Overfull \hbox (3.21336pt too wide) in paragraph at lines 16--17
-\T1/SourceSansPro-LF/m/n/12 Zeilenumbrüche soll-ten im Quell-text im-mer mit-te
-ls ei-ner Leer-zei-le um-ge-setzt wer-
- []
-
-LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/it' will be
-(Font)              scaled to size 12.0pt on input line 21.
-
-Overfull \hbox (8.61823pt too wide) in paragraph at lines 21--22
-\T1/SourceSansPro-LF/m/n/12 Grafiken soll-ten mit-tels der [][]\T1/NimbusMonoN/
-m/n/12 \figure[]\T1/SourceSansPro-LF/m/n/12 -Umgebung ein-ge-bet-tet wer-den. U
-m die Druck-
- []
-
-File: ./img/wwu-logo-neu.pdf Graphic file (type pdf)
-<use ./img/wwu-logo-neu.pdf>
-Package pdftex.def Info: ./img/wwu-logo-neu.pdf  used on input line 30.
-(pdftex.def)             Requested size: 179.25114pt x 60.50029pt.
-LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/n' will be
-(Font)              scaled to size 10.0pt on input line 30.
-File: ./img/wwu-logo-neu.pdf Graphic file (type pdf)
-<use ./img/wwu-logo-neu.pdf>
-Package pdftex.def Info: ./img/wwu-logo-neu.pdf  used on input line 34.
-(pdftex.def)             Requested size: 179.25114pt x 60.50029pt.
-LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/n' will be
-(Font)              scaled to size 10.95pt on input line 36.
-LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/b/n' will be
-(Font)              scaled to size 10.95pt on input line 36.
-
-LaTeX Warning: Citation `jele2010' on page 1 undefined on input line 43.
-
-
-Overfull \hbox (2.95184pt too wide) in paragraph at lines 43--44
-\T1/SourceSansPro-LF/m/n/12 ei-ner Da-tei (z.B.: Quel-len.bib) ge-pflegt wer-de
-n und mit-tels des [][]\T1/NimbusMonoN/m/n/12 \cite[]\T1/SourceSansPro-LF/m/n/1
-2 -Kommandos
- []
-
-[1
+) [1
 
 
 
-])
-LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/sl' in size <12> not avai
-lable
-(Font)              Font shape `T1/SourceSansPro-LF/m/it' tried instead on inpu
-t line 167.
-LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/it' will be
-(Font)              scaled to size 12.0pt on input line 167.
- [2]
+]
 \openout2 = `chapter/DP.aux'.
 
- (./chapter/DP.tex
-chapter 2.
-) [3
+ (./chapter/DP.tex [2
 
 
 
 
 ]
+chapter 2.
+) [3]
 \openout2 = `chapter/dialign.aux'.
 
  (./chapter/dialign.tex [4
@@ -2162,6 +2104,9 @@ No file Hauptdokument.bbl.
 
 
 ]
+LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/it' will be
+(Font)              scaled to size 12.0pt on input line 6.
+
 Overfull \hbox (1.19736pt too wide) in paragraph at lines 16--17
 \T1/SourceSansPro-LF/m/n/12 fin-dung von Über-ein-stim-mun-gen so-wie mit ei-ne
 r zu die-sem Zweck vor-zu-neh-men-
@@ -2171,31 +2116,27 @@ r zu die-sem Zweck vor-zu-neh-men-
 (./chapter/Einleitung.aux) (./chapter/DP.aux) (./chapter/dialign.aux)
 (./chapter/Flussnetze.aux) (./chapter/min-cut.aux)
 (./chapter/Programmierung.aux) (./chapter/Validierung.aux) (./chapter/Fazit.aux
-) (./chapter/EidesstattlicheErklaerung.aux))
-
-LaTeX Warning: There were undefined references.
-
- ) 
+) (./chapter/EidesstattlicheErklaerung.aux)) ) 
 Here is how much of TeX's memory you used:
- 27263 strings out of 492982
- 525028 string characters out of 6136225
- 724260 words of memory out of 5000000
- 30137 multiletter control sequences out of 15000+600000
- 132147 words of font info for 73 fonts, out of 8000000 for 9000
+ 27208 strings out of 492982
+ 523998 string characters out of 6136225
+ 722152 words of memory out of 5000000
+ 30087 multiletter control sequences out of 15000+600000
+ 110446 words of font info for 68 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 64i,8n,95p,8826b,468s stack positions out of 5000i,500n,10000p,200000b,80000s
-{c:/texlive/2016/texmf-dist/fonts/enc/dvips/sourcesanspro/a_sd7igg.enc}{c:/te
-xlive/2016/texmf-dist/fonts/enc/dvips/sourcesanspro/a_5tbsmu.enc}{c:/texlive/20
-16/texmf-dist/fonts/enc/dvips/nimbus15/nimbus15mono-ec.enc}{c:/texlive/2016/tex
-mf-dist/fonts/enc/dvips/sourcesanspro/a_ggs4wk.enc}<c:/texlive/2016/texmf-dist/
-fonts/type1/adobe/sourcesanspro/SourceSansPro-Bold.pfb><c:/texlive/2016/texmf-d
-ist/fonts/type1/adobe/sourcesanspro/SourceSansPro-It.pfb><c:/texlive/2016/texmf
--dist/fonts/type1/adobe/sourcesanspro/SourceSansPro-Regular.pfb><c:/texlive/201
-6/texmf-dist/fonts/type1/public/nimbus15/zcoN-Regular.pfb>
-Output written on Hauptdokument.pdf (21 pages, 165265 bytes).
+ 64i,7n,95p,8826b,344s stack positions out of 5000i,500n,10000p,200000b,80000s
+{c:/texlive/2016/texmf-dist/fonts
+/enc/dvips/sourcesanspro/a_5tbsmu.enc}{c:/texlive/2016/texmf-dist/fonts/enc/dvi
+ps/sourcesanspro/a_sd7igg.enc}{c:/texlive/2016/texmf-dist/fonts/enc/dvips/sourc
+esanspro/a_ggs4wk.enc}<c:/texlive/2016/texmf-dist/fonts/type1/adobe/sourcesansp
+ro/SourceSansPro-Bold.pfb><c:/texlive/2016/texmf-dist/fonts/type1/adobe/sources
+anspro/SourceSansPro-BoldIt.pfb><c:/texlive/2016/texmf-dist/fonts/type1/adobe/s
+ourcesanspro/SourceSansPro-It.pfb><c:/texlive/2016/texmf-dist/fonts/type1/adobe
+/sourcesanspro/SourceSansPro-Regular.pfb>
+Output written on Hauptdokument.pdf (21 pages, 154186 bytes).
 PDF statistics:
- 125 PDF objects out of 1000 (max. 8388607)
- 80 compressed objects within 1 object stream
+ 124 PDF objects out of 1000 (max. 8388607)
+ 79 compressed objects within 1 object stream
  0 named destinations out of 1000 (max. 500000)
  114 words of extra memory for PDF output out of 10000 (max. 10000000)
 

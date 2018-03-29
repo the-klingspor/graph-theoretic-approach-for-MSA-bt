@@ -1,16 +1,22 @@
 \babel@toc {ngerman}{}
 \contentsline {chapter}{\numberline {1}Einleitung}{1}
-\contentsline {section}{\numberline {1.1}Referenzierung von Unterkapiteln}{1}
-\contentsline {section}{\numberline {1.2}Zeilenumbr\IeC {\"u}che und Abs\IeC {\"a}tze}{1}
-\contentsline {section}{\numberline {1.3}Einf\IeC {\"u}gen von Grafiken}{1}
-\contentsline {section}{\numberline {1.4}Wissenschaftliches Zitieren}{2}
-\contentsline {section}{\numberline {1.5}Zusammenfassung}{2}
+\contentsline {section}{\numberline {1.1}Multiple Sequence Alignments}{1}
+\contentsline {section}{\numberline {1.2}Einsatzgebiete}{1}
+\contentsline {section}{\numberline {1.3}Komplexit\IeC {\"a}t}{1}
 \contentsline {chapter}{\numberline {2}Dynamische Programmierung}{3}
 \contentsline {section}{\numberline {2.1}Trivia}{3}
 \contentsline {section}{\numberline {2.2}Das Paradigma}{3}
 \contentsline {section}{\numberline {2.3}Der Algorithmus von Needleman und Wunsch}{3}
 \contentsline {chapter}{\numberline {3}DIALIGN}{5}
+\contentsline {section}{\numberline {3.1}Paarweise Alignments mit dyanmischer Programmierung}{5}
+\contentsline {section}{\numberline {3.2}Konsistenz}{5}
+\contentsline {section}{\numberline {3.3}Gieriges multiples Alignment}{5}
+\contentsline {section}{\numberline {3.4}Ankerpunkte}{5}
+\contentsline {section}{\numberline {3.5}DIALIGN TX}{5}
 \contentsline {chapter}{\numberline {4}Flussnetzwerke und Push Relabel-Algorithmen}{7}
+\contentsline {section}{\numberline {4.1}Flussnetzwerke}{7}
+\contentsline {section}{\numberline {4.2}Push Relabel Algorithmen}{7}
+\contentsline {section}{\numberline {4.3}Der push-to-front-Algorithmus}{7}
 \contentsline {chapter}{\numberline {5}Ein Min-Cut-Ansatz f\IeC {\"u}r das Konsistenzproblem}{9}
 \contentsline {chapter}{\numberline {6}Programmierung}{11}
 \contentsline {chapter}{\numberline {7}Validierung der Ergebnisse}{13}

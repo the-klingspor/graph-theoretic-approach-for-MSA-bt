@@ -1,8 +1,25 @@
 \chapter{Fazit}
 \label{ch:fazit}
 
-Dieses Kapitel bildet die abschließende Zusammenfassung der Arbeit. Dazu können die folgende Punkte behandelt werden:
+\section{Zusammenfassung}
+
+\section{Future Works}
+
 \begin{itemize}
-	\item Reflexion: wurden die Ziele der Arbeit erreicht?
-	\item mögliche Erweiterungen und Verbesserungen (\glqq future work\grqq)
+	\item Statt paarweisen Alignments, Alignments von je drei Sequenzen berechnen
+	\item Conditional Random Fields statt Gewichtsfunktionen
+	\item Bessere Heuristik zum Löschen der Kanten aus dem Sukzessorgraph benutzen (gerade wenn Tests zeigen, dass oft sehr viele Kanten gelöscht werden) - das könnte vor allem dann vorkommen, wenn die Sequenzen große Überkreuzungen enthalten, weil man dann große Zyklen mit sehr hohen Kantengewichten hat. -> mögliches Paper?
+	\item Statt DIALIGN 2 DIALIGN TX zwischen den Ankerpunkten nutzen
+	\item Wir wollen aus dem Sukzessorgraph möglichst wenige Knoten löschen. Dafür sind Sites, die aber als einzige in ihren Knoten vorkommen, irrelevant. 
+		\begin{enumerate}
+			\item Jede Kante hinter Knoten hat Gewicht von Anzahl an Sites - 1 => bevorzugt Zuweisungen über möglichst viele Sequenzen hinweg. Es kann aber sein, dass dadurch viele kleine Zuweisungen aufgelöst werden
+			\item Jede Kante hinter Knoten hat Gewicht 1, falls mehr als eine Sequenz beteiligt und Gewicht 0, falls nicht => bevorzugt viele kleine Alignments und minimiert Anzahl der Löschungen
+		\end{enumerate}
+	\item Teile des Algorithmus lassen sich gut parallelisieren:
+		\begin{enumerate}
+			\item Die $(\frac{1}{2}*(n^2-n))$-vielen paarweisen Alignments lassen sich parallelisiert berechnen.
+			\item Die Überlappgewichte lassen sich gut parallelisiert berechnen, weil keins der Ergebnisse von denen der anderen abhängt. Paralleles Lesen der paarweisen Alignments ist kein Problem.
+			\item Min-Cuts können innerhalb jeder Zusammenhangskomponente parallelisiert berechnet werden.
+			\item Bei der alten Methode können auch die kürzesten Pfade durch den Sukzessionsgraphen parallelisiert werden, bei den beiden neuen Ansätzen nicht. Das ist aber nicht so schlimm, weil dieser Abschnitt die Laufzeit nicht dominiert.
+		\end{enumerate}
 \end{itemize}
