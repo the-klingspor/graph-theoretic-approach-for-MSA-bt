@@ -1,8 +1,8 @@
 \chapter{DIALIGN}
 \label{ch:DIALIGN}
-In diesem Kapitel stelle ich zunächst das DIALIGN-Verfahren für multiples Sequenzalignment nach \cite{mdw96} vor. Dabei werde ich alle Anpassungen und Verbesserungen des Verfahrens vorstellen, die bis zur Version 2.2 umgesetzt wurden. Anders als der im letzten Kapitel vorgestellte Algorithmus von Needleman-Wunsch aligniert DIALIGN keine einzelnen Symbole, sondern gleich ganze Segmente der Eingabesequenzen. Das hat die Vorteile, dass man zum einen auf die Kosten zum Einfügen von Lücken verzichten kann und dadurch weitgehend von nutzerdefinierten Eingaben unabhängig wird, und weiterhin ist man so in der Lage sowohl global, als auch lokal verwandte Sequenzen einander auszurichten: Wenn man feststellt, dass in einem Bereich keine Segmente vorliegen, die einander ähnlich sind, dann verzichtet man darauf diese sich gegenseitig zuzuweisen und sie werden nicht Teil des Alignments. 
+In diesem Kapitel stelle ich zunächst das DIALIGN-Verfahren für multiples Sequenzalignment nach \cite{mdw96} vor. Dabei werde ich alle Anpassungen und Verbesserungen des Verfahrens vorstellen, die bis zur Version 2.2 umgesetzt wurden. Anders als der im letzten Kapitel vorgestellte Algorithmus von Needleman-Wunsch aligniert DIALIGN keine einzelnen Symbole, sondern gleich ganze Segmente der Eingabesequenzen. Das hat die Vorteile, dass man zum einen auf die Kosten zum Einfügen von Lücken verzichten kann und dadurch weitgehend von nutzerdefinierten Eingaben unabhängig wird, und weiterhin ist man so in der Lage sowohl global, als auch lokal verwandte Sequenzen einander auszurichten: Wenn man feststellt, dass in einem Bereich keine Segmente vorliegen, die einander ähnlich sind, dann verzichtet man darauf diese sich gegenseitig zuzuweisen und sie werden nicht Teil des \emph{Alignments}. 
 
-DIALIGN	kann genau wie Needleman-Wunsch im Sinne der jeweiligen Zielfunktion mathematisch optimale paarweise Alignments berechnen. Anders als bei letzterem, kann man aber auch mit Hilfe einer Heuristik effizient multiple Alignments berechnen, die aus drei oder mehr Sequenzen bestehen. Das grobe Vorgehen sieht dabei wie folgt aus:
+DIALIGN	kann genau wie Needleman-Wunsch im Sinne der jeweiligen Zielfunktion mathematisch optimale paarweise \emph{Alignments} berechnen. Anders als bei letzterem, kann man aber auch mit Hilfe einer Heuristik effizient multiple Alignments berechnen, die aus drei oder mehr Sequenzen bestehen. Das grobe Vorgehen sieht dabei wie folgt aus:
 
 \begin{algorithm}
 	\caption{DIALIGN}
@@ -36,8 +36,16 @@ Um multiple Sequenzalignments genauer zu verstehen und die dazu nötigen Algorit
 Nachdem wir bis jetzt nur umgangssprachlich mit \emph{Alignments} und \emph{Konsistenz} zu tun hatten, möchte ich diese Begriffe nun formalisieren.
 
 \begin{definition}[Alignment und Konsitenz]
-	Ein \emph{Alignment} $\mathcal{A}$ ist eine Äquivalenzrelation auf der Menge $\mathcal{S}$, die ein bestimmtes \emph{Konsistenzkriterium} erfüllt. Sei zunächst $\mathcal{R}$ eine beliebige binäre Relation auf $\mathcal{S}$. Wir können diese mit `$\preceq$' zu einer 
+	Ein \emph{Alignment} $\mathcal{A}$ ist eine Äquivalenzrelation auf der Menge $\mathcal{S}$, die ein bestimmtes \emph{Konsistenzkriterium} erfüllt. Sei zunächst $\mathcal{R}$ eine beliebige binäre Relation auf $\mathcal{S}$. Wir können diese mit `$\preceq$' zu der Präordnung (auch Quasiordnung genannt) $\preceq_{\mathcal{R}=(\preceq \cup \mathcal{R})_t}$ erweitern, also einer zweistelligen Relation, die reflexiv und transitiv, aber nicht antisymmetrisch ist. Hierbei bezeichnet $\mathcal{X}_t$ die transitive Hülle einer Relation $\mathcal{X}$. 
+	
+	Wir bezeichnen $\mathcal{R}$ als \emph{konsistent}, wenn $\preceq_{\mathcal{R}=(\preceq \cup \mathcal{R})_t}$ die natürliche Ordnung auf jeder Sequenz erhält, also $x \preceq_{\mathcal{R} y \implies x \preceq y}$ für alle $x,y \in \mathcal{S}$ gilt. Außerdem nennen wir eine Menge von Relationen $\{\mathcal{R}_1, \dots, \mathcal{R}_n\}$ \emph{konsistent}, wenn ihre Vereinigung $\cup_i \mathcal{R}_i$ \emph{konsistent} ist, sowie ein Paar $(x,y) \in \mathcal{S}^2$ \emph{konsistent} mit einer Relation $\mathcal{R}$, falls $\mathcal{R} \cup \{(x,y)\}$ \emph{konsistent} ist.
+	
+	Für ein Alignment $\mathcal{A}$ und $(x,y)$ gilt $x\mathcal{A}y$ genau dann, wenn die \emph{Stellen} $x$ und $y$ durch $\mathcal{A}$ aligniert werden oder identisch sind.
 \end{definition}
+
+Im Folgenden wollen wir zwei Beispiele betrachten, um das Konzept der \emph{Konsistenz} und \emph{Alignments} besser zu veranschaulichen. Informell können wir uns ein \emph{Alignment} als eine Relation vorstellen, bei der es weder zu einer Überkreuzung von Zuweisungen kommt, noch zu Fällen, bei denen ein Symbol (transitiv) gleichzeitig mehreren Symbolen aus einer anderen Sequenz zugewiesen ist.
+
+
 
 \section{Gewichtsfunktionen und Substitutionsmatrizen}
 
