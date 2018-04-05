@@ -1,4 +1,4 @@
-\begin{thebibliography}{3}
+\begin{thebibliography}{9}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{Abdedda\"{i}m und Morgenstern(2000)}]{am00}
@@ -14,11 +14,47 @@ Corel, E., Pitschi, F. und Morgenstern, B.
   sequence alignment.
 \newblock \emph{Bioinformatics}, Band 26:8:1015--1021 (2010).
 
+\bibitem[{Henikoff und Henikoff(1992)}]{hh92}
+Henikoff, S. und Henikoff, J.
+\newblock Amino acid substitution matrices from protein blocks.
+\newblock In \emph{Proceedings of the National Academy of Sciences, USA}, Band
+  89:22, Seiten 10915--10919. Natl. Acad. Sci. USA (1992).
+
+\bibitem[{Morgenstern(1999)}]{m99}
+Morgenstern, B.
+\newblock {DIALIGN} 2: improvement of the segment-to-segment approach to
+  multiple sequence alignment.
+\newblock \emph{Bioinformatics}, Band 15:3:211--218 (1999).
+
+\bibitem[{Morgenstern(2002)}]{m02}
+Morgenstern, B.
+\newblock {A Simple and Space-Efficient Fragment-Chaining Algorithm for
+  Alignment of DNA and Protein Sequences}.
+\newblock \emph{Applied Mathematics Letters}, Band 15:1:11--16 (2002).
+
+\bibitem[{Morgenstern \emph{et~al.}(1998)Morgenstern, Atchley, Hahn und
+  Dress}]{mahd98}
+Morgenstern, B., Atchley, W., Hahn, K. und Dress, A.
+\newblock Segment-based scores for pairwise and multiple sequence alignments.
+\newblock In \emph{ISMB-98 Proceedings}, Seiten 115--121. AAAI (1998).
+
 \bibitem[{Morgenstern \emph{et~al.}(1996)Morgenstern, Dress und Werner}]{mdw96}
 Morgenstern, B., Dress, A. und Werner, T.
 \newblock Multiple {DNA} and protein sequence alignment based on
   segment-to-segment comparison.
 \newblock In \emph{Proceedings of the National Academy of Sciences, USA},
   Band~93, Seiten 12098--12103. Natl. Acad. Sci. USA (1996).
+
+\bibitem[{Pearson(2013)}]{p13}
+Pearson, W.
+\newblock {Selecting the Right Similarity Matrix}.
+\newblock \emph{Curr Protoc Bioinformatics}, Band 43:3.5:1--9 (2013).
+
+\bibitem[{Subramanian \emph{et~al.}(2008)Subramanian, Kaufman und
+  Morgenstern}]{DIALIGNTX}
+Subramanian, A., Kaufman, M. und Morgenstern, B.
+\newblock {DIALIGN TX} download.
+\newblock \url{http://dialign-tx.gobics.de/download} (2008).
+\newblock Accessed: 2018-03-31.
 
 \end{thebibliography}
