@@ -534,8 +534,19 @@ Bei DIALIGN	werden naiv alle \emph{Fragmente} der paarweisen \emph{Alignments} m
 Untersucht man das Problem jedoch genauer, stellt man fest, dass man für ein \emph{Fragment} $f^{k,l}$ gar nicht alle \emph{Fragmente} auf Überlappungen überprüfen muss, sondern nur die, an denen eine der beiden Sequenzen $S_k$ oder $S_l$ unseres \emph{Fragments} beteiligt ist. Außerdem müssen gar nicht \emph{Fragmente} eines anderen paarweisen \emph{Alignments} betrachtet werden, sondern wir können in sortierten Fragmentketten durch die Start- und Endpunkte sehr genau abschätzen welche für Überlappungen in Frage kommen.
 
 \begin{satz}
-	
+	Für eine Menge $S$ von n Sequenzen und eine Menge $F$ von paarweisen \emph{Fragmenten} zwischen diesen Sequenzen, lassen sich in $\oh(n^3\cdot L)$ Zeit die \emph{Überlappgewichte} berechnen.
 \end{satz}
+
+\begin{beweis}
+	Zwischen den n Sequenzen gibt es ${{n}\choose{2}} \in \oh(n^2)$ paarweise \emph{Alignments}. Wir gehen davon aus, dass der vorherige Schritt unseres Verfahrens diese in einer Tabelle $A$ gespeichert hat, wobei $A_{i,j}$ die \emph{Fragmente} des paarweisen \emph{Alignments} zwischen $S_i$ und $S_j$ in einer sortierten Liste enthält. Das können wie o.B.d.A. annehmen, weil der Algorithmus diese ohnehin in sortierter Reihenfolge berechnet.
+	
+	Betrachten wir ein \emph{Alignment} zwischen den Sequenzen $S_i$ und $S_k$. Dann müssen wir für die \emph{Überlappgewichte} nur die Einträge $A_{i,k}$ und $A_{l,j}$ mit $1 \leq k,l \leq n$ betrachten, denn es sind nur die \emph{Alignments} relevant, bei denen eine der Sequenzen übereinstimmt. Das sind alle Listen, die in der selben Spalte oder Zeile unserer Tabelle stehen, also $\oh(n)$ viele.
+	
+	Seien $A_{i,k}$ und $A_{k,j}$ zwei \emph{Alignments} von denen wir die Überlappgewichte berechnen wollen. Dazu müssen wir die Überlappung zwischen allen \emph{Fragmenten} in $S_k$ bestimmen. Dies können wir in linearer Zeit machen, indem wir parallel über die beiden sortierten Listen traversieren und anhand der Start- und Endpunkte in $S_k$ die impliziten \emph{Fragmente} zwischen $S_i$ und $S_j$ bestimmen, sowie die Gewichte der \emph{Fragmente} aktualisieren. Dafür benötigen wir nur $\oh(L)$ Zeit, weil wir einmalig jedes Element der beiden Listen betrachten, es bis zu $\oh(L)$ \emph{Fragmente} pro \emph{Alignment} gibt und jedes von diesen in der Länge durch $l_{\max} \in \oh(1)$ beschränkt ist.
+	Insgesamt haben wir also $\oh(n^2)$ paarweise \emph{Alignments} für die mit jeweils $\oh(n)$ anderen \emph{Alignments} \emph{Überlappgewichte} berechnet werden müssen, was jeweils $\oh(L)$ Zeit kostet. Es folgt die Gesamtlaufzeit von $\oh(n^3\cdot L)$.
+\end{beweis}
+
+Genau genommen brauchen wir keine quadratische Tabelle, weil der Eintrag $A_{i,j}$ aus Symmetriegründen identisch zu $A_{j,i}$ ist. Auch die Diagonale können wir uns sparen, denn das alignieren einer Sequenz mit sich selbst ist unnötig. Des Weiteren kann man sich beim obigen Algorithmus noch die Hälfte des Aufwands sparen, denn die \emph{Überlappgewicht} zwischen $A_{i,k}$ und $A_{k,j}$ müssen wir nicht doppelt berechnen, sondern können sie gleich zu den Gewichten in beiden \emph{Alignments} addieren. Obgleich das nichts an der asymptotischen Laufzeit ändert, macht es in der Praxis einen Unterschied.
  
 $\oh(n^3*l*log l)$ 
 
