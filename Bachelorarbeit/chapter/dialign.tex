@@ -458,7 +458,7 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	7 & " & " &  "  &  "  & lösche $F_8[7]$, $F_9[8]$ wird nicht aktualisiert \\
 	8 & " & " &  "  &  "  & 
 \end{tabular}
-
+ 
 \begin{tabular}{r|cc|cc|l}
 	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c}{\texttt{ADGTCTCA}}\\
 	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c}{\texttt{GTCADCTC\textcolor{red}{A}}} \\
@@ -506,8 +506,30 @@ Dies sind die Ergebnisse der anderen \emph{Alignments}:
 
 \section{Überlappgewichte}
 
-\subsection{Laufzeit}
+Beim multiplen Sequenzalignment werden normalerweise DNA- oder Proteinsequenzen miteinander verglichen bei denen man davon ausgeht, dass sie einen gemeinsamen evolutionären Ursprung haben. Gibt es diesen, dann sind fast ausnahmslos auch gemeinsame Motive erhalten geblieben, die in vielen oder sogar allen Sequenzen vorkommen. Für ein biologisch korrektes \emph{Alignment} ist es notwendig diese zu finden und über möglichst viele Sequenzen hinweg einander zuzuweisen. Hat man erstmal diese verwandten Abschnitte gefunden und miteinander aligniert, werden in der Regel auch die Zuweisungen zwischen diesen sogenannten \emph{Ankerpunkten} besser \citep{mpps06}.
+
+Es ist jedoch nicht immer leicht diese Motive zu finden, weil es sein kann, dass sie im Vergleich zu zufälligen Übereinstimmungen klein sind. Dann bekommen diese nur geringe Gewichte durch unsere Gewichtsfunktion und wenn wir am Ende von DIALIGN	durch gieriges Auswählen der \emph{Fragmente} das multiple \emph{Alignment} bestimmen, kann es sein, dass sie nicht berücksichtigt werden, weil andere höhergewichtige Zuweisungen zu ihnen \emph{inkonsistent} sind. 
+
+Um dieses Problem zu verhindern und Motive zu bevorzugen, die in möglichst vielen Sequenzen vorkommen, führen wir das Konzept der sogenannten \emph{Überlappgewichte} ein \citep{mdw96}. Betrachten wir dazu drei verschiedene Sequenzen $S_1$, $S_2$ und $S_3$ und zwei \emph{Fragmente} $f^{1,2}$ und $f^{2,3}$ zwischen diesen. Dann kann es sein, dass die beiden \emph{Fragmente} eine Überlappung in $S_2$ haben. In diesem Fall ist an dem \emph{Alignment} ein drittes implizites \emph{Fragment} $f^{1,3}$ zwischen $S_1$ und $S_3$ beteiligt, das auf ein gemeinsames Motiv zwischen allen drei Sequenzen hindeutet. Daher ist es angemessen die ursprünglichen \emph{Fragmente} stärker zu gewichten, indem wir zu ihnen das Gewicht der Überlappung addieren.
+
+\begin{equation}
+	\tilde{w}(f^{1,2},f^{2,3}) \coloneqq w(f^{1,3})
+\end{equation}
+
+Das \emph{Überlappgewicht} eines \emph{Fragments} mit sich selbst und zwischen zwei \emph{Fragmenten}, die sich nicht überschneiden, definieren wir als 0.
+
+Analog definieren wir das \emph{Überlappgewicht} eines einzelnen \emph{Fragments} als sein Gewicht addiert mit der Summe aller \emph{Überlappgewichte} zwischen sich selbst und allen anderen \emph{Fragmenten}
+
+\begin{equation}
+	\hat{w}(f)\coloneqq w^*(f)+\sum_{e \in F}\tilde{w}(f,e)
+\end{equation} 
+
+Benutzt man \emph{Überlappgewichte}, muss man jedoch die Zusammensetzung der Sequenzen stärker beachten. Hat man nämlich eine große Subfamilie von sehr ähnlichen Sequenzen, dann werden alle \emph{Fragmente} zwischen einer Sequenz innerhalb und einer Sequenz außerhalb dieser Familie durch hohe \emph{Überlappgewichte} gegenüber denen bevorzugt, die zwischen zwei Sequenzen berechnet wurden, die nicht aus der Sequenzfamilie stammen. \cite{vs93} stellen Methoden vor, die solchen Problemen vorbeugen. 
+  
+\subsection{Umsetzung im Programm und Laufzeit}
 $\oh(n^3*l*log l)$ 
+
+\subsection{Beispiel Überlappgewichte}
 
 \section{Konsistenz}
 

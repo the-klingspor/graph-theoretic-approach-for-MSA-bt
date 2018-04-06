@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.3)  5 APR 2018 22:09
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.3)  6 APR 2018 11:54
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -2584,13 +2584,13 @@ File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/it' will be
 (Font)              scaled to size 10.95pt on input line 17.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 40.
+(babel)             in language  on input line 41.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 40.
+(babel)             in language  on input line 41.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 40.
+(babel)             in language  on input line 41.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 40.
+(babel)             in language  on input line 41.
  [3])
 \tf@toc=\write7
 \openout7 = `Hauptdokument.toc'.
@@ -3054,46 +3054,67 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 507.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 507.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 509.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 509.
+
+Package natbib Warning: Citation `mpps06' on page 18 undefined on input line 50
+9.
+
 
 Underfull \vbox (badness 2662) has occurred while \output is active []
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 512.
+(babel)             in language  on input line 510.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 512.
+(babel)             in language  on input line 510.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 512.
+(babel)             in language  on input line 510.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 512.
+(babel)             in language  on input line 510.
  [18]
+
+Package natbib Warning: Citation `vs93' on page 19 undefined on input line 527.
+
+
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 512.
+(babel)             in language  on input line 529.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 512.
+(babel)             in language  on input line 529.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 514.
+(babel)             in language  on input line 532.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 514.
+(babel)             in language  on input line 532.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 517.
+(babel)             in language  on input line 534.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 517.
+(babel)             in language  on input line 534.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 519.
+(babel)             in language  on input line 536.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 519.
+(babel)             in language  on input line 536.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 522.
+(babel)             in language  on input line 539.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 522.
+(babel)             in language  on input line 539.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 525.
+(babel)             in language  on input line 539.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 525.
+(babel)             in language  on input line 539.
+[19]
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 539.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 539.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 541.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 541.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 544.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 544.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 547.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 547.
 )
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 253.
@@ -3103,25 +3124,10 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 253.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 253.
-
-[19]
+ [20]
 \openout2 = `chapter/min-cut.aux'.
 
  (./chapter/min-cut.tex
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
- [20
-
-
-
-
-]
 chapter 4.
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
@@ -3172,7 +3178,12 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 255.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 255.
- [21]
+ [21
+
+
+
+
+]
 \openout2 = `chapter/Programmierung.aux'.
 
  (./chapter/Programmierung.tex
@@ -3340,13 +3351,15 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 268.
  [31]
+
+Package natbib Warning: There were undefined citations.
+
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 270.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 270.
- (./Hauptdokument.aux (./chapter/Titelblatt.aux)
-(./chapter/Einleitung.aux) (./chapter/DP.aux) (./chapter/dialign.aux)
-(./chapter/min-cut.aux) (./chapter/Programmierung.aux)
-(./chapter/Validierung.aux) (./chapter/Fazit.aux)
-(./chapter/EidesstattlicheErklaerung.aux))
+(./Hauptdokument.aux (./chapter/Titelblatt.aux) (./chapter/Einleitung.aux)
+(./chapter/DP.aux) (./chapter/dialign.aux) (./chapter/min-cut.aux)
+(./chapter/Programmierung.aux) (./chapter/Validierung.aux) (./chapter/Fazit.aux
+) (./chapter/EidesstattlicheErklaerung.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 270.
 Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 270.
 
@@ -3356,10 +3369,10 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 43916 strings out of 492982
- 835933 string characters out of 6136226
+ 43922 strings out of 492982
+ 835999 string characters out of 6136226
  1082674 words of memory out of 5000000
- 46426 multiletter control sequences out of 15000+600000
+ 46429 multiletter control sequences out of 15000+600000
  797909 words of font info for 189 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,14n,95p,10479b,957s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -3388,10 +3401,10 @@ yb.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/txfonts/txsyc.pfb><c:/tex
 live/2017/texmf-dist/fonts/type1/public/newtx/txsys.pfb><c:/texlive/2017/texmf-
 dist/fonts/type1/urw/times/utmri8a.pfb><c:/texlive/2017/texmf-dist/fonts/type1/
 public/nimbus15/zcoN-Regular.pfb>
-Output written on Hauptdokument.pdf (35 pages, 362991 bytes).
+Output written on Hauptdokument.pdf (35 pages, 366516 bytes).
 PDF statistics:
- 716 PDF objects out of 1000 (max. 8388607)
- 633 compressed objects within 7 object streams
- 134 named destinations out of 1000 (max. 500000)
- 522 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 726 PDF objects out of 1000 (max. 8388607)
+ 643 compressed objects within 7 object streams
+ 137 named destinations out of 1000 (max. 500000)
+ 530 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -18,13 +18,14 @@
 \contentsline {subsection}{\numberline {3.3.2}Laufzeit}{15}{subsection.3.3.2}
 \contentsline {subsection}{\numberline {3.3.3}Beispiel zur Berechnung paarweiser \emph {Alignments}}{16}{subsection.3.3.3}
 \contentsline {section}{\numberline {3.4}\IeC {\"U}berlappgewichte}{19}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Laufzeit}{19}{subsection.3.4.1}
-\contentsline {section}{\numberline {3.5}Konsistenz}{19}{section.3.5}
-\contentsline {subsection}{\numberline {3.5.1}Laufzeit}{19}{subsection.3.5.1}
-\contentsline {section}{\numberline {3.6}Gieriges multiples Alignment}{19}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Laufzeit}{19}{subsection.3.6.1}
-\contentsline {section}{\numberline {3.7}Gesamtkomplexit\IeC {\"a}t}{19}{section.3.7}
-\contentsline {section}{\numberline {3.8}Probleme}{19}{section.3.8}
+\contentsline {subsection}{\numberline {3.4.1}Umsetzung im Programm und Laufzeit}{19}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.2}Beispiel \IeC {\"U}berlappgewichte}{20}{subsection.3.4.2}
+\contentsline {section}{\numberline {3.5}Konsistenz}{20}{section.3.5}
+\contentsline {subsection}{\numberline {3.5.1}Laufzeit}{20}{subsection.3.5.1}
+\contentsline {section}{\numberline {3.6}Gieriges multiples Alignment}{20}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Laufzeit}{20}{subsection.3.6.1}
+\contentsline {section}{\numberline {3.7}Gesamtkomplexit\IeC {\"a}t}{20}{section.3.7}
+\contentsline {section}{\numberline {3.8}Probleme}{20}{section.3.8}
 \contentsline {chapter}{\numberline {4}Ein Min-Cut-Ansatz f\IeC {\"u}r das Konsistenzproblem}{21}{chapter.4}
 \contentsline {section}{\numberline {4.1}Flussnetzwerke}{21}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Einf\IeC {\"u}hrung}{21}{subsection.4.1.1}
