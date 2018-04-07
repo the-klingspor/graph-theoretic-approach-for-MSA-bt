@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.3)  6 APR 2018 19:48
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.3)  7 APR 2018 21:10
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -1309,6 +1309,13 @@ Package: xcolor 2016/05/11 v2.12 LaTeX color extensions (UK)
 File: color.cfg 2016/01/02 v1.6 sample color configuration
 )
 Package xcolor Info: Driver file: pdftex.def on input line 225.
+
+(c:/texlive/2017/texmf-dist/tex/latex/colortbl/colortbl.sty
+Package: colortbl 2012/02/13 v1.0a Color table columns (DPC)
+\everycr=\toks33
+\minrowclearance=\skip78
+)
+\rownum=\count164
 Package xcolor Info: Model `cmy' substituted by `cmy0' on input line 1348.
 Package xcolor Info: Model `hsb' substituted by `rgb' on input line 1352.
 Package xcolor Info: Model `RGB' extended on input line 1364.
@@ -1330,7 +1337,7 @@ Package: todonotes 2012/07/25
 (c:/texlive/2017/texmf-dist/tex/latex/pgf/basiclayer/pgf.sty
 (c:/texlive/2017/texmf-dist/tex/latex/pgf/utilities/pgfrcs.sty
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/utilities/pgfutil-common.tex
-\pgfutil@everybye=\toks33
+\pgfutil@everybye=\toks34
 \pgfutil@tempdima=\dimen159
 \pgfutil@tempdimb=\dimen160
 
@@ -1352,11 +1359,11 @@ Package: pgf 2015/08/07 v3.0.1a (rcs-revision 1.15)
 Package: pgfsys 2014/07/09 v3.0.1a (rcs-revision 1.48)
 
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/utilities/pgfkeys.code.tex
-\pgfkeys@pathtoks=\toks34
-\pgfkeys@temptoks=\toks35
+\pgfkeys@pathtoks=\toks35
+\pgfkeys@temptoks=\toks36
 
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/utilities/pgfkeysfiltered.code.tex
-\pgfkeys@tmptoks=\toks36
+\pgfkeys@tmptoks=\toks37
 ))
 \pgf@x=\dimen161
 \pgf@y=\dimen162
@@ -1368,13 +1375,13 @@ Package: pgfsys 2014/07/09 v3.0.1a (rcs-revision 1.48)
 \pgf@yc=\dimen168
 \w@pgf@writea=\write3
 \r@pgf@reada=\read2
-\c@pgf@counta=\count164
-\c@pgf@countb=\count165
-\c@pgf@countc=\count166
-\c@pgf@countd=\count167
-\t@pgf@toka=\toks37
-\t@pgf@tokb=\toks38
-\t@pgf@tokc=\toks39
+\c@pgf@counta=\count165
+\c@pgf@countb=\count166
+\c@pgf@countc=\count167
+\c@pgf@countd=\count168
+\t@pgf@toka=\toks38
+\t@pgf@tokb=\toks39
+\t@pgf@tokc=\toks40
  (c:/texlive/2017/texmf-dist/tex/generic/pgf/systemlayer/pgf.cfg
 File: pgf.cfg 2008/05/14  (rcs-revision 1.7)
 )
@@ -1388,8 +1395,8 @@ File: pgfsys-common-pdf.def 2013/10/10  (rcs-revision 1.13)
 )))
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/systemlayer/pgfsyssoftpath.code.tex
 File: pgfsyssoftpath.code.tex 2013/09/09  (rcs-revision 1.9)
-\pgfsyssoftpath@smallbuffer@items=\count168
-\pgfsyssoftpath@bigbuffer@items=\count169
+\pgfsyssoftpath@smallbuffer@items=\count169
+\pgfsyssoftpath@bigbuffer@items=\count170
 )
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/systemlayer/pgfsysprotocol.code.tex
 File: pgfsysprotocol.code.tex 2006/10/16  (rcs-revision 1.4)
@@ -1401,11 +1408,11 @@ Package: pgfcore 2010/04/11 v3.0.1a (rcs-revision 1.7)
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/math/pgfmathutil.code.tex)
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/math/pgfmathparser.code.tex
 \pgfmath@dimen=\dimen169
-\pgfmath@count=\count170
+\pgfmath@count=\count171
 \pgfmath@box=\box65
-\pgfmath@toks=\toks40
-\pgfmath@stack@operand=\toks41
-\pgfmath@stack@operation=\toks42
+\pgfmath@toks=\toks41
+\pgfmath@stack@operand=\toks42
+\pgfmath@stack@operation=\toks43
 )
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.code.tex
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.basic.code.te
@@ -1425,7 +1432,7 @@ x)
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/math/pgfmathfunctions.integerarithm
 etics.code.tex)))
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/math/pgfmathfloat.code.tex
-\c@pgfmathroundto@lastzeros=\count171
+\c@pgfmathroundto@lastzeros=\count172
 ))
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/basiclayer/pgfcorepoints.code.tex
 File: pgfcorepoints.code.tex 2013/10/07  (rcs-revision 1.27)
@@ -1461,7 +1468,7 @@ File: pgfcorescopes.code.tex 2015/05/08  (rcs-revision 1.46)
 \pgfpic=\box66
 \pgf@hbox=\box67
 \pgf@layerbox@main=\box68
-\pgf@picture@serial@count=\count172
+\pgf@picture@serial@count=\count173
 )
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/basiclayer/pgfcoregraphicstate.code
 .tex
@@ -1492,7 +1499,7 @@ File: pgfcorearrows.code.tex 2015/05/14  (rcs-revision 1.43)
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreshade.code.tex
 File: pgfcoreshade.code.tex 2013/07/15  (rcs-revision 1.15)
 \pgf@max=\dimen193
-\pgf@sys@shading@range@num=\count173
+\pgf@sys@shading@range@num=\count174
 )
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/basiclayer/pgfcoreimage.code.tex
 File: pgfcoreimage.code.tex 2013/07/15  (rcs-revision 1.18)
@@ -1538,8 +1545,8 @@ Package: pgffor 2013/12/13 v3.0.1a (rcs-revision 1.25)
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/math/pgfmath.code.tex)
 \pgffor@iter=\dimen196
 \pgffor@skip=\dimen197
-\pgffor@stack=\toks43
-\pgffor@toks=\toks44
+\pgffor@stack=\toks44
+\pgffor@toks=\toks45
 ))
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/frontendlayer/tikz/tikz.code.tex
 Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
@@ -1547,7 +1554,7 @@ Package: tikz 2015/08/07 v3.0.1a (rcs-revision 1.151)
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/libraries/pgflibraryplothandlers.co
 de.tex
 File: pgflibraryplothandlers.code.tex 2013/08/31 v3.0.1a (rcs-revision 1.20)
-\pgf@plot@mark@count=\count174
+\pgf@plot@mark@count=\count175
 \pgfplotmarksize=\dimen198
 )
 \tikz@lastx=\dimen199
@@ -1561,18 +1568,18 @@ Normal \dimen register pool exhausted, switching to extended pool.
 \tikz@figbox@bg=\box72
 \tikz@tempbox=\box73
 \tikz@tempbox@bg=\box74
-\tikztreelevel=\count175
-\tikznumberofchildren=\count176
-\tikznumberofcurrentchild=\count177
-\tikz@fig@count=\count178
+\tikztreelevel=\count176
+\tikznumberofchildren=\count177
+\tikznumberofcurrentchild=\count178
+\tikz@fig@count=\count179
 
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/modules/pgfmodulematrix.code.tex
 File: pgfmodulematrix.code.tex 2013/09/17  (rcs-revision 1.8)
-\pgfmatrixcurrentrow=\count179
-\pgfmatrixcurrentcolumn=\count180
-\pgf@matrix@numberofcolumns=\count181
+\pgfmatrixcurrentrow=\count180
+\pgfmatrixcurrentcolumn=\count181
+\pgf@matrix@numberofcolumns=\count182
 )
-\tikz@expandcount=\count182
+\tikz@expandcount=\count183
 
 (c:/texlive/2017/texmf-dist/tex/generic/pgf/frontendlayer/tikz/libraries/tikzli
 brarytopaths.code.tex
@@ -1582,7 +1589,7 @@ File: tikzlibrarytopaths.code.tex 2008/06/17 v3.0.1a (rcs-revision 1.2)
 brarypositioning.code.tex
 File: tikzlibrarypositioning.code.tex 2008/10/06 v3.0.1a (rcs-revision 1.7)
 )
-\c@@todonotes@numberoftodonotes=\count183
+\c@@todonotes@numberoftodonotes=\count184
 )
 (c:/texlive/2017/texmf-dist/tex/latex/mathtools/mathtools.sty
 Package: mathtools 2018/01/08 v1.21 mathematical typesetting tools
@@ -1592,7 +1599,7 @@ Package: mhsetup 2017/03/31 v1.3 programming setup (MH)
 )
 (c:/texlive/2017/texmf-dist/tex/latex/amsmath/amsmath.sty
 Package: amsmath 2017/09/02 v2.17a AMS math features
-\@mathmargin=\skip78
+\@mathmargin=\skip79
 
 For additional information on amsmath, use the `?' option.
 (c:/texlive/2017/texmf-dist/tex/latex/amsmath/amstext.sty
@@ -1600,7 +1607,7 @@ Package: amstext 2000/06/29 v2.01 AMS text
 
 (c:/texlive/2017/texmf-dist/tex/latex/amsmath/amsgen.sty
 File: amsgen.sty 1999/11/30 v2.0 generic functions
-\@emptytoks=\toks45
+\@emptytoks=\toks46
 \ex@=\dimen261
 ))
 (c:/texlive/2017/texmf-dist/tex/latex/amsmath/amsbsy.sty
@@ -1610,13 +1617,13 @@ Package: amsbsy 1999/11/29 v1.2d Bold Symbols
 (c:/texlive/2017/texmf-dist/tex/latex/amsmath/amsopn.sty
 Package: amsopn 2016/03/08 v2.02 operator names
 )
-\inf@bad=\count184
+\inf@bad=\count185
 LaTeX Info: Redefining \frac on input line 213.
-\uproot@=\count185
-\leftroot@=\count186
+\uproot@=\count186
+\leftroot@=\count187
 LaTeX Info: Redefining \overline on input line 375.
-\classnum@=\count187
-\DOTSCASE@=\count188
+\classnum@=\count188
+\DOTSCASE@=\count189
 LaTeX Info: Redefining \ldots on input line 472.
 LaTeX Info: Redefining \dots on input line 475.
 LaTeX Info: Redefining \cdots on input line 596.
@@ -1625,26 +1632,26 @@ LaTeX Info: Redefining \cdots on input line 596.
 \big@size=\dimen263
 LaTeX Font Info:    Redeclaring font encoding OML on input line 712.
 LaTeX Font Info:    Redeclaring font encoding OMS on input line 713.
-\macc@depth=\count189
-\c@MaxMatrixCols=\count190
+\macc@depth=\count190
+\c@MaxMatrixCols=\count191
 \dotsspace@=\muskip11
-\c@parentequation=\count191
-\dspbrk@lvl=\count192
-\tag@help=\toks46
-\row@=\count193
-\column@=\count194
-\maxfields@=\count195
-\andhelp@=\toks47
+\c@parentequation=\count192
+\dspbrk@lvl=\count193
+\tag@help=\toks47
+\row@=\count194
+\column@=\count195
+\maxfields@=\count196
+\andhelp@=\toks48
 \eqnshift@=\dimen264
 \alignsep@=\dimen265
 \tagshift@=\dimen266
 \tagwidth@=\dimen267
 \totwidth@=\dimen268
 \lineht@=\dimen269
-\@envbody=\toks48
-\multlinegap=\skip79
-\multlinetaggap=\skip80
-\mathdisplay@stack=\toks49
+\@envbody=\toks49
+\multlinegap=\skip80
+\multlinetaggap=\skip81
+\mathdisplay@stack=\toks50
 LaTeX Info: Redefining \[ on input line 2817.
 LaTeX Info: Redefining \] on input line 2818.
 )
@@ -1652,9 +1659,9 @@ LaTeX Info: Thecontrolsequence`\('isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\)'isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\['isalreadyrobust on input line 129.
 LaTeX Info: Thecontrolsequence`\]'isalreadyrobust on input line 129.
-\g_MT_multlinerow_int=\count196
+\g_MT_multlinerow_int=\count197
 \l_MT_multwidth_dim=\dimen270
-\origjot=\skip81
+\origjot=\skip82
 \l_MT_shortvdotswithinadjustabove_dim=\dimen271
 \l_MT_shortvdotswithinadjustbelow_dim=\dimen272
 \l_MT_above_intertext_sep=\dimen273
@@ -1674,15 +1681,15 @@ LaTeX Font Info:    Overwriting math alphabet `\mathfrak' in version `bold'
 ))
 (c:/texlive/2017/texmf-dist/tex/latex/amscls/amsthm.sty
 Package: amsthm 2017/10/31 v2.20.4
-\thm@style=\toks50
-\thm@bodyfont=\toks51
-\thm@headfont=\toks52
-\thm@notefont=\toks53
-\thm@headpunct=\toks54
-\thm@preskip=\skip82
-\thm@postskip=\skip83
-\thm@headsep=\skip84
-\dth@everypar=\toks55
+\thm@style=\toks51
+\thm@bodyfont=\toks52
+\thm@headfont=\toks53
+\thm@notefont=\toks54
+\thm@headpunct=\toks55
+\thm@preskip=\skip83
+\thm@postskip=\skip84
+\thm@headsep=\skip85
+\dth@everypar=\toks56
 )
 (c:/texlive/2017/texmf-dist/tex/latex/newtx/newtxmath.sty
 Package: newtxmath 2017/12/14 v1.53
@@ -1692,7 +1699,7 @@ Package: newtxmath 2017/12/14 v1.53
 Package: centernot 2016/05/16 v1.4 Centers the not symbol horizontally (HO)
 )
 (c:/texlive/2017/texmf-dist/tex/generic/kastrup/binhex.tex)
-\tx@Isdigit=\count197
+\tx@Isdigit=\count198
 LaTeX Font Info:    Redeclaring symbol font `operators' on input line 156.
 LaTeX Font Info:    Overwriting symbol font `operators' in version `normal'
 (Font)                  OT1/cmr/m/n --> OT1/cmr/m/n on input line 156.
@@ -1894,12 +1901,12 @@ Package: fancyvrb 2008/02/07
 
 Style option: `fancyvrb' v2.7a, with DG/SPQR fixes, and firstline=lastline fix 
 <2008/02/07> (tvz)
-\FV@CodeLineNo=\count198
+\FV@CodeLineNo=\count199
 \FV@InFile=\read3
 \FV@TabBox=\box97
-\c@FancyVerbLine=\count199
 Normal \count register pool exhausted, switching to extended pool.
-\FV@StepNumber=\count277
+\c@FancyVerbLine=\count277
+\FV@StepNumber=\count278
 \FV@OutFile=\write4
 ) (c:/texlive/2017/texmf-dist/tex/latex/upquote/upquote.sty
 Package: upquote 2012/04/19 v1.3 upright-quote and grave-accent glyphs in verba
@@ -1907,16 +1914,16 @@ tim
 )
 (c:/texlive/2017/texmf-dist/tex/latex/lineno/lineno.sty
 Package: lineno 2005/11/02 line numbers on paragraphs v4.41
-\linenopenalty=\count278
-\output=\toks56
-\linenoprevgraf=\count279
+\linenopenalty=\count279
+\output=\toks57
+\linenoprevgraf=\count280
 \linenumbersep=\dimen281
 \linenumberwidth=\dimen282
-\c@linenumber=\count280
-\c@pagewiselinenumber=\count281
-\c@LN@truepage=\count282
-\c@internallinenumber=\count283
-\c@internallinenumbers=\count284
+\c@linenumber=\count281
+\c@pagewiselinenumber=\count282
+\c@LN@truepage=\count283
+\c@internallinenumber=\count284
+\c@internallinenumbers=\count285
 \quotelinenumbersep=\dimen283
 \bframerule=\dimen284
 \bframesep=\dimen285
@@ -1932,25 +1939,25 @@ LaTeX Info: Redefining \\ on input line 3056.
 Package fvextra Warning: csquotes should be loaded after fvextra, to avoid a wa
 rning from the lineno package on input line 37.
 
-\c@FV@TrueTabGroupLevel=\count285
-\c@FV@TrueTabCounter=\count286
+\c@FV@TrueTabGroupLevel=\count286
+\c@FV@TrueTabCounter=\count287
 \FV@TabBox@Group=\box99
-\FV@TmpLength=\skip85
-\c@FV@HighlightLinesStart=\count287
-\c@FV@HighlightLinesStop=\count288
-\FV@LoopCount=\count289
+\FV@TmpLength=\skip86
+\c@FV@HighlightLinesStart=\count288
+\c@FV@HighlightLinesStop=\count289
+\FV@LoopCount=\count290
 \FV@NCharsBox=\box100
 \FV@BreakIndent=\dimen286
-\FV@BreakIndentNChars=\count290
+\FV@BreakIndentNChars=\count291
 \FV@BreakSymbolSepLeft=\dimen287
-\FV@BreakSymbolSepLeftNChars=\count291
+\FV@BreakSymbolSepLeftNChars=\count292
 \FV@BreakSymbolSepRight=\dimen288
-\FV@BreakSymbolSepRightNChars=\count292
+\FV@BreakSymbolSepRightNChars=\count293
 \FV@BreakSymbolIndentLeft=\dimen289
-\FV@BreakSymbolIndentLeftNChars=\count293
+\FV@BreakSymbolIndentLeftNChars=\count294
 \FV@BreakSymbolIndentRight=\dimen290
-\FV@BreakSymbolIndentRightNChars=\count294
-\c@FancyVerbLineBreakLast=\count295
+\FV@BreakSymbolIndentRightNChars=\count295
+\c@FancyVerbLineBreakLast=\count296
 \FV@LineBox=\box101
 \FV@LineIndentBox=\box102
 ) (c:/texlive/2017/texmf-dist/tex/latex/ifplatform/ifplatform.sty
@@ -1962,14 +1969,14 @@ Package: catchfile 2016/05/16 v1.7 Catch the contents of a file (HO)
 (c:/texlive/2017/texmf-dist/tex/generic/xstring/xstring.sty
 (c:/texlive/2017/texmf-dist/tex/generic/xstring/xstring.tex
 \@xs@message=\write5
-\integerpart=\count296
-\decimalpart=\count297
+\integerpart=\count297
+\decimalpart=\count298
 )
 Package: xstring 2013/10/13  v1.7c  String manipulations (C Tellechea)
 )
 (c:/texlive/2017/texmf-dist/tex/latex/framed/framed.sty
 Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
-\OuterFrameSep=\skip86
+\OuterFrameSep=\skip87
 \fb@frw=\dimen291
 \fb@frh=\dimen292
 \FrameRule=\dimen293
@@ -1978,10 +1985,10 @@ Package: framed 2011/10/22 v 0.96: framed or shaded text with page breaks
 \minted@appexistsfile=\read4
 \minted@bgbox=\box103
 \minted@code=\write6
-\c@minted@FancyVerbLineTemp=\count298
-\c@minted@pygmentizecounter=\count299
-\@float@every@listing=\toks57
-\c@listing=\count300
+\c@minted@FancyVerbLineTemp=\count299
+\c@minted@pygmentizecounter=\count300
+\@float@every@listing=\toks58
+\c@listing=\count301
 )
 runsystem(if not exist _minted-Hauptdokument mkdir _minted-Hauptdokument)...exe
 cuted.
@@ -1989,15 +1996,15 @@ cuted.
 
 (c:/texlive/2017/texmf-dist/tex/latex/thmtools/thmtools.sty
 Package: thmtools 2014/04/21 v66
-\thmt@toks=\toks58
-\c@thmt@dummyctr=\count301
+\thmt@toks=\toks59
+\c@thmt@dummyctr=\count302
 
 (c:/texlive/2017/texmf-dist/tex/latex/thmtools/thm-patch.sty
 Package: thm-patch 2014/04/21 v66
 
 (c:/texlive/2017/texmf-dist/tex/latex/thmtools/parseargs.sty
 Package: parseargs 2014/04/21 v66
-\@parsespec=\toks59
+\@parsespec=\toks60
 ))
 (c:/texlive/2017/texmf-dist/tex/latex/thmtools/thm-kv.sty
 Package: thm-kv 2014/04/21 v66
@@ -2019,14 +2026,14 @@ Package: thm-restate 2014/04/21 v66
 )
 (c:/texlive/2017/texmf-dist/tex/latex/thmtools/thm-amsthm.sty
 Package: thm-amsthm 2014/04/21 v66
-\thmt@style@headstyle=\toks60
+\thmt@style@headstyle=\toks61
 ))
 (c:/texlive/2017/texmf-dist/tex/latex/oberdiek/bookmark.sty
 Package: bookmark 2016/05/17 v1.26 PDF bookmarks (HO)
 
 (c:/texlive/2017/texmf-dist/tex/latex/oberdiek/bkm-pdftex.def
 File: bkm-pdftex.def 2016/05/17 v1.26 bookmark driver for pdfTeX (HO)
-\BKM@id=\count302
+\BKM@id=\count303
 ))
 Package thmtools Info: Key `postheadhook' (with value `\theorembookmark ')
 (thmtools)             is not a known style key.
@@ -2048,7 +2055,7 @@ Package thmtools Info: Automatically pulling in `thmdef-mdframed' on input line
 (c:/texlive/2017/texmf-dist/tex/latex/thmtools/thmdef-mdframed.sty
 Package: thmdef-mdframed 2014/04/21 v66
 )
-\c@definition=\count303
+\c@definition=\count304
 
 (c:/texlive/2017/texmf-dist/tex/latex/mdframed/mdframed.sty
 Package: mdframed 2013/07/01 1.9b: mdframed
@@ -2059,107 +2066,107 @@ Package: expl3 2018/02/21 L3 programming layer (loader)
 
 (c:/texlive/2017/texmf-dist/tex/latex/l3kernel/expl3-code.tex
 Package: expl3 2018/02/21 L3 programming layer (code)
-\c_max_int=\count304
-\l_tmpa_int=\count305
-\l_tmpb_int=\count306
-\g_tmpa_int=\count307
-\g_tmpb_int=\count308
-\g__intarray_font_int=\count309
-\g__prg_map_int=\count310
-\c_log_iow=\count311
-\l_iow_line_count_int=\count312
-\l__iow_line_target_int=\count313
-\l__iow_one_indent_int=\count314
-\l__iow_indent_int=\count315
+\c_max_int=\count305
+\l_tmpa_int=\count306
+\l_tmpb_int=\count307
+\g_tmpa_int=\count308
+\g_tmpb_int=\count309
+\g__intarray_font_int=\count310
+\g__prg_map_int=\count311
+\c_log_iow=\count312
+\l_iow_line_count_int=\count313
+\l__iow_line_target_int=\count314
+\l__iow_one_indent_int=\count315
+\l__iow_indent_int=\count316
 \c_zero_dim=\dimen295
 \c_max_dim=\dimen296
 \l_tmpa_dim=\dimen297
 \l_tmpb_dim=\dimen298
 \g_tmpa_dim=\dimen299
 \g_tmpb_dim=\dimen300
-\c_zero_skip=\skip87
-\c_max_skip=\skip88
-\l_tmpa_skip=\skip89
-\l_tmpb_skip=\skip90
-\g_tmpa_skip=\skip91
-\g_tmpb_skip=\skip92
+\c_zero_skip=\skip88
+\c_max_skip=\skip89
+\l_tmpa_skip=\skip90
+\l_tmpb_skip=\skip91
+\g_tmpa_skip=\skip92
+\g_tmpb_skip=\skip93
 \c_zero_muskip=\muskip12
 \c_max_muskip=\muskip13
 \l_tmpa_muskip=\muskip14
 \l_tmpb_muskip=\muskip15
 \g_tmpa_muskip=\muskip16
 \g_tmpb_muskip=\muskip17
-\l_keys_choice_int=\count316
-\c__fp_leading_shift_int=\count317
-\c__fp_middle_shift_int=\count318
-\c__fp_trailing_shift_int=\count319
-\c__fp_big_leading_shift_int=\count320
-\c__fp_big_middle_shift_int=\count321
-\c__fp_big_trailing_shift_int=\count322
-\c__fp_Bigg_leading_shift_int=\count323
-\c__fp_Bigg_middle_shift_int=\count324
-\c__fp_Bigg_trailing_shift_int=\count325
-\c__fp_rand_size_int=\count326
-\c__fp_rand_four_int=\count327
-\c__fp_rand_eight_int=\count328
-\l__sort_length_int=\count329
-\l__sort_min_int=\count330
-\l__sort_top_int=\count331
-\l__sort_max_int=\count332
-\l__sort_true_max_int=\count333
-\l__sort_block_int=\count334
-\l__sort_begin_int=\count335
-\l__sort_end_int=\count336
-\l__sort_A_int=\count337
-\l__sort_B_int=\count338
-\l__sort_C_int=\count339
-\l__tl_build_start_index_int=\count340
-\l__tl_build_index_int=\count341
-\l__tl_analysis_normal_int=\count342
-\l__tl_analysis_index_int=\count343
-\l__tl_analysis_nesting_int=\count344
-\l__tl_analysis_type_int=\count345
-\l__regex_internal_a_int=\count346
-\l__regex_internal_b_int=\count347
-\l__regex_internal_c_int=\count348
-\l__regex_balance_int=\count349
-\l__regex_group_level_int=\count350
-\l__regex_mode_int=\count351
-\c__regex_cs_in_class_mode_int=\count352
-\c__regex_cs_mode_int=\count353
-\l__regex_catcodes_int=\count354
-\l__regex_default_catcodes_int=\count355
-\c__regex_catcode_D_int=\count356
-\c__regex_catcode_S_int=\count357
-\c__regex_catcode_L_int=\count358
-\c__regex_catcode_O_int=\count359
-\c__regex_catcode_A_int=\count360
-\c__regex_all_catcodes_int=\count361
-\l__regex_show_lines_int=\count362
-\l__regex_min_state_int=\count363
-\l__regex_max_state_int=\count364
-\l__regex_left_state_int=\count365
-\l__regex_right_state_int=\count366
-\l__regex_capturing_group_int=\count367
-\l__regex_min_pos_int=\count368
-\l__regex_max_pos_int=\count369
-\l__regex_curr_pos_int=\count370
-\l__regex_start_pos_int=\count371
-\l__regex_success_pos_int=\count372
-\l__regex_curr_char_int=\count373
-\l__regex_curr_catcode_int=\count374
-\l__regex_last_char_int=\count375
-\l__regex_case_changed_char_int=\count376
-\l__regex_curr_state_int=\count377
-\l__regex_step_int=\count378
-\l__regex_min_active_int=\count379
-\l__regex_max_active_int=\count380
-\l__regex_replacement_csnames_int=\count381
-\l__regex_match_count_int=\count382
-\l__regex_min_submatch_int=\count383
-\l__regex_submatch_int=\count384
-\l__regex_zeroth_submatch_int=\count385
-\g__regex_trace_regex_int=\count386
+\l_keys_choice_int=\count317
+\c__fp_leading_shift_int=\count318
+\c__fp_middle_shift_int=\count319
+\c__fp_trailing_shift_int=\count320
+\c__fp_big_leading_shift_int=\count321
+\c__fp_big_middle_shift_int=\count322
+\c__fp_big_trailing_shift_int=\count323
+\c__fp_Bigg_leading_shift_int=\count324
+\c__fp_Bigg_middle_shift_int=\count325
+\c__fp_Bigg_trailing_shift_int=\count326
+\c__fp_rand_size_int=\count327
+\c__fp_rand_four_int=\count328
+\c__fp_rand_eight_int=\count329
+\l__sort_length_int=\count330
+\l__sort_min_int=\count331
+\l__sort_top_int=\count332
+\l__sort_max_int=\count333
+\l__sort_true_max_int=\count334
+\l__sort_block_int=\count335
+\l__sort_begin_int=\count336
+\l__sort_end_int=\count337
+\l__sort_A_int=\count338
+\l__sort_B_int=\count339
+\l__sort_C_int=\count340
+\l__tl_build_start_index_int=\count341
+\l__tl_build_index_int=\count342
+\l__tl_analysis_normal_int=\count343
+\l__tl_analysis_index_int=\count344
+\l__tl_analysis_nesting_int=\count345
+\l__tl_analysis_type_int=\count346
+\l__regex_internal_a_int=\count347
+\l__regex_internal_b_int=\count348
+\l__regex_internal_c_int=\count349
+\l__regex_balance_int=\count350
+\l__regex_group_level_int=\count351
+\l__regex_mode_int=\count352
+\c__regex_cs_in_class_mode_int=\count353
+\c__regex_cs_mode_int=\count354
+\l__regex_catcodes_int=\count355
+\l__regex_default_catcodes_int=\count356
+\c__regex_catcode_D_int=\count357
+\c__regex_catcode_S_int=\count358
+\c__regex_catcode_L_int=\count359
+\c__regex_catcode_O_int=\count360
+\c__regex_catcode_A_int=\count361
+\c__regex_all_catcodes_int=\count362
+\l__regex_show_lines_int=\count363
+\l__regex_min_state_int=\count364
+\l__regex_max_state_int=\count365
+\l__regex_left_state_int=\count366
+\l__regex_right_state_int=\count367
+\l__regex_capturing_group_int=\count368
+\l__regex_min_pos_int=\count369
+\l__regex_max_pos_int=\count370
+\l__regex_curr_pos_int=\count371
+\l__regex_start_pos_int=\count372
+\l__regex_success_pos_int=\count373
+\l__regex_curr_char_int=\count374
+\l__regex_curr_catcode_int=\count375
+\l__regex_last_char_int=\count376
+\l__regex_case_changed_char_int=\count377
+\l__regex_curr_state_int=\count378
+\l__regex_step_int=\count379
+\l__regex_min_active_int=\count380
+\l__regex_max_active_int=\count381
+\l__regex_replacement_csnames_int=\count382
+\l__regex_match_count_int=\count383
+\l__regex_min_submatch_int=\count384
+\l__regex_submatch_int=\count385
+\l__regex_zeroth_submatch_int=\count386
+\g__regex_trace_regex_int=\count387
 \c_empty_box=\box104
 \l_tmpa_box=\box105
 \l_tmpb_box=\box106
@@ -2203,15 +2210,15 @@ Package: expl3 2018/02/21 L3 programming layer (code)
 )
 (c:/texlive/2017/texmf-dist/tex/latex/l3kernel/l3pdfmode.def
 File: l3pdfmode.def 2017/03/18 v L3 Experimental driver: PDF mode
-\l__driver_color_stack_int=\count387
+\l__driver_color_stack_int=\count388
 \l__driver_tmp_box=\box119
 ))
 Package: xparse 2018/02/21 L3 Experimental document command parser
-\l__xparse_current_arg_int=\count388
-\g__xparse_grabber_int=\count389
-\l__xparse_m_args_int=\count390
-\l__xparse_mandatory_args_int=\count391
-\l__xparse_v_nesting_int=\count392
+\l__xparse_current_arg_int=\count389
+\g__xparse_grabber_int=\count390
+\l__xparse_m_args_int=\count391
+\l__xparse_mandatory_args_int=\count392
+\l__xparse_v_nesting_int=\count393
 )
 (c:/texlive/2017/texmf-dist/tex/latex/oberdiek/zref-abspage.sty
 Package: zref-abspage 2016/05/21 v2.26 Module abspage for zref (HO)
@@ -2222,53 +2229,53 @@ Package zref Info: New property list: main on input line 759.
 Package zref Info: New property: default on input line 760.
 Package zref Info: New property: page on input line 761.
 )
-\c@abspage=\count393
+\c@abspage=\count394
 Package zref Info: New property: abspage on input line 62.
 )
 (c:/texlive/2017/texmf-dist/tex/latex/needspace/needspace.sty
 Package: needspace 2010/09/12 v1.3d reserve vertical space
 )
-\mdf@templength=\skip93
-\c@mdf@globalstyle@cnt=\count394
-\mdf@skipabove@length=\skip94
-\mdf@skipbelow@length=\skip95
-\mdf@leftmargin@length=\skip96
-\mdf@rightmargin@length=\skip97
-\mdf@innerleftmargin@length=\skip98
-\mdf@innerrightmargin@length=\skip99
-\mdf@innertopmargin@length=\skip100
-\mdf@innerbottommargin@length=\skip101
-\mdf@splittopskip@length=\skip102
-\mdf@splitbottomskip@length=\skip103
-\mdf@outermargin@length=\skip104
-\mdf@innermargin@length=\skip105
-\mdf@linewidth@length=\skip106
-\mdf@innerlinewidth@length=\skip107
-\mdf@middlelinewidth@length=\skip108
-\mdf@outerlinewidth@length=\skip109
-\mdf@roundcorner@length=\skip110
-\mdf@footenotedistance@length=\skip111
-\mdf@userdefinedwidth@length=\skip112
-\mdf@needspace@length=\skip113
-\mdf@frametitleaboveskip@length=\skip114
-\mdf@frametitlebelowskip@length=\skip115
-\mdf@frametitlerulewidth@length=\skip116
-\mdf@frametitleleftmargin@length=\skip117
-\mdf@frametitlerightmargin@length=\skip118
-\mdf@shadowsize@length=\skip119
-\mdf@extratopheight@length=\skip120
-\mdf@subtitleabovelinewidth@length=\skip121
-\mdf@subtitlebelowlinewidth@length=\skip122
-\mdf@subtitleaboveskip@length=\skip123
-\mdf@subtitlebelowskip@length=\skip124
-\mdf@subtitleinneraboveskip@length=\skip125
-\mdf@subtitleinnerbelowskip@length=\skip126
-\mdf@subsubtitleabovelinewidth@length=\skip127
-\mdf@subsubtitlebelowlinewidth@length=\skip128
-\mdf@subsubtitleaboveskip@length=\skip129
-\mdf@subsubtitlebelowskip@length=\skip130
-\mdf@subsubtitleinneraboveskip@length=\skip131
-\mdf@subsubtitleinnerbelowskip@length=\skip132
+\mdf@templength=\skip94
+\c@mdf@globalstyle@cnt=\count395
+\mdf@skipabove@length=\skip95
+\mdf@skipbelow@length=\skip96
+\mdf@leftmargin@length=\skip97
+\mdf@rightmargin@length=\skip98
+\mdf@innerleftmargin@length=\skip99
+\mdf@innerrightmargin@length=\skip100
+\mdf@innertopmargin@length=\skip101
+\mdf@innerbottommargin@length=\skip102
+\mdf@splittopskip@length=\skip103
+\mdf@splitbottomskip@length=\skip104
+\mdf@outermargin@length=\skip105
+\mdf@innermargin@length=\skip106
+\mdf@linewidth@length=\skip107
+\mdf@innerlinewidth@length=\skip108
+\mdf@middlelinewidth@length=\skip109
+\mdf@outerlinewidth@length=\skip110
+\mdf@roundcorner@length=\skip111
+\mdf@footenotedistance@length=\skip112
+\mdf@userdefinedwidth@length=\skip113
+\mdf@needspace@length=\skip114
+\mdf@frametitleaboveskip@length=\skip115
+\mdf@frametitlebelowskip@length=\skip116
+\mdf@frametitlerulewidth@length=\skip117
+\mdf@frametitleleftmargin@length=\skip118
+\mdf@frametitlerightmargin@length=\skip119
+\mdf@shadowsize@length=\skip120
+\mdf@extratopheight@length=\skip121
+\mdf@subtitleabovelinewidth@length=\skip122
+\mdf@subtitlebelowlinewidth@length=\skip123
+\mdf@subtitleaboveskip@length=\skip124
+\mdf@subtitlebelowskip@length=\skip125
+\mdf@subtitleinneraboveskip@length=\skip126
+\mdf@subtitleinnerbelowskip@length=\skip127
+\mdf@subsubtitleabovelinewidth@length=\skip128
+\mdf@subsubtitlebelowlinewidth@length=\skip129
+\mdf@subsubtitleaboveskip@length=\skip130
+\mdf@subsubtitlebelowskip@length=\skip131
+\mdf@subsubtitleinneraboveskip@length=\skip132
+\mdf@subsubtitleinnerbelowskip@length=\skip133
 
 (c:/texlive/2017/texmf-dist/tex/latex/mdframed/md-frame-0.mdf
 File: md-frame-0.mdf 2013/07/01\ 1.9b: md-frame-0
@@ -2278,34 +2285,34 @@ File: md-frame-0.mdf 2013/07/01\ 1.9b: md-frame-0
 \mdf@splitbox@one=\box122
 \mdf@splitbox@two=\box123
 \mdf@splitbox@save=\box124
-\mdfsplitboxwidth=\skip133
-\mdfsplitboxtotalwidth=\skip134
-\mdfsplitboxheight=\skip135
-\mdfsplitboxdepth=\skip136
-\mdfsplitboxtotalheight=\skip137
-\mdfframetitleboxwidth=\skip138
-\mdfframetitleboxtotalwidth=\skip139
-\mdfframetitleboxheight=\skip140
-\mdfframetitleboxdepth=\skip141
-\mdfframetitleboxtotalheight=\skip142
-\mdffootnoteboxwidth=\skip143
-\mdffootnoteboxtotalwidth=\skip144
-\mdffootnoteboxheight=\skip145
-\mdffootnoteboxdepth=\skip146
-\mdffootnoteboxtotalheight=\skip147
-\mdftotallinewidth=\skip148
-\mdfboundingboxwidth=\skip149
-\mdfboundingboxtotalwidth=\skip150
-\mdfboundingboxheight=\skip151
-\mdfboundingboxdepth=\skip152
-\mdfboundingboxtotalheight=\skip153
-\mdf@freevspace@length=\skip154
-\mdf@horizontalwidthofbox@length=\skip155
-\mdf@verticalmarginwhole@length=\skip156
-\mdf@horizontalspaceofbox=\skip157
-\mdfsubtitleheight=\skip158
-\mdfsubsubtitleheight=\skip159
-\c@mdfcountframes=\count395
+\mdfsplitboxwidth=\skip134
+\mdfsplitboxtotalwidth=\skip135
+\mdfsplitboxheight=\skip136
+\mdfsplitboxdepth=\skip137
+\mdfsplitboxtotalheight=\skip138
+\mdfframetitleboxwidth=\skip139
+\mdfframetitleboxtotalwidth=\skip140
+\mdfframetitleboxheight=\skip141
+\mdfframetitleboxdepth=\skip142
+\mdfframetitleboxtotalheight=\skip143
+\mdffootnoteboxwidth=\skip144
+\mdffootnoteboxtotalwidth=\skip145
+\mdffootnoteboxheight=\skip146
+\mdffootnoteboxdepth=\skip147
+\mdffootnoteboxtotalheight=\skip148
+\mdftotallinewidth=\skip149
+\mdfboundingboxwidth=\skip150
+\mdfboundingboxtotalwidth=\skip151
+\mdfboundingboxheight=\skip152
+\mdfboundingboxdepth=\skip153
+\mdfboundingboxtotalheight=\skip154
+\mdf@freevspace@length=\skip155
+\mdf@horizontalwidthofbox@length=\skip156
+\mdf@verticalmarginwhole@length=\skip157
+\mdf@horizontalspaceofbox=\skip158
+\mdfsubtitleheight=\skip159
+\mdfsubsubtitleheight=\skip160
+\c@mdfcountframes=\count396
 
 ****** mdframed patching \endmdf@trivlist
 
@@ -2321,10 +2328,10 @@ File: md-frame-0.mdf 2013/07/01\ 1.9b: md-frame-0
 . 
 . Defining command \mdtheorem with sig. ' O{} m o m o ' on line 701.
 .................................................
-\mdf@envdepth=\count396
-\c@mdf@env@i=\count397
-\c@mdf@env@ii=\count398
-\c@mdf@zref@counter=\count399
+\mdf@envdepth=\count397
+\c@mdf@env@i=\count398
+\c@mdf@env@ii=\count399
+\c@mdf@zref@counter=\count400
 Package zref Info: New property: mdf@pagevalue on input line 895.
 )
 Package csquotes Info: Checking for multilingual support...
@@ -2413,17 +2420,17 @@ LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/n' will be
 
 (c:/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
-\scratchcounter=\count400
+\scratchcounter=\count401
 \scratchdimen=\dimen326
 \scratchbox=\box125
-\nofMPsegments=\count401
-\nofMParguments=\count402
-\everyMPshowfont=\toks61
-\MPscratchCnt=\count403
+\nofMPsegments=\count402
+\nofMParguments=\count403
+\everyMPshowfont=\toks62
+\MPscratchCnt=\count404
 \MPscratchDim=\dimen327
-\MPnumerator=\count404
-\makeMPintoPDFobject=\count405
-\everyMPtoPDFconversion=\toks62
+\MPnumerator=\count405
+\makeMPintoPDFobject=\count406
+\everyMPtoPDFconversion=\toks63
 ) (c:/texlive/2017/texmf-dist/tex/latex/oberdiek/epstopdf-base.sty
 Package: epstopdf-base 2016/05/15 v2.6 Base part for package epstopdf
 
@@ -2481,7 +2488,7 @@ Package caption Info: End \AtBeginDocument code.
 * \@reversemarginfalse
 * (1in=72.27pt=25.4mm, 1cm=28.453pt)
 
-\c@lstlisting=\count406
+\c@lstlisting=\count407
 \AtBeginShipoutBox=\box126
 Package hyperref Info: Link coloring OFF on input line 234.
 (c:/texlive/2017/texmf-dist/tex/latex/hyperref/nameref.sty
@@ -2490,7 +2497,7 @@ Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 (c:/texlive/2017/texmf-dist/tex/generic/oberdiek/gettitlestring.sty
 Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
-\c@section@level=\count407
+\c@section@level=\count408
 )
 LaTeX Info: Redefining \ref on input line 234.
 LaTeX Info: Redefining \pageref on input line 234.
@@ -3012,17 +3019,17 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 376.
  [16]
-Overfull \hbox (26.73325pt too wide) in paragraph at lines 376--393
+Overfull \hbox (26.73318pt too wide) in paragraph at lines 376--393
 [][] 
  []
 
 
-Overfull \hbox (31.08458pt too wide) in paragraph at lines 411--428
+Overfull \hbox (31.08452pt too wide) in paragraph at lines 411--428
 [][] 
  []
 
 
-Overfull \hbox (7.95062pt too wide) in paragraph at lines 429--445
+Overfull \hbox (7.95056pt too wide) in paragraph at lines 429--445
 [][] 
  []
 
@@ -3038,7 +3045,7 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 446.
  [17]
-Overfull \hbox (7.95062pt too wide) in paragraph at lines 446--462
+Overfull \hbox (7.95056pt too wide) in paragraph at lines 446--462
 [][] 
  []
 
@@ -3055,10 +3062,6 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 508.
 
-Package natbib Warning: Citation `mpps06' on page 18 undefined on input line 51
-0.
-
-
 Underfull \vbox (badness 2662) has occurred while \output is active []
 
 Package babel Info: Redefining ngerman shorthand "|
@@ -3070,22 +3073,19 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 511.
  [18]
-
-Package natbib Warning: Citation `vs93' on page 19 undefined on input line 528.
-
-
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 530.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 530.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 534.
+(babel)             in language  on input line 533.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 534.
+(babel)             in language  on input line 533.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 534.
+(babel)             in language  on input line 533.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 534.
+(babel)             in language  on input line 533.
+
 [19]
 Package mdframed Info: mdframed works in twoside mode on input line 537.
 Package mdframed Info: mdframed detected package amsthm 
@@ -3095,46 +3095,82 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 537.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 537.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 549.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 549.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 551.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 551.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 553.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 553.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 556.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 556.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 558.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 558.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/b/n' will be
+(Font)              scaled to size 10.0pt on input line 550.
 
-Underfull \vbox (badness 3536) has occurred while \output is active []
+Underfull \hbox (badness 10000) in paragraph at lines 550--550
+[][]|\T1/SourceSansPro-LF/m/n/10 Je-der Ta-bel-len-ein-trag $\OML/ntxmi/m/it/10
+ A[]$
+ []
 
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 561.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 561.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 561.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 561.
- [20]
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 561.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 561.
+
+Package wrapfig Warning: Stationary wraptable forced to float on input line 554
+.
+
+
+Package wrapfig Warning: Stationary wraptable forced to float on input line 556
+.
+
+
+Package wrapfig Warning: Stationary wraptable forced to float on input line 558
+.
+
+
+Underfull \hbox (badness 1655) in paragraph at lines 562--563
+\T1/SourceSansPro-LF/m/n/10.95 denn die \T1/SourceSansPro-LF/m/it/10.95 Über-la
+pp-ge-wicht \T1/SourceSansPro-LF/m/n/10.95 zwi-schen $\OML/ntxmi/m/it/10.95 A[]
+$ \T1/SourceSansPro-LF/m/n/10.95 und
+ []
+
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 564.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 564.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 567.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 567.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 567.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 567.
+[20]
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 612.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 612.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 614.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 614.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 617.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 617.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 617.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 617.
+ [21]
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 617.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 617.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 619.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 619.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 622.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 622.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 625.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 625.
 )
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 253.
@@ -3145,24 +3181,10 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 253.
 
-[21]
+[22]
 \openout2 = `chapter/min-cut.aux'.
 
  (./chapter/min-cut.tex
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
- [22
-
-
-
-
-]
 chapter 4.
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
@@ -3213,7 +3235,12 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 255.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 255.
- [23]
+ [23
+
+
+
+
+]
 \openout2 = `chapter/Programmierung.aux'.
 
  (./chapter/Programmierung.tex
@@ -3381,15 +3408,13 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 268.
  [33]
-
-Package natbib Warning: There were undefined citations.
-
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 270.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 270.
-(./Hauptdokument.aux (./chapter/Titelblatt.aux) (./chapter/Einleitung.aux)
-(./chapter/DP.aux) (./chapter/dialign.aux) (./chapter/min-cut.aux)
-(./chapter/Programmierung.aux) (./chapter/Validierung.aux) (./chapter/Fazit.aux
-) (./chapter/EidesstattlicheErklaerung.aux))
+ (./Hauptdokument.aux (./chapter/Titelblatt.aux)
+(./chapter/Einleitung.aux) (./chapter/DP.aux) (./chapter/dialign.aux)
+(./chapter/min-cut.aux) (./chapter/Programmierung.aux)
+(./chapter/Validierung.aux) (./chapter/Fazit.aux)
+(./chapter/EidesstattlicheErklaerung.aux))
 Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 270.
 Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 270.
 
@@ -3399,13 +3424,13 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 43929 strings out of 492982
- 836091 string characters out of 6136226
- 1082705 words of memory out of 5000000
- 46431 multiletter control sequences out of 15000+600000
- 797909 words of font info for 189 fonts, out of 8000000 for 9000
+ 43997 strings out of 492982
+ 837045 string characters out of 6136226
+ 1089300 words of memory out of 5000000
+ 46488 multiletter control sequences out of 15000+600000
+ 808305 words of font info for 194 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 73i,14n,95p,10479b,957s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 73i,16n,95p,10479b,957s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2017/texmf-dist/fonts/enc/dvips/nimbus15/nimbus15mono-ec.enc}{c:/
 texlive/2017/texmf-dist/fonts/enc/dvips/sourcesanspro/a_sd7igg.enc}{c:/texlive/
 2017/texmf-dist/fonts/enc/dvips/sourcesanspro/a_mhce32.enc}{c:/texlive/2017/tex
@@ -3431,10 +3456,10 @@ yb.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/txfonts/txsyc.pfb><c:/tex
 live/2017/texmf-dist/fonts/type1/public/newtx/txsys.pfb><c:/texlive/2017/texmf-
 dist/fonts/type1/urw/times/utmri8a.pfb><c:/texlive/2017/texmf-dist/fonts/type1/
 public/nimbus15/zcoN-Regular.pfb>
-Output written on Hauptdokument.pdf (37 pages, 370724 bytes).
+Output written on Hauptdokument.pdf (37 pages, 376060 bytes).
 PDF statistics:
- 746 PDF objects out of 1000 (max. 8388607)
- 661 compressed objects within 7 object streams
- 142 named destinations out of 1000 (max. 500000)
+ 756 PDF objects out of 1000 (max. 8388607)
+ 671 compressed objects within 7 object streams
+ 146 named destinations out of 1000 (max. 500000)
  538 words of extra memory for PDF output out of 10000 (max. 10000000)
 

@@ -531,26 +531,83 @@ Benutzt man \emph{Überlappgewichte}, muss man jedoch die Zusammensetzung der Se
 
 Bei DIALIGN	werden naiv alle \emph{Fragmente} der paarweisen \emph{Alignments} miteinander verglichen und auf Überschneidungen untersucht. Da es in den $\oh(n^2)$ \emph{Alignments} zwischen $n$ Sequenzen jeweils bis zu $\oh(L)$ \emph{Fragmente} gibt, kommt man so auf eine Gesamtlaufzeit von $\oh(n^4\cdot L^2)$ \citep{m99}.
 
-Untersucht man das Problem jedoch genauer, stellt man fest, dass man für ein \emph{Fragment} $f^{k,l}$ gar nicht alle \emph{Fragmente} auf Überlappungen überprüfen muss, sondern nur die, an denen eine der beiden Sequenzen $S_k$ oder $S_l$ unseres \emph{Fragments} beteiligt ist. Außerdem müssen gar nicht \emph{Fragmente} eines anderen paarweisen \emph{Alignments} betrachtet werden, sondern wir können in sortierten Fragmentketten durch die Start- und Endpunkte sehr genau abschätzen welche für Überlappungen in Frage kommen.
+Untersucht man das Problem jedoch genauer, stellt man fest, dass man für ein \emph{Fragment} $f^{k,l}$ gar nicht alle \emph{Fragmente} auf Überlappungen überprüfen muss, sondern nur die, an denen eine der beiden Sequenzen $S_k$ oder $S_l$ unseres \emph{Fragments} beteiligt ist. Außerdem müssen wir nicht jedes \emph{Fragment} eines anderen paarweisen \emph{Alignments} betrachten, sondern wir können in sortierten Fragmentketten durch die Start- und Endpunkte sehr genau abschätzen welche für Überlappungen in Frage kommen.
 
 \begin{satz}
 	Für eine Menge $S$ von n Sequenzen und eine Menge $F$ von paarweisen \emph{Fragmenten} zwischen diesen Sequenzen, lassen sich in $\oh(n^3\cdot L)$ Zeit die \emph{Überlappgewichte} berechnen.
 \end{satz}
 
+
+\begin{wraptable}{r}{6cm}
+	\begin{tabular}{r|cccc}
+		2 & $A_{2,1}$ & & & \\
+		3 & $A_{3,1}$ & $A_{3,2}$ & & \\
+		$\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & \\
+		n & $A_{n,1}$ & $A_{n,2}$ & $\dots$ & $A_{n,n-1}$ \\
+		\hline
+		\diagbox[dir=NE]{i}{j} & 1 & 2 & $\dots$ & n-1
+	\end{tabular}
+	\caption{Jeder Tabelleneintrag $A_{i,j}$ enthält Liste von \emph{Fragmenten}}
+\end{wraptable}
+
 \begin{beweis}
 	Zwischen den n Sequenzen gibt es ${{n}\choose{2}} \in \oh(n^2)$ paarweise \emph{Alignments}. Wir gehen davon aus, dass der vorherige Schritt unseres Verfahrens diese in einer Tabelle $A$ gespeichert hat, wobei $A_{i,j}$ die \emph{Fragmente} des paarweisen \emph{Alignments} zwischen $S_i$ und $S_j$ in einer sortierten Liste enthält. Das können wie o.B.d.A. annehmen, weil der Algorithmus diese ohnehin in sortierter Reihenfolge berechnet.
 	
-	Betrachten wir ein \emph{Alignment} zwischen den Sequenzen $S_i$ und $S_k$. Dann müssen wir für die \emph{Überlappgewichte} nur die Einträge $A_{i,k}$ und $A_{l,j}$ mit $1 \leq k,l \leq n$ betrachten, denn es sind nur die \emph{Alignments} relevant, bei denen eine der Sequenzen übereinstimmt. Das sind alle Listen, die in der selben Spalte oder Zeile unserer Tabelle stehen, also $\oh(n)$ viele.
+	Betrachten wir ein \emph{Alignment} zwischen den Sequenzen $S_i$ und $S_k$. Dann müssen wir für die \emph{Überlappgewichte} nur die Einträge $A_{i,k}$ und $A_{l,j}$ mit $1 \leq k,l \leq n$ betrachten, denn es sind nur die \emph{Alignments} relevant, bei denen eine der Sequenzen übereinstimmt. In einer vollständigen Tabelle sind das alle Listen, die in der selben Spalte oder Zeile stehen, also $\oh(n)$ viele.
 	
 	Seien $A_{i,k}$ und $A_{k,j}$ zwei \emph{Alignments} von denen wir die Überlappgewichte berechnen wollen. Dazu müssen wir die Überlappung zwischen allen \emph{Fragmenten} in $S_k$ bestimmen. Dies können wir in linearer Zeit machen, indem wir parallel über die beiden sortierten Listen traversieren und anhand der Start- und Endpunkte in $S_k$ die impliziten \emph{Fragmente} zwischen $S_i$ und $S_j$ bestimmen, sowie die Gewichte der \emph{Fragmente} aktualisieren. Dafür benötigen wir nur $\oh(L)$ Zeit, weil wir einmalig jedes Element der beiden Listen betrachten, es bis zu $\oh(L)$ \emph{Fragmente} pro \emph{Alignment} gibt und jedes von diesen in der Länge durch $l_{\max} \in \oh(1)$ beschränkt ist.
 	Insgesamt haben wir also $\oh(n^2)$ paarweise \emph{Alignments} für die mit jeweils $\oh(n)$ anderen \emph{Alignments} \emph{Überlappgewichte} berechnet werden müssen, was jeweils $\oh(L)$ Zeit kostet. Es folgt die Gesamtlaufzeit von $\oh(n^3\cdot L)$.
 \end{beweis}
 
-Genau genommen brauchen wir keine quadratische Tabelle, weil der Eintrag $A_{i,j}$ aus Symmetriegründen identisch zu $A_{j,i}$ ist. Auch die Diagonale können wir uns sparen, denn das alignieren einer Sequenz mit sich selbst ist unnötig. Des Weiteren kann man sich beim obigen Algorithmus noch die Hälfte des Aufwands sparen, denn die \emph{Überlappgewicht} zwischen $A_{i,k}$ und $A_{k,j}$ müssen wir nicht doppelt berechnen, sondern können sie gleich zu den Gewichten in beiden \emph{Alignments} addieren. Obgleich das nichts an der asymptotischen Laufzeit ändert, macht es in der Praxis einen Unterschied.
- 
-$\oh(n^3*l*log l)$ 
+Genau genommen brauchen wir keine quadratische Tabelle, weil der Eintrag $A_{i,j}$ aus Symmetriegründen identisch zu $A_{j,i}$ ist. Auch die Diagonale können wir uns sparen, denn das alignieren einer Sequenz mit sich selbst ist unnötig. Des Weiteren kann man sich beim obigen Algorithmus noch die Hälfte des Aufwands sparen, denn die \emph{Überlappgewicht} zwischen $A_{i,k}$ und $A_{k,j}$ müssen wir nicht doppelt berechnen, sondern können sie gleich zu den Gewichten in beiden \emph{Alignments} addieren. Obgleich das nichts an der asymptotischen Laufzeit ändert, macht es in der Praxis einen Unterschied. 
 
 \subsection{Beispiel Überlappgewichte}
+
+Widmen wir uns den \emph{Überlappgewichten} an unserem Beispiel und betrachten dazu das \emph{Alignment} zwischen den Sequenzen $S_1$ und $S_3$. Um das Gewicht zu aktualisieren, müssen wir alle \emph{Alignments} auf Überlappungen überprüfen, in denen eine der beiden Sequenzen vorkommt. 
+
+\begin{wraptable}{r}{6cm}
+	\begin{tabular}{r|ccc}
+		2 & \cellcolor{red} $A_{2,1}$ & & \\
+		3 & $A_{3,1}$ & \cellcolor{red} $A_{3,2}$ & \\
+		4 & \cellcolor{red} $A_{4,1}$ & $A_{4,2}$ & \cellcolor{red} $A_{4,3}$ \\
+		\hline
+		\diagbox[dir=NE]{i}{j} & 1 & 2 & 3 \\
+	\end{tabular}
+	\caption{Auf Überlappungen zu überprüfende \emph{Alignments}}
+\end{wraptable}
+
+Da unsere Tabelle nicht vollständig ist, reicht es nicht die Einträge der selben Spalte und Zeile zu überprüfen, weil diese unter Umständen nicht vollständig ist. Stattdessen müssen wir alle Einträge in der ersten und dritten Spalte oder Zeile betrachten. Dann gehen wir alle \emph{Fragmente} der Reihe nach durch und gucken anhand der Start- und Endpunkte in der gemeinsamen Sequenz, ob es Überschneidungen gibt. Falls ja, bestimmen wir diese und addieren das Gewicht zu dem unseres \emph{Fragments}.
+
+Zur Erinnerung hier nochmal der bisherige Stand mit den paarweisen \emph{Alignments}:
+
+\begin{tabular}{r|c|c||r|c|c}
+	Sequenzen & \emph{Alignments} & \emph{Score} & Sequenzen & \emph{Alignments} & \emph{Score}\\
+	\hline
+	1 & \texttt{adgTCTCA---} & \multirow{2}{*}{10} & 1 & \texttt{aDGTC---TCa} & \multirow{2}{*}{7}\\
+	3 & \texttt{---TATCAdgg} & & 4 & \texttt{-DGTCadaTC-} \\
+	\hline
+	2 & \texttt{-gTCADctca}  & \multirow{2}{*}{8} & 2 & \texttt{-GTCADCTCa} & \multirow{2}{*}{16}\\
+	3 & \texttt{taTCADgg--}  & &4 & \texttt{dGTCADATC-} & \\
+	\hline
+	3 & \texttt{taTCADgg-}   & \multirow{2}{*}{8} & 1 & \texttt{adGT---CTCA}     \\
+	4 & \texttt{dgTCADatc}   &                    & 2 & \texttt{--GTcadCTCA} 
+\end{tabular}
+
+Wie wir sehen enthält das von uns betrachtete \emph{Alignment} nur das eine Fragment $f_{8,5,5}$ mit drei Übereinstimmungen und einer Abweichung. Als erstes überprüfen wir die Überlappung mit $A_{2,1}$. Beide haben den gemeinsamen Abschnitt \texttt{CTCA} in $S_1$, woraus sich das neue \emph{Fragment} ${\texttt{CTCA}}\choose{\texttt{ATCA}}$ zwischen $S_2$ und $S_3$ ergibt. Dieses hat drei Übereinstimmungen, eine Abweichung und somit ein Gewicht von 8. In der Folge addieren wir diese Zahl zum Gewicht von $f_{8,5,5}^{1,3}$ und zu dem von $f_{8,9,4}^{1,2}$. Wenn wir diese Anweisungen auch mit und zwischen allen anderen \emph{Alignments} durchführen, kommen wir zu den folgenden \emph{Überlappgewichten}:
+
+\begin{tabular}{r|c|c||r|c|c||r|c|c}
+	Seq. & \emph{Frag.} & \emph{Ü-Gew.} & Seq. & \emph{Frag.} & \emph{Ü-Gew.} & Seq. & \emph{Frag.} & \emph{Ü-Gew.}\\
+	\hline
+	2 & \texttt{GTCADCTC} & \multirow{2}{*}{69} & 1 & \texttt{TCTCA} & \multirow{2}{*}{41} & 1 & \texttt{GT} &\multirow{2}{*}{20} \\
+	4 & \texttt{GTCADATC} &                     & 3 & \texttt{TATCA} &                     & 2 & \texttt{GT} & \\
+	3 & \texttt{TCAD} & \multirow{2}{*}{47} & 1 & \texttt{CTCA} & \multirow{2}{*}{34} & 1 & \texttt{TC} & \multirow{2}{*}{20} \\
+	4 & \texttt{TCAD} &                     & 2 & \texttt{CTCA} &                          & 4 & \texttt{TC} & \\
+	3 & \texttt{TCAD} & \multirow{2}{*}{41} & 1 & \texttt{DGTC} & \multirow{2}{*}{31} &    &   & \\
+    4 & \texttt{TCAD} &                     & 4 & \texttt{DGTC} &                     &    &   & \\
+
+\end{tabular}
+
+Da wir im nächsten Schritt gierig die \emph{Fragmente} für unser multiples \emph{Alignment} basierend auf ihren Gewichten auswählen, wurden die Abschnitte bereits sortiert.
 
 \section{Konsistenz}
 
