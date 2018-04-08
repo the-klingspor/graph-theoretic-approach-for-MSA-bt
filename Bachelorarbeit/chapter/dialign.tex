@@ -604,12 +604,13 @@ Wie wir sehen enthält das von uns betrachtete \emph{Alignment} nur das eine Fra
 	4 & \texttt{TCAD} &                     & 2 & \texttt{CTCA} &                          & 4 & \texttt{TC} & \\
 	3 & \texttt{TCAD} & \multirow{2}{*}{41} & 1 & \texttt{DGTC} & \multirow{2}{*}{31} &    &   & \\
     4 & \texttt{TCAD} &                     & 4 & \texttt{DGTC} &                     &    &   & \\
-
 \end{tabular}
 
-Da wir im nächsten Schritt gierig die \emph{Fragmente} für unser multiples \emph{Alignment} basierend auf ihren Gewichten auswählen, wurden die Abschnitte bereits sortiert.
+Da wir im nächsten Schritt die \emph{Fragmente} für unser multiples \emph{Alignment} basierend auf ihren Gewichten gierig auswählen, wurden die Abschnitte bereits sortiert. Ein Algorithmus wird als \emph{gierig} bezeichnet, wenn er eine Entscheidung lokal optimal trifft und danach nicht wieder ändert. In unserem Fall bedeutet das, dass die \emph{Fragmente} mit höheren Gewichten früher gewählt werden und wir sie selbst dann nicht wieder aus unserem multiplen \emph{Alignment} entfernen, wenn sie durch \emph{Inkonsistenzen} verhindern, dass andere, zusammen möglicherweise bessere \emph{Fragment} gewählt werden können. Durch diese radikale Vorgehensweise haben gierige Algorithmen oft gute Laufzeiten, liefern aber nicht immer die bestmöglichen Ergebnisse. Zu bekannten Vertretern dieses Paradigmas gehören beispielsweise der Algorithmus von Dijkstra zur Bestimmung der kürzesten Pfade aus einem einzelnen Knoten oder die Algorithmen von Prim und Kruskal zur Bestimmung von minimalen Spannbäumen.
 
 \section{Konsistenz}
+
+Die nach ihrem Gewicht sortierten \emph{Fragmente} möchten wir der Reihe nach in unser multiples \emph{Alignment} einfügen, vorausgesetzt, das gerade gewählte ist nicht \emph{inkonsistent} zu den zuvor integrierten. 
 
 \subsection{Laufzeit}
 $\oh(n^3*l + n^2*l^2)$

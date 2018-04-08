@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.3)  7 APR 2018 21:10
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.3)  8 APR 2018 14:09
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -3136,41 +3136,38 @@ Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 567.
 [20]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 612.
+(babel)             in language  on input line 610.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 612.
+(babel)             in language  on input line 610.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 614.
+(babel)             in language  on input line 610.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 614.
-
-Underfull \vbox (badness 10000) has occurred while \output is active []
-
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 617.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 617.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 617.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 617.
+(babel)             in language  on input line 610.
  [21]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 617.
+(babel)             in language  on input line 611.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 617.
+(babel)             in language  on input line 611.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 619.
+(babel)             in language  on input line 615.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 619.
+(babel)             in language  on input line 615.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 622.
+(babel)             in language  on input line 618.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 622.
+(babel)             in language  on input line 618.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 625.
+(babel)             in language  on input line 620.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 625.
+(babel)             in language  on input line 620.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 623.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 623.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 626.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 626.
 )
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 253.
@@ -3180,8 +3177,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 253.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 253.
-
-[22]
+ [22]
 \openout2 = `chapter/min-cut.aux'.
 
  (./chapter/min-cut.tex
@@ -3456,7 +3452,7 @@ yb.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/txfonts/txsyc.pfb><c:/tex
 live/2017/texmf-dist/fonts/type1/public/newtx/txsys.pfb><c:/texlive/2017/texmf-
 dist/fonts/type1/urw/times/utmri8a.pfb><c:/texlive/2017/texmf-dist/fonts/type1/
 public/nimbus15/zcoN-Regular.pfb>
-Output written on Hauptdokument.pdf (37 pages, 376060 bytes).
+Output written on Hauptdokument.pdf (37 pages, 377327 bytes).
 PDF statistics:
  756 PDF objects out of 1000 (max. 8388607)
  671 compressed objects within 7 object streams
