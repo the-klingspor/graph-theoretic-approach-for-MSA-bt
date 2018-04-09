@@ -1,5 +1,12 @@
-\begin{thebibliography}{11}
+\begin{thebibliography}{12}
 \providecommand{\natexlab}[1]{#1}
+
+\bibitem[{Abdedda\"{i}m(1997)}]{a97}
+Abdedda\"{i}m, S.
+\newblock {On Incremental Computation of Transisitve Closure and Greedy
+  Alignment}.
+\newblock In \emph{Pattern Matching Algorithms}, Seiten 168--179. Oxford
+  University Press (1997).
 
 \bibitem[{Abdedda\"{i}m und Morgenstern(2000)}]{am00}
 Abdedda\"{i}m, S. und Morgenstern, B.

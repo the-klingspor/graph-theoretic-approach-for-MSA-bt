@@ -379,7 +379,8 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	\hline \hline
 	\diagbox{i}{j} & 3 & 4 & 3 & 4 & Hier beginnende \emph{Fragmente} und Kommentare \\
 	\hline
-	\multirow{2}{*}{0} & \multirow{2}{*}{0} & \multirow{2}{*}{0} & \multirow{2}{*}{NIL} & \multirow{2}{*}{NIL} & $F_5[2]=\{f_{2,5,2},W(f)=2,P(f)=\text{NIL}\}$, $F_7[4]=\{f_{4,7,4},W(f)=4,P(f)=\text{NIL}\}$,\\
+	\multirow{3}{*}{0} & \multirow{3}{*}{0} & \multirow{3}{*}{0} & \multirow{3}{*}{NIL} & \multirow{3}{*}{NIL} & $F_5[2]=\{f_{2,5,2},W(f)=2,P(f)=\text{NIL}\}$,\\ 
+	  &   &   &     &     & $F_7[4]=\{f_{4,7,4},W(f)=4,P(f)=\text{NIL}\}$,\\
 	  &   &   &     &     & $F_8[5]=\{f_{5,8,5},W(f)=7,P(f)=\text{NIL}\}$ \\
 	1 & " & " &  "  &  "  & \\
 	2 & " & " &  "  &  "  & \\
@@ -419,7 +420,8 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	2 & 2 & 2 &  $f_{2,5,2}$  &  $f_{2,5,2}$  & \\
 	3 & " & " &  "  &  "  & \\
 	4 & " & " &  $f_{4,2,2}$  &  $f_{4,2,2}$  & \\
-	\multirow{2}{*}{5} & \multirow{2}{*}{5} & \multirow{2}{*}{5} &  \multirow{2}{*}{$f_{5,3,3}$}  & \multirow{2}{*}{$f_{5,3,3}$}  & $F_7[6]=\{f_{6,7,2},W(f)=4,P(f)=f_{4,2,2}\}$,$F_8[7]=\{f_{7,8,3},W(f)=7,P(f)=f_{4,2,2}\}$\\
+	\multirow{3}{*}{5} & \multirow{3}{*}{5} & \multirow{3}{*}{5} &  \multirow{3}{*}{$f_{5,3,3}$}  & \multirow{3}{*}{$f_{5,3,3}$}  & $F_7[6]=\{f_{6,7,2},W(f)=4,P(f)=f_{4,2,2}\}$, \\
+	  &   &   &     &     & $F_8[7]=\{f_{7,8,3},W(f)=7,P(f)=f_{4,2,2}\}$ \\
 	  &   &   &     &     & $F_9[8]=\{f_{9,8,4},W(f)=10,P(f)=f_{4,2,2}\}$ \\
 	6 & " & " &  "  &  "  & \\
 	7 & " & " &  "  &  "  & \\
@@ -437,7 +439,7 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	2 & 2 & 2 &  $f_{2,5,2}$  &  $f_{2,5,2}$  & \\
 	3 & " & " &  "  &  "  & \\
 	4 & 2 & \textcolor{red}{4} &  $f_{4,2,2}$  &  \textcolor{red}{$f_{4,7,4}$} & \\
-	5 & 5 & 5 &  $f_{5,3,3}$  &  $f_{5,3,3}$  & $F_8[7]$ und $F_9[8]$ nicht aktualisiert; \emph{Score} zwar erreicht, aber nicht übertroffen\\
+	5 & 5 & 5 &  $f_{5,3,3}$  &  $f_{5,3,3}$  & $F_8[7]$ und $F_9[8]$ nicht aktualisiert; \emph{Score} erreicht, aber nicht übertroffen\\
 	6 & " & " &  "  &  "  & \\
 	7 & " & " &  "  &  "  & \\
 	8 & " & " &  "  &  "  & 
@@ -632,14 +634,133 @@ Das finale \emph{Alignment} $\mathcal{A}$ ist dann genau das resultierende grö�
 	\begin{equation}
 	\begin{split}
 	\underline{b}_\mathcal{A}(s,i) &= \min(p: (s,[i,p])\: \text{ist \emph{konsistent} zu} \mathcal{A}) \\
-	\overline{b}_\mathcal{A}(s,i) &= \min(p: (s,[i,p])\: \text{ist \emph{konsistent} zu} \mathcal{A})
+	\overline{b}_\mathcal{A}(s,i) &= \max(p: (s,[i,p])\: \text{ist \emph{konsistent} zu} \mathcal{A})
 	\end{split} 
 	\end{equation}
 	Diese beiden \emph{Stellen} nennen wir die \emph{Konsistenzgrenzen} von $s$ in $S_i$. 
 \end{definition}
 
-In der ersten Version von DIALIGN wurden diese Konsistenzgrenzen für alle \emph{Stellen} gespeichert und jedes mal aktualisiert, wenn eine neue Sequenz zum multiplen \emph{Alignment} hinzugefügt wurde.
- 
+In der ersten Version von DIALIGN wurden diese Konsistenzgrenzen für alle \emph{Stellen} gespeichert und jedes mal aktualisiert, wenn eine neue Sequenz zum multiplen \emph{Alignment} hinzugefügt wurde \citep{mdw96}. Das bedeutete benötigten Speicherplatz in der Größenordnung $\theta(n^2\cdot L)$, denn für jede \emph{Stelle} aus jeder Sequenz ($\theta(n\cdot L)$ viele) mussten die \emph{Konsistenzgrenzen} für jede der n Sequenzen gespeichert werden. Noch schlechter ist die Laufzeit bei diesem naiven Ansatz, denn im schlimmsten Fall gibt es $\oh(n^2\cdot L)$ \emph{Fragmente}, die der Reihe nach zum \emph{Alignment} hinzugefügt werden, für die jeweils alle $\theta(n\cdot L)$ \emph{Konsistenzgrenzen} überprüft und gegebenenfalls angepasst werden müssen. Es folgt eine Laufzeit von $\oh(n^4\cdot L^2)$, die auch die Gesamtlaufzeit des DIALIGN-Verfahrens dominiert hat \citep{m99}. 
+
+Weil die Laufzeit im Vergleich zu anderen Verfahren, wie beispielsweise Clustal W, sehr schlecht war, entschied man sich den von \cite{a97} veröffentlichten und in der GABIOS-LIB (\enquote{Greedy Alignment of BIOlogical Sequences LIBrary}) implementierten besseren Ansatz auch in DIALIGN	einzubauen. Wie wir im Folgenden sehen werden, ist es möglich das Problem der \emph{Konsistenzgrenzen} durch den Erhalt der transitiven Hülle eines Graphen abzubilden. Dadurch kann man die \emph{Fragmente} deutlich effizienter der Reihe nach in unser multiples \emph{Alignment} einfügen, wodurch sich die praktische Laufzeit in etwa um den Faktor zehn verbessern ließ \citep{am00}. 
+
+\begin{definition}[Transitivitätsgrenzen]
+	Die sogenannten \emph{Transitivitätsgrenzen} erlauben es uns die \emph{Konsistenzgrenzen} als graphtheoretisches Problem zu verstehen. Wir definieren zu unserer \emph{Stelle} $s$ die \emph{Vorgängergrenze} $Pred_{\mathcal{A}}(s,i)$ als die \emph{Stelle} $y$ aus der Sequenz $S_i$, die von allen \emph{Stellen} mit $y \preceq_{\mathcal{A}} s$ am weitesten rechts steht. Analog wird die \emph{Nachfolgergrenze} $Succ_{\mathcal{A}}(s,i)$ als am weitesten links stehende \emph{Stelle} mit $s \preceq_{\mathcal{A}} y$ festgelegt.
+	\begin{equation}
+	\begin{split}
+		Pred_{\mathcal{A}}(s,i) &= \max(p: [i,p] \preceq_{\mathcal{A}} s) \\
+		Succ_{\mathcal{A}}(s,i) &= \min(p: s \preceq_{\mathcal{A}} [i,p])
+	\end{split}
+	\end{equation}
+\end{definition}
+
+Zwischen \emph{Transitivitäts-} und \emph{Konsistenzgrenzen} herrscht ein direkter Zusammenhang. Ist unsere \emph{Stelle} $s$ bereits mit einer anderen aus der Sequenz $S_i$ aligniert, dann gibt es zwischen allen vier Grenzen keinen Unterschied.
+
+\begin{equation}
+	Pred_{\mathcal{A}}(s,i) = Succ_{\mathcal{A}}(s,i) = \underline{b}_\mathcal{A}(s,i) = \overline{b}_\mathcal{A}(s,i) = p
+\end{equation}
+
+Gibt es hingegen keine \emph{Stelle} in $S_i$, die bereits $s$ zugewiesen wurde, dann unterscheiden sich $Pred_{\mathcal{A}}(s,i)$ und $\underline{b}_\mathcal{A}(s,i)$, sowie $Succ_{\mathcal{A}}(s,i)$ und $\overline{b}_\mathcal{A}(s,i)$ jeweils nur um genau eine Position.
+
+\begin{equation}
+\begin{split}
+	Pred_{\mathcal{A}}(s,i) &= \underline{b}_\mathcal{A}(s,i) - 1\\
+	Succ_{\mathcal{A}}(s,i) &= \overline{b}_\mathcal{A}(s,i) + 1
+\end{split}
+\end{equation}
+
+Man kann also sagen, dass \emph{Transitivitätsgrenzen} und \emph{Konsistenzgrenzen} äquivalent sind, denn wenn man das aktuelle \emph{Alignment} kennt, kann man aus dem einen das jeweils andere bestimmen. Daraus folgt auch, dass man mit beiden darstellen kann, ob zwei \emph{Stellen} miteinander alignierbar sind oder nicht. \improvement{Beispiel hinzufügen?}
+
+\scriptsize
+\begin{wrapfigure}{r}{7cm}
+	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
+	& s_1 \arrow[r] & s_2 \arrow[r] & s_3 \arrow[r] & s_4 &  \\
+	s'_1 \arrow[r] & s'_2 \arrow[r] & s_3' \arrow[r] & s_4' \arrow[r] & s_5' \arrow[r] & s_6' \\
+	s_1'' \arrow[r] & s_2'' \arrow[r] & s_3'' \arrow[r] & s_4'' \arrow[r] & s_5'' & 
+	\end{tikzcd}
+	\caption{Graph dreier Sequenzen mit den durch sie induzierten Pfaden}
+\end{wrapfigure}
+\normalsize
+
+In den nächsten beiden Abschnitten zeige ich eine Technik mit der man in konstanter Zeit entscheiden kann, ob zwei \emph{Stellen} miteinander alignierbar sind und einen inkrementellen Algorithmus, der es uns in angemessener Zeit erlaubt ein \emph{Alignment} zwischen zwei \emph{Stellen} in unser multiples \emph{Alignment} hinzuzufügen.
+
+Das wird erreicht, indem wir unseren Stellenraum $\mathcal{S}$ als gerichteten Graph auffassen, in dem die einzelnen \emph{Stellen} Knoten entsprechen und jede Sequenz einen Pfad durch den Graphen darstellt. Jedes mal, wenn eine Zuweisung zwischen zwei \emph{Stellen} ausgewählt wird, fügen wir eine neue Kante zu unserem Graphen hinzu. Ziel ist es in jedem Schritt unseres Verfahrens die transitive Hülle des Graphen zu kennen, denn mit ihr lässt sich entscheiden, ob das \emph{Fragment}, das wir gerade wählen wollen, \emph{konsistent} zum bisherigen \emph{Alignment} ist oder nicht.
+
+\subsection{Berechnung der transitiven Hülle eines gerichteten Graphen}
+
+Sei $G=(V,E)$ ein gerichteter Graph mit einer Menge Knoten $V$ und einer Menge an Kanten $E$ zwischen diesen Knoten. Unter einem Pfad $P$ auf $G$ verstehen wir ein k-Tupel von Knoten $(v_1, \dots, v_k)$, sodass $(v_i, v_{i+1}) \in E \forall 1 \leq i \leq k-1$, also eine Folge von Knoten, die alle direkt durch Kanten miteinander verbunden sind. Dabei nennen wir den Index eines Knotens innerhalb dieses Tupels seine \emph{Position} ($pos(x)$ für $x \in P$).
+
+Die transitive Hülle eines Graphen $G$ ist der Graph $G^*$, in dem es eine Kante $(u,v) \in E^*$ gibt, falls es in $G$ einen Pfad von $u$ nach $v$ gibt. Sollte es $(u,v) \in E^*$ geben, dann nennen wir $u$ den Vorgänger von $v$ und $v$ den Nachfolger von $u$. Diese Vorgänger und Nachfolger sind nicht mit den gleichnamigen Definitionen aus dem Abschnitt über die paarweisen \emph{Alignments} zu verwechseln. Ich habe mich hier an den Begriffen der Quellen orientiert, die den selben Begriff an verschiedenen Stellen verwenden. Da die beiden Bedeutungen des Begriffs aber nur in zueinander disjunkten und klar getrennten Themengebieten vorkommen, hoffe ich hier nicht allzu viel Verwirrung zu stiften. 
+
+Zunächst definieren wir ein paar Variablen für den Kontext dieses Abschnitts: Die Anzahl der Knoten $|V| = \nu$, die der Kanten $|E| = \mu$, die der Kanten in der transitiven Hülle $|E^*| = \mu^*$ und die Anzahl Kanten $\mu_0$, die sich vor dem Hinzufügen von neuen Verbindungen in unserem Graphen befinden. Zuletzt brauchen wir noch $\mu_p$ für die Anzahl der Kanten, über die ein Pfad $P$ traversiert.
+
+Sei im Folgenden eine Menge $\mathcal{P} = \{P_1, \dots, P_k\}$ von Pfaden auf unserem ursprünglichen Graphen gegeben, für die gilt, dass jeder Knoten aus $V$ in genau einem der Pfade vorkommt. Eine solche Menge nennen wir SSDP (\emph{Spanning Set of Disjoint Paths}), also eine Menge von disjunkten Pfaden, die den ganzen Graphen aufspannen. Man kann sich vorstellen, dass man auf unserem Graphen sehr leicht einen solche Menge aufstellen kann, indem man jede einzelne dieser Sequenzen mit ihren Kanten als Pfad dieser Menge auffasst. 
+
+\begin{satz}
+	Es sei ein SSDP mit $k$ disjunkten Pfaden gegeben. Dann lässt sich die transitive Hülle $G^*$ unseres Graphen in $\oh(k^2\cdot(\mu - \mu_0) + \nu \cdot \min\{\nu, (\mu - \mu_p)\})$ Zeit und mit $\oh(k\cdot \nu)$ Speicherplatz erhalten, nachdem Kanten zu ihm hinzugefügt wurden.
+\end{satz}
+
+Für einen Knoten $x$ sei $P(x)$ das Tupel, das in jedem Eintrag $P(x)[i]$ für $1\leq i \leq k$ die Anzahl an Vorgängern von $x$ im Pfad $P_i$ angibt. In anderen Worten ist $P(x)[i]$ die maximale Position eines Vorgängers in $P_i$. Analog definieren wir $S(x)$, wobei  $S(x)[i]$ der minimale Nachfolger von $x$ in $S_i$ ist. Wie man sich denken kann, entsprechen $S(x)$ und $P(x)$ genau unseren \emph{Transitivitätsgrenzen} aus dem Kontext unseres \emph{Alignments} und wir werden diese Begriffe synonym verwenden. Gibt es Vorgänger oder Nachfolger nicht, setzen wir diese Werte auf 0 beziehungsweise die Länge des Pfads, um den es geht, addiert mit eins.
+
+Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $pos(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $pos(y) \geq P(x)[j]$. Wie man sieht ist es also möglich die transitive Hülle auf $\oh(k \cdot \nu)$ Speicherplatz zu sichern, wenn man ein SSDP mit k Pfaden hat. Das kann signifikant weniger sein, als die $\oh(\nu^2)$ Kanten, die man im naiven Ansatz speichern muss.
+
+\improvement{Beispiel S(x) und P(x)}
+
+Als nächstes führen wir eine Funktion ein, die die \emph{Transitivitätsgrenzen} nach dem Hinzufügen einer einzelnen Kante aktualisiert. Wollen wir unseren Graphen um mehr als eine Kante ergänzen, fügen wir sie der Reihe nach hinzu und rufen jedes mal inkrementell die Funktion auf. Das ist beispielsweise der Fall, wenn wir ein längeres \emph{Fragment} zu unserem \emph{Alignment} hinzufügen. Im Folgenden seien die transitive Hülle und die \emph{Transitivitätsgrenzen} unseres ursprünglichen Graphen gegeben. Sei außerdem $(x,y)$ die Kante, die wir ergänzen.
+
+Nun wählen wir einen beliebigen, aber festen Knoten $u \in V$, dessen \emph{Transitivitätsgrenzen} wir aktualisieren. $P(u)$ und $S(u)$ bezeichnen dabei die Grenzen vor und $P(u)'$ und $S(u)'$ die Grenzen nach dem Hinzufügen. Als erstes kann man sich überlegen, dass die \emph{Vorgängergrenze} immer nur wachsen kann, während die \emph{Nachfolgergrenze} höchstens sinkt. Des Weiteren kann sich durch eine Kante von $x$ nach $y$ nur die \emph{Vorgängergrenze} von $u$ in einer Sequenz verändern, wenn $u$ ein Nachfolger von $y$ war und die \emph{Nachfolgergrenze}, wenn es ein Vorgänger von $x$ war. Im ersten Fall, wählt man dann das Maximum der beiden möglichen Werte aus und in letzterem das Minimum.  
+
+Mit diesen zwei Formeln können wir für ein $u \in P_i$ und jeden Pfad $P_j$ die neuen \emph{Transitivitätsgrenzen} von $u$ bestimmen:
+\begin{equation}
+	P'(u)[j] = \begin{cases}
+			\max\{P(u)[j], P(x)[j]\}, & \text{falls $u$ Nachfolger von y war} \\
+			P(u)[j], & sonst
+		\end{cases}
+\end{equation} 
+
+\begin{equation}
+	S'(u)[j] = \begin{cases}
+			\min\{S(u)[j], S(y)[j]\}, & \text{falls $u$ Vorgänger von x war} \\
+			S(u)[j], & sonst
+		\end{cases}
+\end{equation}
+
+Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die transitive Hülle nicht verändert und dass wir nicht machen müssen. Die obigen Beobachtungen können wir jetzt direkt in einen Algorithmus \textrm{EdgeAddition} münden lassen, indem wir über alle Paarkombinationen von Pfaden iterieren und dabei für jeden in Frage kommenden Knoten im jeweiligen Pfad die obigen Formeln anwenden. Wir wählen dabei die Knoten für die \emph{Nachfolgergrenze} in absteigender und die für die \emph{Vorgängergrenze} in aufsteigender Reihenfolge. Weil wir wissen, dass die \emph{Nachfolgergrenze} immer nur sinken kann und wir die in Frage kommenden Knoten sortiert betrachten, wissen wir, dass wir mit dem aktuellen Schleifendurchlauf aufhören können, wenn die \emph{Nachfolgergrenze} kleiner oder genauso groß ist, wie die von $y$. In diesem Fall würde sie eh nicht mehr aktualisiert werden und wir können uns die Berechnung sparen. Für die \emph{Vorgängergrenzen} gehen wir analog vor.
+
+\begin{algorithm}
+	\caption{EdgeAddition}
+	\label{alg:edgeaddition}
+	\begin{algorithmic}[1]
+		\Require Gerichteter Graph $G$ mit SSDP $P_1, \dots, P_k$
+		\Procedure{EdgeAddition}{$x,y$}
+			\If{$(x,y) \notin E^*$}
+				\For{\textbf{each} Pfad $P_i$}
+					\For{\textbf{each} Pfad $P_j$}
+						\For{\textbf{each} $u$ in $P_i$ startend von $P(x)[i]$ in absteigender Reihenfolge}
+							\If{$S(u)[j] > S(y)[j]$}
+								\State{$S(u)[j]	\gets S(y)[j]$}\Comment{\small{aktualisiere \emph{Nachfolgergrenze}}}
+							\Else
+								\State{breche den aktuellen Schleifendurchlauf für $u$ ab}						
+							\EndIf
+						\EndFor
+					\EndFor
+				\EndFor
+				\For{\textbf{each} Pfad $P_i$}
+					\For{\textbf{each} Pfad $P_j$}
+						\For{\textbf{each} $u$ in $P_i$ startend von $S(y)[i]$ in aufsteigender Reihenfolge}
+							\If{$P(u)[j] < P(x)[j]$}
+								\State{$P(u)[j]	\gets P(x)[j]$}\Comment{\small{aktualisiere \emph{Vorgängergrenze}}}
+							\Else
+								\State{breche den aktuellen Schleifendurchlauf für $u$ ab}						
+							\EndIf
+						\EndFor
+					\EndFor
+				\EndFor
+			\EndIf
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
 \subsection{Laufzeit}
 $\oh(n^3*l + n^2*l^2)$
 
