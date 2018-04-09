@@ -43,7 +43,7 @@ Nachdem wir bis jetzt nur umgangssprachlich mit \emph{Alignments} und \emph{Kons
 \begin{definition}[Alignment und Konsistenz]
 	Ein \emph{Alignment} $\mathcal{A}$ ist eine Äquivalenzrelation auf der Menge $\mathcal{S}$, die ein bestimmtes \emph{Konsistenzkriterium} erfüllt. Sei zunächst $\mathcal{R}$ eine beliebige binäre Relation auf $\mathcal{S}$. Wir können diese mit `$\preceq$' zu der Präordnung (auch Quasiordnung genannt) $\preceq_{\mathcal{R}=(\preceq \cup \mathcal{R})_t}$ erweitern, also einer zweistelligen Relation, die reflexiv und transitiv, aber nicht antisymmetrisch ist. Hierbei bezeichnet $\mathcal{X}_t$ die transitive Hülle einer Relation $\mathcal{X}$. 
 	
-	Wir bezeichnen $\mathcal{R}$ als \emph{konsistent}, wenn $\preceq_{\mathcal{R}}=(\preceq \cup \mathcal{R})_t$ die natürliche Ordnung auf jeder Sequenz erhält, also $x \preceq_{\mathcal{R}} y \implies x \preceq y$ für alle $x,y \in S_i \forall 1\leq i \leq n$ gilt. Außerdem nennen wir eine Menge von Relationen $\{\mathcal{R}_1, \dots, \mathcal{R}_n\}$ \emph{konsistent}, wenn ihre Vereinigung $\cup_i \mathcal{R}_i$ \emph{konsistent} ist, sowie ein Paar $(x,y) \in \mathcal{S}^2$ \emph{konsistent} mit einer Relation $\mathcal{R}$, falls $\mathcal{R} \cup \{(x,y)\}$ \emph{konsistent} ist.
+	Wir bezeichnen $\mathcal{R}$ als \emph{konsistent}, wenn $\preceq_{\mathcal{R}}=(\preceq \cup\: \mathcal{R})_t$ die natürliche Ordnung auf jeder Sequenz erhält, also $x \preceq_{\mathcal{R}} y \implies x \preceq y$ für alle $x,y \in S_i \forall 1\leq i \leq n$ gilt. Außerdem nennen wir eine Menge von Relationen $\{\mathcal{R}_1, \dots, \mathcal{R}_n\}$ \emph{konsistent}, wenn ihre Vereinigung $\cup_i \mathcal{R}_i$ \emph{konsistent} ist, sowie ein Paar $(x,y) \in \mathcal{S}^2$ \emph{konsistent} mit einer Relation $\mathcal{R}$, falls $\mathcal{R} \cup \{(x,y)\}$ \emph{konsistent} ist.
 	
 	Für ein Alignment $\mathcal{A}$ und $(x,y)$ gilt $x\mathcal{A}y$ genau dann, wenn die \emph{Stellen} $x$ und $y$ durch $\mathcal{A}$ aligniert werden oder identisch sind.
 \end{definition}
@@ -267,13 +267,13 @@ Diesen Vorgang wiederholen wir, bis wir schlussendlich auch alle Werte der letzt
 					\end{cases}$\label{algl:praefix}
 				\State Setze $Pr[i,j]$ analog zu $Sc[i,j]$
 				\State lösche $Sc[i,j\!-\!1]$ und $Pr[i,j\!-\!1]$\Comment{{\small Lösche alte Spalteneinträge}}
-				\ForAll{$f_{i,j,k} \in F_j$ mit $f \not Pr[i,j]$}
+				\ForAll{$f_{i,j,k} \in F_j$ mit $f \neq Pr[i,j]$}
 					\State lösche $F_{i,j,k}$\Comment{{\small Lösche die, die in keiner opt. Kette in $(i,j)$ enden}}
 				\EndFor
 			\EndFor
 		\EndFor
 		\State $f_0 \gets Pr[L_1,L_2]$
-		\While{$f_k \not \textbf{NIL}\:$}\Comment{{\small Backtracking, um \emph{Alignment} zu bestimmen}}
+		\While{$f_k \neq \textbf{NIL}\:$}\Comment{{\small Backtracking, um \emph{Alignment} zu bestimmen}}
 			\State $f_{k+1} \gets P(f_{k})$
 			\State $k \gets k+1$
 		\EndWhile 
@@ -568,7 +568,7 @@ Widmen wir uns den \emph{Überlappgewichten} an unserem Beispiel und betrachten 
 \begin{wraptable}{r}{6cm}
 	\begin{tabular}{r|ccc}
 		2 & \cellcolor{red} $A_{2,1}$ & & \\
-		3 & $A_{3,1}$ & \cellcolor{red} $A_{3,2}$ & \\
+		3 & \cellcolor{yellow} $A_{3,1}$ & \cellcolor{red} $A_{3,2}$ & \\
 		4 & \cellcolor{red} $A_{4,1}$ & $A_{4,2}$ & \cellcolor{red} $A_{4,3}$ \\
 		\hline
 		\diagbox[dir=NE]{i}{j} & 1 & 2 & 3 \\
@@ -610,8 +610,34 @@ Da wir im nächsten Schritt die \emph{Fragmente} für unser multiples \emph{Alig
 
 \section{Konsistenz}
 
-Die nach ihrem Gewicht sortierten \emph{Fragmente} möchten wir der Reihe nach in unser multiples \emph{Alignment} einfügen, vorausgesetzt, das gerade gewählte ist nicht \emph{inkonsistent} zu den zuvor integrierten. 
+Die nach ihrem Gewicht sortierten \emph{Fragmente} möchten wir der Reihe nach in unser multiples \emph{Alignment} einfügen, vorausgesetzt, das gerade gewählte ist nicht \emph{inkonsistent} zu den zuvor integrierten. Wenn wir uns an den Abschnitt über die theoretischen Grundlagen erinnern, dann hatten wir formal definiert, dass eine Relation $\mathcal{R}$ genau dann ein \emph{Alignment} ist, wenn \enquote{$\preceq_{\mathcal{R}}=(\preceq \cup\: \mathcal{R})_t$ die natürliche Ordnung auf jeder Sequenz erhält, also $x \preceq_{\mathcal{R}} y \implies x \preceq y$ für alle $x,y \in S_i \forall 1\leq i \leq n$ gilt.}
 
+Mengentheoretisch können wir uns unser vorgehen so vorstellen, dass wir eine Menge von \emph{Fragmenten} $f_1, \cdot f_k$ haben, die wir der Reihe nach in unser wachsendes multiples \emph{Alignment} hinzufügen wollen, vorausgesetzt sie sind \emph{konsistent} zueinander. Die hinzugefügten \emph{Fragmente} bilden dabei für $i = 2, \dots, k$ eine monoton wachsende Menge $A_1 \subset \dots \subset A_k$:
+
+\begin{equation}
+\begin{split}
+	\mathcal{A}_1 &= f_1 \\
+	\mathcal{A}_i &= 
+		\begin{cases}
+			(\mathcal{A}_{i-1} \cup f_i) & \text{falls $f_i$ \emph{konsistent} ist zu $A_{i-1}$} \\
+			A_{i-1} & sonst 
+		\end{cases}
+\end{split}
+\end{equation} 
+
+Das finale \emph{Alignment} $\mathcal{A}$ ist dann genau das resultierende größte \emph{Alignment} $\mathcal{A}_k$. Die Frage, die man sich natürlich jetzt stellt, lautet: \enquote{Wie kann ich bestimmen, ob ein \emph{Fragment} \emph{konsistent} zu einem \emph{Alignment} ist?} Und noch besser: \enquote{Wie kann ich das effizient bestimmen?}
+
+\begin{definition}[Konsistenzgrenze]
+	Gegeben seien ein \emph{Alignment} $\mathcal{A}$ auf einer Menge von Sequenzen $S$ mit Stellenraum $\mathcal{S}$. Dann existiert für eine Stelle $s \in \mathcal{S}$ und eine Sequenz $S_i \in S$ eine kleinste und größte Stelle in $S_i$, die mit $s$ alignierbar ist, ohne zu \emph{Inkonsistenzen} zu führen.
+	\begin{equation}
+	\begin{split}
+	\underline{b}_\mathcal{A}(s,i) &= \min(p: (s,[i,p])\: \text{ist \emph{konsistent} zu} \mathcal{A}) \\
+	\overline{b}_\mathcal{A}(s,i) &= \min(p: (s,[i,p])\: \text{ist \emph{konsistent} zu} \mathcal{A})
+	\end{split} 
+	\end{equation}
+	Diese beiden \emph{Stellen} nennen wir die \emph{Konsistenzgrenzen} von $s$ in $S_i$. 
+\end{definition}
+ 
 \subsection{Laufzeit}
 $\oh(n^3*l + n^2*l^2)$
 

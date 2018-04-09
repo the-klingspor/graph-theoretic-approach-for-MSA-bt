@@ -1,4 +1,4 @@
-\babel@toc {ngerman}{}
+\select@language {ngerman}
 \contentsline {chapter}{\numberline {1}Einleitung und Motivation}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Multiple Sequence Alignments}{1}{section.1.1}
 \contentsline {section}{\numberline {1.2}Einsatzgebiete}{1}{section.1.2}
@@ -24,24 +24,24 @@
 \contentsline {subsection}{\numberline {3.5.1}Laufzeit}{22}{subsection.3.5.1}
 \contentsline {section}{\numberline {3.6}Gieriges multiples Alignment}{22}{section.3.6}
 \contentsline {subsection}{\numberline {3.6.1}Laufzeit}{22}{subsection.3.6.1}
-\contentsline {section}{\numberline {3.7}Gesamtkomplexit\IeC {\"a}t}{22}{section.3.7}
-\contentsline {section}{\numberline {3.8}Probleme}{22}{section.3.8}
-\contentsline {chapter}{\numberline {4}Ein Min-Cut-Ansatz f\IeC {\"u}r das Konsistenzproblem}{23}{chapter.4}
-\contentsline {section}{\numberline {4.1}Flussnetzwerke}{23}{section.4.1}
-\contentsline {subsection}{\numberline {4.1.1}Einf\IeC {\"u}hrung}{23}{subsection.4.1.1}
-\contentsline {subsection}{\numberline {4.1.2}Wichtige Algorithmen}{23}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Der \emph {Max-Flow-Min-Cut-Satz}}{23}{subsection.4.1.3}
-\contentsline {section}{\numberline {4.2}Inzidenzgraphen und das Aufl\IeC {\"o}sen von Inkosistenzen mit Hilfe von Flussnetzwerken}{23}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Komplexit\IeC {\"a}t}{23}{subsection.4.2.1}
-\contentsline {section}{\numberline {4.3}Sukzessorgraphen und der Algorithmus von Pitschi}{23}{section.4.3}
-\contentsline {section}{\numberline {4.4}Ankerpunkte}{23}{section.4.4}
-\contentsline {section}{\numberline {4.5}Gesamtkomplexit\IeC {\"a}t}{23}{section.4.5}
-\contentsline {chapter}{\numberline {5}Programmierung}{25}{chapter.5}
-\contentsline {section}{\numberline {5.1}Speichereffiziente Umsetzung der dynamischen Programmierung}{25}{section.5.1}
-\contentsline {chapter}{\numberline {6}Validierung der Ergebnisse}{27}{chapter.6}
-\contentsline {section}{\numberline {6.1}Vorstellung BAliBase und (D)IRMBASE}{27}{section.6.1}
-\contentsline {section}{\numberline {6.2}Test auf BAliBase}{27}{section.6.2}
-\contentsline {section}{\numberline {6.3}Test auf DIRMBASE und IRMBASE}{27}{section.6.3}
-\contentsline {chapter}{\numberline {7}Fazit}{29}{chapter.7}
-\contentsline {section}{\numberline {7.1}Zusammenfassung}{29}{section.7.1}
-\contentsline {section}{\numberline {7.2}Future Works}{29}{section.7.2}
+\contentsline {section}{\numberline {3.7}Gesamtkomplexit\IeC {\"a}t}{23}{section.3.7}
+\contentsline {section}{\numberline {3.8}Probleme}{23}{section.3.8}
+\contentsline {chapter}{\numberline {4}Ein Min-Cut-Ansatz f\IeC {\"u}r das Konsistenzproblem}{25}{chapter.4}
+\contentsline {section}{\numberline {4.1}Flussnetzwerke}{25}{section.4.1}
+\contentsline {subsection}{\numberline {4.1.1}Einf\IeC {\"u}hrung}{25}{subsection.4.1.1}
+\contentsline {subsection}{\numberline {4.1.2}Wichtige Algorithmen}{25}{subsection.4.1.2}
+\contentsline {subsection}{\numberline {4.1.3}Der \emph {Max-Flow-Min-Cut-Satz}}{25}{subsection.4.1.3}
+\contentsline {section}{\numberline {4.2}Inzidenzgraphen und das Aufl\IeC {\"o}sen von Inkosistenzen mit Hilfe von Flussnetzwerken}{25}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Komplexit\IeC {\"a}t}{25}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}Sukzessorgraphen und der Algorithmus von Pitschi}{25}{section.4.3}
+\contentsline {section}{\numberline {4.4}Ankerpunkte}{25}{section.4.4}
+\contentsline {section}{\numberline {4.5}Gesamtkomplexit\IeC {\"a}t}{25}{section.4.5}
+\contentsline {chapter}{\numberline {5}Programmierung}{27}{chapter.5}
+\contentsline {section}{\numberline {5.1}Speichereffiziente Umsetzung der dynamischen Programmierung}{27}{section.5.1}
+\contentsline {chapter}{\numberline {6}Validierung der Ergebnisse}{29}{chapter.6}
+\contentsline {section}{\numberline {6.1}Vorstellung BAliBase und (D)IRMBASE}{29}{section.6.1}
+\contentsline {section}{\numberline {6.2}Test auf BAliBase}{29}{section.6.2}
+\contentsline {section}{\numberline {6.3}Test auf DIRMBASE und IRMBASE}{29}{section.6.3}
+\contentsline {chapter}{\numberline {7}Fazit}{31}{chapter.7}
+\contentsline {section}{\numberline {7.1}Zusammenfassung}{31}{section.7.1}
+\contentsline {section}{\numberline {7.2}Future Works}{31}{section.7.2}
