@@ -697,7 +697,8 @@ Zunächst definieren wir ein paar Variablen für den Kontext dieses Abschnitts: 
 Sei im Folgenden eine Menge $\mathcal{P} = \{P_1, \dots, P_k\}$ von Pfaden auf unserem ursprünglichen Graphen gegeben, für die gilt, dass jeder Knoten aus $V$ in genau einem der Pfade vorkommt. Eine solche Menge nennen wir SSDP (\emph{Spanning Set of Disjoint Paths}), also eine Menge von disjunkten Pfaden, die den ganzen Graphen aufspannen. Man kann sich vorstellen, dass man auf unserem Graphen sehr leicht einen solche Menge aufstellen kann, indem man jede einzelne dieser Sequenzen mit ihren Kanten als Pfad dieser Menge auffasst. 
 
 \begin{satz}
-	Es sei ein SSDP mit $k$ disjunkten Pfaden gegeben. Dann lässt sich die transitive Hülle $G^*$ unseres Graphen in $\oh(k^2\cdot(\mu - \mu_0) + \nu \cdot \min\{\nu, (\mu - \mu_p)\})$ Zeit und mit $\oh(k\cdot \nu)$ Speicherplatz erhalten, nachdem Kanten zu ihm hinzugefügt wurden.
+	\label{satz:ssdp}
+	Es sei ein SSDP mit $k$ disjunkten Pfaden gegeben. Dann lässt sich die transitive Hülle $G^*$ unseres Graphen in $\oh(k^2\cdot(\mu - \mu_0) + \nu \cdot \min\{\nu, (\mu - \mu_p)\})$ Zeit und mit $\oh(k\cdot \nu)$ Speicherplatz erhalten, nachdem Kanten zu ihm hinzugefügt wurden \citep{a97}.
 \end{satz}
 
 Für einen Knoten $x$ sei $P(x)$ das Tupel, das in jedem Eintrag $P(x)[i]$ für $1\leq i \leq k$ die Anzahl an Vorgängern von $x$ im Pfad $P_i$ angibt. In anderen Worten ist $P(x)[i]$ die maximale Position eines Vorgängers in $P_i$. Analog definieren wir $S(x)$, wobei  $S(x)[i]$ der minimale Nachfolger von $x$ in $S_i$ ist. Wie man sich denken kann, entsprechen $S(x)$ und $P(x)$ genau unseren \emph{Transitivitätsgrenzen} aus dem Kontext unseres \emph{Alignments} und wir werden diese Begriffe synonym verwenden. Gibt es Vorgänger oder Nachfolger nicht, setzen wir diese Werte auf 0 beziehungsweise die Länge des Pfads, um den es geht, addiert mit eins.
@@ -725,7 +726,7 @@ Mit diesen zwei Formeln können wir für ein $u \in P_i$ und jeden Pfad $P_j$ di
 		\end{cases}
 \end{equation}
 
-Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die transitive Hülle nicht verändert und dass wir nicht machen müssen. Die obigen Beobachtungen können wir jetzt direkt in einen Algorithmus \textrm{EdgeAddition} münden lassen, indem wir über alle Paarkombinationen von Pfaden iterieren und dabei für jeden in Frage kommenden Knoten im jeweiligen Pfad die obigen Formeln anwenden. Wir wählen dabei die Knoten für die \emph{Nachfolgergrenze} in absteigender und die für die \emph{Vorgängergrenze} in aufsteigender Reihenfolge. Weil wir wissen, dass die \emph{Nachfolgergrenze} immer nur sinken kann und wir die in Frage kommenden Knoten sortiert betrachten, wissen wir, dass wir mit dem aktuellen Schleifendurchlauf aufhören können, wenn die \emph{Nachfolgergrenze} kleiner oder genauso groß ist, wie die von $y$. In diesem Fall würde sie eh nicht mehr aktualisiert werden und wir können uns die Berechnung sparen. Für die \emph{Vorgängergrenzen} gehen wir analog vor.
+Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die transitive Hülle nicht verändert und dass wir die \emph{Transitivitätsgrenzen} dementsprechend nicht anpassen müssen. Die obigen Beobachtungen können wir jetzt direkt in einen Algorithmus \textrm{EdgeAddition} münden lassen, indem wir über alle Paarkombinationen von Pfaden iterieren und dabei für jeden in Frage kommenden Knoten im jeweiligen Pfad die obigen Formeln anwenden. Wir wählen dabei die Knoten für die \emph{Nachfolgergrenze} in absteigender und die für die \emph{Vorgängergrenze} in aufsteigender Reihenfolge. Weil wir wissen, dass die \emph{Nachfolgergrenze} immer nur sinken kann und wir die in Frage kommenden Knoten sortiert betrachten, wissen wir, dass der aktuelle Schleifendurchlauf abgebrochen werden kann, wenn die \emph{Nachfolgergrenze} kleiner oder genauso groß ist, wie die von $y$. In diesem Fall würde sie eh nicht mehr aktualisiert werden und wir können uns die Berechnung sparen. Für die \emph{Vorgängergrenzen} gehen wir analog vor. Jetzt haben wir alles Rüstzeug zusammen, um Satz \ref{satz:ssdp} zu beweisen.
 
 \begin{algorithm}
 	\caption{EdgeAddition}
@@ -734,32 +735,49 @@ Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die
 		\Require Gerichteter Graph $G$ mit SSDP $P_1, \dots, P_k$
 		\Procedure{EdgeAddition}{$x,y$}
 			\If{$(x,y) \notin E^*$}
-				\For{\textbf{each} Pfad $P_i$}
-					\For{\textbf{each} Pfad $P_j$}
-						\For{\textbf{each} $u$ in $P_i$ startend von $P(x)[i]$ in absteigender Reihenfolge}
-							\If{$S(u)[j] > S(y)[j]$}
+				\NFor{Pfad $P_i$}
+					\NFor{Pfad $P_j$}
+						\NFor{$u$ in $P_i$ startend von $P(x)[i]$ in absteigender Reihenfolge}
+							\If{$S(u)[j] > S(y)[j]$} \label{alg:succ_if}
 								\State{$S(u)[j]	\gets S(y)[j]$}\Comment{\small{aktualisiere \emph{Nachfolgergrenze}}}
 							\Else
 								\State{breche den aktuellen Schleifendurchlauf für $u$ ab}						
 							\EndIf
-						\EndFor
-					\EndFor
-				\EndFor
-				\For{\textbf{each} Pfad $P_i$}
-					\For{\textbf{each} Pfad $P_j$}
-						\For{\textbf{each} $u$ in $P_i$ startend von $S(y)[i]$ in aufsteigender Reihenfolge}
-							\If{$P(u)[j] < P(x)[j]$}
+				\NFor{Pfad $P_i$}
+					\NFor{Pfad $P_j$}
+						\NFor{$u$ in $P_i$ startend von $S(y)[i]$ in aufsteigender Reihenfolge}
+							\If{$P(u)[j] < P(x)[j]$} \label{alg:pred_if}
 								\State{$P(u)[j]	\gets P(x)[j]$}\Comment{\small{aktualisiere \emph{Vorgängergrenze}}}
 							\Else
 								\State{breche den aktuellen Schleifendurchlauf für $u$ ab}						
 							\EndIf
-						\EndFor
-					\EndFor
-				\EndFor
 			\EndIf
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
+%\caption{Algorithmus zum Aktualisieren der transitiven Hülle, nachdem eine Kante $(x,y)$ zum Graphen hinzugefügt wurde}
+
+\begin{beweis}
+	Im schlimmsten Fall werden die ineinander verschachtelten Schleifen je $\oh(k^2 \cdot (\mu - \mu_0))$-mal durchlaufen. Das ergibt sich aus der Kombination aller $\oh(k^2)$ Paare von Pfaden und dadurch, dass es sein kann, dass nur für die ursprünglichen Kanten $\mu_0$ im Graphen und die sie verbindenden Knoten die if-Bedingungen \ref{alg:succ_if} und \ref{alg:pred_if} nicht erfüllt sind. \unsure{Ist das wirklich der Grund? Denk nochmal drüber nach.}
+	
+	Wenn wir darüber nachdenken wie oft es wirklich zu einer Aktualisierung der \emph{Transitivitätsgrenzen} kommen kann, stellen wir fest, dass diese je nach Graph möglicherweise viel geringer ist, als oben abgeschätzt. Um Redundanz zu vermeiden betrachten wir hier nur die \emph{Vorgängergrenzen}. Für \emph{Nachfolgergrenzen} gilt aus Symmetriegründen aber genau das selbe. Die einzige Situation, in der ein Knoten $v \in V$ die \emph{Vorgängergrenzen} eines anderen Knotens $u$ verändern kann, ist wenn $v$ ein Vorgänger von $x$, aber kein Vorgänger von $u$ ist, bevor die Kante $(x,y)$ hinzugefügt wird. Gleichzeitig muss gelten, dass $u$ ein Nachfolger von $y$ ist. Das liegt daran, dass die Pfade $\mathcal{P}$ disjunkt sind. Also folgt, dass die \emph{Vorgängergrenzen} von $u$ höchstens $\nu$ mal angepasst werden und es insgesamt nicht mehr als $\nu^2$ Anpassungen gibt. 
+	
+	\scriptsize
+	\begin{wrapfigure}{r}{6cm}
+		\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
+		{} \arrow[rrr] &  &  & y \arrow[r] & \dots \arrow[r] & u \arrow[r] & {} \\
+		{} \arrow[rr] &  & x \arrow[rrrr] \arrow[ru, red] &  &  &  & {} \\
+		{} \arrow[r] & v \arrow[ru] \arrow[rrrrr] &  &  &  &  & {} \\
+		{} \arrow[r] & w \arrow[u] \arrow[rrrrr] &  &  &  &  & {}
+		\end{tikzcd}
+		\caption{Füge $(x,y)$ ein.}
+	\end{wrapfigure}
+	\normalsize
+	
+	Sei $(w,v)$ eine Kante unseres Graphen, die auf keinem unserer Pfade aus dem SSDP liegt. Diese Kante kann die \emph{Vorgängergrenze} von $u$ in der Methode \textrm{EdgeAddition} nur dann verändern, wenn $v$ ein Vorgänger von $x$ ist, aber kein Vorgänger von $u$, bevor die Kante $(x,y)$ addiert wird. Nach dieser Aktualisierung kann die Kante $(w,v)$ die \emph{Transitivitätsgrenzen} von $u$ nie wieder anpassen. Das bedeutet, dass dies für einen Knoten $u$ höchstens so oft passieren, wie es Kanten gibt, die in keinem Pfad des SSDP liegen. Das sind genau $\oh(\mu - \mu_p)$ und es folgt, dass es insgesamt höchstens $\nu \cdot (\mu - \mu_p)$ solcher Aktualisierungen geben kann.
+	
+	Da sowohl die Anzahl dieser Knoten, als auch der Kanten im Graph die Anzahl der Aktualisierungen beschränken, kann es nicht zu mehr Aktualisierungen als dem Minimum dieser beiden Werte kommen, also $\oh(\nu \cdot \min\{\nu, \mu - \mu_p\})$. Fasst man alles zusammen, so folgt die behauptete Laufzeit in $\oh(k^2 \cdot (\mu - \mu_0) + \nu \cdot \min\{\nu, \mu - \mu_p\})$.
+\end{beweis}
 
 \subsection{Laufzeit}
 $\oh(n^3*l + n^2*l^2)$

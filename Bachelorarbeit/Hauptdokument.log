@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.3)  10 APR 2018 00:16
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.3)  10 APR 2018 23:46
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -2038,19 +2038,19 @@ File: bkm-pdftex.def 2016/05/17 v1.26 bookmark driver for pdfTeX (HO)
 Package thmtools Info: Key `postheadhook' (with value `\theorembookmark ')
 (thmtools)             is not a known style key.
 (thmtools)             Will pass this to every \declaretheorem
-(thmtools)             that uses `style=mainstyle' on input line 212.
+(thmtools)             that uses `style=mainstyle' on input line 213.
 Package thmtools Info: Key `mdframed' (with value ` backgroundcolor=gray!20, li
 necolor=gray, topline=false, bottomline=false, rightline=false, leftline=false,
  innerbottommargin=6pt, innertopmargin=6pt, ')
 (thmtools)             is not a known style key.
 (thmtools)             Will pass this to every \declaretheorem
-(thmtools)             that uses `style=mainstyle' on input line 212.
+(thmtools)             that uses `style=mainstyle' on input line 213.
 Package thmtools Info: Key `qed' (with value `\qedsymbol ')
 (thmtools)             is not a known style key.
 (thmtools)             Will pass this to every \declaretheorem
-(thmtools)             that uses `style=beweise' on input line 222.
+(thmtools)             that uses `style=beweise' on input line 223.
 Package thmtools Info: Automatically pulling in `thmdef-mdframed' on input line
- 224.
+ 225.
 
 (c:/texlive/2017/texmf-dist/tex/latex/thmtools/thmdef-mdframed.sty
 Package: thmdef-mdframed 2014/04/21 v66
@@ -2350,73 +2350,73 @@ runsystem(del Hauptdokument.aex)...executed.
 ) (./chapter/EidesstattlicheErklaerung.aux))
 \openout1 = `Hauptdokument.aux'.
 
-LaTeX Font Info:    Checking defaults for OML/ntxmi/m/it on input line 234.
+LaTeX Font Info:    Checking defaults for OML/ntxmi/m/it on input line 235.
 LaTeX Font Info:    Try loading font information for OML+ntxmi on input line 23
-4.
+5.
 
 (c:/texlive/2017/texmf-dist/tex/latex/newtx/omlntxmi.fd
 File: omlntxmi.fd 2015/08/25 Fontinst v1.933 font definitions for OML/ntxmi.
 )
-LaTeX Font Info:    ... okay on input line 234.
-LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 234.
-LaTeX Font Info:    ... okay on input line 234.
-LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 234.
-LaTeX Font Info:    ... okay on input line 234.
-LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 234.
-LaTeX Font Info:    ... okay on input line 234.
-LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 234.
-LaTeX Font Info:    ... okay on input line 234.
-LaTeX Font Info:    Checking defaults for U/ntxexa/m/n on input line 234.
-LaTeX Font Info:    Try loading font information for U+ntxexa on input line 234
+LaTeX Font Info:    ... okay on input line 235.
+LaTeX Font Info:    Checking defaults for T1/cmr/m/n on input line 235.
+LaTeX Font Info:    ... okay on input line 235.
+LaTeX Font Info:    Checking defaults for OT1/cmr/m/n on input line 235.
+LaTeX Font Info:    ... okay on input line 235.
+LaTeX Font Info:    Checking defaults for OMS/cmsy/m/n on input line 235.
+LaTeX Font Info:    ... okay on input line 235.
+LaTeX Font Info:    Checking defaults for OMX/cmex/m/n on input line 235.
+LaTeX Font Info:    ... okay on input line 235.
+LaTeX Font Info:    Checking defaults for U/ntxexa/m/n on input line 235.
+LaTeX Font Info:    Try loading font information for U+ntxexa on input line 235
 .
 
 (c:/texlive/2017/texmf-dist/tex/latex/newtx/untxexa.fd
 File: untxexa.fd 2012/04/16 Fontinst v1.933 font definitions for U/ntxexa.
 )
-LaTeX Font Info:    ... okay on input line 234.
-LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 234.
-LaTeX Font Info:    ... okay on input line 234.
-LaTeX Font Info:    Checking defaults for LY1/ptm/m/n on input line 234.
-LaTeX Font Info:    Try loading font information for LY1+ptm on input line 234.
+LaTeX Font Info:    ... okay on input line 235.
+LaTeX Font Info:    Checking defaults for PD1/pdf/m/n on input line 235.
+LaTeX Font Info:    ... okay on input line 235.
+LaTeX Font Info:    Checking defaults for LY1/ptm/m/n on input line 235.
+LaTeX Font Info:    Try loading font information for LY1+ptm on input line 235.
 
 
 (c:/texlive/2017/texmf-dist/tex/latex/ly1/ly1ptm.fd
 File: ly1ptm.fd 2001/02/01 font definitions for LY1/ptm using Berry names.
 )
-LaTeX Font Info:    ... okay on input line 234.
-LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 234.
-LaTeX Font Info:    Try loading font information for TS1+cmr on input line 234.
+LaTeX Font Info:    ... okay on input line 235.
+LaTeX Font Info:    Checking defaults for TS1/cmr/m/n on input line 235.
+LaTeX Font Info:    Try loading font information for TS1+cmr on input line 235.
 
 
 (c:/texlive/2017/texmf-dist/tex/latex/base/ts1cmr.fd
 File: ts1cmr.fd 2014/09/29 v2.5h Standard LaTeX font definitions
 )
-LaTeX Font Info:    ... okay on input line 234.
-LaTeX Font Info:    Checking defaults for LMS/ntxsy/m/n on input line 234.
+LaTeX Font Info:    ... okay on input line 235.
+LaTeX Font Info:    Checking defaults for LMS/ntxsy/m/n on input line 235.
 LaTeX Font Info:    Try loading font information for LMS+ntxsy on input line 23
-4.
+5.
 
 (c:/texlive/2017/texmf-dist/tex/latex/newtx/lmsntxsy.fd
 File: lmsntxsy.fd 2016/07/02 Fontinst v1.933 font definitions for LMS/ntxsy.
 )
-LaTeX Font Info:    ... okay on input line 234.
-LaTeX Font Info:    Checking defaults for LMX/ntxexx/m/n on input line 234.
+LaTeX Font Info:    ... okay on input line 235.
+LaTeX Font Info:    Checking defaults for LMX/ntxexx/m/n on input line 235.
 LaTeX Font Info:    Try loading font information for LMX+ntxexx on input line 2
-34.
+35.
 
 (c:/texlive/2017/texmf-dist/tex/latex/newtx/lmxntxexx.fd
 File: lmxntxexx.fd 2016/07/03 Fontinst v1.933 font definitions for LMX/ntxexx.
 )
-LaTeX Font Info:    ... okay on input line 234.
+LaTeX Font Info:    ... okay on input line 235.
 LaTeX Font Info:    Try loading font information for T1+SourceSansPro-LF on inp
-ut line 234.
+ut line 235.
 
 (c:/texlive/2017/texmf-dist/tex/latex/sourcesanspro/t1sourcesanspro-lf.fd
 File: T1SourceSansPro-LF.fd 2016/12/03 (autoinst) Font definitions for T1/Sourc
 eSansPro-LF.
 )
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/n' will be
-(Font)              scaled to size 10.95pt on input line 234.
+(Font)              scaled to size 10.95pt on input line 235.
 
 (c:/texlive/2017/texmf-dist/tex/context/base/mkii/supp-pdf.mkii
 [Loading MPS to PDF converter (version 2006.09.02).]
@@ -2490,7 +2490,7 @@ Package caption Info: End \AtBeginDocument code.
 
 \c@lstlisting=\count407
 \AtBeginShipoutBox=\box126
-Package hyperref Info: Link coloring OFF on input line 234.
+Package hyperref Info: Link coloring OFF on input line 235.
 (c:/texlive/2017/texmf-dist/tex/latex/hyperref/nameref.sty
 Package: nameref 2016/05/21 v2.44 Cross-referencing by name of section
 
@@ -2499,10 +2499,10 @@ Package: gettitlestring 2016/05/16 v1.5 Cleanup title references (HO)
 )
 \c@section@level=\count408
 )
-LaTeX Info: Redefining \ref on input line 234.
-LaTeX Info: Redefining \pageref on input line 234.
-LaTeX Info: Redefining \nameref on input line 234.
-LaTeX Info: Redefining \dots on input line 234.
+LaTeX Info: Redefining \ref on input line 235.
+LaTeX Info: Redefining \pageref on input line 235.
+LaTeX Info: Redefining \nameref on input line 235.
+LaTeX Info: Redefining \dots on input line 235.
 
 ABD: EveryShipout initializing macros
 \openout2 = `chapter/Titelblatt.aux'.
@@ -2527,13 +2527,13 @@ LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/b/n' will be
 (Font)              scaled to size 14.4pt on input line 20.
 )
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 239.
+(babel)             in language  on input line 240.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 239.
+(babel)             in language  on input line 240.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 239.
+(babel)             in language  on input line 240.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 239.
+(babel)             in language  on input line 240.
  [1
 
 
@@ -2542,13 +2542,13 @@ Package babel Info: Redefining ngerman shorthand "~
 {c:/texlive/2017/texmf-var/fonts/map/pdftex/updmap/pdftex.map} <./img/wwu-logo-
 neu.pdf>]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 243.
+(babel)             in language  on input line 244.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 243.
+(babel)             in language  on input line 244.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 243.
+(babel)             in language  on input line 244.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 243.
+(babel)             in language  on input line 244.
 
 [2
 
@@ -2556,9 +2556,9 @@ Package babel Info: Redefining ngerman shorthand "~
 
 ]
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/b/n' will be
-(Font)              scaled to size 10.95pt on input line 243.
+(Font)              scaled to size 10.95pt on input line 244.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/b/n' will be
-(Font)              scaled to size 20.74pt on input line 243.
+(Font)              scaled to size 20.74pt on input line 244.
  (./Hauptdokument.toc
 LaTeX Font Info:    Try loading font information for U+msa on input line 3.
  (c:/texlive/2017/texmf-dist/tex/latex/amsfonts/umsa.fd
@@ -2605,17 +2605,17 @@ Package babel Info: Redefining ngerman shorthand "~
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/sl' in size <10.95> not a
 vailable
 (Font)              Font shape `T1/SourceSansPro-LF/m/it' tried instead on inpu
-t line 245.
+t line 246.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/it' will be
-(Font)              scaled to size 10.95pt on input line 245.
+(Font)              scaled to size 10.95pt on input line 246.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 245.
+(babel)             in language  on input line 246.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 245.
+(babel)             in language  on input line 246.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 245.
+(babel)             in language  on input line 246.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 245.
+(babel)             in language  on input line 246.
  [4]
 \openout2 = `chapter/Einleitung.aux'.
 
@@ -2655,13 +2655,13 @@ Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 8.
 )
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 249.
+(babel)             in language  on input line 250.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 249.
+(babel)             in language  on input line 250.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 249.
+(babel)             in language  on input line 250.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 249.
+(babel)             in language  on input line 250.
  [1
 
 
@@ -2705,13 +2705,13 @@ Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 8.
 )
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 251.
+(babel)             in language  on input line 252.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 251.
+(babel)             in language  on input line 252.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 251.
+(babel)             in language  on input line 252.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 251.
+(babel)             in language  on input line 252.
  [3]
 \openout2 = `chapter/dialign.aux'.
 
@@ -3222,53 +3222,74 @@ Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 706.
  [24]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 765.
+(babel)             in language  on input line 762.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 765.
+(babel)             in language  on input line 762.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 768.
+(babel)             in language  on input line 762.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 768.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 770.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 770.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 773.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 773.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 773.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 773.
+(babel)             in language  on input line 762.
  [25]
+
+Package wrapfig Warning: wrapfigure used inside a conflicting environment on in
+put line 766.
+
+
+Overfull \hbox (1.2782pt too wide) in paragraph at lines 772--773
+[][] 
+ []
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 77
+7.
+
+
+Package wrapfig Warning: Stationary wrapfigure forced to float on input line 77
+9.
+
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 773.
+(babel)             in language  on input line 782.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 773.
+(babel)             in language  on input line 782.
+
+Underfull \vbox (badness 5050) has occurred while \output is active []
+
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 773.
+(babel)             in language  on input line 785.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 773.
+(babel)             in language  on input line 785.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 785.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 785.
  [26]
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 773.
+(babel)             in language  on input line 785.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 773.
+(babel)             in language  on input line 785.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 776.
+(babel)             in language  on input line 787.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 776.
+(babel)             in language  on input line 787.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 790.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 790.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 793.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 793.
 )
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 253.
+(babel)             in language  on input line 254.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 253.
+(babel)             in language  on input line 254.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 253.
+(babel)             in language  on input line 254.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 253.
- [27]
+(babel)             in language  on input line 254.
+
+[27]
 \openout2 = `chapter/min-cut.aux'.
 
  (./chapter/min-cut.tex
@@ -3329,13 +3350,13 @@ Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 23.
 )
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 255.
+(babel)             in language  on input line 256.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 255.
+(babel)             in language  on input line 256.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 255.
+(babel)             in language  on input line 256.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 255.
+(babel)             in language  on input line 256.
  [29]
 \openout2 = `chapter/Programmierung.aux'.
 
@@ -3365,13 +3386,13 @@ Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 4.
 )
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 257.
+(babel)             in language  on input line 258.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 257.
+(babel)             in language  on input line 258.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 257.
+(babel)             in language  on input line 258.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 257.
+(babel)             in language  on input line 258.
  [31]
 \openout2 = `chapter/Validierung.aux'.
 
@@ -3409,13 +3430,13 @@ Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 8.
 )
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 259.
+(babel)             in language  on input line 260.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 259.
+(babel)             in language  on input line 260.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 259.
+(babel)             in language  on input line 260.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 259.
+(babel)             in language  on input line 260.
  [33]
 \openout2 = `chapter/Fazit.aux'.
 
@@ -3449,13 +3470,13 @@ Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 6.
 )
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 261.
+(babel)             in language  on input line 262.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 261.
+(babel)             in language  on input line 262.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 261.
+(babel)             in language  on input line 262.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 261.
+(babel)             in language  on input line 262.
  [35] (./Hauptdokument.bbl
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
@@ -3471,13 +3492,13 @@ Package babel Info: Redefining ngerman shorthand "~
 
 ])
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 268.
+(babel)             in language  on input line 269.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 268.
+(babel)             in language  on input line 269.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 268.
+(babel)             in language  on input line 269.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 268.
+(babel)             in language  on input line 269.
  [37]
 \openout2 = `chapter/EidesstattlicheErklaerung.aux'.
 
@@ -3496,23 +3517,23 @@ Package babel Info: Redefining ngerman shorthand "~
 
 ])
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 268.
+(babel)             in language  on input line 269.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 268.
+(babel)             in language  on input line 269.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 268.
+(babel)             in language  on input line 269.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 268.
+(babel)             in language  on input line 269.
  [39]
-Package atveryend Info: Empty hook `BeforeClearDocument' on input line 270.
-Package atveryend Info: Empty hook `AfterLastShipout' on input line 270.
+Package atveryend Info: Empty hook `BeforeClearDocument' on input line 271.
+Package atveryend Info: Empty hook `AfterLastShipout' on input line 271.
  (./Hauptdokument.aux (./chapter/Titelblatt.aux)
 (./chapter/Einleitung.aux) (./chapter/DP.aux) (./chapter/dialign.aux)
 (./chapter/min-cut.aux) (./chapter/Programmierung.aux)
 (./chapter/Validierung.aux) (./chapter/Fazit.aux)
 (./chapter/EidesstattlicheErklaerung.aux))
-Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 270.
-Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 270.
+Package atveryend Info: Executing hook `AtVeryEndDocument' on input line 271.
+Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 271.
 
 
 LaTeX Font Warning: Size substitutions with differences
@@ -3520,13 +3541,13 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 44220 strings out of 492982
- 841973 string characters out of 6136226
- 1094121 words of memory out of 5000000
- 46684 multiletter control sequences out of 15000+600000
+ 44372 strings out of 492982
+ 845563 string characters out of 6136226
+ 1099060 words of memory out of 5000000
+ 46833 multiletter control sequences out of 15000+600000
  822855 words of font info for 215 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 73i,27n,95p,10479b,1037s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 73i,27n,95p,10479b,1297s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{c:/texl
 ive/2017/texmf-dist/fonts/enc/dvips/nimbus15/nimbus15mono-ec.enc}{c:/texlive/20
 17/texmf-dist/fonts/enc/dvips/sourcesanspro/a_sd7igg.enc}{c:/texlive/2017/texmf
@@ -3554,10 +3575,10 @@ ewtx/txexs.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/txfonts/txsya.pfb
 /fonts/type1/public/newtx/txsys.pfb><c:/texlive/2017/texmf-dist/fonts/type1/urw
 /times/utmri8a.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nimbus15/zcoN
 -Regular.pfb>
-Output written on Hauptdokument.pdf (43 pages, 415296 bytes).
+Output written on Hauptdokument.pdf (43 pages, 419936 bytes).
 PDF statistics:
- 832 PDF objects out of 1000 (max. 8388607)
- 739 compressed objects within 8 object streams
- 171 named destinations out of 1000 (max. 500000)
+ 840 PDF objects out of 1000 (max. 8388607)
+ 747 compressed objects within 8 object streams
+ 174 named destinations out of 1000 (max. 500000)
  570 words of extra memory for PDF output out of 10000 (max. 10000000)
 
