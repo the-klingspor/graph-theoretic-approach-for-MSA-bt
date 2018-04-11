@@ -703,7 +703,7 @@ Sei im Folgenden eine Menge $\mathcal{P} = \{P_1, \dots, P_k\}$ von Pfaden auf u
 
 Für einen Knoten $x$ sei $P(x)$ das Tupel, das in jedem Eintrag $P(x)[i]$ für $1\leq i \leq k$ die Anzahl an Vorgängern von $x$ im Pfad $P_i$ angibt. In anderen Worten ist $P(x)[i]$ die maximale Position eines Vorgängers in $P_i$. Analog definieren wir $S(x)$, wobei  $S(x)[i]$ der minimale Nachfolger von $x$ in $S_i$ ist. Wie man sich denken kann, entsprechen $S(x)$ und $P(x)$ genau unseren \emph{Transitivitätsgrenzen} aus dem Kontext unseres \emph{Alignments} und wir werden diese Begriffe synonym verwenden. Gibt es Vorgänger oder Nachfolger nicht, setzen wir diese Werte auf 0 beziehungsweise die Länge des Pfads, um den es geht, addiert mit eins.
 
-Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $pos(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $pos(y) \geq P(x)[j]$. Wie man sieht ist es also möglich die transitive Hülle auf $\oh(k \cdot \nu)$ Speicherplatz zu sichern, wenn man ein SSDP mit k Pfaden hat. Das kann signifikant weniger sein, als die $\oh(\nu^2)$ Kanten, die man im naiven Ansatz speichern muss.
+Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $pos(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $pos(y) \geq S(x)[j]$. Wie man sieht ist es also möglich die transitive Hülle auf $\oh(k \cdot \nu)$ Speicherplatz zu sichern, wenn man ein SSDP mit k Pfaden hat. Das kann signifikant weniger sein, als die $\oh(\nu^2)$ Kanten, die man im naiven Ansatz speichern muss.
 
 \improvement{Beispiel S(x) und P(x)}
 
@@ -809,7 +809,7 @@ Für den Rest des Abschnitts nehmen wir an, dass unser \emph{Alignmentgraph} $G$
 \begin{lemma}
 	Zwei \emph{Stellen} $s$ und $t$ mit den korrespondierenden Knoten $u$ und $v$ sind genau dann \emph{alignierbar}, wenn eine der folgenden zwei Bedingungen eintritt:
 	
-	(1) Es exisitert kein Pfad zwischen $u$ und $v$, das heißt $(u,v),(v,u) \notin E^{*}$,
+	(1) Es existiert kein Pfad zwischen $u$ und $v$, das heißt $(u,v),(v,u) \notin E^{*}$,
 	
 	(2) $u$ und $v$ \emph{koinzidieren} miteinander, also $u \rightleftharpoons^{*} v$.
 \end{lemma}
@@ -817,8 +817,14 @@ Für den Rest des Abschnitts nehmen wir an, dass unser \emph{Alignmentgraph} $G$
 \begin{beweis}
 	Sei $G'$ der Graph nach dem Hinzufügen der Kanten $(u,v)$ und $(v,u)$. Wir müssen zeigen, dass $(G',P)$ genau dann regulär ist, wenn eine der beiden obigen Bedingungen eintritt.
 	
-	\bewhin Es gelte $u \rightleftharpoons^{*} v$ für $G$. Dann sind die \emph{Anker} von $G'$ die selben wie von $G$, denn $u$ und $v$ haben bereits zuvor \emph{koninzidiert}. Also ist auch $G'$ \emph{regulär}, da $G$ es war.
-\end{beweis}\
+	\bewhin (1) Angenommen es existiert kein Pfad zwischen $u$ und $v$ und seien $a_1$ und $a_2$ die dazugehörigen \emph{Anker} der beiden Knoten. Es sei $a = a_1 \cup a_2$ der neue \emph{Anker} von $G'$ nach dem Hinzufügen von $(u,v)$. Dann kann $a$ nicht mehrere Knoten vom selben Pfad aus $P$ enthalten, weil es sonst bereits einen Pfad von $u$ nach $v$ oder andersrum gegeben hätte und die Vorbedingung verletzt gewesen wäre. Das liegt daran, dass es zwischen diesen Knoten vom selben Pfad ja eine Kante gegeben haben müsste über die dann auch eine einseitige Verbindung zwischen $u$ und $v$ bestände. Weil alle anderen \emph{Anker} von $G$ nicht verändert werden, folgt, dass $G'$ regulär ist.
+	
+	(2) Es gelte $u \rightleftharpoons^{*} v$ für $G$. Dann sind die \emph{Anker} von $G'$ die selben wie von $G$, denn $u$ und $v$ haben bereits zuvor \emph{koninzidiert}. Also ist auch $G'$ \emph{regulär}, da $G$ es war.
+	
+	\bewrueck Die Rückrichtung des Beweises führen wir per Kontrapositionsbeweis. Es sei also nur eine einseitige Verbindung zwischen $u$ und $v$ gegeben. O.B.d.A. nehmen wir an, dass $(u,v) \in E^{*}$ und $(v,u) \notin E^{*}$. Da $G$ ein \emph{Alignmentgraph} ist, gibt es zwangsläufig zwei Knoten $x$ und $y$, die auf dem selben Pfad $P_i$ aus $P$ liegen und über die der Pfad von $u$ nach $v$ läuft. Gäbe es keinen solchen Knoten, dann wäre die Vorbedingung nicht erfüllt, weil nur Kanten auf den Pfaden $P$ keine antiparallele Kante haben. Nach dem Hinzufügen der Kante $(u,v)$ mit dem resultierenden \emph{Alignmentgraphen} $G'$ gäbe es dann einen Pfad von $y$ nach $x$, denn $(y,v), (v,u), (u,x) \in E^{*}$. Daraus folgt dann $x \rightleftharpoons^{*} y$, also eine \emph{Koinzidenz} zwischen $x$ und $y$ vom selben Pfad $P_i$, wodurch die \emph{Regularität} von $G'$ verletzt ist.
+\end{beweis}
+
+Sei ein Symbol $s$ aus der Sequenz $S_i$ mit korrespondierendem Knoten $v$ aus dem \emph{Alignmentgraohen} gegeben. Dann sind genau die Symbole einer zweiten Sequenz $S_j$ mit $s$ \emph{alignierbar}, die zwischen $P(v)[j] + 1$ und $S(v)[j] - 1$ liegen. Das liegt an einer Beobachtung, die wir bereits zu Beginn dieses Unterabschnitts gemacht haben: \enquote{Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $pos(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $pos(y) \geq S(x)[j]$.} Haben wir jetzt einen Knoten $u$ auf $P_j$ mit $P(v)[j] +1 \leq u \leq S(v)[j] - 1$, dann gilt $u \rightleftharpoons^{*} v$ und die beiden korrespondierenden Symbole sind miteinander \emph{alignierbar} nach dem letzten Lemma. Des Weiteren kann man über die \emph{Transitivitätsgrenzen} in konstanter Zeit bestimmen, ob zwei Symbole miteinander \emph{alignierbar} sind oder nicht.
 
 \subsection{Laufzeit}
 $\oh(n^3*l + n^2*l^2)$
