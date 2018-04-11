@@ -781,7 +781,7 @@ Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die
 
 \subsection{Konsistenzgrenzen durch Berechnung der transitiven Hülle}
 
-	Jetzt möchten wir den allgemeinen graphtheoretischen Ansatz auf unser multiples \emph{Alignment} anwenden. 
+Jetzt möchten wir den allgemeinen graphtheoretischen Ansatz auf unser multiples \emph{Alignment} anwenden. 
 	
 \begin{definition}[Alignmentgraph]
 	Zunächst übertragen wir daher unsere Sequenzen $S = \{S_1, \dots, S_n\}$ auf einen Graphen mit SSDP. Hierbei ist jede \emph{Stelle} aus $\mathcal{S}$ ein Knoten und zwischen zwei Knoten $u$ und $v$ gibt es genau dann eine Kante $(u,v) \in E$, wenn die dazugehörigen \emph{Stellen} aus der selben Sequenz kommen und direkt aufeinanderfolgen. Dadurch ergibt sich automatisch unser SSDP mit n Pfaden, denn jede Sequenz liefert genau einen solchen und da jeder Knoten mit genau einer Sequenz assoziiert ist, spannen diese Pfade auch den ganzen Graphen. Den Pfad einer Sequenz $S_i$ bezeichnen wir als $P_i$.
@@ -789,6 +789,36 @@ Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die
 \end{definition}
 
 Gibt es zwischen $u$ und $v$ Pfade in beiden Richtungen ($(u,v)$ und $(v,u) \in E^*$), dann symbolisieren wir dies durch $u \rightleftharpoons^{*} v$. Wir sagen dann, dass $u$ und $v$ miteinander \emph{koinzidieren}. 
+
+Wie bereits angedeutet ist es bei einem \emph{Alignment} möglich Lücken so in die Sequenzen einzufügen, dass genau die einander zugewiesenen Symbole übereinander stehen. Diese Tupel von \emph{Stellen} nennen wir \emph{Zuweisungsspalten} und zu ihnen zählen wir nur die miteinander alignierten Symbole. Andere, nicht mit den gerade betrachteten \emph{Stellen} alignierte Symbole, gehören nicht zur \emph{Zuweisungsspalte}, selbst wenn sie in der selben Spalte der Sequenzen stehen, nachdem man Lücken eingefügt hat.\improvement{Beispiel} Eine Menge von miteinander \emph{koinzidierenden} Knoten nennen wir einen \emph{Anker}, wenn es keine weiteren Knoten gibt, die mit Knoten aus dieser Menge \emph{koinzidieren}.
+
+Wir nennen einen \emph{Alignmentgraphen} mit seinem SSDP $(G,P)$ auf einer Menge von Sequenzen $S$ genau dann \emph{regulär}, wenn die Relation auf der er beruht ein \emph{Alignment} ist. Das heißt, wenn die Zuweisungen keine \emph{Inkonsistenzen} enthalten.
+
+\begin{lemma}
+	Sei $G$ ein \emph{Alignmentgraph} und $P$ das ihm zugewiesene SSDP. $(G,P)$ ist genau dann regulär, wenn jeder dazugehörige \emph{Anker} höchstens einen Knoten aus jedem Pfad von $P$ hat. In diesem Fall entspricht ein \emph{Anker} genau einer \emph{Zuweisungsspalte}.
+\end{lemma}
+
+\begin{beweis}
+	\bewhin Angenommen jeder \emph{Anker} unseres \emph{Alignmentgraphen} $G$ enthält höchstens einen Knoten aus jedem Pfad in $P$. Betrachten wir jetzt die Halbordnung $\preceq^{*}$, bei der für zwei \emph{Anker} $a$ und $b$ $a \preceq^{*} b$ genau dann gilt, wenn zwischen zwei Knoten $u \in a$ und $v \in b$ ein Pfad in $G$ existiert. Da keiner der \emph{Anker} von $G$ zwei oder mehr verschiedene Knoten vom selben Pfad aus $P$ enthält und da auf ihnen unsere Halbordnung $\preceq^{*}$ existiert, können wir anhand dieser die \emph{Anker} immer in \emph{Zuweisungsspalten} übereinander schreiben und haben somit ein \emph{Alignment}. $\preceq^{*}$ entspricht dabei genau der topologischen Sortierung auf $G$. Da auf $(G,P)$ ein \emph{Alignment} existiert, ist es \emph{regulär}.
+	
+	\bewrueck Sei $G$ regulär. Dann ist die zugehörige Relation zwischen Knoten per Definition ein \emph{Alignment} und für dieses können wir, wie wir wissen, die Zuweisungen in \emph{Zuweisungsspalten} untereinander schreiben. Da dies möglich ist, sind alle \emph{Anker} \emph{Zuweisungsspalten} und keiner enthält zwei oder mehr Knoten aus der selben Sequenz.
+\end{beweis}
+
+Für den Rest des Abschnitts nehmen wir an, dass unser \emph{Alignmentgraph} $G$ mit SSDP \emph{regulär} ist. Ziel ist es jetzt zu überprüfen, ob er auch regulär bleibt, nachdem man eine Zuweisung zwischen zwei \emph{Stellen} $s$ und $s$ und die korrespondierenden Kanten in $G$ hinzugefügt hat. Falls ja, dann nennen wir $s$ und $t$ \emph{alignierbar}, einen Begriff, den wir zuvor bereits informell genutzt haben.
+
+\begin{lemma}
+	Zwei \emph{Stellen} $s$ und $t$ mit den korrespondierenden Knoten $u$ und $v$ sind genau dann \emph{alignierbar}, wenn eine der folgenden zwei Bedingungen eintritt:
+	
+	(1) Es exisitert kein Pfad zwischen $u$ und $v$, das heißt $(u,v),(v,u) \notin E^{*}$,
+	
+	(2) $u$ und $v$ \emph{koinzidieren} miteinander, also $u \rightleftharpoons^{*} v$.
+\end{lemma}
+
+\begin{beweis}
+	Sei $G'$ der Graph nach dem Hinzufügen der Kanten $(u,v)$ und $(v,u)$. Wir müssen zeigen, dass $(G',P)$ genau dann regulär ist, wenn eine der beiden obigen Bedingungen eintritt.
+	
+	\bewhin Es gelte $u \rightleftharpoons^{*} v$ für $G$. Dann sind die \emph{Anker} von $G'$ die selben wie von $G$, denn $u$ und $v$ haben bereits zuvor \emph{koninzidiert}. Also ist auch $G'$ \emph{regulär}, da $G$ es war.
+\end{beweis}\
 
 \subsection{Laufzeit}
 $\oh(n^3*l + n^2*l^2)$

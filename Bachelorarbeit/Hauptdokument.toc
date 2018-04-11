@@ -1,4 +1,4 @@
-\babel@toc {ngerman}{}
+\select@language {ngerman}
 \contentsline {chapter}{\numberline {1}Einleitung und Motivation}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Multiple Sequence Alignments}{1}{section.1.1}
 \contentsline {section}{\numberline {1.2}Einsatzgebiete}{1}{section.1.2}
@@ -23,11 +23,11 @@
 \contentsline {section}{\numberline {3.5}Konsistenz}{22}{section.3.5}
 \contentsline {subsection}{\numberline {3.5.1}Berechnung der transitiven H\IeC {\"u}lle eines gerichteten Graphen}{24}{subsection.3.5.1}
 \contentsline {subsection}{\numberline {3.5.2}Konsistenzgrenzen durch Berechnung der transitiven H\IeC {\"u}lle}{27}{subsection.3.5.2}
-\contentsline {subsection}{\numberline {3.5.3}Laufzeit}{27}{subsection.3.5.3}
-\contentsline {section}{\numberline {3.6}Gieriges multiples Alignment}{27}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Laufzeit}{27}{subsection.3.6.1}
-\contentsline {section}{\numberline {3.7}Gesamtkomplexit\IeC {\"a}t}{27}{section.3.7}
-\contentsline {section}{\numberline {3.8}Probleme}{27}{section.3.8}
+\contentsline {subsection}{\numberline {3.5.3}Laufzeit}{28}{subsection.3.5.3}
+\contentsline {section}{\numberline {3.6}Gieriges multiples Alignment}{28}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Laufzeit}{28}{subsection.3.6.1}
+\contentsline {section}{\numberline {3.7}Gesamtkomplexit\IeC {\"a}t}{28}{section.3.7}
+\contentsline {section}{\numberline {3.8}Probleme}{28}{section.3.8}
 \contentsline {chapter}{\numberline {4}Ein Min-Cut-Ansatz f\IeC {\"u}r das Konsistenzproblem}{29}{chapter.4}
 \contentsline {section}{\numberline {4.1}Flussnetzwerke}{29}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Einf\IeC {\"u}hrung}{29}{subsection.4.1.1}
