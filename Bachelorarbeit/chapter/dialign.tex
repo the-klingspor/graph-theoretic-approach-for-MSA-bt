@@ -746,7 +746,7 @@ Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die
 	\begin{algorithmic}[1]
 		\Require Gerichteter Graph $G$ mit SSDP $P_1, \dots, P_k$
 		\Procedure{EdgeAddition}{$x,y$}
-			\If{$(x,y) \notin E^*$}
+			\If{$(x,y) \notin E^*$}\label{alg:pathIf}
 				\NFor{Pfad $P_i$}
 					\NFor{Pfad $P_j$}
 						\NFor{$u$ in $P_i$ startend von $P(x)[i]$ in absteigender Reihenfolge}
@@ -824,7 +824,15 @@ Für den Rest des Abschnitts nehmen wir an, dass unser \emph{Alignmentgraph} $G$
 	\bewrueck Die Rückrichtung des Beweises führen wir per Kontrapositionsbeweis. Es sei also nur eine einseitige Verbindung zwischen $u$ und $v$ gegeben. O.B.d.A. nehmen wir an, dass $(u,v) \in E^{*}$ und $(v,u) \notin E^{*}$. Da $G$ ein \emph{Alignmentgraph} ist, gibt es zwangsläufig zwei Knoten $x$ und $y$, die auf dem selben Pfad $P_i$ aus $P$ liegen und über die der Pfad von $u$ nach $v$ läuft. Gäbe es keinen solchen Knoten, dann wäre die Vorbedingung nicht erfüllt, weil nur Kanten auf den Pfaden $P$ keine antiparallele Kante haben. Nach dem Hinzufügen der Kante $(u,v)$ mit dem resultierenden \emph{Alignmentgraphen} $G'$ gäbe es dann einen Pfad von $y$ nach $x$, denn $(y,v), (v,u), (u,x) \in E^{*}$. Daraus folgt dann $x \rightleftharpoons^{*} y$, also eine \emph{Koinzidenz} zwischen $x$ und $y$ vom selben Pfad $P_i$, wodurch die \emph{Regularität} von $G'$ verletzt ist.
 \end{beweis}
 
-Sei ein Symbol $s$ aus der Sequenz $S_i$ mit korrespondierendem Knoten $v$ aus dem \emph{Alignmentgraohen} gegeben. Dann sind genau die Symbole einer zweiten Sequenz $S_j$ mit $s$ \emph{alignierbar}, die zwischen $P(v)[j] + 1$ und $S(v)[j] - 1$ liegen. Das liegt an einer Beobachtung, die wir bereits zu Beginn dieses Unterabschnitts gemacht haben: \enquote{Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $pos(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $pos(y) \geq S(x)[j]$.} Haben wir jetzt einen Knoten $u$ auf $P_j$ mit $P(v)[j] +1 \leq u \leq S(v)[j] - 1$, dann gilt $u \rightleftharpoons^{*} v$ und die beiden korrespondierenden Symbole sind miteinander \emph{alignierbar} nach dem letzten Lemma. Des Weiteren kann man über die \emph{Transitivitätsgrenzen} in konstanter Zeit bestimmen, ob zwei Symbole miteinander \emph{alignierbar} sind oder nicht.
+Sei ein Symbol $s$ aus der Sequenz $S_i$ mit korrespondierendem Knoten $v$ aus dem \emph{Alignmentgraohen} gegeben. Dann sind genau die Symbole einer zweiten Sequenz $S_j$ mit $s$ \emph{alignierbar}, die zwischen $P(v)[j] + 1$ und $S(v)[j] - 1$ liegen. Das liegt an einer Beobachtung, die wir bereits zu Beginn dieses Unterabschnitts gemacht haben: \enquote{Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $pos(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $pos(y) \geq S(x)[j]$.} Haben wir jetzt einen Knoten $u$ auf $P_j$ mit $P(v)[j] +1 \leq u \leq S(v)[j] - 1$, dann gilt $u \rightleftharpoons^{*} v$ und die beiden korrespondierenden Symbole sind miteinander \emph{alignierbar} nach dem letzten Lemma. Diese Überprüfung ist in $\oh(1)$ Zeit möglich.
+
+\begin{korollar}
+	Für eine Menge an Sequenzen $S = \{S_1, \dots, S_n\}$ und zugehörigem \emph{Alignmentgraphen} mit SSDP $(G,P)$ kann die transitive Hülle von $G$ in $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit und mit $\oh(n^2\cdot L)$ Speicherplatz erhalten werden, wenn $L$ die maximale Länge aller Sequenzen ist.
+\end{korollar}
+
+\begin{beweis}
+	Da $(G,P)$ \emph{regulär} ist, hat jeder \emph{Anker} höchstens einen Pfad aus $P$. Die Anzahl der Kanten ist also beschränkt durch die Anzahl an möglichen Paaren zwischen den Sequenzen mal zwei, denn für zwei \emph{alignierte} Symbole werden zwischen den dazugehörigen Knoten auch zwei Kanten hinzugefügt. Von diesen $n\cdot (n-1)$ Kanten können aber nur $2\cdot (n-1)$-viele für Aktualisierungen im Algorithmus \textrm{EdgeAddition} sorgen. Das liegt daran, dass jeder Knoten nur mit $(n-1)$ neuen Knoten verbunden werden kann. Alle weiteren Kanten ändern die transitive Hülle des \emph{Alignmentgraphen} nicht und werden direkt in Zeile \ref{alg:edgeaddition}\ref{alg:pathIf} abgefangen. 
+\end{beweis}
 
 \subsection{Laufzeit}
 $\oh(n^3*l + n^2*l^2)$
