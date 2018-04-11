@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.3)  10 APR 2018 23:46
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.3)  11 APR 2018 09:23
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -3221,64 +3221,67 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 706.
  [24]
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 762.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 762.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 762.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 762.
- [25]
-
-Package wrapfig Warning: wrapfigure used inside a conflicting environment on in
-put line 766.
-
-
-Overfull \hbox (1.2782pt too wide) in paragraph at lines 772--773
+Overfull \hbox (1.2782pt too wide) in paragraph at lines 719--720
 [][] 
  []
 
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 769.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 769.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 769.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 769.
+[25]
 
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 77
-7.
+Package caption Warning: \label without proper reference on input line 713.
+See the caption package documentation for explanation.
 
 
-Package wrapfig Warning: Stationary wrapfigure forced to float on input line 77
-9.
+LaTeX Warning: Reference `abb:kante' on page 26 undefined on input line 775.
 
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 780.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 780.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 780.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 780.
+[26]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 782.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 782.
-
-Underfull \vbox (badness 5050) has occurred while \output is active []
-
+Package mdframed Info: mdframed works in twoside mode on input line 786.
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 786.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 785.
+(babel)             in language  on input line 786.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 785.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 785.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 785.
- [26]
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 785.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 785.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 787.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 787.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 790.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 790.
+(babel)             in language  on input line 786.
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 793.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 793.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 796.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 796.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 798.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 798.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 801.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 801.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 804.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 804.
 )
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 254.
@@ -3288,8 +3291,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 254.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 254.
-
-[27]
+ [27]
 \openout2 = `chapter/min-cut.aux'.
 
  (./chapter/min-cut.tex
@@ -3539,15 +3541,18 @@ Package atveryend Info: Empty hook `AtEndAfterFileList' on input line 271.
 LaTeX Font Warning: Size substitutions with differences
 (Font)              up to 1.64499pt have occurred.
 
+
+LaTeX Warning: There were undefined references.
+
  ) 
 Here is how much of TeX's memory you used:
- 44372 strings out of 492982
- 845563 string characters out of 6136226
- 1099060 words of memory out of 5000000
- 46833 multiletter control sequences out of 15000+600000
+ 44380 strings out of 492982
+ 845689 string characters out of 6136226
+ 1098769 words of memory out of 5000000
+ 46838 multiletter control sequences out of 15000+600000
  822855 words of font info for 215 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
- 73i,27n,95p,10479b,1297s stack positions out of 5000i,500n,10000p,200000b,80000s
+ 73i,27n,95p,10479b,1042s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{c:/texl
 ive/2017/texmf-dist/fonts/enc/dvips/nimbus15/nimbus15mono-ec.enc}{c:/texlive/20
 17/texmf-dist/fonts/enc/dvips/sourcesanspro/a_sd7igg.enc}{c:/texlive/2017/texmf
@@ -3575,10 +3580,10 @@ ewtx/txexs.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/txfonts/txsya.pfb
 /fonts/type1/public/newtx/txsys.pfb><c:/texlive/2017/texmf-dist/fonts/type1/urw
 /times/utmri8a.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nimbus15/zcoN
 -Regular.pfb>
-Output written on Hauptdokument.pdf (43 pages, 419936 bytes).
+Output written on Hauptdokument.pdf (43 pages, 422123 bytes).
 PDF statistics:
- 840 PDF objects out of 1000 (max. 8388607)
- 747 compressed objects within 8 object streams
- 174 named destinations out of 1000 (max. 500000)
- 570 words of extra memory for PDF output out of 10000 (max. 10000000)
+ 853 PDF objects out of 1000 (max. 8388607)
+ 760 compressed objects within 8 object streams
+ 177 named destinations out of 1000 (max. 500000)
+ 586 words of extra memory for PDF output out of 10000 (max. 10000000)
 

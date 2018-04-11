@@ -22,7 +22,8 @@
 \contentsline {subsection}{\numberline {3.4.2}Beispiel \IeC {\"U}berlappgewichte}{21}{subsection.3.4.2}
 \contentsline {section}{\numberline {3.5}Konsistenz}{22}{section.3.5}
 \contentsline {subsection}{\numberline {3.5.1}Berechnung der transitiven H\IeC {\"u}lle eines gerichteten Graphen}{24}{subsection.3.5.1}
-\contentsline {subsection}{\numberline {3.5.2}Laufzeit}{27}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.2}Konsistenzgrenzen durch Berechnung der transitiven H\IeC {\"u}lle}{27}{subsection.3.5.2}
+\contentsline {subsection}{\numberline {3.5.3}Laufzeit}{27}{subsection.3.5.3}
 \contentsline {section}{\numberline {3.6}Gieriges multiples Alignment}{27}{section.3.6}
 \contentsline {subsection}{\numberline {3.6.1}Laufzeit}{27}{subsection.3.6.1}
 \contentsline {section}{\numberline {3.7}Gesamtkomplexit\IeC {\"a}t}{27}{section.3.7}
