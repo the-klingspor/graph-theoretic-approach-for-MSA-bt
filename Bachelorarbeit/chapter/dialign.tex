@@ -831,7 +831,9 @@ Sei ein Symbol $s$ aus der Sequenz $S_i$ mit korrespondierendem Knoten $v$ aus d
 \end{korollar}
 
 \begin{beweis}
-	Da $(G,P)$ \emph{regulär} ist, hat jeder \emph{Anker} höchstens einen Pfad aus $P$. Die Anzahl der Kanten ist also beschränkt durch die Anzahl an möglichen Paaren zwischen den Sequenzen mal zwei, denn für zwei \emph{alignierte} Symbole werden zwischen den dazugehörigen Knoten auch zwei Kanten hinzugefügt. Von diesen $n\cdot (n-1)$ Kanten können aber nur $2\cdot (n-1)$-viele für Aktualisierungen im Algorithmus \textrm{EdgeAddition} sorgen. Das liegt daran, dass jeder Knoten nur mit $(n-1)$ neuen Knoten verbunden werden kann. Alle weiteren Kanten ändern die transitive Hülle des \emph{Alignmentgraphen} nicht und werden direkt in Zeile \ref{alg:edgeaddition}\ref{alg:pathIf} abgefangen. 
+	Da $(G,P)$ \emph{regulär} ist, hat jeder \emph{Anker} höchstens einen Pfad aus $P$. Die Anzahl der Kanten pro \emph{Anker} ist also beschränkt durch die Anzahl an möglichen Paaren zwischen den Sequenzen mal zwei, denn für zwei \emph{alignierte} Symbole werden zwischen den dazugehörigen Knoten auch zwei Kanten hinzugefügt. Von diesen $n\cdot (n-1)$ Kanten können aber nur $2\cdot (n-1)$-viele für Aktualisierungen im Algorithmus \textrm{EdgeAddition} sorgen. Das liegt daran, dass jeder Knoten nur mit $(n-1)$ neuen Knoten verbunden werden kann. Alle weiteren Kanten ändern die transitive Hülle des \emph{Alignmentgraphen} nicht und werden direkt in Zeile \ref{alg:edgeaddition}\ref{alg:pathIf} abgefangen.
+	
+	Die maximale Anzahl an möglichen Kanten wird erreicht, wenn man $\oh(L)$ \emph{Anker} hat, die sich über möglichst viele Sequenzen spannen. Es ist zwar möglich, dass man deutlich mehr Anker hat (bis zu $\oh(n\cdot L)$), aber das ginge mit einer Reduzierung der zu überprüfenden Kanten einher. Im schlimmsten Fall kommt es also zu $\oh(n\cdot L)$ rechenintensiven Aufrufen von \textrm{EdgeAddition}. Da jeder dieser Aufrufe im schlimmsten Fall eine Laufzeit von $\oh(n^2 \cdot (\mu - \mu_0) + \nu \cdot \min\{\nu, \mu - \mu_p\})$ hat, mit $\mu - \mu_0$ 
 \end{beweis}
 
 \subsection{Laufzeit}
