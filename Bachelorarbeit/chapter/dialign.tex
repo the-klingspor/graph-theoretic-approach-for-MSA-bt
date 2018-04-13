@@ -52,7 +52,7 @@ Im Folgenden wollen wir zwei Beispiele betrachten, um das Konzept der \emph{Kons
 
 \begin{beispiel}
 	\begin{center}
-	\begin{tikzcd}
+	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
 		a_1 \arrow[rrdd, no head] & a_2 & a_3 & a_4 & a_5 \\
 		b_1 \arrow[d, no head] & b_2 & b_3 & b_4 \arrow[lu, no head] & b_5 \\
 		c_1 & c_2 & c_3 & c_4 \arrow[u, no head] & c_5
@@ -61,7 +61,7 @@ Im Folgenden wollen wir zwei Beispiele betrachten, um das Konzept der \emph{Kons
 	Für alle \emph{Stellen}, die aus der selben kommen Sequenz stammen, gilt $x \preceq_{\mathcal{R} y \implies x \preceq y}$, wie beispielsweise für $a_1$ und $a_5$: $a_1 \mathcal{A} c_3, c_3 \preceq c_4, c_4 \mathcal{A} b_4, b_4 \mathcal{A} a_3$ und $a_3 \preceq a_5$. Es folgt $a_1 \preceq_{\mathcal{R}} a_5$. Also ist die Relation auf $\mathcal{S}$ \emph{konsistent} und somit ein \emph{Alignment}.
 	
 	\begin{center}
-	\begin{tikzcd}
+	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
 		a_1 \arrow[rdd, no head] & a_2 & a_3 & a_4 \arrow[rdd, no head] & a_5 \\
 		b_1 & b_2 & b_3 \arrow[ru, no head] & b_4 & b_5 \\
 		c_1 \arrow[ruu, no head] & c_2 & c_3 & c_4 & c_5 \arrow[u, no head]
@@ -70,11 +70,11 @@ Im Folgenden wollen wir zwei Beispiele betrachten, um das Konzept der \emph{Kons
 	Hier handelt es sich um kein \emph{Alignment}, denn die \emph{Konsistenz} ist gleich an mehreren Stellen verletzt. Erstens gilt $a_2 \preceq_{\mathcal{R}} a_1$, denn $a_2 \mathcal{A} c_1, c_1 \preceq c_2$ und $c_2 \mathcal{A} c_1$. Da aber $c_1 \preceq c_2$ gilt, erhält die Relation die natürliche Ordnung auf der erstens Sequenz nicht. Der Grund liegt hier an der Überkreuzung von mehreren Zuweisungen. Des Weiteren gilt $b_5 \preceq_{\mathcal{R}} b_3$, weil $b_5 \mathcal{A} c_5, c_5 \mathcal{A} a_4$ und $a_4 \mathcal{A} b_3$, aber $b_5 \npreceq b_3$. Hier ist das Problem eine transitive Mehrfachzuweisung von mehreren Symbolen der einen Sequenz auf das gleiche einer anderen (sowohl $b_3$ als auch $b_5$ stehen in Relation zu beispielsweise $a_4$). 
 \end{beispiel}
 
-Es lässt sich zeigen, dass eine Relation $\mathcal{A}$ genau dann ein \emph{Alignment} ist, wenn es möglich ist zwischen den alignierten Symbolen Lücken einzufügen, sodass gerade die einander zugewiesenen untereinander stehen. Deshalb bezeichnet man die Äquivalenzklassen $[x]_{\mathcal{A}} = \{y \in \mathcal{S} \colon x\mathcal{A}y \}$ von $\mathcal{A}$ auch als \emph{Spalten}. Man kann sich leicht überlegen, dass das bei Überkreuzungen und transitiven Mehrfachzuweisungen nicht möglich ist. Bei unserem ersten Beispiel von oben würde das so aussehen:
+Es lässt sich zeigen, dass eine Relation $\mathcal{A}$ genau dann ein \emph{Alignment} ist, wenn es möglich ist zwischen den alignierten Symbolen Lücken einzufügen, sodass gerade die einander zugewiesenen untereinander stehen. Deshalb bezeichnet man die Äquivalenzklassen $[x]_{\mathcal{A}} = \{y \in \mathcal{S} \colon x\mathcal{A}y \}$ von $\mathcal{A}$ auch als \emph{(Zuweisungs-)Spalten}. Man kann sich leicht überlegen, dass das bei Überkreuzungen und transitiven Mehrfachzuweisungen nicht möglich ist. Bei unserem ersten Beispiel von oben würde das so aussehen:
 
 \begin{beispiel}
 	\begin{center}
-	\begin{tikzcd}
+	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
 		- & - & A_1 \arrow[dd, no head] & a_2 & A_3 \arrow[d, no head] & a_4 & a_5 \\
 		b_1 & B_2 \arrow[d, no head] & - & b_3 & B_4 \arrow[d, no head] & b_5 & - \\
 		c_1 & C_2 & C_3 & - & C_4 & c_5 & -
@@ -817,9 +817,9 @@ Für den Rest des Abschnitts nehmen wir an, dass unser \emph{Alignmentgraph} $G$
 \begin{beweis}
 	Sei $G'$ der Graph nach dem Hinzufügen der Kanten $(u,v)$ und $(v,u)$. Wir müssen zeigen, dass $(G',P)$ genau dann regulär ist, wenn eine der beiden obigen Bedingungen eintritt.
 	
-	\bewhin (1) Angenommen es existiert kein Pfad zwischen $u$ und $v$ und seien $a_1$ und $a_2$ die dazugehörigen \emph{Anker} der beiden Knoten. Es sei $a = a_1 \cup a_2$ der neue \emph{Anker} von $G'$ nach dem Hinzufügen von $(u,v)$. Dann kann $a$ nicht mehrere Knoten vom selben Pfad aus $P$ enthalten, weil es sonst bereits einen Pfad von $u$ nach $v$ oder andersrum gegeben hätte und die Vorbedingung verletzt gewesen wäre. Das liegt daran, dass es zwischen diesen Knoten vom selben Pfad ja eine Kante gegeben haben müsste über die dann auch eine einseitige Verbindung zwischen $u$ und $v$ bestände. Weil alle anderen \emph{Anker} von $G$ nicht verändert werden, folgt, dass $G'$ regulär ist.
+	\bewhin (1) Angenommen es existiert kein Pfad zwischen $u$ und $v$ und seien $a_1$ und $a_2$ die dazugehörigen \emph{Anker} der beiden Knoten. Es sei $a = a_1 \cup a_2$ der neue \emph{Anker} von $G'$ nach dem Hinzufügen von $(u,v)$. Dann kann $a$ nicht mehrere Knoten vom selben Pfad aus $P$ enthalten, weil es sonst bereits einen Pfad von $u$ nach $v$ oder andersrum gegeben hätte und die Vorbedingung verletzt gewesen wäre. Das liegt daran, dass es zwischen diesen Knoten vom selben Pfad ja eine Kante gegeben haben müsste über die dann auch eine einseitige Verbindung zwischen $u$ und $v$ bestünde. Weil alle anderen \emph{Anker} von $G$ nicht verändert werden, folgt, dass $G'$ regulär ist.
 	
-	(2) Es gelte $u \rightleftharpoons^{*} v$ für $G$. Dann sind die \emph{Anker} von $G'$ die selben wie von $G$, denn $u$ und $v$ haben bereits zuvor \emph{koninzidiert}. Also ist auch $G'$ \emph{regulär}, da $G$ es war.
+	(2) Es gelte $u \rightleftharpoons^{*} v$ für $G$. Dann sind die \emph{Anker} von $G'$ die selben wie von $G$, denn $u$ und $v$ haben bereits zuvor \emph{koinzidiert}. Also ist auch $G'$ \emph{regulär}, da $G$ es war.
 	
 	\bewrueck Die Rückrichtung des Beweises führen wir per Kontrapositionsbeweis. Es sei also nur eine einseitige Verbindung zwischen $u$ und $v$ gegeben. O.B.d.A. nehmen wir an, dass $(u,v) \in E^{*}$ und $(v,u) \notin E^{*}$. Da $G$ ein \emph{Alignmentgraph} ist, gibt es zwangsläufig zwei Knoten $x$ und $y$, die auf dem selben Pfad $P_i$ aus $P$ liegen und über die der Pfad von $u$ nach $v$ läuft. Gäbe es keinen solchen Knoten, dann wäre die Vorbedingung nicht erfüllt, weil nur Kanten auf den Pfaden $P$ keine antiparallele Kante haben. Nach dem Hinzufügen der Kante $(u,v)$ mit dem resultierenden \emph{Alignmentgraphen} $G'$ gäbe es dann einen Pfad von $y$ nach $x$, denn $(y,v), (v,u), (u,x) \in E^{*}$. Daraus folgt dann $x \rightleftharpoons^{*} y$, also eine \emph{Koinzidenz} zwischen $x$ und $y$ vom selben Pfad $P_i$, wodurch die \emph{Regularität} von $G'$ verletzt ist.
 \end{beweis}
@@ -835,14 +835,31 @@ Sei ein Symbol $s$ aus der Sequenz $S_i$ mit korrespondierendem Knoten $v$ aus d
 	
 	Die maximale Anzahl an möglichen Kanten wird erreicht, wenn man $\oh(L)$ \emph{Anker} hat, die sich über möglichst viele Sequenzen spannen. Es ist zwar möglich, dass man deutlich mehr Anker hat (bis zu $\oh(n\cdot L)$), aber das ginge mit einer Reduzierung der zu überprüfenden Kanten einher. Im schlimmsten Fall kommt es also zu $\oh(n\cdot L)$ rechenintensiven Aufrufen von \textrm{EdgeAddition}. Erinnern wir uns an die Laufzeit von \textrm{EdgeAddition} auf unserem Graphen: $\oh(n^2 \cdot (\mu - \mu_0) + \nu \cdot \min\{\nu, \mu - \mu_p\})$, mit $\mu - \mu_0$ der Anzahl an hinzugefügten Verbindungen, $\nu$ der Anzahl an \emph{Stellen} aller Sequenzen und $\mu - \mu_p$ der Anzahl an Kanten zwischen allen Knoten, die nicht zur gerade betrachteten Sequenz gehören. $\mu - \mu_p$ liegt im schlimmsten Fall über $\nu$, sodass dieses als Minimum im entsprechenden Term ausgewählt wird. Es gelten $\mu - \mu_0 \in \oh(n\cdot L)$ und $\nu \in \oh(n\cdot L)$. Die Laufzeit von \textrm{EdgeAddition} aller Kanten im rechenintensiven Fall liegt also in $\oh(n^3\cdot L + n^2\cdot L^2)$. Die anderen Kanten, die nicht in Zeile \ref{alg:edgeaddition}\ref{alg:pathIf} abgefangen werden, sind nur $\oh(n^2\cdot L)$-viele und da ihre Bearbeitung nur konstante Zeit kostet, beträgt die Laufzeit auch insgesamt $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit.
 	
-	Während des Algorithmus müssen wir stets unseren \emph{Alignmentgraphen} vorhalten. Dieser enthält für jede \emph{Stelle} einen Knoten, also $\oh(n\cdot L)$-viele und $\oh(n\cdot L)$ Kanten für unsere Pfade für jede Sequenz, sowie im Worst-Case für $\oh(L)$ Anker die jeweils bis zu $n^2$ Verbindungen zwischen den Symbolen dieser \emph{Zuweisungsspalte}. Der benötigte Speicherplatz beträgt somit $n^2\cdot L$.  
+	Während des Algorithmus müssen wir stets unseren \emph{Alignmentgraphen} vorhalten. Dieser enthält für jede \emph{Stelle} einen Knoten, also $\oh(n\cdot L)$-viele und $\oh(n\cdot L)$ Kanten für unsere Pfade für jede Sequenz, sowie im Worst-Case für $\oh(L)$ Anker die jeweils bis zu $n^2$ Verbindungen zwischen den Symbolen dieser \emph{Zuweisungsspalte}. Der benötigte Speicherplatz beträgt somit $\oh(n^2\cdot L)$.  
 \end{beweis}
 
 Die Schlussfolgerung des letzten Satzes ist, dass es möglich ist die \emph{Transitivitäts-} und somit \emph{Konsistenzgrenzen} für ein ganzes multiples \emph{Alignment} in $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit und mit $\oh(n^2\cdot L)$ Speicherplatz zu berechnen. 
 
-Durch ein paar geschickte Tricks ist es \cite{am00} gelungen die Laufzeit und den Speicherplatz für die DIALIGN-Implementierung mit GABIOS-LIB weiter zu verbessern. Wenn zwei \emph{Stellen} aus $\mathcal{S}$ miteinander aligniert sind, dann folgt daraus automatisch, dass ihre \emph{Transitivitätsgrenzen} identisch sind. Das nutzen wir aus, indem wir nicht die Grenzen für jede \emph{Stelle} speichern und aktualisieren, sondern stattdessen für ganze Identitätsklassen unseres \emph{Alignments}.
+Durch ein paar geschickte Tricks ist es \cite{am00} gelungen die Laufzeit und den Speicherplatz für die DIALIGN-Implementierung mit GABIOS-LIB weiter zu verbessern. Wenn zwei \emph{Stellen} aus $\mathcal{S}$ miteinander aligniert sind, dann folgt daraus automatisch, dass ihre \emph{Transitivitätsgrenzen} identisch sind. Das nutzen wir aus, indem wir nicht die Grenzen für jede \emph{Stelle} speichern und aktualisieren, sondern stattdessen für ganze Äquivalenzklassen $[x]_{\mathcal{A}}$ unseres \emph{Alignments}.
 
-Die zweite Verbesserung zielt auf \emph{verwaiste} \emph{Stellen} ab, das heißt solche, die mit keiner anderen aligniert sind.  
+Die zweite Verbesserung zielt auf \emph{verwaiste} \emph{Stellen} ab, das heißt solche, die mit keiner anderen aligniert sind. Sei $x = (i,p)$ ein solcher \emph{Waise} aus der Sequenz $S_i$ an der Stelle $p$. Dann stimmen die \emph{Nachfolgergrenzen} von $x$ genau mit denen der am weitesten links stehenden \emph{Stelle} $y = (i,p')$ überein mit $p < p'$, sodass $y$ kein \emph{Waise} ist. \improvement{Sobald Beispiele für Transitivitätsgrenzen gegeben sind, hier darauf verweisen}
+Jetzt genügt es ein Feld mit Werten $\text{nextClass}[x] = p'$ für alle \emph{Waisen} unserer Sequenzen zu speichern. Dadurch ist es uns möglich die \emph{Transitivitätsgrenzen} $Succ_{\mathcal{A}}(x,j)$ dieser \emph{Stellen} in konstanter Zeit zu aktualisieren, wenn eine neue Zuweisung zwischen unseren Sequenzen und somit eine neue Kante in unserem \emph{Alignmentgraphen} hinzugefügt wird. Möglicherweise kann man dieses Array auch durch eine Baum- oder andere Datenstruktur ersetzen, die es uns ermöglicht Einträge zu löschen, nachdem die entsprechenden \emph{Stellen} keine \emph{Waisen} mehr sind. Das verhindert, dass beim Alignieren von sehr ähnlichen Sequenzen viel Speicher durch Arrays belegt sind, deren Einträge nie wieder benötigt werden. Das weiterzuführen ginge aber zu weit und soll nicht Teil dieser Bachelorarbeit sein.
+
+\subsection{Einbindung in DIALIGN}
+
+Auch wenn dieses Thema in \cite{am00} nicht behandelt wird, möchten ich kurz darauf eingehen was notwendig ist, um den obigen Ansatz zur Überprüfung von \emph{Konsistenz} im konkreten Fall von DIALIGN anzuwenden. 
+
+DIALIGN ist ein segmentbasiertes Verfahren für multiples Sequenzalignment. Unser Algorithmus \textrm{EdgeAddition} addiert aber immer nur eine einzelne Kante, die eine symbolweise Zuweisung darstellt, zu unserem \emph{Alignmentgraphen}. Um sicherzustellen, dass ein ganzes \emph{Fragment}, das wir zu unserem \emph{Alignment} hinzufügen wollen, zu den bisher gewählten Zuweisungen \emph{konsistent} ist, betrachten wir dieses auf der Ebene einfacher Paare von \emph{Stellen}. Zunächst überprüfen wir für alle \emph{Stellenpaare} nacheinander, ob diese alignierbar sind. Falls ja, können wir sie der Reihe nach zum \emph{Alignment} mit \textrm{EdgeAddition} hinzufügen und falls nicht, würde das \emph{Fragment} für \emph{Inkonsistenzen} sorgen und wir fügen nichts hinzu. Die Überprüfung kann einmalig für alle Paare am Anfang durchgeführt werden, weil jedes Paar definitiv zu einem eigenen \emph{Anker} gehört und die \emph{Alignierbarkeit} nicht durch andere Paare desselben \emph{Fragments} eingeschränkt wird.
+
+Es mag sein, dass man für die \enquote{inneren} \emph{Stellen} der Fragmente effizientere Wege finden kann, um diese zum \emph{Alignment} hinzuzufügen als \textrm{EdgeAddition}. In diesem Fall wäre der Algorithmus nur für die beiden Randpaare unseres \emph{Fragments} nötig.
+
+\subsection{Evaluation von DIALIGN mit der GABIOS-LIB}
+
+Nachdem die GABIOS-LIB in DIALIGN 2.1 integriert wurde, haben Abdedda\"im und Morgenstern die neue Version auf verschiedenen simulierten und echten Datensätzen getestet und mit der vorherigen verglichen \citep{am00}. Die Datensätze umfassten dabei bis zu 200 Sequenzen mit Durchschnittslängen von 100, 63,3 und 119,3 je nach Satz. 
+
+Es hat sich herausgestellt, dass die Laufzeit der alten Version sich proportional zu $n^4$ verhielt, während die von DIALIGN 2.1 sogar besser als $n^3$ war. Wie nicht anders zu erwarten, wurde der Unterschied bei steigender Anzahl der Sequenzen $n$ tendenziell größer. Die Laufzeit verbesserte sich im besten Fall um den Faktor 120 und im Durchschnitt etwa um den Faktor 10. Insbesondere die höhere Geschwindigkeit bei großen \emph{Alignments} mit mehr Sequenzen ist erfreulich, da diese ohnehin komplexer zu berechnen sind.
+
+Ein weiterer Faktor ist der verringerte Speicherverbrauch im Verhältnis zur alten Version 2.0. Zwar beträgt der Speicherverbrauch der neuen Implementierung im schlimmsten Fall nach wie vor $\oh(n^2\cdot L)$, was zuvor der echte benötigte Speicher war. In der Praxis sank er aber um einen konstanten Faktor abhängig von der Ähnlichkeit der alignierten Sequenzen (Ausnahme: randomisierte Sequenzen). Die Anzahl $n$ hatte hierbei keinen signifikanten Einfluss auf den Grad der Verbesserung. Dieser lag bei den nichtrandomisierten Datensätzen etwa zwischen fünf und zehn.
 
 \subsection{Laufzeit}
 $\oh(n^3*l + n^2*l^2)$
