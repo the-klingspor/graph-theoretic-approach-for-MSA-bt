@@ -291,7 +291,7 @@ Da wir wissen, dass nur \emph{Fragmente} mit positiven Gewichten Teil unseres \e
 
 Guckt man sich \algref{alg:speichereffizient}{algl:praefix} genauer an, stellt man fest, dass man gar nicht alle \emph{Fragmente} kennen muss, die in $(i,j)$ enden. Es reicht das zu kennen, welches das \emph{Präfixgewicht} $W(f)$ aller dort endenden Ketten maximiert. Anstatt alle dieser \emph{Fragmente} in $F_j$ zu speichern reicht es zu überprüfen, ob der dritte Fall von \algref{alg:speichereffizient}{algl:praefix} eintritt und erst dann in \algref{alg:speichereffizient}{algl:fragmentliste} zu sichern. Das bedeutet, dass wir keine ganze Liste von \emph{Fragmenten} für jede Stelle unserer Tabelle speichern müssen, sondern nur ein einziges.
 
-Widmen wir uns nun $N_{\max}$, der Anzahl an \emph{Fragmenten}, die maximal gleichzeitig gespeichert werden. Die Anzahl an gesicherten \emph{Fragmenten}, die wir noch nicht für $Sc[i,j]$ betrachtet haben, beträgt $l_{\max} \cdot L_1 \in \oh(L)$, weil wir für jede der nächsten $l_{\max}$ Spalten und dort jede der $L_1$-vielen Zeilen das \emph{Fragment} speichern, das $W(f)$ für alle dort endenden maximiert. Zusätzlich wird die Reihe von \emph{Vorgängern} für jeden aktuellen Spalteneintrag gesichert, indem wir in $Pr[i,j]$ einen Pointer auf das letzte \emph{Fragment} einer optimalen Kette für die Teilsequenzen bis zu den Stellen $i$ und $j$ in den beiden Sequenzen speichern. Dieses wiederum speichert einen Pointer auf seinen eigenen \emph{Vorgänger} und so weiter. Im schlimmsten Fall befinden wir uns in der letzten Spalte der Tabelle und die in den Einträgen endenden optimalen Ketten sind alle unabhängig voneinander. Dann kann es sein, dass diese jeweils aus $\oh(L_2)$ nah aufeinanderfolgenden \emph{Fragmenten} der Länge $\oh(1)$ bestehen. In diesem Fall ist $N_{\max} \in \oh(L^2)$, genau wir der insgesamt benötigte Speicherplatz. In der Praxis kann man aber erwarten, dass $N_{\max}$ deutlich kleiner ist. 
+Widmen wir uns nun $N_{\max}$, der Anzahl an \emph{Fragmenten}, die maximal gleichzeitig gespeichert werden. Die Anzahl an gesicherten \emph{Fragmenten}, die wir noch nicht für $Sc[i,j]$ betrachtet haben, beträgt $l_{\max} \cdot L_1 \in \oh(L)$, weil wir für jede der nächsten $l_{\max}$ Spalten und dort jede der $L_1$-vielen Zeilen das \emph{Fragment} speichern, das $W(f)$ für alle dort endenden maximiert. Zusätzlich wird die Reihe von \emph{Vorgängern} für jeden aktuellen Spalteneintrag gesichert, indem wir in $Pr[i,j]$ einen Pointer auf das letzte \emph{Fragment} einer optimalen Kette für die Teilsequenzen bis zu den Stellen $i$ und $j$ in den beiden Sequenzen speichern. Dieses wiederum speichert einen Pointer auf seinen eigenen \emph{Vorgänger} und so weiter. Im schlimmsten Fall befinden wir uns in der letzten Spalte der Tabelle und die in den Einträgen endenden optimalen Ketten sind alle unabhängig voneinander. Dann kann es sein, dass diese jeweils aus $\oh(L_2)$ nah aufeinanderfolgenden \emph{Fragmenten} der Länge $\oh(1)$ bestehen. In diesem Fall ist $N_{\max} \in \oh(L^2)$, genau wie der insgesamt benötigte Speicherplatz. In der Praxis kann man aber erwarten, dass $N_{\max}$ deutlich kleiner ist. 
 
 \cite{m02} hat sein Verfahren mit verschiedenen Sequenzen getestet. Dabei hat er festgestellt, dass $N_{\max}$ für unabhängige zufällig erstelle Sequenzen im Vergleich zur Größe $L$ zu vernachlässigen ist. Und selbst wenn sehr ähnliche Sequenzen miteinander aligniert wurden, befand sich $N_{\max}$ in der Größenordnung von $L \cdot l_{\max}$. So gesehen bietet dieser Ansatz einen großen Vorteil gegenüber der naiven Umsetzung der Rekursionsformel für paarweise \emph{Alignments}.
 
@@ -604,8 +604,8 @@ Wie wir sehen enthält das von uns betrachtete \emph{Alignment} nur das eine Fra
 	4 & \texttt{GTCADATC} &                     & 3 & \texttt{TATCA} &                     & 2 & \texttt{GT} & \\
 	3 & \texttt{TCAD} & \multirow{2}{*}{47} & 1 & \texttt{CTCA} & \multirow{2}{*}{34} & 1 & \texttt{TC} & \multirow{2}{*}{20} \\
 	4 & \texttt{TCAD} &                     & 2 & \texttt{CTCA} &                          & 4 & \texttt{TC} & \\
-	3 & \texttt{TCAD} & \multirow{2}{*}{41} & 1 & \texttt{DGTC} & \multirow{2}{*}{31} &    &   & \\
-    4 & \texttt{TCAD} &                     & 4 & \texttt{DGTC} &                     &    &   & \\
+	2 & \texttt{TCAD} & \multirow{2}{*}{44} & 1 & \texttt{DGTC} & \multirow{2}{*}{31} &    &   & \\
+    3 & \texttt{TCAD} &                     & 4 & \texttt{DGTC} &                     &    &   & \\
 \end{tabular}
 
 Da wir im nächsten Schritt die \emph{Fragmente} für unser multiples \emph{Alignment} basierend auf ihren Gewichten gierig auswählen, wurden die Abschnitte bereits sortiert. Ein Algorithmus wird als \emph{gierig} bezeichnet, wenn er eine Entscheidung lokal optimal trifft und danach nicht wieder ändert. In unserem Fall bedeutet das, dass die \emph{Fragmente} mit höheren Gewichten früher gewählt werden und wir sie selbst dann nicht wieder aus unserem multiplen \emph{Alignment} entfernen, wenn sie durch \emph{Inkonsistenzen} verhindern, dass andere, zusammen möglicherweise bessere \emph{Fragment} gewählt werden können. Durch diese radikale Vorgehensweise haben gierige Algorithmen oft gute Laufzeiten, liefern aber nicht immer die bestmöglichen Ergebnisse. Zu bekannten Vertretern dieses Paradigmas gehören beispielsweise der Algorithmus von Dijkstra zur Bestimmung der kürzesten Pfade aus einem einzelnen Knoten oder die Algorithmen von Prim und Kruskal zur Bestimmung von minimalen Spannbäumen.
@@ -622,7 +622,7 @@ Mengentheoretisch können wir uns unser vorgehen so vorstellen, dass wir eine Me
 	\mathcal{A}_i &= 
 		\begin{cases}
 			(\mathcal{A}_{i-1} \cup f_i) & \text{falls $f_i$ \emph{konsistent} ist zu $A_{i-1}$} \\
-			A_{i-1} & sonst 
+			A_{i-1} & \text{sonst} 
 		\end{cases}
 \end{split}
 \end{equation} 
@@ -727,14 +727,14 @@ Mit diesen zwei Formeln können wir für ein $u \in P_i$ und jeden Pfad $P_j$ di
 \begin{equation}
 	P'(u)[j] = \begin{cases}
 			\max\{P(u)[j], P(x)[j]\}, & \text{falls $u$ Nachfolger von y war} \\
-			P(u)[j], & sonst
+			P(u)[j], & \text{sonst}
 		\end{cases}
 \end{equation} 
 
 \begin{equation}
 	S'(u)[j] = \begin{cases}
 			\min\{S(u)[j], S(y)[j]\}, & \text{falls $u$ Vorgänger von x war} \\
-			S(u)[j], & sonst
+			S(u)[j], & \text{sonst}
 		\end{cases}
 \end{equation}
 
@@ -833,7 +833,7 @@ Sei ein Symbol $s$ aus der Sequenz $S_i$ mit korrespondierendem Knoten $v$ aus d
 \begin{beweis}
 	Da $(G,P)$ \emph{regulär} ist, enthält jeder \emph{Anker} höchstens einen Pfad aus $P$. Die Anzahl der Kanten pro \emph{Anker} ist also beschränkt durch die Anzahl an möglichen Paaren zwischen den Sequenzen mal zwei, denn für zwei \emph{alignierte} Symbole werden zwischen den dazugehörigen Knoten auch zwei Kanten hinzugefügt. Von diesen $n\cdot (n-1)$ Kanten können aber nur $2\cdot (n-1)$-viele für Aktualisierungen im Algorithmus \textrm{EdgeAddition} sorgen. Das liegt daran, dass jeder Knoten nur mit $(n-1)$ neuen Knoten verbunden werden kann. Alle weiteren Kanten ändern die transitive Hülle des \emph{Alignmentgraphen} nicht und werden direkt in Zeile \ref{alg:edgeaddition}\ref{alg:pathIf} abgefangen.
 	
-	Die maximale Anzahl an möglichen Kanten wird erreicht, wenn man $\oh(L)$ \emph{Anker} hat, die sich über möglichst viele Sequenzen spannen. Es ist zwar möglich, dass man deutlich mehr Anker hat (bis zu $\oh(n\cdot L)$), aber das ginge mit einer Reduzierung der zu überprüfenden Kanten einher. Im schlimmsten Fall kommt es also zu $\oh(n\cdot L)$ rechenintensiven Aufrufen von \textrm{EdgeAddition}. Erinnern wir uns an die Laufzeit von \textrm{EdgeAddition} auf unserem Graphen: $\oh(n^2 \cdot (\mu - \mu_0) + \nu \cdot \min\{\nu, \mu - \mu_p\})$, mit $\mu - \mu_0$ der Anzahl an hinzugefügten Verbindungen, $\nu$ der Anzahl an \emph{Stellen} aller Sequenzen und $\mu - \mu_p$ der Anzahl an Kanten zwischen allen Knoten, die nicht zur gerade betrachteten Sequenz gehören. $\mu - \mu_p$ liegt im schlimmsten Fall über $\nu$, sodass dieses als Minimum im entsprechenden Term ausgewählt wird. Es gelten $\mu - \mu_0 \in \oh(n\cdot L)$ und $\nu \in \oh(n\cdot L)$. Die Laufzeit von \textrm{EdgeAddition} aller Kanten im rechenintensiven Fall liegt also in $\oh(n^3\cdot L + n^2\cdot L^2)$. Die anderen Kanten, die nicht in Zeile \ref{alg:edgeaddition}\ref{alg:pathIf} abgefangen werden, sind nur $\oh(n^2\cdot L)$-viele und da ihre Bearbeitung nur konstante Zeit kostet, beträgt die Laufzeit auch insgesamt $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit.
+	Die maximale Anzahl an möglichen Kanten wird erreicht, wenn man $\oh(L)$ \emph{Anker} hat, die sich über möglichst viele Sequenzen spannen. Es ist zwar möglich, dass man deutlich mehr \emph{Anker} hat (bis zu $\oh(n\cdot L)$), aber das ginge mit einer Reduzierung der zu überprüfenden Kanten einher. Im schlimmsten Fall kommt es also zu $\oh(n\cdot L)$ rechenintensiven Aufrufen von \textrm{EdgeAddition}. Erinnern wir uns an die Laufzeit von \textrm{EdgeAddition} auf unserem Graphen: $\oh(n^2 \cdot (\mu - \mu_0) + \nu \cdot \min\{\nu, \mu - \mu_p\})$, mit $\mu - \mu_0$ der Anzahl an hinzugefügten Verbindungen, $\nu$ der Anzahl an \emph{Stellen} aller Sequenzen und $\mu - \mu_p$ der Anzahl an Kanten zwischen allen Knoten, die nicht zur gerade betrachteten Sequenz gehören. $\mu - \mu_p$ liegt im schlimmsten Fall über $\nu$, sodass dieses als Minimum im entsprechenden Term ausgewählt wird. Es gelten $\mu - \mu_0 \in \oh(n\cdot L)$ und $\nu \in \oh(n\cdot L)$. Die Laufzeit von \textrm{EdgeAddition} aller Kanten im rechenintensiven Fall liegt also in $\oh(n^3\cdot L + n^2\cdot L^2)$. Die anderen Kanten, die nicht in Zeile \ref{alg:edgeaddition}\ref{alg:pathIf} abgefangen werden, sind nur $\oh(n^2\cdot L)$-viele und da ihre Bearbeitung nur konstante Zeit kostet, beträgt die Laufzeit auch insgesamt $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit.
 	
 	Während des Algorithmus müssen wir stets unseren \emph{Alignmentgraphen} vorhalten. Dieser enthält für jede \emph{Stelle} einen Knoten, also $\oh(n\cdot L)$-viele und $\oh(n\cdot L)$ Kanten für unsere Pfade für jede Sequenz, sowie im Worst-Case für $\oh(L)$ Anker die jeweils bis zu $n^2$ Verbindungen zwischen den Symbolen dieser \emph{Zuweisungsspalte}. Der benötigte Speicherplatz beträgt somit $\oh(n^2\cdot L)$.  
 \end{beweis}
@@ -843,11 +843,11 @@ Die Schlussfolgerung des letzten Satzes ist, dass es möglich ist die \emph{Tran
 Durch ein paar geschickte Tricks ist es \cite{am00} gelungen die Laufzeit und den Speicherplatz für die DIALIGN-Implementierung mit GABIOS-LIB weiter zu verbessern. Wenn zwei \emph{Stellen} aus $\mathcal{S}$ miteinander aligniert sind, dann folgt daraus automatisch, dass ihre \emph{Transitivitätsgrenzen} identisch sind. Das nutzen wir aus, indem wir nicht die Grenzen für jede \emph{Stelle} speichern und aktualisieren, sondern stattdessen für ganze Äquivalenzklassen $[x]_{\mathcal{A}}$ unseres \emph{Alignments}.
 
 Die zweite Verbesserung zielt auf \emph{verwaiste} \emph{Stellen} ab, das heißt solche, die mit keiner anderen aligniert sind. Sei $x = (i,p)$ ein solcher \emph{Waise} aus der Sequenz $S_i$ an der Stelle $p$. Dann stimmen die \emph{Nachfolgergrenzen} von $x$ genau mit denen der am weitesten links stehenden \emph{Stelle} $y = (i,p')$ überein mit $p < p'$, sodass $y$ kein \emph{Waise} ist. \improvement{Sobald Beispiele für Transitivitätsgrenzen gegeben sind, hier darauf verweisen}
-Jetzt genügt es ein Feld mit Werten $\text{nextClass}[x] = p'$ für alle \emph{Waisen} unserer Sequenzen zu speichern. Dadurch ist es uns möglich die \emph{Transitivitätsgrenzen} $Succ_{\mathcal{A}}(x,j)$ dieser \emph{Stellen} in konstanter Zeit zu aktualisieren, wenn eine neue Zuweisung zwischen unseren Sequenzen und somit eine neue Kante in unserem \emph{Alignmentgraphen} hinzugefügt wird. Möglicherweise kann man dieses Array auch durch eine Baum- oder andere Datenstruktur ersetzen, die es uns ermöglicht Einträge zu löschen, nachdem die entsprechenden \emph{Stellen} keine \emph{Waisen} mehr sind. Das verhindert, dass beim Alignieren von sehr ähnlichen Sequenzen viel Speicher durch Arrays belegt sind, deren Einträge nie wieder benötigt werden. Das weiterzuführen ginge aber zu weit und soll nicht Teil dieser Bachelorarbeit sein.
+Jetzt genügt es ein Feld mit Werten $\text{nextClass}[x] = p'$ für alle \emph{Waisen} unserer Sequenzen zu speichern. Dadurch ist es uns möglich die \emph{Transitivitätsgrenzen} $Succ_{\mathcal{A}}(x,j)$ dieser \emph{Stellen} in konstanter Zeit zu aktualisieren, wenn eine neue Zuweisung zwischen unseren Sequenzen und somit eine neue Kante in unserem \emph{Alignmentgraphen} hinzugefügt wird. Möglicherweise kann man dieses Array auch durch eine Baum- oder andere Datenstruktur ersetzen, die es uns ermöglicht Einträge zu löschen, nachdem die entsprechenden \emph{Stellen} keine \emph{Waisen} mehr sind. Das verhindert, dass beim Alignieren von sehr ähnlichen Sequenzen viel Speicher durch Arrays belegt sind, deren Einträge nie wieder benötigt werden. Dieser Ansatz könnte insbesondere deshalb gut funktionieren, weil \emph{Stellen} innerhalb eines Intervalls zwischen zwei \emph{Nichtwaisen} die gleichen \emph{Vorgänger} und \emph{Nachfolger} haben. Man kann jetzt einen AVL- oder B-Baum pro Sequenz nehmen über der Ordnung der Startpunkte aller Intervalle. Jedes Knotenelement speichert dann zusätzlich seinen Endpunkt, sowie \emph{Vorgänger} und \emph{Nachfolger}. Wird ein neues \emph{Fragment} ins \emph{Alignment} eingefügt, wird das Intervall höchstens in zwei neue aufgeteilt, was die Löschung eines und das Hinzufügen zwei neuer Knoten zur Folge hätte. Asymptotisch wäre die Laufzeit vermutlich schlechter, aber durch den mitunter deutlich verringerten Speicherplatz in der Praxis letztendlich besser. Das weiterzuführen ginge aber zu weit und soll nicht Teil dieser Bachelorarbeit sein.
 
 \subsection{Einbindung in DIALIGN}
 
-Auch wenn dieses Thema in \cite{am00} nicht behandelt wird, möchten ich kurz darauf eingehen was notwendig ist, um den obigen Ansatz zur Überprüfung von \emph{Konsistenz} im konkreten Fall von DIALIGN anzuwenden. 
+Auch wenn dieses Thema in \cite{am00} nicht behandelt wird, möchte ich kurz darauf eingehen was notwendig ist, um den obigen Ansatz zur Überprüfung von \emph{Konsistenz} im konkreten Fall von DIALIGN anzuwenden. 
 
 DIALIGN ist ein segmentbasiertes Verfahren für multiples Sequenzalignment. Unser Algorithmus \textrm{EdgeAddition} addiert aber immer nur eine einzelne Kante, die eine symbolweise Zuweisung darstellt, zu unserem \emph{Alignmentgraphen}. Um sicherzustellen, dass ein ganzes \emph{Fragment}, das wir zu unserem \emph{Alignment} hinzufügen wollen, zu den bisher gewählten Zuweisungen \emph{konsistent} ist, betrachten wir dieses auf der Ebene einfacher Paare von \emph{Stellen}. Zunächst überprüfen wir für alle \emph{Stellenpaare} nacheinander, ob diese alignierbar sind. Falls ja, können wir sie der Reihe nach zum \emph{Alignment} mit \textrm{EdgeAddition} hinzufügen und falls nicht, würde das \emph{Fragment} für \emph{Inkonsistenzen} sorgen und wir fügen nichts hinzu. Die Überprüfung kann einmalig für alle Paare am Anfang durchgeführt werden, weil jedes Paar definitiv zu einem eigenen \emph{Anker} gehört und die \emph{Alignierbarkeit} nicht durch andere Paare desselben \emph{Fragments} eingeschränkt wird.
 
@@ -859,17 +859,35 @@ Nachdem die GABIOS-LIB in DIALIGN 2.1 integriert wurde, haben Abdedda\"im und Mo
 
 Es hat sich herausgestellt, dass die Laufzeit der alten Version sich proportional zu $n^4$ verhielt, während die von DIALIGN 2.1 sogar besser als $n^3$ war. Wie nicht anders zu erwarten, wurde der Unterschied bei steigender Anzahl der Sequenzen $n$ tendenziell größer. Die Laufzeit verbesserte sich im besten Fall um den Faktor 120 und im Durchschnitt etwa um den Faktor 10. Insbesondere die höhere Geschwindigkeit bei großen \emph{Alignments} mit mehr Sequenzen ist erfreulich, da diese ohnehin komplexer zu berechnen sind.
 
-Ein weiterer Faktor ist der verringerte Speicherverbrauch im Verhältnis zur alten Version 2.0. Zwar beträgt der Speicherverbrauch der neuen Implementierung im schlimmsten Fall nach wie vor $\oh(n^2\cdot L)$, was zuvor der echte benötigte Speicher war. In der Praxis sank er aber um einen konstanten Faktor abhängig von der Ähnlichkeit der alignierten Sequenzen (Ausnahme: randomisierte Sequenzen). Die Anzahl $n$ hatte hierbei keinen signifikanten Einfluss auf den Grad der Verbesserung. Dieser lag bei den nichtrandomisierten Datensätzen etwa zwischen fünf und zehn.
+Ein weiterer Vorteil ist der verringerte Speicherverbrauch im Verhältnis zur alten Version 2.0. Zwar beträgt der Speicherverbrauch der neuen Implementierung im schlimmsten Fall nach wie vor $\oh(n^2\cdot L)$, was zuvor der echte benötigte Speicher war. In der Praxis sank er aber um einen konstanten Faktor abhängig von der Ähnlichkeit der alignierten Sequenzen (Ausnahme: randomisierte Sequenzen). Die Anzahl $n$ hatte hierbei keinen signifikanten Einfluss auf den Grad der Verbesserung. Dieser lag bei den nichtrandomisierten Datensätzen etwa zwischen fünf und zehn.
 
-\subsection{Laufzeit}
-$\oh(n^3*l + n^2*l^2)$
+\subsection{Beispiel Konsistenzgrenzen}
 
-\section{Gieriges multiples Alignment}
+\section{Zusammenfassung}
 
-\subsection{Laufzeit}
-$\oh(n^2*l*log(n^2*l))$
+Als abschließenden Schritt müssen wir noch unsere Ausgabe vorbereiten. Das Ziel ist dabei alignierte Symbole als Groß- und \emph{Waisen} als Kleinbuchstaben darzustellen. Zudem sollen die \emph{Zuweisungsspalten} genau übereinander stehen, wofür unter Umständen das Einfügen  von Leerzeichen in die Ausgabesequenzen nötig ist. Hierfür sortieren wir alle \emph{Fragmente} für jede Sequenz nach Startpunkten und traversieren diese, sowie die Sequenzen selbst, der Reihe nach durch, wobei wir bei Bedarf Lücken einfügen. Da die Länge jeder Sequenz in $\oh(1)$ ist, ist dies in $\oh(n^2\cdot L)$ möglich \citep{m99}.
 
-\section{Gesamtkomplexität}
+\subsection{Gesamtkomplexität}
+
+\begin{korollar}
+	Mit DIALIGN	lässt sich ein multiples \emph{Sequenzalignment} in $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit und mit $\oh(N_{\max} + n^2\cdot L)$ Speicherplatz berechnen.
+\end{korollar}
+
+\begin{beweis}
+	Mit unserem speichereffizienten Algorithmus lässt sich jedes paarweise \emph{Alignment} in $\oh(L^2)$ Zeit und mit $\oh(N_{\max}) \in \oh(L^2)$ Speicherplatz berechnen \citep{m02}. Da es $\oh(n^2)$ paarweise \emph{Alignments} gibt, folgt hierfür die Laufzeit in $\oh(n^2\cdot L^2)$. Die Werte für unsere \emph{Fragmente} speichern wir sortiert in einer $\oh(n^2)$ großen Tabelle, wobei jeder Eintrag auf die Liste von \emph{Fragmenten} eines paarweisen \emph{Alignments} verweist. Da jedes von diesen bis zu $\oh(L)$ Segmente enthält, folgt der Speicherverbrauch von $\oh(n^2\cdot L)$ zu diesem Zeitpunkt.
+	
+	Mit Hilfe unserer Tabelle und dem parallelen traversieren sortierter Listen können wir in-place und in $\oh(n^3\cdot L)$ Zeit unsere \emph{Überlappgewichte} berechnen.
+	
+	Bevor wir die \emph{Fragmente} gierig in unser multiples \emph{Alignment} einfügen können, müssen wir sie alle auf Basis ihrer \emph{Überlappgewichte} sortieren. Mit einem effizienten Algorithmus wie beispielsweise Heapsort ist dies in $\oh(n^2\cdot L\cdot \log(n^2\cdot L))$ Rechenschritten möglich. 
+	
+	Im letzten Schritt von DIALIGN konstruieren wir unseren \emph{Alignmentgraphen} und benutzen ihn, um die \emph{Transitivitäts-} und somit die \emph{Konsistenzgrenzen} zu berechnen. Er enthält $\oh(n\cdot L)$ Knoten mit bis zu $\oh(n^2\cdot L)$ Kanten und wie in Satz \ref{satz:ssdp} bewiesen kostet das Aktualisieren der \emph{Transitivitätsgrenzen} $\oh(n^3\cdot L + n^2\cdot L^2)$ Rechenschritte. 
+	
+	
+\end{beweis}
+
+Konsistenzgrenzen
+
+
 $\oh(n^3*l*log l + n^2*l^2)$
 
 \section{Probleme}

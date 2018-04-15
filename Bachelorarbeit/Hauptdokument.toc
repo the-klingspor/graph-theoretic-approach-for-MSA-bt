@@ -24,12 +24,11 @@
 \contentsline {subsection}{\numberline {3.5.1}Berechnung der transitiven H\IeC {\"u}lle eines gerichteten Graphen}{24}{subsection.3.5.1}
 \contentsline {subsection}{\numberline {3.5.2}Konsistenzgrenzen durch Berechnung der transitiven H\IeC {\"u}lle}{27}{subsection.3.5.2}
 \contentsline {subsection}{\numberline {3.5.3}Einbindung in DIALIGN}{30}{subsection.3.5.3}
-\contentsline {subsection}{\numberline {3.5.4}Evaluation von DIALIGN mit der GABIOS-LIB}{30}{subsection.3.5.4}
-\contentsline {subsection}{\numberline {3.5.5}Laufzeit}{31}{subsection.3.5.5}
-\contentsline {section}{\numberline {3.6}Gieriges multiples Alignment}{31}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Laufzeit}{31}{subsection.3.6.1}
-\contentsline {section}{\numberline {3.7}Gesamtkomplexit\IeC {\"a}t}{31}{section.3.7}
-\contentsline {section}{\numberline {3.8}Probleme}{31}{section.3.8}
+\contentsline {subsection}{\numberline {3.5.4}Evaluation von DIALIGN mit der GABIOS-LIB}{31}{subsection.3.5.4}
+\contentsline {subsection}{\numberline {3.5.5}Beispiel Konsistenzgrenzen}{31}{subsection.3.5.5}
+\contentsline {section}{\numberline {3.6}Zusammenfassung}{31}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Gesamtkomplexit\IeC {\"a}t}{31}{subsection.3.6.1}
+\contentsline {section}{\numberline {3.7}Probleme}{32}{section.3.7}
 \contentsline {chapter}{\numberline {4}Ein Min-Cut-Ansatz f\IeC {\"u}r das Konsistenzproblem}{33}{chapter.4}
 \contentsline {section}{\numberline {4.1}Flussnetzwerke}{33}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Einf\IeC {\"u}hrung}{33}{subsection.4.1.1}

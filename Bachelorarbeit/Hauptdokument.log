@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.13)  13 APR 2018 16:42
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.13)  15 APR 2018 18:42
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -2590,9 +2590,6 @@ File: uwasy.fd 2003/10/30 v2.0 Wasy-2 symbol font definitions
 )
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/it' will be
 (Font)              scaled to size 10.95pt on input line 17.
-
-Underfull \vbox (badness 1655) has occurred while \output is active []
-
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 40.
 Package babel Info: Redefining ngerman shorthand "~
@@ -2619,11 +2616,11 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 246.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 246.
-
-[4]
+ [4]
 \openout2 = `chapter/Einleitung.aux'.
 
- (./chapter/Einleitung.tex
+
+(./chapter/Einleitung.tex
 chapter 1.
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
@@ -3334,35 +3331,58 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 856.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 856.
+
+Underfull \vbox (badness 10000) has occurred while \output is active []
+
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 862.
+(babel)             in language  on input line 859.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 862.
+(babel)             in language  on input line 859.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 862.
+(babel)             in language  on input line 859.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 862.
+(babel)             in language  on input line 859.
  [30]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 864.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 864.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 867.
+(babel)             in language  on input line 866.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 867.
+(babel)             in language  on input line 866.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 869.
+(babel)             in language  on input line 870.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 869.
+(babel)             in language  on input line 870.
+Package mdframed Info: mdframed works in twoside mode on input line 873.
+Package mdframed Info: mdframed detected package amsthm 
+ changed the theorem header of amsthm
+(mdframed)              on input line 873.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 872.
+(babel)             in language  on input line 873.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 872.
+(babel)             in language  on input line 873.
+
+Overfull \hbox (6.30034pt too wide) in paragraph at lines 877--878
+[]\T1/SourceSansPro-LF/m/it/10.95 Beweis. []\T1/SourceSansPro-LF/m/n/10.95 Mit 
+un-se-rem spei-cheref-fi-zi-en-ten Al-go-rith-mus lässt sich je-des paar-wei-se
+ \T1/SourceSansPro-LF/m/it/10.95 Ali-gnment
+ []
+
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 875.
+(babel)             in language  on input line 882.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 875.
+(babel)             in language  on input line 882.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 882.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 882.
+[31]
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 893.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 893.
 )
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 254.
@@ -3372,24 +3392,10 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 254.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 254.
- [31]
+ [32]
 \openout2 = `chapter/min-cut.aux'.
 
  (./chapter/min-cut.tex
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
- [32
-
-
-
-
-]
 chapter 4.
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
@@ -3440,7 +3446,12 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 256.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 256.
- [33]
+ [33
+
+
+
+
+]
 \openout2 = `chapter/Programmierung.aux'.
 
  (./chapter/Programmierung.tex
@@ -3627,10 +3638,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 44424 strings out of 492982
- 846442 string characters out of 6136225
- 1099147 words of memory out of 5000000
- 46865 multiletter control sequences out of 15000+600000
+ 44427 strings out of 492982
+ 846509 string characters out of 6136225
+ 1099172 words of memory out of 5000000
+ 46866 multiletter control sequences out of 15000+600000
  822855 words of font info for 215 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,27n,95p,10479b,1042s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -3661,10 +3672,10 @@ ewtx/txexs.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/txfonts/txsya.pfb
 /fonts/type1/public/newtx/txsys.pfb><c:/texlive/2017/texmf-dist/fonts/type1/urw
 /times/utmri8a.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nimbus15/zcoN
 -Regular.pfb>
-Output written on Hauptdokument.pdf (47 pages, 441506 bytes).
+Output written on Hauptdokument.pdf (47 pages, 445090 bytes).
 PDF statistics:
- 916 PDF objects out of 1000 (max. 8388607)
- 818 compressed objects within 9 object streams
- 194 named destinations out of 1000 (max. 500000)
+ 921 PDF objects out of 1000 (max. 8388607)
+ 823 compressed objects within 9 object streams
+ 196 named destinations out of 1000 (max. 500000)
  626 words of extra memory for PDF output out of 10000 (max. 10000000)
 
