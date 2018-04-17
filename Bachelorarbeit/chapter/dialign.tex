@@ -1072,10 +1072,29 @@ Zu Beginn haben wir das \emph{Fragment} ${\texttt{GTCADCTC}}\choose{\texttt{GTCA
 	
 	% erstes Fragment
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
-		c22/c43//above}
-	\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+		c21/c42//above,
+		c22/c43//above,
+		c23/c44//above,
+		c24/c45//above,
+		c25/c46//above,	
+		c26/c47//above,
+		c27/c48//above,
+		c28/c49//above}
+	\draw [Stealth-Stealth, draw=black,double=white] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
 	\end{tikzpicture}
 \end{center}
+
+Um zu verdeutlichen, dass durch doppelte Kanten verbundene Knoten im Sinne unseres \emph{Alignments} äquivalent sind, wurde diese Verbindung mit Äquivalenzpfeilen dargestellt.
+
+\begin{tabular}{r|c|c|c|c|c}
+	Bezeichner 	& $[(2,1)]_{\mathcal{A}}$ & $[(2,2)]_{\mathcal{A}}$ & $[(2,3)]_{\mathcal{A}}$ & $[(2,4)]_{\mathcal{A}}$ & $[(2,5)]_{\mathcal{A}}$\\
+	Äqu.klasse  & $\{(2,1),(4,2)\}$	      & $\{(2,2),(4,3)\}$       & $\{(2,3),(4,4)\}$       & $\{(2,4),(4,5)\}$       & $\{(2,4),(4,5)\}$ \\
+	\hline
+	\hline
+	            & $[(2,6)]_{\mathcal{A}}$ & $[(2,7)]_{\mathcal{A}}$ & $[(2,8)]_{\mathcal{A}}$ & & \\
+	            & $\{(2,6),(4,7)\}$       & $\{(2,7),(4,8)\}$       & $\{(2,8),(4,9)\}$       & & 
+
+\end{tabular}
 
 \section{Zusammenfassung}
 

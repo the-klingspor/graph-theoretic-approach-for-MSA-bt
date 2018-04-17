@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.10.18)  17 APR 2018 11:56
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2017.10.18)  17 APR 2018 13:28
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -3360,39 +3360,50 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 976.
  [31]
+Overfull \hbox (30.53334pt too wide) in paragraph at lines 1089--1098
+[][] 
+ []
+
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1080.
+(babel)             in language  on input line 1099.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1080.
+(babel)             in language  on input line 1099.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1086.
+(babel)             in language  on input line 1105.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1086.
-Package mdframed Info: mdframed works in twoside mode on input line 1089.
+(babel)             in language  on input line 1105.
+Package mdframed Info: mdframed works in twoside mode on input line 1108.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
-(mdframed)              on input line 1089.
+(mdframed)              on input line 1108.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1089.
+(babel)             in language  on input line 1108.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1089.
+(babel)             in language  on input line 1108.
 
-Overfull \hbox (6.30034pt too wide) in paragraph at lines 1093--1094
+Package mdframed Warning: You got a bad break
+(mdframed)                because the last box will be empty
+(mdframed)                you have to change it manually
+(mdframed)                by changing the text, the space
+(mdframed)                or something else on input line 1109.
+
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1109.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1109.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1109.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1109.
+[32]
+Overfull \hbox (6.30034pt too wide) in paragraph at lines 1112--1113
 []\T1/SourceSansPro-LF/m/it/10.95 Beweis. []\T1/SourceSansPro-LF/m/n/10.95 Mit 
 un-se-rem spei-cheref-fi-zi-en-ten Al-go-rith-mus lässt sich je-des paar-wei-se
  \T1/SourceSansPro-LF/m/it/10.95 Ali-gnment
  []
 
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1097.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1097.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1097.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1097.
-[32]
-Overfull \hbox (0.67839pt too wide) in paragraph at lines 1103--1104
+
+Overfull \hbox (0.67839pt too wide) in paragraph at lines 1122--1123
 []\T1/SourceSansPro-LF/m/n/10.95 Somit do-mi-nie-ren die \T1/SourceSansPro-LF/m
 /it/10.95 Kon-sis-tenz-gren-zen \T1/SourceSansPro-LF/m/n/10.95 die Lauf-zeit un
 d je nach $\OML/ntxmi/m/it/10.95 N[]$ \T1/SourceSansPro-LF/m/n/10.95 in un-se-r
@@ -3400,9 +3411,9 @@ en paar-
  []
 
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1106.
+(babel)             in language  on input line 1125.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1106.
+(babel)             in language  on input line 1125.
 )
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 254.
@@ -3667,10 +3678,10 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 44371 strings out of 492990
- 843921 string characters out of 6136333
- 1143683 words of memory out of 5000000
- 46806 multiletter control sequences out of 15000+600000
+ 44385 strings out of 492990
+ 844296 string characters out of 6136333
+ 1152598 words of memory out of 5000000
+ 46820 multiletter control sequences out of 15000+600000
  822262 words of font info for 213 fonts, out of 8000000 for 9000
  1141 hyphenation exceptions out of 8191
  73i,27n,95p,10479b,1042s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -3701,7 +3712,7 @@ ewtx/txexs.pfb><d:/texlive/2017/texmf-dist/fonts/type1/public/txfonts/txsya.pfb
 /fonts/type1/public/newtx/txsys.pfb><d:/texlive/2017/texmf-dist/fonts/type1/urw
 /times/utmri8a.pfb><d:/texlive/2017/texmf-dist/fonts/type1/public/nimbus15/zcoN
 -Regular.pfb>
-Output written on Hauptdokument.pdf (49 pages, 455075 bytes).
+Output written on Hauptdokument.pdf (49 pages, 456801 bytes).
 PDF statistics:
  930 PDF objects out of 1000 (max. 8388607)
  830 compressed objects within 9 object streams
