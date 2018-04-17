@@ -1,4 +1,4 @@
-\select@language {ngerman}
+\babel@toc {ngerman}{}
 \contentsline {chapter}{\numberline {1}Einleitung und Motivation}{1}{chapter.1}
 \contentsline {section}{\numberline {1.1}Multiple Sequence Alignments}{1}{section.1.1}
 \contentsline {section}{\numberline {1.2}Einsatzgebiete}{1}{section.1.2}
@@ -26,9 +26,13 @@
 \contentsline {subsection}{\numberline {3.5.3}Einbindung in DIALIGN}{30}{subsection.3.5.3}
 \contentsline {subsection}{\numberline {3.5.4}Evaluation von DIALIGN mit der GABIOS-LIB}{31}{subsection.3.5.4}
 \contentsline {subsection}{\numberline {3.5.5}Beispiel Konsistenzgrenzen}{31}{subsection.3.5.5}
-\contentsline {section}{\numberline {3.6}Zusammenfassung}{32}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Gesamtkomplexit\IeC {\"a}t}{32}{subsection.3.6.1}
-\contentsline {section}{\numberline {3.7}Evaluierung und Schw\IeC {\"a}chen des Ansatzes}{33}{section.3.7}
+\contentsline {subsubsection}{\nonumberline Ursprungszustand}{31}{section*.13}
+\contentsline {subsubsection}{\nonumberline Erstes Fragment}{32}{section*.14}
+\contentsline {subsubsection}{\nonumberline Zweites Fragment}{33}{section*.15}
+\contentsline {subsubsection}{\nonumberline Drittes Fragment}{33}{section*.16}
+\contentsline {section}{\numberline {3.6}Zusammenfassung}{34}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Gesamtkomplexit\IeC {\"a}t}{34}{subsection.3.6.1}
+\contentsline {section}{\numberline {3.7}Evaluierung und Schw\IeC {\"a}chen des Ansatzes}{34}{section.3.7}
 \contentsline {chapter}{\numberline {4}Ein Min-Cut-Ansatz f\IeC {\"u}r das Konsistenzproblem}{35}{chapter.4}
 \contentsline {section}{\numberline {4.1}Flussnetzwerke}{35}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Einf\IeC {\"u}hrung}{35}{subsection.4.1.1}
