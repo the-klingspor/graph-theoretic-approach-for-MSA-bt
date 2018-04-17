@@ -927,7 +927,7 @@ Vor dem ersten Schritt enthält der \emph{Alignmentgraph} genau unsere \emph{Ste
 	\node[mycircle,right=of c36] (c37) {G};
 	\node[mycircle,right=of c37] (c38) {G};
 
-	% dritte Sequenz
+	% vierte Sequenz
 	\node[mycircle,below=of c31] (c41) {D};
 	\node[mycircle,right=of c41] (c42) {G};
 	\node[mycircle,right=of c42] (c43) {T};
@@ -1026,7 +1026,7 @@ Zu Beginn haben wir das \emph{Fragment} ${\texttt{GTCADCTC}}\choose{\texttt{GTCA
 	\node[mycircle,right=of c36] (c37) {G};
 	\node[mycircle,right=of c37] (c38) {G};
 	
-	% dritte Sequenz
+	% vierte Sequenz
 	\node[mycircle,below=of c31] (c41) {D};
 	\node[mycircle,right=of c41] (c42) {G};
 	\node[mycircle,right=of c42] (c43) {T};
@@ -1095,7 +1095,6 @@ Um zu verdeutlichen, dass durch doppelte Kanten verbundene Knoten im Sinne unser
 	Bezeichner 	& $[(2,1)]_{\mathcal{A}}$ & $[(2,2)]_{\mathcal{A}}$ & $[(2,3)]_{\mathcal{A}}$ & $[(2,4)]_{\mathcal{A}}$\\
 	Äqu.klasse  & $\{(2,1),(4,2)\}$	      & $\{(2,2),(4,3)\}$       & $\{(2,3),(4,4)\}$       & $\{(2,4),(4,5)\}$        \\
 	\hline
-	\hline
 	            & $[(2,5)]_{\mathcal{A}}$ & $[(2,6)]_{\mathcal{A}}$ & $[(2,7)]_{\mathcal{A}}$ & $[(2,8)]_{\mathcal{A}}$\\
 	            & $\{(2,5),(4,6)\}$       & $\{(2,6),(4,7)\}$       & $\{(2,7),(4,8)\}$       & $\{(2,8),(4,9)\}$  
 \end{tabular}
@@ -1121,7 +1120,7 @@ Bei den \emph{Waisen} werden nur die \emph{Stellen} beeinflusst, die in den Sequ
 \normalsize
 \vspace{5pt}
 
-Wie nicht anders zu erwarten, wurden die \emph{Vorgänger} und \emph{Nachfolger} für alle Sequenzen, die nicht mit einem \emph{Fragment} verbunden sind, auf 0 beziehungsweise die Länge der Sequenz plus eins gesetzt.
+Wie nicht anders zu erwarten, wurden die \emph{Vorgänger} und \emph{Nachfolger} für alle Sequenzen, die nicht mit einem \emph{Fragment} verbunden sind, auf 0 beziehungsweise die Länge der Sequenz plus eins gesetzt. Bei allen \emph{Ankern} ist der Eintrag für die jeweilige Sequenz genau die Position der an dieser Äquivalenzklasse beteiligten \emph{Stelle}.
 
 \subsubsection{Zweites Fragment}
 
@@ -1173,7 +1172,7 @@ Als nächstes fügen wir das \emph{Fragment} ${\texttt{TCAD}}\choose{\texttt{TCA
 	\node[mycircle,right=of c36] (c37) {G};
 	\node[mycircle,right=of c37] (c38) {G};
 	
-	% dritte Sequenz
+	% vierte Sequenz
 	\node[mycircle,below=of c31] (c41) {D};
 	\node[mycircle,right=of c41] (c42) {G};
 	\node[mycircle,right=of c42] (c43) {T};
@@ -1248,13 +1247,16 @@ Als nächstes fügen wir das \emph{Fragment} ${\texttt{TCAD}}\choose{\texttt{TCA
 	Bezeichner 	& $[(2,1)]_{\mathcal{A}}$ & $[(2,2)]_{\mathcal{A}}$ & $[(2,3)]_{\mathcal{A}}$ & $[(2,4)]_{\mathcal{A}}$\\
 	Äqu.klasse  & $\{(2,1),(4,2)\}$	      & $\{(2,2),(3,3),(4,3)\}$       & $\{(2,3),(3,4),(4,4)\}$       & $\{(2,4),(3,5),(4,5)\}$        \\
 	\hline
-	\hline
 	& $[(2,5)]_{\mathcal{A}}$ & $[(2,6)]_{\mathcal{A}}$ & $[(2,7)]_{\mathcal{A}}$ & $[(2,8)]_{\mathcal{A}}$\\
 	& $\{(2,5),(3,6),(4,6)\}$       & $\{(2,6),(4,7)\}$       & $\{(2,7),(4,8)\}$       & $\{(2,8),(4,9)\}$  
 \end{tabular}
-
+\normalsize
 \vspace{5pt}
 
+Zu aktualisieren sind die \emph{Transitivitätsgrenzen} für die dritte Sequenz und die \textrm{Prev-} und \textrm{NextClass}-Einträge der \emph{Stellen} von $S_3$, die vor oder hinter unserem \emph{Fragment} liegen. Da diese jeweils am Start oder Ende positioniert sind, ist nur einer der beiden Einträge relevant.
+
+\vspace{5pt}
+\small
 \begin{tabular}{r|cccc|cccc||r|c|r|c}
 	& \multicolumn{4}{c|}{$Pred((i,p),j)$} & \multicolumn{4}{c||}{$Succ((i,p),j)$} & \multicolumn{2}{c|}{\textrm{PrevClass}} & \multicolumn{2}{c}{\textrm{NextClass}} \\ \hline
 	\diagbox[dir=NW]{$(i,p)$}{$j$} & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 & $(i,p)$ & $P((i,p))$ & $(i,p)$ & $S((i,p))$ \\ \hline
@@ -1271,7 +1273,7 @@ Als nächstes fügen wir das \emph{Fragment} ${\texttt{TCAD}}\choose{\texttt{TCA
 
 \subsubsection{Drittes Fragment}
 
-In diesem Schritt fügen wir das \emph{Fragment} ${\texttt{TCAD}}\choose{\texttt{TCAD}}$ aus $S_2$ und $S_3$ ein. Hier fügen wir nur zusätzliche Kanten in bereits existierende \emph{Anker} ein. Das hat auch zur Folge, dass sich die \emph{Vorgänger-} und \emph{Nachfolgergrenzen} nicht verändern können, weil bereits in beide Richtungen Kanten existierten (s. \ref{alg:edgeaddition}).
+In diesem Schritt fügen wir das \emph{Fragment} ${\texttt{TCAD}}\choose{\texttt{TCAD}}$ aus $S_2$ und $S_3$ ein. Hier fügen wir nur zusätzliche Kanten in bereits existierende \emph{Anker} ein. Das hat auch zur Folge, dass sich die \emph{Vorgänger-} und \emph{Nachfolgergrenzen} nicht verändern können, weil bereits in beide Richtungen Kanten existierten (s. Algorithmus \ref{alg:edgeaddition}).
 
 \begin{center}
 	\begin{tikzpicture}[
@@ -1318,7 +1320,7 @@ In diesem Schritt fügen wir das \emph{Fragment} ${\texttt{TCAD}}\choose{\texttt
 	\node[mycircle,right=of c36] (c37) {G};
 	\node[mycircle,right=of c37] (c38) {G};
 	
-	% dritte Sequenz
+	% vierte Sequenz
 	\node[mycircle,below=of c31] (c41) {D};
 	\node[mycircle,right=of c41] (c42) {G};
 	\node[mycircle,right=of c42] (c43) {T};
@@ -1386,7 +1388,7 @@ In diesem Schritt fügen wir das \emph{Fragment} ${\texttt{TCAD}}\choose{\texttt
 		c36/c46//above}
 	\draw [Stealth-Stealth, draw=black,double=white] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
 	
-	% zweites Fragment
+	% drittes Fragment
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
 		c22/c33//above,	
 		c23/c34//above,
@@ -1396,7 +1398,180 @@ In diesem Schritt fügen wir das \emph{Fragment} ${\texttt{TCAD}}\choose{\texttt
 	\end{tikzpicture}
 \end{center}
 
-\
+\subsubsection{Viertes Fragment}
+
+Nun fügen wir das \emph{Fragment} ${\texttt{TCTCA}}\choose{\texttt{TATCA}}$ aus der ersten und dritten Sequenz ein. Auch hier kann es wieder zu keinen \emph{Inkonsistenzen} kommen, weil $S_1$ noch nicht Teil des \emph{Alignments} war.
+
+
+\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 1.1cm
+	]
+	% erste Sequenz
+	\node[mycircle] (c11) {A};
+	\node[mycircle,right=of c11] (c12) {D};
+	\node[mycircle,right=of c12] (c13) {G};
+	\node[mycircle,right=of c13] (c14) {T};
+	\node[mycircle,right=of c14] (c15) {C};
+	\node[mycircle,right=of c15] (c16) {T};
+	\node[mycircle,right=of c16] (c17) {C};
+	\node[mycircle,right=of c17] (c18) {A};
+	
+	% zweite Sequenz
+	\node[mycircle,below=of c11] (c21) {G};
+	\node[mycircle,right=of c21] (c22) {T};
+	\node[mycircle,right=of c22] (c23) {C};
+	\node[mycircle,right=of c23] (c24) {A};
+	\node[mycircle,right=of c24] (c25) {D};
+	\node[mycircle,right=of c25] (c26) {C};
+	\node[mycircle,right=of c26] (c27) {T};
+	\node[mycircle,right=of c27] (c28) {C};
+	\node[mycircle,right=of c28] (c29) {A};
+	
+	% dritte Sequenz
+	\node[mycircle,below=of c21] (c31) {T};
+	\node[mycircle,right=of c31] (c32) {A};
+	\node[mycircle,right=of c32] (c33) {T};
+	\node[mycircle,right=of c33] (c34) {C};
+	\node[mycircle,right=of c34] (c35) {A};
+	\node[mycircle,right=of c35] (c36) {D};
+	\node[mycircle,right=of c36] (c37) {G};
+	\node[mycircle,right=of c37] (c38) {G};
+	
+	% vierte Sequenz
+	\node[mycircle,below=of c31] (c41) {D};
+	\node[mycircle,right=of c41] (c42) {G};
+	\node[mycircle,right=of c42] (c43) {T};
+	\node[mycircle,right=of c43] (c44) {C};
+	\node[mycircle,right=of c44] (c45) {A};
+	\node[mycircle,right=of c45] (c46) {D};
+	\node[mycircle,right=of c46] (c47) {A};
+	\node[mycircle,right=of c47] (c48) {T};
+	\node[mycircle,right=of c48] (c49) {C};
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		%erste Sequenz
+		c11/c12//above,
+		c12/c13//above,
+		c13/c14//above,
+		c14/c15//above,
+		c15/c16//above,
+		c16/c17//above,
+		c17/c18//above,
+		%zweite Sequenz
+		c21/c22//above,
+		c22/c23//above,
+		c23/c24//above,
+		c24/c25//above,
+		c25/c26//above,
+		c26/c27//above,
+		c27/c28//above,
+		c28/c29//above,
+		%dritte Sequenz
+		c31/c32//above,
+		c32/c33//above,
+		c33/c34//above,
+		c34/c35//above,
+		c35/c36//above,
+		c36/c37//above,
+		c37/c38//above,
+		%vierte Sequenz
+		c41/c42//above,
+		c42/c43//above,
+		c43/c44//above,
+		c44/c45//above,
+		c45/c46//above,
+		c46/c47//above,
+		c47/c48//above,
+		c48/c49//above}
+	\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	
+	% viertes Fragment
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c14/c31//above,	
+		c15/c32//above,
+		c16/c33//above,
+		c17/c34//above,
+		c18/c35//above}
+	\draw [Stealth-Stealth, draw=black,double=white] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+
+	% erstes Fragment
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c21/c42//above,
+		c22/c43//above,
+		c23/c44//above,
+		c24/c45//above,
+		c25/c46//above,	
+		c26/c47//above,
+		c27/c48//above,
+		c28/c49//above}
+	\draw [Stealth-Stealth, draw=black,double=white] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	
+	% zweites Fragment
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c33/c43//above,	
+		c34/c44//above,
+		c35/c45//above,
+		c36/c46//above}
+	\draw [Stealth-Stealth, draw=black,double=white] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	
+	% drittes Fragment
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c22/c33//above,	
+		c23/c34//above,
+		c24/c35//above,
+		c25/c36//above}
+	\draw [Stealth-Stealth, draw=black,double=white] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	\end{tikzpicture}
+\end{center}
+.
+\small
+\begin{tabular}{r||c|c|c}
+	Bezeichner 	& $[(2,1)]_{\mathcal{A}}$ & $[(2,2)]_{\mathcal{A}}$ & $[(2,3)]_{\mathcal{A}}$ \\
+	Äqu.klasse  & $\{(2,1),(4,2)\}$	      & $\{(2,2),(3,3),(4,3),(1,6)\}$       & $\{(2,3),(3,4),(4,4),(1,7)\}$ \\
+	\hline
+	& $[(2,4)]_{\mathcal{A}}$ & $[(2,5)]_{\mathcal{A}}$ & $[(2,6)]_{\mathcal{A}}$ \\
+	& $\{(2,4),(3,5),(4,5),(1,8)\}$ & $\{(2,5),(3,6),(4,6)\}$       & $\{(2,6),(4,7)\}$ \\
+	\hline
+	& $[(2,7)]_{\mathcal{A}}$ & $[(2,8)]_{\mathcal{A}}$ & $[(1,4)]_{\mathcal{A}}$ \\
+	& $\{(2,7),(4,8)\}$       & $\{(2,8),(4,9)\}$       & $\{(1,4),(3,1)\}$        \\
+	\hline
+	& $[(1,4)]_{\mathcal{A}}$ & & \\
+	& $\{(1,4),(3,1)\}$ & & \\
+	
+\end{tabular}
+
+\vspace{5pt}
+
+\begin{tabular}{r|cccc|cccc||r|c|r|c}
+	& \multicolumn{4}{c|}{$Pred((i,p),j)$} & \multicolumn{4}{c||}{$Succ((i,p),j)$} & \multicolumn{2}{c|}{\textrm{PrevClass}} & \multicolumn{2}{c}{\textrm{NextClass}} \\ \hline
+	\diagbox[dir=NW]{$(i,p)$}{$j$} & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 & $(i,p)$ & $P((i,p))$ & $(i,p)$ & $S((i,p))$ \\ \hline
+	$[(2,1)]_{\mathcal{A}}$ & 0 & 1 & 0 & 2 & 6 & 1 & 3 & 2 & $(2,9)$ & 8 & $(4,1)$ & 1 \\
+	$[(2,2)]_{\mathcal{A}}$ & 6 & 2 & 3 & 3 & 6 & 2 & 3 & 3 & $(3,7)$ & 6 & $(3,1)$ & 3 \\
+	$[(2,3)]_{\mathcal{A}}$ & 7 & 3 & 4 & 4 & 7 & 3 & 4 & 4 & $(3,8)$ & 6 & $(3,2)$ & 3 \\
+	$[(2,4)]_{\mathcal{A}}$ & 8 & 4 & 5 & 5 & 8 & 4 & 5 & 5 & & & $(1,1)$ & 4 \\
+	$[(2,5)]_{\mathcal{A}}$ & 0 & 5 & 6 & 6 & 9 & 5 & 6 & 6 & & & $(1,2)$ & 4 \\
+	$[(2,6)]_{\mathcal{A}}$ & 0 & 6 & 6 & 7 & 9 & 6 & 9 & 7 & & & $(1,3)$ & 4 \\
+	$[(2,7)]_{\mathcal{A}}$ & 0 & 7 & 6 & 8 & 9 & 7 & 9 & 8 & & & & \\
+	$[(2,8)]_{\mathcal{A}}$ & 0 & 8 & 6 & 9 & 9 & 8 & 9 & 9 & & & & \\
+	$[(1,4)]_{\mathcal{A}}$ & 4 & 0 & 1 & 0 & 4 & 2 & 1 & 3 & & & & \\
+	$[(1,5)]_{\mathcal{A}}$ & 5 & 0 & 2 & 0 & 5 & 2 & 2 & 4 & & & & 
+\end{tabular}
+\normalsize
+
+\subsubsection{Weitere Fragmente}
+
+Die restlichen \emph{Fragmente} unserer paarweisen \emph{Alignments} sind leider nicht \emph{konsistent} zu unserem bisherigen multiplen \emph{Alignment}. Betrachtet man ${\texttt{GT}}\choose{\texttt{Gt}}$ zwischen $S_1$ und $S_2$, das als drittes an der Reihe ist, stellt man fest, dass die jeweiligen \emph{Stellen} nicht \emph{alignierbar} sind. Für $(1,2)$ (\texttt{G}) ist das Alignieren noch möglich, denn $\textrm{NextClass}((1,3)) = 4$ und $Succ((1,4),2) - 1 = 1$. Für $(1,3)$ (\texttt{T}) gilt das nicht mehr, denn $Succ((1,4),2) - 1 = 1 < 2$. Für die anderen drei übrigen \emph{Fragmente} gilt ähnliches.
 
 \section{Zusammenfassung}
 
