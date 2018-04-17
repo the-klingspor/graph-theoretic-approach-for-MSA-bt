@@ -863,9 +863,225 @@ Ein weiterer Vorteil ist der verringerte Speicherverbrauch im Verhältnis zur al
 
 \subsection{Beispiel Konsistenzgrenzen}
 
+Für die \emph{Konsistenzgrenzen} brauchen wir in jedem Schritt unseren \emph{Alignmentgraphen}, alle Äquivalenzklassen unseres \emph{Alignments}, deren \emph{Vorgänger-} und \emph{Nachfolgergrenzen} und die Felder \textrm{nextClass} und \textrm{prevClass} für alle  \emph{Waisen}. Der Übersichtlichkeit halber gebe ich nicht die ganzen Felder an, sondern nur die Werte ungleich \enquote{NIL}. Zur Erinnerung hier nochmal der aktuelle Zwischenstand mit unseren \emph{Fragmenten} sortiert nach \emph{Überlappgewichten}.
+
+\begin{tabular}{r|c|c||r|c|c||r|c|c}
+	Seq. & \emph{Frag.} & \emph{Ü-Gew.} & Seq. & \emph{Frag.} & \emph{Ü-Gew.} & Seq. & \emph{Frag.} & \emph{Ü-Gew.}\\
+	\hline
+	2 & \texttt{GTCADCTC} & \multirow{2}{*}{69} & 1 & \texttt{TCTCA} & \multirow{2}{*}{41} & 1 & \texttt{GT} &\multirow{2}{*}{20} \\
+	4 & \texttt{GTCADATC} &                     & 3 & \texttt{TATCA} &                     & 2 & \texttt{GT} & \\
+	3 & \texttt{TCAD} & \multirow{2}{*}{47} & 1 & \texttt{CTCA} & \multirow{2}{*}{34} & 1 & \texttt{TC} & \multirow{2}{*}{20} \\
+	4 & \texttt{TCAD} &                     & 2 & \texttt{CTCA} &                          & 4 & \texttt{TC} & \\
+	2 & \texttt{TCAD} & \multirow{2}{*}{44} & 1 & \texttt{DGTC} & \multirow{2}{*}{31} &    &   & \\
+	3 & \texttt{TCAD} &                     & 4 & \texttt{DGTC} &                     &    &   & \\
+\end{tabular}
+
+Diese werden wir jetzt der Reihe nach in unseren \emph{Alignmentgraphen} einfügen, wenn die \emph{Konsistenz} dadurch erhalten bleibt.
+
+Vor dem ersten Schritt enthält der \emph{Alignmentgraph} genau unsere \emph{Stellen} $\mathcal{S}$ mit den Pfaden $\mathcal{P}$, die der natürlichen Ordnung auf den jeweiligen Sequenzen entsprechen. Weil es noch keine \emph{Nichtwaisen} gibt, können wir auch die Felder \textrm{nextClass} und \textrm{prevClass} zunächst ignorieren, da es keine \emph{Stellen} gibt auf die diese verweisen können.
+
+\begin{center}
+\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 1.1cm
+	]
+	% erste Sequenz
+	\node[mycircle] (c11) {A};
+	\node[mycircle,right=of c11] (c12) {D};
+	\node[mycircle,right=of c12] (c13) {G};
+	\node[mycircle,right=of c13] (c14) {T};
+	\node[mycircle,right=of c14] (c15) {C};
+	\node[mycircle,right=of c15] (c16) {T};
+	\node[mycircle,right=of c16] (c17) {C};
+	\node[mycircle,right=of c17] (c18) {A};
+
+	% zweite Sequenz
+	\node[mycircle,below=of c11] (c21) {G};
+	\node[mycircle,right=of c21] (c22) {T};
+	\node[mycircle,right=of c22] (c23) {C};
+	\node[mycircle,right=of c23] (c24) {A};
+	\node[mycircle,right=of c24] (c25) {D};
+	\node[mycircle,right=of c25] (c26) {C};
+	\node[mycircle,right=of c26] (c27) {T};
+	\node[mycircle,right=of c27] (c28) {C};
+	\node[mycircle,right=of c28] (c29) {A};
+
+	% dritte Sequenz
+	\node[mycircle,below=of c21] (c31) {T};
+	\node[mycircle,right=of c31] (c32) {A};
+	\node[mycircle,right=of c32] (c33) {T};
+	\node[mycircle,right=of c33] (c34) {C};
+	\node[mycircle,right=of c34] (c35) {A};
+	\node[mycircle,right=of c35] (c36) {D};
+	\node[mycircle,right=of c36] (c37) {G};
+	\node[mycircle,right=of c37] (c38) {G};
+
+	% dritte Sequenz
+	\node[mycircle,below=of c31] (c41) {D};
+	\node[mycircle,right=of c41] (c42) {G};
+	\node[mycircle,right=of c42] (c43) {T};
+	\node[mycircle,right=of c43] (c44) {C};
+	\node[mycircle,right=of c44] (c45) {A};
+	\node[mycircle,right=of c45] (c46) {D};
+	\node[mycircle,right=of c46] (c47) {A};
+	\node[mycircle,right=of c47] (c48) {T};
+	\node[mycircle,right=of c48] (c49) {C};
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		%erste Sequenz
+		c11/c12//above,
+		c12/c13//above,
+		c13/c14//above,
+		c14/c15//above,
+		c15/c16//above,
+		c16/c17//above,
+		c17/c18//above,
+		%zweite Sequenz
+		c21/c22//above,
+		c22/c23//above,
+		c23/c24//above,
+		c24/c25//above,
+		c25/c26//above,
+		c26/c27//above,
+		c27/c28//above,
+		c28/c29//above,
+		%dritte Sequenz
+		c31/c32//above,
+		c32/c33//above,
+		c33/c34//above,
+		c34/c35//above,
+		c35/c36//above,
+		c36/c37//above,
+		c37/c38//above,
+		%vierte Sequenz
+		c41/c42//above,
+		c42/c43//above,
+		c43/c44//above,
+		c44/c45//above,
+		c45/c46//above,
+		c46/c47//above,
+		c47/c48//above,
+		c48/c49//above}
+	\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+\end{tikzpicture}
+\end{center}
+
+Zu Beginn haben wir das \emph{Fragment} ${\texttt{GTCADCTC}}\choose{\texttt{GTCADATC}}$ zwischen den Sequenzen $S_2$ und $S_4$. Da unser \emph{Alignment} noch leer ist, bleibt die \emph{Konsistenz} auf jeden Fall gewahrt. Wir fügen daher die Kanten in unseren \emph{Alignmentgraphen} ein und berechnen die \emph{Vorgänger-} und \emph{Nachfolgergrenzen} für alle Äquivalenzklassen und \emph{Waisen}.
+
+\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 1.1cm
+	]
+	% erste Sequenz
+	\node[mycircle] (c11) {A};
+	\node[mycircle,right=of c11] (c12) {D};
+	\node[mycircle,right=of c12] (c13) {G};
+	\node[mycircle,right=of c13] (c14) {T};
+	\node[mycircle,right=of c14] (c15) {C};
+	\node[mycircle,right=of c15] (c16) {T};
+	\node[mycircle,right=of c16] (c17) {C};
+	\node[mycircle,right=of c17] (c18) {A};
+	
+	% zweite Sequenz
+	\node[mycircle,below=of c11] (c21) {G};
+	\node[mycircle,right=of c21] (c22) {T};
+	\node[mycircle,right=of c22] (c23) {C};
+	\node[mycircle,right=of c23] (c24) {A};
+	\node[mycircle,right=of c24] (c25) {D};
+	\node[mycircle,right=of c25] (c26) {C};
+	\node[mycircle,right=of c26] (c27) {T};
+	\node[mycircle,right=of c27] (c28) {C};
+	\node[mycircle,right=of c28] (c29) {A};
+	
+	% dritte Sequenz
+	\node[mycircle,below=of c21] (c31) {T};
+	\node[mycircle,right=of c31] (c32) {A};
+	\node[mycircle,right=of c32] (c33) {T};
+	\node[mycircle,right=of c33] (c34) {C};
+	\node[mycircle,right=of c34] (c35) {A};
+	\node[mycircle,right=of c35] (c36) {D};
+	\node[mycircle,right=of c36] (c37) {G};
+	\node[mycircle,right=of c37] (c38) {G};
+	
+	% dritte Sequenz
+	\node[mycircle,below=of c31] (c41) {D};
+	\node[mycircle,right=of c41] (c42) {G};
+	\node[mycircle,right=of c42] (c43) {T};
+	\node[mycircle,right=of c43] (c44) {C};
+	\node[mycircle,right=of c44] (c45) {A};
+	\node[mycircle,right=of c45] (c46) {D};
+	\node[mycircle,right=of c46] (c47) {A};
+	\node[mycircle,right=of c47] (c48) {T};
+	\node[mycircle,right=of c48] (c49) {C};
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		%erste Sequenz
+		c11/c12//above,
+		c12/c13//above,
+		c13/c14//above,
+		c14/c15//above,
+		c15/c16//above,
+		c16/c17//above,
+		c17/c18//above,
+		%zweite Sequenz
+		c21/c22//above,
+		c22/c23//above,
+		c23/c24//above,
+		c24/c25//above,
+		c25/c26//above,
+		c26/c27//above,
+		c27/c28//above,
+		c28/c29//above,
+		%dritte Sequenz
+		c31/c32//above,
+		c32/c33//above,
+		c33/c34//above,
+		c34/c35//above,
+		c35/c36//above,
+		c36/c37//above,
+		c37/c38//above,
+		%vierte Sequenz
+		c41/c42//above,
+		c42/c43//above,
+		c43/c44//above,
+		c44/c45//above,
+		c45/c46//above,
+		c46/c47//above,
+		c47/c48//above,
+		c48/c49//above}
+	\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	
+	% erstes Fragment
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c22/c43//above}
+	\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	\end{tikzpicture}
+\end{center}
+
 \section{Zusammenfassung}
 
 Als abschließenden Schritt müssen wir noch unsere Ausgabe vorbereiten. Das Ziel ist dabei alignierte Symbole als Groß- und \emph{Waisen} als Kleinbuchstaben darzustellen. Zudem sollen die \emph{Zuweisungsspalten} genau übereinander stehen, wofür unter Umständen das Einfügen  von Leerzeichen in die Ausgabesequenzen nötig ist. Hierfür sortieren wir alle \emph{Fragmente} für jede Sequenz nach Startpunkten und traversieren diese, sowie die Sequenzen selbst, der Reihe nach durch, wobei wir bei Bedarf Lücken einfügen. Da die Länge jeder Sequenz in $\oh(1)$ ist, ist dies in $\oh(n^2\cdot L)$ möglich \citep{m99}.
+
+
 
 \subsection{Gesamtkomplexität}
 
@@ -880,14 +1096,11 @@ Als abschließenden Schritt müssen wir noch unsere Ausgabe vorbereiten. Das Zie
 	
 	Bevor wir die \emph{Fragmente} gierig in unser multiples \emph{Alignment} einfügen können, müssen wir sie alle auf Basis ihrer \emph{Überlappgewichte} sortieren. Mit einem effizienten Algorithmus wie beispielsweise Heapsort ist dies in $\oh(n^2\cdot L\cdot \log(n^2\cdot L))$ Rechenschritten möglich. 
 	
-	Im letzten Schritt von DIALIGN konstruieren wir unseren \emph{Alignmentgraphen} und benutzen ihn, um die \emph{Transitivitäts-} und somit die \emph{Konsistenzgrenzen} zu berechnen. Er enthält $\oh(n\cdot L)$ Knoten mit bis zu $\oh(n^2\cdot L)$ Kanten und wie in Satz \ref{satz:ssdp} bewiesen kostet das Aktualisieren der \emph{Transitivitätsgrenzen} $\oh(n^3\cdot L + n^2\cdot L^2)$ Rechenschritte. 
+	Im vorletzten Schritt von DIALIGN konstruieren wir unseren \emph{Alignmentgraphen} und benutzen ihn, um die \emph{Transitivitäts-} und somit die \emph{Konsistenzgrenzen} zu berechnen. Er enthält $\oh(n\cdot L)$ Knoten mit bis zu $\oh(n^2\cdot L)$ Kanten und wie in Satz \ref{satz:ssdp} bewiesen kostet das Aktualisieren der \emph{Transitivitätsgrenzen} $\oh(n^3\cdot L + n^2\cdot L^2)$ Rechenschritte. 
 	
+	Das vorbereiten der Ausgabe ist wie gerade erwähnt in $\oh(n^2\cdot L)$ Zeit möglich.
 	
+	Somit dominieren die \emph{Konsistenzgrenzen} die Laufzeit und je nach $N_{\max}$ in unseren paarweisen \emph{Alignments} auch den Speicherverbrauch. Es folgt die behauptete Laufzeit von $\oh(n^3\cdot L + n^2\cdot L^2)$ Rechenschritten und benötigter Speicherplatz in $\oh(N_{\max} + n^2\cdot L)$. 
 \end{beweis}
 
-Konsistenzgrenzen
-
-
-$\oh(n^3*l*log l + n^2*l^2)$
-
-\section{Probleme}
+\section{Evaluierung und Schwächen des Ansatzes}
