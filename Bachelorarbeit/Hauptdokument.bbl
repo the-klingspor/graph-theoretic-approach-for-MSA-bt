@@ -1,4 +1,4 @@
-\begin{thebibliography}{12}
+\begin{thebibliography}{13}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{Abdedda\"{i}m(1997)}]{a97}
@@ -51,6 +51,12 @@ Morgenstern, B., Dress, A. und Werner, T.
   segment-to-segment comparison.
 \newblock In \emph{Proceedings of the National Academy of Sciences, USA},
   Band~93, Seiten 12098--12103. Natl. Acad. Sci. USA (1996).
+
+\bibitem[{Morgenstern \emph{et~al.}(1997)Morgenstern, Frech, Dress und
+  Werner}]{mfdw98}
+Morgenstern, B., Frech, K., Dress, A. und Werner, T.
+\newblock {DIALIGN: Finding local similarities by multiple sequence alignment}.
+\newblock \emph{Bioinformatics}, Band 14:3:290--294 (1997).
 
 \bibitem[{Morgenstern \emph{et~al.}(2006)Morgenstern, Prohaska, D. und
   Stadler}]{mpps06}
