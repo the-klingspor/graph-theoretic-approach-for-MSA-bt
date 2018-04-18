@@ -1571,13 +1571,13 @@ Nun fügen wir das \emph{Fragment} ${\texttt{TCTCA}}\choose{\texttt{TATCA}}$ aus
 
 \subsubsection{Weitere Fragmente}
 
-Die restlichen \emph{Fragmente} unserer paarweisen \emph{Alignments} sind leider nicht \emph{konsistent} zu unserem bisherigen multiplen \emph{Alignment}. Betrachtet man ${\texttt{GT}}\choose{\texttt{Gt}}$ zwischen $S_1$ und $S_2$, das als drittes an der Reihe ist, stellt man fest, dass die jeweiligen \emph{Stellen} nicht \emph{alignierbar} sind. Für $(1,2)$ (\texttt{G}) ist das Alignieren noch möglich, denn $\textrm{NextClass}((1,3)) = 4$ und $Succ((1,4),2) - 1 = 1$. Für $(1,3)$ (\texttt{T}) gilt das nicht mehr, denn $Succ((1,4),2) - 1 = 1 < 2$. Für die anderen drei übrigen \emph{Fragmente} gilt ähnliches.
+Die restlichen \emph{Fragmente} unserer paarweisen \emph{Alignments} sind leider nicht \emph{konsistent} zu unserem bisherigen multiplen \emph{Alignment}. Betrachtet man ${\texttt{GT}}\choose{\texttt{Gt}}$ zwischen $S_1$ und $S_2$, das als drittnächstes an der Reihe ist, stellt man fest, dass die jeweiligen \emph{Stellen} nicht \emph{alignierbar} sind. Für $(1,2) =$ (\texttt{G}) ist das Alignieren noch möglich, denn $\textrm{NextClass}((1,3)) = 4$ und $Succ((1,4),2) - 1 = 1$. Für $(1,3) =$ (\texttt{T}) gilt das nicht mehr, denn $Succ((1,4),2) - 1 = 1 < 2$. Für die anderen drei übrigen \emph{Fragmente} gilt analoges.
 
-\section{Zusammenfassung}
+\section{Abschluss des Verfahrens}
+
+Nach diesem ersten Durchlauf unseres Ansatzes sind wir jedoch noch nicht fertig. Es kann ja beispielsweise sein, dass wir ein wichtiges Motiv haben, dass in mehreren Sequenzen vorkommt und somit Teil unseres multiplen \emph{Alignments} sein sollte. Bei zwei Sequenzen war es jedoch nicht im paarweisen \emph{Alignment} enthalten, weil stattdessen ein zufälliges, aber größeres \emph{Fragment} ausgewählt wurde. Wenn wir Glück haben, findet dieses aber nicht den Weg in unser multiples \emph{Alignment}, weil es im Vergleich zu anderen \emph{Fragmenten} mit denen es \emph{inkonsistent} war ein geringeres Gewicht hat. Deshalb führen wir zwischen allen Teilsequenzen, die durch unsere \emph{Ankerpunkte} vorgegeben sind, unser DIALIGN-Verfahren nochmal durch und wiederholen dies, bis es keine neuen \emph{Fragmente} mit positivem Gewicht mehr gibt \citep{mdw96}. In der Praxis stellt man fest, dass es in der Regel zu höchstens drei Iterationen kommt \citep{m99}. Wir können daher annehmen, dass die Anzahl an Durchläufen unseres Verfahrens konstant ist und für die Laufzeit nicht weiter in Betracht gezogen werden muss.
 
 Als abschließenden Schritt müssen wir noch unsere Ausgabe vorbereiten. Das Ziel ist dabei alignierte Symbole als Groß- und \emph{Waisen} als Kleinbuchstaben darzustellen. Zudem sollen die \emph{Zuweisungsspalten} genau übereinander stehen, wofür unter Umständen das Einfügen  von Leerzeichen in die Ausgabesequenzen nötig ist. Hierfür sortieren wir alle \emph{Fragmente} für jede Sequenz nach Startpunkten und traversieren diese, sowie die Sequenzen selbst, der Reihe nach durch, wobei wir bei Bedarf Lücken einfügen. Da die Länge jeder Sequenz in $\oh(1)$ ist, ist dies in $\oh(n^2\cdot L)$ möglich \citep{m99}.
-
-
 
 \subsection{Gesamtkomplexität}
 
@@ -1586,6 +1586,8 @@ Als abschließenden Schritt müssen wir noch unsere Ausgabe vorbereiten. Das Zie
 \end{korollar}
 
 \begin{beweis}
+	Wir gehen davon aus, dass die Anzahl an Iterationen wie oben beschrieben in $\oh(1)$ liegt. Es folgt, dass die Laufzeit einer Iteration asymptotisch auch der Gesamtlaufzeit entspricht. 
+	
 	Mit unserem speichereffizienten Algorithmus lässt sich jedes paarweise \emph{Alignment} in $\oh(L^2)$ Zeit und mit $\oh(N_{\max}) \in \oh(L^2)$ Speicherplatz berechnen \citep{m02}. Da es $\oh(n^2)$ paarweise \emph{Alignments} gibt, folgt hierfür die Laufzeit in $\oh(n^2\cdot L^2)$. Die Werte für unsere \emph{Fragmente} speichern wir sortiert in einer $\oh(n^2)$ großen Tabelle, wobei jeder Eintrag auf die Liste von \emph{Fragmenten} eines paarweisen \emph{Alignments} verweist. Da jedes von diesen bis zu $\oh(L)$ Segmente enthält, folgt der Speicherverbrauch von $\oh(n^2\cdot L)$ zu diesem Zeitpunkt.
 	
 	Mit Hilfe unserer Tabelle und dem parallelen traversieren sortierter Listen können wir in-place und in $\oh(n^3\cdot L)$ Zeit unsere \emph{Überlappgewichte} berechnen.
@@ -1599,4 +1601,17 @@ Als abschließenden Schritt müssen wir noch unsere Ausgabe vorbereiten. Das Zie
 	Somit dominieren die \emph{Konsistenzgrenzen} die Laufzeit und je nach $N_{\max}$ in unseren paarweisen \emph{Alignments} auch den Speicherverbrauch. Es folgt die behauptete Laufzeit von $\oh(n^3\cdot L + n^2\cdot L^2)$ Rechenschritten und benötigter Speicherplatz in $\oh(N_{\max} + n^2\cdot L)$. 
 \end{beweis}
 
-\section{Evaluierung und Schwächen des Ansatzes}
+\section{Evaluierung. Zusammenfassung und Schwächen des Ansatzes}
+
+\subsection{Evaluierung}
+
+DIALIGN	wurde im Laufe der Zeit und nach jeder neuen Verbesserung ausführlichen Tests und Vergleichen zu anderen Programmen für multiple \emph{Sequenzalignments} unterzogen. Diese möchte ich im Folgenden kurz zusammenfassen.
+
+DIALIGN 1.0 wurde zunächst an einem Satz von elf DNA-Sequenzen getestet, die jeweils Helix-Loop-Helix-Bindungstellen für Proteine haben \citep{mdw96}. Diese Bindungsstellen mit einer Länge von etwa 30 DNA-Basen wurden experimentell gefunden und außerhalb dieser Regionen existieren keine erkennbaren Ähnlichkeiten zwischen den Sequenzen. Während DIALIGN in der Lage war alle elf Sequenzen korrekt miteinander zu alignieren, waren das Optimum der anderen Verfahren zwei korrekte Zuordnungen. Die verglichenen Programme waren dabei DFALIGN, PILEUP, CLUSTAL und GENALIGN. Auch bei den Vergleichen mit elf Programmen zum alignieren von Proteinsequenzen schnitt DIALIGN neben CLUSTAL V und DFALIGN unter den besten dreien ab.
+
+Es ist sinnvoll bei zu alignierenden Sequenzen zwischen lokal und global verwandten zu unterscheiden. Lokal verwandte haben nur Ähnlichkeiten in begrenzten Abschnitten, während der Rest höchstens zufällige Übereinstimmungen enthält. Hier ist es optimal lediglich die ähnlichen Segmente ins \emph{Alignment} aufzunehmen und die nicht verwandten zu ignorieren. Global verwandte Sequenzen haben hingegen Ähnlichkeiten, die sich über die volle Länge der Sequenzen ziehen und wo es nur vereinzelt zu Deletionen, Insertionen oder Punktmutationen kommt.
+
+Beim Testen von DIALIGN 2.0 an verschiedenen Testsequenzen hat man festgestellt, dass DIALIGN 1 und 2.0 auf global verwandten Sequenzen vergleichbar zu globalen Alignern wie CLUSTAL W und DCA zu sein scheinen \citep{mahd98}. Bei lokal verwandten Sequenzen war DIALIGN 2.0 allen anderen getesteten Programmen hingegen weit überlegen. Ein weiterer Vorteil ist, dass DIALIGN 2.0 anders als der Vorgänger und viele der anderen Programme unabhängig von benutzerdefinierten Eingaben war.
+
+Da große \emph{Alignments} sehr rechenintensiv sein können, ist es außerdem wichtig die Laufzeit der Verfahren im Auge zu behalten. Progressive Alignierer wie beispielsweise CLUSTAL W starten damit nach dem Berechnen paarweiser \emph{Alignments} zunächst die beiden ähnlichsten Sequenzen zu verwenden und dann der Reihe nach die jeweils ähnlichste Sequenz ins multiple \emph{Alignment} einzufügen, bis alle Sequenzen Teil der Zuordnung sind.  
+
