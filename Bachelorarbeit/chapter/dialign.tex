@@ -1106,7 +1106,7 @@ Bei den \emph{Waisen} werden nur die \emph{Stellen} beeinflusst, die in den Sequ
 
 \small
 \begin{tabular}{r|cccc|cccc||r|c|r|c}
-	 & \multicolumn{4}{c|}{$Pred((i,p),j)$} & \multicolumn{4}{c||}{$Succ((i,p),j)$} & \multicolumn{2}{c|}{\textrm{PrevClass}} & \multicolumn{2}{c}{\textrm{NextClass}} \\ \hline
+	 & \multicolumn{4}{c|}{$Pred((i,p),j)$} & \multicolumn{4}{c||}{$Succ((i,p),j)$} & \multicolumn{2}{c|}{\textrm{prevClass}} & \multicolumn{2}{c}{\textrm{nextClass}} \\ \hline
 	\diagbox[dir=NW]{$(i,p)$}{$j$} & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 & $(i,p)$ & $P((i,p))$ & $(i,p)$ & $S((i,p))$ \\ \hline
 	$[(2,1)]_{\mathcal{A}}$ & 0 & 1 & 0 & 2 & 9 & 1 & 9 & 2 & $(2,9)$ & 8 & $(4,1)$ & 1 \\
 	$[(2,2)]_{\mathcal{A}}$ & 0 & 2 & 0 & 3 & 9 & 2 & 9 & 3 & & & & \\
@@ -1258,7 +1258,7 @@ Zu aktualisieren sind die \emph{Transitivitätsgrenzen} für die dritte Sequenz 
 \vspace{5pt}
 \small
 \begin{tabular}{r|cccc|cccc||r|c|r|c}
-	& \multicolumn{4}{c|}{$Pred((i,p),j)$} & \multicolumn{4}{c||}{$Succ((i,p),j)$} & \multicolumn{2}{c|}{\textrm{PrevClass}} & \multicolumn{2}{c}{\textrm{NextClass}} \\ \hline
+	& \multicolumn{4}{c|}{$Pred((i,p),j)$} & \multicolumn{4}{c||}{$Succ((i,p),j)$} & \multicolumn{2}{c|}{\textrm{prevClass}} & \multicolumn{2}{c}{\textrm{nextClass}} \\ \hline
 	\diagbox[dir=NW]{$(i,p)$}{$j$} & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 & $(i,p)$ & $P((i,p))$ & $(i,p)$ & $S((i,p))$ \\ \hline
 	$[(2,1)]_{\mathcal{A}}$ & 0 & 1 & 0 & 2 & 9 & 1 & 3 & 2 & $(2,9)$ & 8 & $(4,1)$ & 1 \\
 	$[(2,2)]_{\mathcal{A}}$ & 0 & 2 & 3 & 3 & 9 & 2 & 3 & 3 & $(3,7)$ & 6 & $(3,1)$ & 3 \\
@@ -1554,7 +1554,7 @@ Nun fügen wir das \emph{Fragment} ${\texttt{TCTCA}}\choose{\texttt{TATCA}}$ aus
 \vspace{5pt}
 
 \begin{tabular}{r|cccc|cccc||r|c|r|c}
-	& \multicolumn{4}{c|}{$Pred((i,p),j)$} & \multicolumn{4}{c||}{$Succ((i,p),j)$} & \multicolumn{2}{c|}{\textrm{PrevClass}} & \multicolumn{2}{c}{\textrm{NextClass}} \\ \hline
+	& \multicolumn{4}{c|}{$Pred((i,p),j)$} & \multicolumn{4}{c||}{$Succ((i,p),j)$} & \multicolumn{2}{c|}{\textrm{prevClass}} & \multicolumn{2}{c}{\textrm{nextClass}} \\ \hline
 	\diagbox[dir=NW]{$(i,p)$}{$j$} & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 & $(i,p)$ & $P((i,p))$ & $(i,p)$ & $S((i,p))$ \\ \hline
 	$[(2,1)]_{\mathcal{A}}$ & 0 & 1 & 0 & 2 & 6 & 1 & 3 & 2 & $(2,9)$ & 8 & $(4,1)$ & 1 \\
 	$[(2,2)]_{\mathcal{A}}$ & 6 & 2 & 3 & 3 & 6 & 2 & 3 & 3 & $(3,7)$ & 6 & $(3,1)$ & 3 \\
@@ -1584,10 +1584,10 @@ Als abschließenden Schritt müssen wir noch unsere Ausgabe vorbereiten. Das Zie
 Das finale \emph{Alignment} unserer vier Beispielsequenzen mit DIALIGN 2.2 und einer $+3/-1$"=Substitutionsmatrix sieht dann so aus:
 \ttfamily
 \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
-	\item aDGTCTCA
+	\item aDGTCTCA-----
 	\item --G--TCADCTCa
-	\item ---TATCADgg
-	\item -DG--TCADATC
+	\item ---TATCADgg--
+	\item -DG--TCADATC-
 \end{enumerate}
 \normalfont 
 
@@ -1637,3 +1637,13 @@ DIALIGN aligniert nur die Segmente der Sequenzen miteinander, die auch wirklich 
 Erinnern wir uns zurück an die gängigsten Mutationen, die auf den von uns untersuchten Sequenzen vorkommen: Deletionen und Insertionen von ganzen Abschnitten oder Punktmutationen, bei denen einzelne Basen oder Aminosäuren durch andere ersetzt werden. Man stellt fest, dass jede dieser Situationen sich in DIALIGN wiederfindet. Punktmutationen zeigen sich durch Abweichungen einzelner \emph{Stellen} in längeren \emph{Fragmenten} und mit gelöschten oder eingefügten Segmenten gehen wir um, indem ein einzelnes längeres \emph{Fragment} in zwei oder mehr kürzere aufgeteilt wird \citep{mfdw98}. Es ist außerdem anzunehmen, dass der segmentbasierte Ansatz von DIALIGN insofern für die Benutzer angenehmer ist, als dass nicht auf Biegen und Brechen versucht wird die kompletten Sequenzen in ein \emph{Alignment} einzufügen, selbst wenn es keine Ähnlichkeit gibt. Man stellt fest, dass es für einen Alignierer fast genauso wichtig ist, nichtverwandte Abschnitte auch nicht zuzuordnen, wie es wichtig ist, dies für verwandte zu tun. Denn sonst muss der Forscher, der das \emph{Alignment} später benutzt, erst mühsam von Hand feststellen, welche Abschnitte eigentlich die gesuchten Motive sind \citep{m99}.
 
 \subsection{Schwächen von DIALIGN}
+
+Es gibt im Allgemeinen zwei Gründe, warum automatisierte \emph{Alignmentverfahren} wie beispielsweise DIALIGN biologisch unzureichende Ergebnisse liefern können: Entweder die Gütefunktion, also in unserem Fall der \emph{Score} unseres \emph{Alignments}, bildet die Wirklichkeit unzureichend ab und weist bedeutungslosen Abschnitten größere Werte zu, als anderen wichtigen Motiven. Oder aber die Gütefunktion ist grundsätzlich richtig, aber dafür werden beim zusammensetzen des multiplen \emph{Alignments} die falschen \emph{Fragmente} ausgewählt. In diesem Fall liegt das Problem bei unserer Heuristik, die gierig die \emph{Fragmente} nach Gewicht und \emph{Konsistenz} auswählt. 
+
+Um festzustellen wie sich DIALIGN weiter verbessern lässt, muss man zuerst die Güte unserer Ergebnisse quantifizieren und dann überprüfen, ob die obigen Situationen auftreten. Bei der Quantifizierung gibt es zunächst zwei verschiedene Möglichkeiten, wie man feststellen kann, ob und wie gut ein \emph{Alignment} wirklich ist. Als erstes brauchen wir dafür fertige \emph{Alignments} zum Vergleich von denen wir wissen, dass sie korrekt sind. Solche finden sich beispielsweise in Testdatenbanken wie BAliBASE, die eine Vielzahl von Zuordnungen auf unterschiedlichen Klassen von Sequenzen bieten. Das erste Gütekriterium ist der \emph{sum-of-pairs-Score}, der in Prozent angibt wie viele paarweise korrekte Übereinstimmungen es im Vergleich zur Referenz gab. Die zweite Möglichkeit ist der \emph{column-Score}, der überprüft wie viele ganze Spalten korrekt \emph{aligniert} wurden \citep{mpps06}. Grundsätzlich ist letzterer das bessere Maß, weil wir Ähnlichkeiten über die komplette Menge an Sequenzen hinweg finden wollen. Es kann jedoch passieren, dass in beinahe jeder Spalte eine einzige fehlerhafte Zuordnung auftritt, was in einem sehr niedrigen \emph{column-Score} resultieren würde, obwohl das \emph{Alignment} eigentlich nicht so schlecht ist.
+
+\cite{mpps06} haben DIALIGN auf einer Vielzahl von Sequenzen untersucht, um festzustellen welche Probleme beim \emph{Alignieren} auftreten. Die schlechte Nachricht: beide der oben genannten treten auf, abhängig von den zu \emph{alignierenden} Sequenzen. Das erste \emph{Testalignment} war eine Menge von Genen des Pufferfischs \emph{Takifugu rubripes}. Diese enthalten sogenannte \emph{Hoxgene}, die die Ausbildung von Vorder- (Kopf) und Hinterteilen (Schwanz) bei der Klasse der \emph{Bilateria} regulieren. Zu den \emph{Bilateria} gehören alle Tiere, die einen bilateralsymmetrisch aufgebauten Körper haben, also beispielsweise alle Säugetiere, Würmer, Fische, Fische oder Amphibien. Die \emph{Hoxgene} sind evolutionär gesehen sehr alt und ihre Geschichte wurde durch viele \emph{Tandemduplikate} dominiert. \emph{Tandemduplikate} sind gleiche oder sehr ähnliche Abschnitte, die an mehreren Stellen innerhalb der Sequenzen vorkommen. Im schlimmsten Fall kommt es dann dazu, dass die falschen \emph{Hoxgene} miteinander \emph{aligniert} werden. Weil diese sehr ähnlich sind, ist es wahrscheinlich, dass sie einander zugewiesen werden und die \emph{Alignments} hohe Gewichte haben. Biologisch sind diese Zuweisungen aber von geringem Wert, weil es eben nicht die richtigen Paare von \emph{Hoxgenen} in unserem \emph{Alignment} waren. Genau diese Erfahrung hat man auch bei \emph{Takifugu rubripes} gemacht. Das DIALIGN-Ergebnis hatte zwar einen um 13\% höheren \emph{Score}, als das korrekte Ergebnis, der \emph{column-Score} lag dagegen bei 0\% und selbst die Residuenpaare waren nur zu 33\% richtig. Ergebnisse wie dieses sind ein klares Ergebnis dafür, dass die Gütefunktion von DIALIGN in manchen Fällen versagt. Bei diesem extremen Beispiel ist es aufgrund der geringeren Korrelation zwischen der mathematischen und der biologischen Ähnlichkeit der \emph{Hoxgene} schwer eine entsprechende Gütefunktion zu finden. Mögliche Ansätze können Machine Learning oder semiautomatisierte Verfahren sein, wo ein Mensch mit Expertenwissen bestimmte Abschnitte von Hand zuweist (Verankerung \footnote{Im englischen Original auch \enquote{anchor}. Um Verwirrung mit unseren \emph{Ankern} vorzubeugen hier umbenannt.}) und lediglich die Abschnitte dazwischen maschinell \emph{aligniert} \citep{mpps06}. Man hat jedoch auch weitere Sequenzfamilien in BAliBASE gefunden, bei denen der \emph{Score} bei schlechteren \emph{Alignments} stieg. In diesem Fall kann man über bessere Gütefunktionen nachdenken, weil bessere Heuristiken das Problem nicht lösen. Schließlich basieren sie auf den Ergebnissen der anscheinend unzureichenden Gütefunktionen.
+
+Bei anderen Sequenzen hat man hingegen festgestellt, dass die korrekten \emph{Alignments} \emph{Scores} haben können, die bis zu 15\% über den Ergebnissen von DIALIGN liegen. In diesem Fall ist das Problem vermutlich die Heuristik, die gierig die \emph{Fragmente} mit den höchsten Gewichten wählt. Wenn man Pech hat läuft man so in ein lokales Maximum, indem man \emph{Fragmente} wählt, die hohe Gewichte, aber geringen biologischen Wert haben und über \emph{Inkonsistenzen} verhindern, dass andere bedeutungsvollere Zuweisungen gewählt werden. Auch mathematisch kann der gierige Ansatz suboptimale Ergebnisse liefern, indem ein einziges großes \emph{Fragment} das Hinzufügen mehrerer kleiner verhindert, die summiert ein größeres Gesamtgewicht hätten. Weil das nicht optimale, große \emph{Fragment} nie wieder aus unserem multiplen \emph{Alignment} entfernt werden kann, sind wir auch nicht in der Lage die anderen Segmente auszuwählen \citep{m99}. 
+
+Um diesem Problem vorzubeugen lernen wir im nächsten Kapitel eine neue, verbesserte Heuristik für DIALIGN kennen. Das Verfahren von \cite{cpm10} basiert auf Flussnetzen und weiteren graphtheoretischen Ansätzen, die eine flexiblere Auswahl der \emph{Anker} unseres multiplen \emph{Alignments} ermöglichen.

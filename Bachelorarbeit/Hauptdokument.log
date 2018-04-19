@@ -1,11 +1,11 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.3)  18 APR 2018 17:11
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.19)  19 APR 2018 17:45
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
 **./Hauptdokument.tex
 (./Hauptdokument.tex
 LaTeX2e <2017-04-15>
-Babel <3.18> and hyphenation patterns for 84 language(s) loaded.
+Babel <3.18> and hyphenation patterns for 10 language(s) loaded.
 (c:/texlive/2017/texmf-dist/tex/latex/koma-script/scrbook.cls
 Document Class: scrbook 2017/09/07 v3.24 KOMA-Script document class (book)
 (c:/texlive/2017/texmf-dist/tex/latex/koma-script/scrkbase.sty
@@ -3465,7 +3465,19 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1639.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1639.
-)
+LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/n' will be
+(Font)              scaled to size 7.3pt on input line 1645.
+LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/m/it' will be
+(Font)              scaled to size 9.0pt on input line 1645.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1646.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1646.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1646.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1646.
+ [38])
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 254.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3474,10 +3486,24 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 254.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 254.
- [38]
+ [39]
 \openout2 = `chapter/min-cut.aux'.
 
  (./chapter/min-cut.tex
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1.
+ [40
+
+
+
+
+]
 chapter 4.
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
@@ -3528,12 +3554,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 256.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 256.
- [39
-
-
-
-
-]
+ [41]
 \openout2 = `chapter/Programmierung.aux'.
 
  (./chapter/Programmierung.tex
@@ -3545,7 +3566,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1.
- [40
+ [42
 
 
 
@@ -3569,7 +3590,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 258.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 258.
- [41]
+ [43]
 \openout2 = `chapter/Validierung.aux'.
 
  (./chapter/Validierung.tex
@@ -3581,7 +3602,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1.
- [42
+ [44
 
 
 
@@ -3613,7 +3634,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 260.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 260.
- [43]
+ [45]
 \openout2 = `chapter/Fazit.aux'.
 
  (./chapter/Fazit.tex
@@ -3625,7 +3646,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1.
- [44
+ [46
 
 
 
@@ -3653,7 +3674,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 262.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 262.
- [45] (./Hauptdokument.bbl
+ [47] (./Hauptdokument.bbl
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3662,32 +3683,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1.
- [46
-
-
-
-])
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 269.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 269.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 269.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 269.
- [47]
-\openout2 = `chapter/EidesstattlicheErklaerung.aux'.
-
- (./chapter/EidesstattlicheErklaerung.tex
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
-[48
+ [48
 
 
 
@@ -3701,6 +3697,31 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 269.
  [49]
+\openout2 = `chapter/EidesstattlicheErklaerung.aux'.
+
+ (./chapter/EidesstattlicheErklaerung.tex
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1.
+[50
+
+
+
+])
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 269.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 269.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 269.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 269.
+ [51]
 Package atveryend Info: Empty hook `BeforeClearDocument' on input line 271.
 Package atveryend Info: Empty hook `AfterLastShipout' on input line 271.
  (./Hauptdokument.aux (./chapter/Titelblatt.aux)
@@ -3720,12 +3741,12 @@ LaTeX Warning: There were undefined references.
 
  ) 
 Here is how much of TeX's memory you used:
- 44719 strings out of 492982
- 850799 string characters out of 6136226
- 1187915 words of memory out of 5000000
- 47133 multiletter control sequences out of 15000+600000
- 825732 words of font info for 220 fonts, out of 8000000 for 9000
- 1141 hyphenation exceptions out of 8191
+ 44739 strings out of 494830
+ 851098 string characters out of 6177580
+ 1183410 words of memory out of 5000000
+ 46919 multiletter control sequences out of 15000+600000
+ 847244 words of font info for 235 fonts, out of 8000000 for 9000
+ 36 hyphenation exceptions out of 8191
  73i,27n,95p,10479b,1042s stack positions out of 5000i,500n,10000p,200000b,80000s
 {c:/texlive/2017/texmf-dist/fonts/enc/dvips/cm-super/cm-super-t1.enc}{c:/texl
 ive/2017/texmf-dist/fonts/enc/dvips/nimbus15/nimbus15mono-ec.enc}{c:/texlive/20
@@ -3755,10 +3776,10 @@ dist/fonts/type1/public/txfonts/txsyc.pfb><c:/texlive/2017/texmf-dist/fonts/typ
 e1/public/newtx/txsys.pfb><c:/texlive/2017/texmf-dist/fonts/type1/urw/times/utm
 ri8a.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/nimbus15/zcoN-Regular.p
 fb>
-Output written on Hauptdokument.pdf (53 pages, 505201 bytes).
+Output written on Hauptdokument.pdf (55 pages, 511535 bytes).
 PDF statistics:
- 999 PDF objects out of 1000 (max. 8388607)
- 894 compressed objects within 9 object streams
- 216 named destinations out of 1000 (max. 500000)
+ 1025 PDF objects out of 1200 (max. 8388607)
+ 917 compressed objects within 10 object streams
+ 219 named destinations out of 1000 (max. 500000)
  650 words of extra memory for PDF output out of 10000 (max. 10000000)
 
