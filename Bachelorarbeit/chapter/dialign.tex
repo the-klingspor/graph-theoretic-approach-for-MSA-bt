@@ -52,7 +52,7 @@ Im Folgenden wollen wir zwei Beispiele betrachten, um das Konzept der \emph{Kons
 
 \begin{beispiel}
 	\begin{center}
-	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
+	\begin{tikzcd}[/tikz/commutative diagrams/sep=tiny]
 		a_1 \arrow[rrdd, no head] & a_2 & a_3 & a_4 & a_5 \\
 		b_1 \arrow[d, no head] & b_2 & b_3 & b_4 \arrow[lu, no head] & b_5 \\
 		c_1 & c_2 & c_3 & c_4 \arrow[u, no head] & c_5
@@ -61,7 +61,7 @@ Im Folgenden wollen wir zwei Beispiele betrachten, um das Konzept der \emph{Kons
 	Für alle \emph{Stellen}, die aus der selben kommen Sequenz stammen, gilt $x \preceq_{\mathcal{R} y \implies x \preceq y}$, wie beispielsweise für $a_1$ und $a_5$: $a_1 \mathcal{A} c_3, c_3 \preceq c_4, c_4 \mathcal{A} b_4, b_4 \mathcal{A} a_3$ und $a_3 \preceq a_5$. Es folgt $a_1 \preceq_{\mathcal{R}} a_5$. Also ist die Relation auf $\mathcal{S}$ \emph{konsistent} und somit ein \emph{Alignment}.
 	
 	\begin{center}
-	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
+	\begin{tikzcd}[/tikz/commutative diagrams/sep=tiny]
 		a_1 \arrow[rdd, no head] & a_2 & a_3 & a_4 \arrow[rdd, no head] & a_5 \\
 		b_1 & b_2 & b_3 \arrow[ru, no head] & b_4 & b_5 \\
 		c_1 \arrow[ruu, no head] & c_2 & c_3 & c_4 & c_5 \arrow[u, no head]
@@ -74,7 +74,7 @@ Es lässt sich zeigen, dass eine Relation $\mathcal{A}$ genau dann ein \emph{Ali
 
 \begin{beispiel}
 	\begin{center}
-	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
+	\begin{tikzcd}[/tikz/commutative diagrams/sep=tiny]
 		- & - & A_1 \arrow[dd, no head] & a_2 & A_3 \arrow[d, no head] & a_4 & a_5 \\
 		b_1 & B_2 \arrow[d, no head] & - & b_3 & B_4 \arrow[d, no head] & b_5 & - \\
 		c_1 & C_2 & C_3 & - & C_4 & c_5 & -
@@ -1579,7 +1579,7 @@ Nach diesem ersten Durchlauf unseres Ansatzes sind wir jedoch noch nicht fertig.
 
 Denken wir an unser Beispiel zurück, dann stellen wir fest, dass das Fragment $f_{3,2,2} = {\texttt{DG}}\choose{DG}$ aus der ersten und vierten Sequenz das positive Gewicht 2 hat. Es kann also unter Aktualisierung unseres \emph{Alignmentgraphen} in unser multiples \emph{Alignment} aufgenommen werden. Weitere geeignete \emph{Fragmente} der Teilsequenzen gibt es nicht. Bei der nächsten Iteration stellt man demnach fest, dass kein neues \emph{Fragment} ein positives Gewicht hat und wir können das Alignieren abbrechen.
 
-Als abschließenden Schritt müssen wir noch unsere Ausgabe vorbereiten. Das Ziel ist dabei alignierte Symbole als Groß- und \emph{Waisen} als Kleinbuchstaben darzustellen. Zudem sollen die \emph{Zuweisungsspalten} genau übereinander stehen, wofür unter Umständen das Einfügen  von Leerzeichen in die Ausgabesequenzen nötig ist. Hierfür sortieren wir alle \emph{Fragmente} für jede Sequenz nach Startpunkten und traversieren diese, sowie die Sequenzen selbst, der Reihe nach durch, wobei wir bei Bedarf Lücken einfügen. Da die Länge jeder Sequenz in $\oh(1)$ ist, ist dies in $\oh(n^2\cdot L)$ möglich \citep{m99}.
+Als abschließenden Schritt müssen wir noch unsere Ausgabe vorbereiten. Das Ziel ist dabei alignierte Symbole als Groß- und \emph{Waisen} als Kleinbuchstaben darzustellen. Zudem sollen die \emph{Zuweisungsspalten} genau übereinander stehen, wofür unter Umständen das Einfügen  von Leerzeichen in die Ausgabesequenzen nötig ist. Hierfür sortieren wir alle \emph{Fragmente} für jede Sequenz nach Startpunkten und traversieren diese, sowie die Sequenzen selbst, der Reihe nach durch, wobei wir bei Bedarf Lücken einfügen. Da die Länge jeder Sequenz in $\oh(1)$ ist, ist dies in $\oh(n^2\cdot L)$ möglich \citep{m99}. \improvement{Alignmentgraphen für das Einfügen von Lücken benutzen?}
 
 Das finale \emph{Alignment} unserer vier Beispielsequenzen mit DIALIGN 2.2 und einer $+3/-1$"=Substitutionsmatrix sieht dann so aus:
 \ttfamily

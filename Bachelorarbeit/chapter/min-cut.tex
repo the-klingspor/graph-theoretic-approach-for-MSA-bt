@@ -1,24 +1,32 @@
 \chapter{Ein Min-Cut-Ansatz für das Konsistenzproblem}
 \label{ch:min-cut}
--skizzierter Ablauf des Algorithmus
+Da es, wie im letzten Kapitel gezeigt, auf manchen Sequenzfamilien durch die gierige Heuristik von DIALIGN zu suboptimalen \emph{Scores} und \emph{Alignments} kommt, werden wir jetzt einen verbesserten graphtheoretischen Ansatz von \cite{cpm10} betrachten.
 
+Dazu benötigen wir zwei verschiedene Graphen: zum einen den \emph{Inzidenzgraphen}, bei dem alle \emph{Stellen} Knoten sind und ihre \emph{Anker} Zusammenhangskomponenten. Der zweite ist der \emph{Sukzessorgraph}, der die Zusammenhangskomponenten unseres \emph{Inzidenzgraphen} als Knoten und die natürliche Ordnung auf den Sequenzen als Kanten benutzt. Man kann sich vorstellen, dass genau dann eine Kante zwischen zwei  Diese beiden Datenstrukturen werden wir benutzen, um \emph{Inkonsistenzen} aufzulösen. Wenn wir uns an die Definition von \emph{Konsistenz} aus dem letzten Kapitel erinnern, dann stellen wir fest, dass es zwei Arten von ihr gibt: zum einen implizite, transitive Mehrfachzuweisungen bei denen einer \emph{Stelle} einer Sequenze mehrere \emph{Stellen} einer anderen Sequenz zugeordnet sind und zum anderen überkreuzte Zuweisungen.
+
+Als Ausgangspunkt starten wir wieder mit unseren paarweisen \emph{Alignments} aus DIALIGN. \emph{Überlappgewichte} brauchen wir in unserem Fall nicht. Dann konstruieren wir mit Hilfe dieser Zuweisungen unseren \emph{Inzidenzgraphen} und benutzen einen Algorithmus zur Berechnung des minimalen Schnitts (\enquote{min-cut}) auf den Zusammenhangskomponenten, um alle \emph{Inkonsistenzen} aufgrund von transitiven Mehrfachzuweisungen aufzulösen. Die so entstehenden Zusammenhangskomponenten benutzen wir, um einen \emph{Sukzessorgraphen} aufzubauen. Dank eines Algorithmus von \cite{pdc10} können wir mit diesem Überkreuzungen aus unserer Relation löschen. Alle dieser Konzepte werden wir im Laufe dieses Kapitel formal definieren, genauer analysieren und die Korrektheit der Aussagen beweisen.
+ 
 \section{Flussnetzwerke}
 
 \subsection{Einführung}
 
+
+
 \subsection{Wichtige Algorithmen}
+
+Es gibt eine Vielzahl von Algorithmen zur Berechnung eines maximalen Flusses auf einem Flussnetzwerk. Die wichtigsten und bekanntesten Vertreter möchte ich kurz vorstellen. 
 
 \subsection{Der \emph{Max-Flow-Min-Cut-Satz}}
 
 \section{Inzidenzgraphen und das Auflösen von Inkosistenzen mit Hilfe von Flussnetzwerken}
 
 \subsection{Komplexität}
-$\oh(n^4*l^{7/2})$
+$\oh(n^4\cdot L^{7/2})$
 
 \section{Sukzessorgraphen und der Algorithmus von Pitschi}
-$\oh(n^3 * l)$ für n-faches Topological Sort auf einem Knoten mit $\oh(n^2 * l)$-vielen Kanten im schlimmsten Fall.
+$\oh(n^3\cdot L)$ für n-faches Topological Sort auf einem Knoten mit $\oh(n^2\cdot L)$-vielen Kanten im schlimmsten Fall.
 
 \section{Ankerpunkte}
 
 \section{Gesamtkomplexität}
-$\oh(n^4*l^{7/2})$
+$\oh(n^4\cdot L^{7/2})$ 
