@@ -12,44 +12,44 @@ A level-1 auxiliary file: chapter/Fazit.aux
 The style file: german.bst
 A level-1 auxiliary file: chapter/EidesstattlicheErklaerung.aux
 Database file #1: Quellen.bib
-You've used 14 entries,
+You've used 15 entries,
             2828 wiz_defined-function locations,
-            680 strings with 6927 characters,
-and the built_in function-call counts, 8890 in all, are:
-= -- 758
-> -- 300
+            686 strings with 7038 characters,
+and the built_in function-call counts, 9477 in all, are:
+= -- 800
+> -- 334
 < -- 23
-+ -- 118
-- -- 103
-* -- 618
-:= -- 1325
-add.period$ -- 48
-call.type$ -- 14
-change.case$ -- 103
-chr.to.int$ -- 15
-cite$ -- 14
-duplicate$ -- 674
-empty$ -- 663
-format.name$ -- 142
-if$ -- 1825
++ -- 131
+- -- 115
+* -- 667
+:= -- 1421
+add.period$ -- 51
+call.type$ -- 15
+change.case$ -- 112
+chr.to.int$ -- 16
+cite$ -- 15
+duplicate$ -- 714
+empty$ -- 704
+format.name$ -- 157
+if$ -- 1937
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 131
-newline$ -- 75
-num.names$ -- 56
-pop$ -- 266
+missing$ -- 141
+newline$ -- 80
+num.names$ -- 60
+pop$ -- 287
 preamble$ -- 1
-purify$ -- 90
+purify$ -- 98
 quote$ -- 0
-skip$ -- 311
+skip$ -- 327
 stack$ -- 0
-substring$ -- 432
-swap$ -- 389
+substring$ -- 443
+swap$ -- 410
 text.length$ -- 16
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 126
+type$ -- 132
 warning$ -- 0
-while$ -- 58
+while$ -- 61
 width$ -- 0
-write$ -- 194
+write$ -- 207

@@ -1,4 +1,4 @@
-\begin{thebibliography}{14}
+\begin{thebibliography}{15}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{Abdedda\"{i}m(1997)}]{a97}
@@ -20,6 +20,12 @@ Corel, E., Pitschi, F. und Morgenstern, B.
 \newblock A \textit{min-cut} algorithm for the consistency problem in multiple
   sequence alignment.
 \newblock \emph{Bioinformatics}, Band 26:8:1015--1021 (2010).
+
+\bibitem[{Cormen \emph{et~al.}(2009)Cormen, Leiserson, Rivest und
+  Stein}]{clrs09}
+Cormen, T., Leiserson, C., Rivest, R. und Stein, C.
+\newblock \emph{{Introduction to Algorithms}}.
+\newblock The MIT Press, 3rd Auf\/lage (2009).
 
 \bibitem[{Henikoff und Henikoff(1992)}]{hh92}
 Henikoff, S. und Henikoff, J.

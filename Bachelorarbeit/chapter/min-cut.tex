@@ -10,7 +10,117 @@ Als Ausgangspunkt starten wir wieder mit unseren paarweisen \emph{Alignments} au
 
 \subsection{Einführung}
 
+Stell dir eine Produktionsstätte vor, wo ein bestimmtes Produkt hergestellt wird und eine Verwendungsstätte bei der das Produkt benötigt wird. Zwischen dem Ort der Produktion und dem Ort der Verwendung gibt es ein Schienennetz über das die Produkte geliefert werden können. Über jeden Abschnitt der Schienen kann aber nur eine bestimmte Anzahl an Waggons geleitet werden. So mag es weniger stark befestigte Strecken geben, wo nur kleinere oder leichtere Züge fahren können und andere gut ausgebaute mit mehreren Gleisen nebeneinander. Die Anzahl an Einheiten, die über einen Abschnitt geleitet werden können, nennt man Kapazität, während Produktionsstätte und Zielort Quelle und Senke heißen. Ziel ist es zu bestimmen wie viele Produktionseinheiten über dieses Netz von der Fabrik zum Verbraucher geliefert werden können.
 
+Neben diesem Problem kann man mit Flussnetzwerken noch viele andere Anwendungen modellieren, zum Beispiel eine chemische Produktionsstraße mit vielen Rohren, die jeweils nur den Durchfluss einer bestimmten Menge erlauben. Oder Stromnetze mit Kraftwerken und Endverbrauchern zwischen denen es Stromleitungen gibt, die jeweils höchstens einen bestimmten Stromfluss erlauben. Für eine Hochspannungsleitung mag dieser sehr hoch und für die Leitungen, die direkt zu den Häusern gehen, sehr klein sein. Stromnetze bieten uns auch eine direkte Analogie, wie mit den Knotenpunkten zwischen den Verbindungen umzugehen ist. An jedem Knoten, außer der Quelle und Senke, wird genauso viel Fluss hinein- wie wieder hinausgeleitet. Es wird nichts gespeichert oder geht verloren. Dieses Konzept, das man \emph{Flusserhaltung} nennt, funktioniert genau wie das erste \emph{Kirchhoffsche Gesetz} bei Strömen \citep{clrs09}. 
+
+Ursprünglich stammt das Konzept des Flussnetzwerkes aus dem Kalten Krieg und der militärischen Forschung. Es wurde das Schienennetzwerk des Sowjetunion in Osteuropa untersucht, um herauszufinden wie viel Material die UdSSR im Kriegsfall aus dem russischen Kerngebiet nach Mitteleuropa transportieren könnte und welche Strecken man zerstören müsste, um den Nachschub am schnellsten Abzuschneiden. Die Untersuchung bietet uns sogleich einen intuitiven Begriff des \emph{maximalen Flusses} und des \emph{minimalen Schnitts}. Der \emph{maximale Fluss} ist die maximale Anzahl an Einheiten, die von der Quelle zur Senke transportiert werden kann, während der \emph{minimale Schnitt} den \enquote{Bottleneck} des Netzwerkes darstellt, der den Fluss von der Quelle zur Senke minimiert. Wie wir später formal zeigen werden sind diese beiden Werte in einem Flussnetzwerk äquivalent.
+
+Zunächst betrachten wir Flussnetzwerke auf einer formalen Ebene, dann widmen wir uns kurz und skizziert einigen der wichtigsten Algorithmen zum berechnen von \emph{maximalen Flüssen} und danach beweisen wir die Äquivalenz von diesen mit \emph{minimalen Schnitten}. Diese \emph{minimalen Schnitte} brauchen wir später zum Auflösen von \emph{Inkonsistenzen} im \emph{Inzidenzgraphen}.
+
+\begin{definition}[Flussnetzwerk]
+	Ein \emph{Flussnetzwerk} ist ein gerichteter Graph $G = (V,E)$ bei dem jeder Kante $(u,v) \in E$ eine nicht-negative Kapazität $c(u,v) \geq 0$ zugeordnet ist und bei dem es zwei ausgezeichnete Knoten $s, t \in V$ gibt, die wir \emph{Quelle} und \emph{Senke} nennen.  
+\end{definition}
+
+Der Einfachheit halber nehmen wir im Folgenden an, dass jeder Knoten von $G$ auf einem Pfad von $s$ nach $t$ liegt. Sollte es doch solche Knoten geben, dann wären sie ohnehin nicht relevant, weil kein \emph{Fluss} durch sie von der \emph{Quelle} zur \emph{Senke} geschickt werden kann.
+
+\begin{definition}[Fluss]
+	Sei $G = (V,E)$ mit Kapazitätsfunktion $c$ ein \emph{Flussnetzwerk}. Dann ist definieren wir einen \emph{Fluss} als eine Funktion $f: V \times V \rightarrow \mathbb{R}$, die die folgenden beiden Eigenschaften erfüllt:
+	\begin{itemize}[leftmargin=12em]
+		\item[\textbf{Kapazitätsbeschränkung:}] Für alle Knoten $u,v \in V$ gelte $0 \leq f(u,v) \leq c(u,v)$.
+		\item[\textbf{Flusserhaltung:}] Für alle Knoten $u \in V\setminus\{s,t\}$ gelte \\ 
+			$\sum_{v \in V}{f(v,u)} = \sum_{v \in V}{f(u,v)}$.
+	\end{itemize} 
+	Für Knoten $u,v\in V$, die nicht durch eine Kante verbunden sind ($(u,v)\notin E$), setzen wir den Fluss auf 0: $f(u,v) = 0$.
+\end{definition}
+
+Ein \emph{Fluss} ist also eine Zuordnung von Werten an die Kanten unseres \emph{Flussnetzwerkes}, sodass keine Kapazität verletzt wird und in jeden Knoten soviel hinein wie hinaus fließt. Wir nennen auch den Wert $f(u,v)$ \emph{Fluss} zwischen den beiden Knoten $u$ und $v$.
+
+
+Hier ein Beispiel für ein einfaches \emph{Flussnetzwerk} mit sechs Knoten:
+\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=20pt,
+		font=\footnotesize},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 1.2cm
+	]
+	\node[mycircle] (c1) {$s$};
+	\node[mycircle,below right=of c1] (c2) {$v_2$};
+	\node[mycircle,right=of c2] (c3) {$v_4$};
+	\node[mycircle,above right=of c1] (c4) {$v_1$};
+	\node[mycircle,right=of c4] (c5) {$v_3$};
+	\node[mycircle,below right=of c5] (c6) {$t$};
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1/c2/8/below,
+		c1/c4/11/above,
+		c2/c3/11/below,
+		c3/c6/4/below,
+		c4/c5/12/above,
+		c5/c6/15/above,
+		c5/c2/4/below,
+		c3/c5/7/below,
+		c2.70/c4.290/1/below}
+	\draw [myarrow] (\i) -- node[sloped,font=\footnotesize,\p] {\txt} (\j);
+	
+	
+	% draw this outside loop to get proper orientation of 10
+	\draw [myarrow] (c4.250) -- node[sloped,font=\small,above,rotate=180] {10} (c2.110);
+	\end{tikzpicture}
+\end{center}
+
+Viele Autoren setzen voraus, dass es keine Kanten in die \emph{Senke} und keine aus der \emph{Quelle} gibt. Diese Beschränkung ist zwar hilfreich fürs Verständnis, wird aber grundsätzlich nicht benötigt. Man kann sich leicht überlegen, dass selbst wenn es solche Kanten gibt, ihr \emph{Fluss} 0 sein muss. Bei den \emph{Flussnetzwerken}, die wir für unseren Algorithmus benutzen, wird es diese Kanten geben, weshalb wir auf die Beschränkung verzichten. 
+
+\begin{definition}[Wert eines Flusses]
+	Der \emph{Wert} eines \emph{Flusses} ist definiert als
+	\begin{equation}
+		|f| = \sum_{v \in V}{f(s,v)} - \sum_{v \in V}{f(v,s)}.
+	\end{equation} 
+\end{definition}
+
+Eine andere Einschränkung, die man in vielen Definitionen sieht, ist der Verzicht auf antiparallele Kanten. Das heißt, dass es gleichzeitig Kanten $(u,v), (v,u) \in E$ gibt. Manche Implementierungen für Algorithmen, die den maximalen Fluss berechnen, sind so programmiert, dass sie vom Benutzer eine Menge von Gegenkanten mit \emph{Fluss} 0 erwarten, die intern benötigt werden. Grundsätzlich sind antiparallele Kanten aber unproblematisch, weil man jeden \emph{Fluss} mit positiven Werten auf antiparallelen Kanten in einen \emph{Fluss} umwandeln kann, bei dem zwischen zwei Knoten höchstens eine Kante einen positiven \emph{Fluss} hat. Sei beispielsweise $f(u,v) = x, f(v,u) = y$ mit $x \not 0 \not y$. Dann kann man einen \emph{Fluss} mit dem selben \emph{Wert} definieren, wenn man den \emph{Fluss} auf den antiparallelen Kanten wie folgt definiert: $f(u,v) = x - \min\{x,y\}, f(v,u) = y - \min\{x,y\}$. Alternativ lässt sich jedes \emph{Flussnetzwerk} mit antiparallelen Kanten auch in ein äquivalentes übertragen, das keine solchen Kanten enthält.
+
+\begin{center}
+\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=20pt,
+		font=\footnotesize},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 1.2cm
+	]
+	\node[mycircle] at (0,0) (c1) {$u$};
+	\node[mycircle] at (0,-2) (c2) {$v$};
+	
+	\node[mycircle] at (5,0) (c3) {$u$};
+	\node[mycircle] at (3,-1) (c4) {$c$};
+	\node[mycircle] at (7,-1) (c5) {$c'$};
+	\node[mycircle] at (5,-2) (c6) {$v$};
+
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1.255/c2.105/2/below,
+		c2.75/c1.285/5/below,
+		c3/c4/2/below,
+		c4/c6/2/below,
+		c6/c5/5/below,
+		c5/c3/5/below}
+	\draw [myarrow] (\i) -- node[sloped,font=\footnotesize,\p] {\txt} (\j);
+\end{tikzpicture}
+\end{center}
 
 \subsection{Wichtige Algorithmen}
 
@@ -18,7 +128,7 @@ Es gibt eine Vielzahl von Algorithmen zur Berechnung eines maximalen Flusses auf
 
 \subsection{Der \emph{Max-Flow-Min-Cut-Satz}}
 
-\section{Inzidenzgraphen und das Auflösen von Inkosistenzen mit Hilfe von Flussnetzwerken}
+\section{Inzidenzgraphen und das Auflösen von Inkonsistenzen mit Hilfe von Flussnetzwerken}
 
 \subsection{Komplexität}
 $\oh(n^4\cdot L^{7/2})$
