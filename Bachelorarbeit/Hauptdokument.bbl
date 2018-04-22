@@ -1,4 +1,4 @@
-\begin{thebibliography}{15}
+\begin{thebibliography}{19}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{Abdedda\"{i}m(1997)}]{a97}
@@ -15,6 +15,12 @@ Abdedda\"{i}m, S. und Morgenstern, B.
 \newblock In \emph{Computational Biology: First International Conference on
   Biology, Informatics, and Mathematics}, Seiten 1--11 (2000).
 
+\bibitem[{Ahuja \emph{et~al.}(1997)Ahuja, Kodialam, Mishra und Orlin}]{akmo97}
+Ahuja, R., Kodialam, M., Mishra, A. und Orlin, J.
+\newblock Computational investigations of maximum flow algorithms.
+\newblock \emph{European Journal of Operational Research}, Band 97:3:509--542
+  (1997).
+
 \bibitem[{Corel \emph{et~al.}(2010)Corel, Pitschi und Morgenstern}]{cpm10}
 Corel, E., Pitschi, F. und Morgenstern, B.
 \newblock A \textit{min-cut} algorithm for the consistency problem in multiple
@@ -26,6 +32,22 @@ Corel, E., Pitschi, F. und Morgenstern, B.
 Cormen, T., Leiserson, C., Rivest, R. und Stein, C.
 \newblock \emph{{Introduction to Algorithms}}.
 \newblock The MIT Press, 3rd Auf\/lage (2009).
+
+\bibitem[{Dinitz(2006)}]{d06}
+Dinitz, Y.
+\newblock {Dinitz’ Algorithm: The Original Version and Even’s Version}.
+\newblock In \emph{Theoretical Computer Science. Lecture Notes in Computer
+  Science}, Band 3895. Springer-Verlag (2006).
+
+\bibitem[{Goldberg und Tarjan(1988)}]{gt88}
+Goldberg, A. und Tarjan, R.
+\newblock A new approach to the maximum-flow problem.
+\newblock \emph{Journal of the ACM}, Band 35:4:921--940 (1988).
+
+\bibitem[{Goldberg und Tarjan(2014)}]{gt14}
+Goldberg, A. und Tarjan, R.
+\newblock {Efficient Maximum Flow Algorithms}.
+\newblock \emph{Communications of the ACM}, Band 57:8:82--89 (2014).
 
 \bibitem[{Henikoff und Henikoff(1992)}]{hh92}
 Henikoff, S. und Henikoff, J.

@@ -710,7 +710,7 @@ Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht �
 Als nächstes führen wir eine Funktion ein, die die \emph{Transitivitätsgrenzen} nach dem Hinzufügen einer einzelnen Kante aktualisiert. Wollen wir unseren Graphen um mehr als eine Kante ergänzen, fügen wir sie der Reihe nach hinzu und rufen jedes Mal inkrementell die Funktion auf. Das ist beispielsweise der Fall, wenn wir ein längeres \emph{Fragment} zu unserem \emph{Alignment} hinzufügen. Im Folgenden seien die transitive Hülle und die \emph{Transitivitätsgrenzen} unseres ursprünglichen Graphen gegeben. Sei außerdem $(x,y)$ die Kante, die wir ergänzen.
 
 \scriptsize
-\begin{wrapfigure}{r}{6cm}\label{abb:kante}
+\begin{wrapfigure}{r}{6cm}
 	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
 	{} \arrow[rrr] &  &  & y \arrow[r] & \dots \arrow[r] & u \arrow[r] & {} \\
 	{} \arrow[rr] &  & x \arrow[rrrr] \arrow[ru, red] &  &  &  & {} \\
@@ -718,6 +718,7 @@ Als nächstes führen wir eine Funktion ein, die die \emph{Transitivitätsgrenze
 	{} \arrow[r] & w \arrow[u] \arrow[rrrrr] &  &  &  &  & {}
 	\end{tikzcd}
 	\caption{Füge $(x,y)$ ein.}
+	\label{abb:kante_eing}
 \end{wrapfigure}
 \normalsize
 
@@ -772,7 +773,7 @@ Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die
 \begin{beweis}
 	Im schlimmsten Fall werden die ineinander verschachtelten Schleifen je $\oh(k^2 \cdot (\mu - \mu_0))$-mal durchlaufen. Das ergibt sich aus der Kombination aller $\oh(k^2)$ Paare von Pfaden und dadurch, dass es sein kann, dass nur für die ursprünglichen Kanten $\mu_0$ im Graphen und die sie verbindenden Knoten die if-Bedingungen \ref{alg:succ_if} und \ref{alg:pred_if} nicht erfüllt sind. \unsure{Ist das wirklich der Grund? Denk nochmal drüber nach.}
 	
-	Wenn wir darüber nachdenken wie oft es wirklich zu einer Aktualisierung der \emph{Transitivitätsgrenzen} kommen kann, stellen wir fest, dass diese je nach Graph möglicherweise viel geringer ist, als oben abgeschätzt. Um Redundanz zu vermeiden betrachten wir hier nur die \emph{Vorgängergrenzen}. Für \emph{Nachfolgergrenzen} gilt aus Symmetriegründen aber genau das selbe. Die einzige Situation, in der ein Knoten $v \in V$ die \emph{Vorgängergrenzen} eines anderen Knotens $u$ verändern kann, ist wenn $v$ ein Vorgänger von $x$, aber kein Vorgänger von $u$ ist, bevor die Kante $(x,y)$ hinzugefügt wird (vgl. \ref{abb:kante}). Gleichzeitig muss gelten, dass $u$ ein Nachfolger von $y$ ist. Das liegt daran, dass die Pfade $\mathcal{P}$ disjunkt sind. Also folgt, dass die \emph{Vorgängergrenzen} von $u$ höchstens $\nu$-mal angepasst werden und es insgesamt nicht mehr als $\nu^2$ Anpassungen gibt. 
+	Wenn wir darüber nachdenken wie oft es wirklich zu einer Aktualisierung der \emph{Transitivitätsgrenzen} kommen kann, stellen wir fest, dass diese je nach Graph möglicherweise viel geringer ist, als oben abgeschätzt. Um Redundanz zu vermeiden betrachten wir hier nur die \emph{Vorgängergrenzen}. Für \emph{Nachfolgergrenzen} gilt aus Symmetriegründen aber genau das selbe. Die einzige Situation, in der ein Knoten $v \in V$ die \emph{Vorgängergrenzen} eines anderen Knotens $u$ verändern kann, ist wenn $v$ ein Vorgänger von $x$, aber kein Vorgänger von $u$ ist, bevor die Kante $(x,y)$ hinzugefügt wird (vgl. \ref{abb:kante_eing}). Gleichzeitig muss gelten, dass $u$ ein Nachfolger von $y$ ist. Das liegt daran, dass die Pfade $\mathcal{P}$ disjunkt sind. Also folgt, dass die \emph{Vorgängergrenzen} von $u$ höchstens $\nu$-mal angepasst werden und es insgesamt nicht mehr als $\nu^2$ Anpassungen gibt. 
 
 	Sei $(w,v)$ eine Kante unseres Graphen, die auf keinem unserer Pfade aus dem SSDP liegt. Diese Kante kann die \emph{Vorgängergrenze} von $u$ in der Methode \textrm{EdgeAddition} nur dann verändern, wenn $v$ ein Vorgänger von $x$ ist, aber kein Vorgänger von $u$, bevor die Kante $(x,y)$ addiert wird. Nach dieser Aktualisierung kann die Kante $(w,v)$ die \emph{Transitivitätsgrenzen} von $u$ nie wieder anpassen. Das bedeutet, dass dies für einen Knoten $u$ höchstens so oft passieren, wie es Kanten gibt, die in keinem Pfad des SSDP liegen. Das sind genau $\oh(\mu - \mu_p)$ und es folgt, dass es insgesamt höchstens $\nu \cdot (\mu - \mu_p)$ solcher Aktualisierungen geben kann.
 	

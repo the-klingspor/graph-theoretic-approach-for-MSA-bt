@@ -126,11 +126,111 @@ Eine andere Einschränkung, die man in vielen Definitionen sieht, ist der Verzic
 
 Es gibt eine Vielzahl von Algorithmen zur Berechnung eines maximalen Flusses auf einem Flussnetzwerk. Die wichtigsten und bekanntesten Vertreter möchte ich kurz vorstellen. 
 
-\subsection{Der \emph{Max-Flow-Min-Cut-Satz}}
+Der erste Algorithmus, der speziell zum berechnen des \emph{maximalen Flusses} entwickelt wurde war der Algorithmus von Ford-Fulkerson \citep{gt14}. Dieser verwendete einen sogenannten \emph{Restwertgraphen}, der für jede Kante im ursprünglichen \emph{Flussnetzwerk} eine Vorwärts- und eine Rückwärtskante enthält. Die Vorwärtskante hat als Kapazität die der Kante im ursprünglichen Graph minus den \emph{Fluss} im \emph{Flussnetzwerk}. Die der Rückwärtskante im \emph{Restwertgraphen} ist genau die Kapazität des \emph{Flusses} der zugehörigen Kante im \emph{Flussnetzwerk}. Für einen Pfad von der \emph{Quelle} zur \emph{Senke} im \emph{Restwertgraph} kann man den \emph{Fluss} im \emph{Flussnetzwerk} um die kleinste Kapazität auf diesem Pfad erhöhen, ohne die \emph{Kapazitätsbeschränkung} zu verletzen. Diese Pfade nennt man \emph{augmentierend} und nach jeder Aktualisierung des Flusses, müssen auch die Kapazitäten im \emph{Restwertgraphen} angepasst werden. Der Algorithmus von Ford-Fulkerson besucht solange \emph{augmentierende} Pfade, bis es keine solchen mehr gibt. Ist das der Fall, dann kann der \emph{Fluss} nicht mehr vergrößert werden und der \emph{maximale Fluss} wurde berechnet. Der Algorithmus von Ford-Fulkerson hat für einen zusammenhängenden Graphen mit ganzzahligen Kapazitäten eine pseudopolynomielle Laufzeit von $\oh(|E|\cdot U)$, wobei $U$ die Summe der Kapazitäten der ausgehenden Kanten von der \emph{Quelle} ist.
+
+Oft wird Ford-Fulkerson eher als eine \enquote{Methode} statt als \emph{Algorithmus} bezeichnet, weil die Reihenfolge nach der \emph{augmentierende} Pfade gewählt werden nicht spezifiziert ist. In der Folge wurde der Algorithmus von Ford-Fulkerson an mehreren Stellen verbessert. Edmond-Karps benutzt eine Breitensuche, um den Pfad mit den wenigsten Knoten von der \emph{Quelle} zur \emph{Senke} zu finden. Dadurch lässt sich die Laufzeit auf $\oh(|V|\cdot |E|^2)$ verbessern \citep{clrs09}. Auch der Algorithmus von Dinic \footnote{Eigentlich entwickelt vom sowjetischen Forscher Yefim A. Dinitz. Die verbreitete Schreibweise beruht auf einem Übersetzungsfehler. Später wanderte Dinitz nach Israel aus \citep{d06}.} sucht nach kürzesten Pfaden im \emph{Restwertgraphen}. Zusätzlich wird das Konzept von sogenannten \emph{blockierenden Flüssen} benutzt, bei denen jeder $s-t$-Pfad mindestens eine Kante enthält, deren Kapazität komplett ausgereizt ist. Der Algorithmus von Dinic benötigt nur $\oh(|V|^2\cdot |E|)$ Rechenschritte \citep{d06}.
+
+Die nächste Klasse von Algorithmen waren die sogenannten \emph{Push-Relabel-Algorithmen}. Diese benutzen bei ihren Schritten statt \emph{Flüssen} nur sogenannten \emph{Präflüsse} bei denen zwar die \emph{Kapazitätsbeschränkung} gilt, die \emph{Flusserhaltung} aber nicht. Das heißt, dass jeder Knoten einen positiven \emph{Überfluss} haben kann, wenn mehr in ihn hinein als hinaus fließt. Jeder Knoten hat einen Index, der seine Höhe im Netz angibt, wobei \emph{Fluss} immer nur von oben nach unten geleitet werden kann. Wie der Name schon sagt, sind die zwei Grundschritte bei allen \emph{Push-Relabel-Algorithmen} die Methoden \emph{Push} und \emph{Relabel}. Bei \emph{Push} verschieben wir den \emph{Überfluss} eines Knotens zu einem tiefer gelegenen Nachbarn. Bei \emph{Relabel} wird hingegen die Höhe eines Knotens vergrößert, wenn er noch \emph{Überfluss} hat, aber alle benachbarten Knoten einen größeren Index haben. Die \emph{Push-} und \emph{Relabelmethoden} werden solange angewendet, bis es keine Knoten mehr gibt auf die sie anwendbar sind \citep{clrs09}. Je nachdem wie der nächste zu bearbeitende Knoten ausgewählt wird, kann die Laufzeit stark variieren. Ein generischer Algorithmus, der die Knoten mehr oder minder zufällig auswählt, läuft in $\oh(|V|^2\cdot |E|)$. Mit einer FIFO-Warteschlange in dem jeder bearbeitete Knoten, der noch \emph{Überfluss} hat, wieder ans Ende eingereiht wird, lässt sich die Laufzeit auf $\oh(|V|^3)$ verbessern \citep{gt88}. Der in der Praxis verbreitetste Ansatz benutzt die \enquote{Highest-Label}-Regel, bei der alle Knoten in Töpfen nach ihrem Index eingeordnet sind und jeweils ein Knoten mit maximalem Index ausgewählt wird. Hier verbessert sich die Laufzeit auf $\oh(|V|^2\cdot \sqrt{|E|})$ Rechenschritte im schlimmsten Fall \citep{akmo97}.
+
+Weiter verbessern ließ sich die asymptotische Laufzeit durch die Verwendung von \emph{dynamischen Bäumen}. \emph{Dynamische Bäume} sind eine Datenstruktur, die die nicht-saturierten Teile von \emph{augmentierenden} Pfaden speichern. Mit Operationen auf dieser Datenstruktur ist es möglich die Laufzeit zu senken. Beschränkt man beispielsweise die maximale Baumgröße und benutzt eine weitere Datenstruktur, dann lässt sich der maximale Fluss mit Hilfe von \emph{blockierenden Flüssen} in $\oh(|V|\cdot |E|\cdot \log(|V|^2/|E|))$ berechnen \citep{gt14}. In der Praxis sind diese Algorithmen aber nicht von Relevanz, weil die verwendete Baumstruktur einen großen konstanten Vorfaktor benötigt. Einer der schnellsten bekannten Algorithmen ist der von Orlin. Er verwendet eine Kombination verschiedener Techniken in unterschiedlichen Situationen und kommt insgesamt auf eine Laufzeit von $\oh(|V|\cdot |E|)$ \citep{gt14}.
+ 
+\subsection{Schnitte und der \emph{Max-Flow-Min-Cut-Satz}}
+
+\begin{definition}[Schnitt]
+	Sei $G = (V,E)$ mit \emph{Senke} und \emph{Quelle} $s, t \in V$ und einer Kapazitätsfunktion $c$. Dann ist ein \emph{Schnitt} von $G$ eine Partitionierung von $V$ in zwei Mengen $A$ und $B$, sodass $s \in A$ und $t \in B$ gelten.
+	
+	Die Kapazität $c_{A,B}$ dieses \emph{Schnitts} ist definiert als die Summe der Kapazitäten aller Kanten von $A$ nach $B$:
+	\begin{equation}
+		c_{A,B} \coloneqq \sum_{(v,w) \in E \cap (A \times B)}{c(v,w)}
+	\end{equation}
+\end{definition}
+
+Betrachten wir ein Beispiel für einen \emph{Schnitt} auf einem \emph{Flussnetzwerk}. Alle Knoten in $A$ wurden grün und alle in $B$ rot markiert. Kanten zwischen den beiden Mengen wurden gepunktet dargestellt.
+
+\vspace{-8pt}
+\begin{center}
+	\begin{tikzpicture}[
+	mygreennode/.style={
+		circle,
+		draw=black,
+		fill=green,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=20pt,
+		font=\footnotesize},
+	myrednode/.style={
+		circle,
+		draw=black,
+		fill=red,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=20pt,
+		font=\footnotesize},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 1.2cm
+	]
+	\node[mygreennode] (c1) {$s$};
+	\node[myrednode,below right=of c1] (c2) {$v_2$};
+	\node[mygreennode,right=of c2] (c3) {$v_4$};
+	\node[mygreennode,above right=of c1] (c4) {$v_1$};
+	\node[mygreennode,right=of c4] (c5) {$v_3$};
+	\node[myrednode,below right=of c5] (c6) {$t$};
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1/c4/11/above,
+		c4/c5/12/above,
+		c5/c6/15/above,
+		c3/c5/7/below}
+	\draw [myarrow] (\i) -- node[sloped,font=\footnotesize,\p] {\txt} (\j);
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1/c2/8/below,
+		c2/c3/11/below,
+		c3/c6/4/below,
+		c5/c2/4/below,
+		c2.70/c4.290/1/below}
+	\draw [myarrow, dotted] (\i) -- node[sloped,font=\footnotesize,\p] {\txt} (\j);
+	
+	% draw this outside loop to get proper orientation of 10
+	\draw [myarrow, dotted] (c4.250) -- node[sloped,font=\small,above,rotate=180] {10} (c2.110);
+	\end{tikzpicture}
+\end{center}
+\vspace{-8pt}
+
+Es gilt $A = \{s, v_1, v_3, v_4\}$ und $B = \{v_2, t\}$. Zur Kapazität des \emph{Schnitts} tragen alle Kanten bei, die von Knoten aus $A$ zu solchen aus $B$ verlaufen. Die Kante $(v_3,v_2)$ also schon, die Kante $(v_2, v_4)$ aber nicht. Insgesamt beträgt die Kapazität des \emph{Schnitts} $c(s,v_2) + c(v_1, v_2) + c(v_3,v_2) + c(v_3,t) + c(v_4,t) = 8 + 10 + 4 + 15 + 4 = 41$.  
+
+\begin{definition}[Minimaler Schnitt]
+	Als \emph{minimalen Schnitt} bezeichnet man den oder einen Schnitt mit minimaler Kapazität. Es kann mehrere solcher \emph{minimaler Schnitte} geben. 
+\end{definition}
+
+Dem geneigten Leser mag die Asymmetrie zwischen \emph{Flüssen}, die maximal sein können und \emph{Schnitten}, die minimal sein können, aufgefallen sein. Den Zusammenhang der beiden Konzepte möchte ich im Folgenden kurz beschreiben. Dazu werden wir zwei formale Aussagen betrachten, die hier aber nicht bewiesen werden. Diese sind zwar für unseren Algorithmus von Bedeutung, aber für einen formalen Beweis bräuchten wir einen größeren theoretischen Hintergrund, der obgleich furchtbar spannend, hier den Rahmen sprengte und wenig zielführend wäre.
+
+\begin{lemma}
+	Der \emph{Wert} eines beliebigen \emph{Flusses} über einem \emph{Flussnetzwerk} ist beschränkt durch einen beliebigen Schnitt.
+\end{lemma}
+
+\begin{beweis}
+	Siehe \cite{clrs09}.
+\end{beweis}
+
+\begin{satz}[Max-Flow-Min-Cut-Satz]
+	Für ein \emph{Flussnetzwerk} $G = (V,E)$ mit \emph{Senke} und \emph{Quelle} $s, t \in V$ entspricht die minimale Kapazität aller \emph{Schnitte} auf $G$ dem maximalen \emph{Wert} aller Flüsse von $s$ nach $t$. 
+\end{satz} 
+
+\begin{beweis}
+	Wenn wir an den Algorithmus von Ford-Fulkerson denken, dann erinnern wir uns, dass dieser solange \emph{augmentierende} Pfade mit positiver \emph{Restwertkapazität} von der \emph{Quelle} zur \emph{Senke} gesucht hat, bis es keinen solchen mehr gab. Sobald das der Fall war, hatte man den \emph{maximalen Fluss} berechnet. Das bedeutet gleichzeitig, dass man den \emph{Bottleneck} zwischen $s$ und $t$ gefunden hat. Genau dieser trennt die Knoten von $G$ in zwei Hälften und ist unser \emph{minimaler Schnitt}. Für einen formalen Beweis neben dieser Skizze siehe auch hier \cite{clrs09}.
+\end{beweis} 
+
+Die Erkenntnis, die man aus diesem Satz zieht, ist, dass man Algorithmen zur Berechnung des \emph{maximalen Flusses} benutzen kann, um den \emph{minimalen Schnitt} eines \emph{Flussnetzwerkes} zu bestimmen. Das werden wir im nächsten Abschnitt ausnutzen, um \emph{Inkonsistenzen} zwischen unseren Sequenzen aufzulösen.
 
 \section{Inzidenzgraphen und das Auflösen von Inkonsistenzen mit Hilfe von Flussnetzwerken}
 
 \subsection{Komplexität}
+
+Möglicherweise bessere Laufzeit, wenn alle Kanten Kapazität 1 haben (s. Karzanov/Even); für Push-Relabel nichts gefunden.
+
 $\oh(n^4\cdot L^{7/2})$
 
 \section{Sukzessorgraphen und der Algorithmus von Pitschi}

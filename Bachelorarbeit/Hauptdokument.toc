@@ -42,18 +42,18 @@
 \contentsline {section}{\numberline {4.1}Flussnetzwerke}{41}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Einf\IeC {\"u}hrung}{41}{subsection.4.1.1}
 \contentsline {subsection}{\numberline {4.1.2}Wichtige Algorithmen}{44}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Der \emph {Max-Flow-Min-Cut-Satz}}{44}{subsection.4.1.3}
-\contentsline {section}{\numberline {4.2}Inzidenzgraphen und das Aufl\IeC {\"o}sen von Inkonsistenzen mit Hilfe von Flussnetzwerken}{44}{section.4.2}
-\contentsline {subsection}{\numberline {4.2.1}Komplexit\IeC {\"a}t}{44}{subsection.4.2.1}
-\contentsline {section}{\numberline {4.3}Sukzessorgraphen und der Algorithmus von Pitschi}{44}{section.4.3}
-\contentsline {section}{\numberline {4.4}Ankerpunkte}{44}{section.4.4}
-\contentsline {section}{\numberline {4.5}Gesamtkomplexit\IeC {\"a}t}{44}{section.4.5}
-\contentsline {chapter}{\numberline {5}Programmierung}{45}{chapter.5}
-\contentsline {section}{\numberline {5.1}Speichereffiziente Umsetzung der dynamischen Programmierung}{45}{section.5.1}
-\contentsline {chapter}{\numberline {6}Validierung der Ergebnisse}{47}{chapter.6}
-\contentsline {section}{\numberline {6.1}Vorstellung BAliBase und (D)IRMBASE}{47}{section.6.1}
-\contentsline {section}{\numberline {6.2}Test auf BAliBase}{47}{section.6.2}
-\contentsline {section}{\numberline {6.3}Test auf DIRMBASE und IRMBASE}{47}{section.6.3}
-\contentsline {chapter}{\numberline {7}Fazit}{49}{chapter.7}
-\contentsline {section}{\numberline {7.1}Zusammenfassung}{49}{section.7.1}
-\contentsline {section}{\numberline {7.2}Future Works}{49}{section.7.2}
+\contentsline {subsection}{\numberline {4.1.3}Schnitte und der \emph {Max-Flow-Min-Cut-Satz}}{45}{subsection.4.1.3}
+\contentsline {section}{\numberline {4.2}Inzidenzgraphen und das Aufl\IeC {\"o}sen von Inkonsistenzen mit Hilfe von Flussnetzwerken}{46}{section.4.2}
+\contentsline {subsection}{\numberline {4.2.1}Komplexit\IeC {\"a}t}{46}{subsection.4.2.1}
+\contentsline {section}{\numberline {4.3}Sukzessorgraphen und der Algorithmus von Pitschi}{46}{section.4.3}
+\contentsline {section}{\numberline {4.4}Ankerpunkte}{47}{section.4.4}
+\contentsline {section}{\numberline {4.5}Gesamtkomplexit\IeC {\"a}t}{47}{section.4.5}
+\contentsline {chapter}{\numberline {5}Programmierung}{49}{chapter.5}
+\contentsline {section}{\numberline {5.1}Speichereffiziente Umsetzung der dynamischen Programmierung}{49}{section.5.1}
+\contentsline {chapter}{\numberline {6}Validierung der Ergebnisse}{51}{chapter.6}
+\contentsline {section}{\numberline {6.1}Vorstellung BAliBase und (D)IRMBASE}{51}{section.6.1}
+\contentsline {section}{\numberline {6.2}Test auf BAliBase}{51}{section.6.2}
+\contentsline {section}{\numberline {6.3}Test auf DIRMBASE und IRMBASE}{51}{section.6.3}
+\contentsline {chapter}{\numberline {7}Fazit}{53}{chapter.7}
+\contentsline {section}{\numberline {7.1}Zusammenfassung}{53}{section.7.1}
+\contentsline {section}{\numberline {7.2}Future Works}{53}{section.7.2}
