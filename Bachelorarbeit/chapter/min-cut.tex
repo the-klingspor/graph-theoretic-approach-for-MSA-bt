@@ -321,7 +321,7 @@ Diese \emph{Fragmente} überführen wir direkt in einen \emph{Inzidenzgraphen} b
 	\node[mycircle,right=of c48] (c49) {C};
 		
 	
-	% Dritte Zusammenhangskomponente
+	% Erste Zusammenhangskomponente
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
 		c16/c33//above,
 		c14/c22//above,
@@ -335,7 +335,7 @@ Diese \emph{Fragmente} überführen wir direkt in einen \emph{Inzidenzgraphen} b
 		c16/c27//above}
 	\draw [draw=blue, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
 	
-	% Vierte Zusammenhangskomponente
+	% Zweite Zusammenhangskomponente
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
 		c17/c34//above,
 		c34/c44//above,
@@ -350,7 +350,7 @@ Diese \emph{Fragmente} überführen wir direkt in einen \emph{Inzidenzgraphen} b
 		c26/c47//above}
 	\draw [draw=green, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
 	
-	% Fünfte Zusammenhangskomponente
+	% Dritte Zusammenhangskomponente
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
 		c18/c35//above,
 		c35/c24//above,
@@ -359,20 +359,21 @@ Diese \emph{Fragmente} überführen wir direkt in einen \emph{Inzidenzgraphen} b
 		c18/c29//above}
 	\draw [draw=red, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
 	
-	%  Zusammenhangskomponente
+	% Vierte Zusammenhangskomponente
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
 		c25/c36//above,
 		c25/c46//above,
 		c36/c46//above}
 	\draw [draw=cyan, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
 	
-		%  Zusammenhangskomponente
+	% Fünfte Zusammenhangskomponente
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
 		c21/c42//above,
 		c13/c21//above,
 		c13/c42//above}
 	\draw [draw=lime, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
 	
+	% Sechste Zusammenhangskomponente
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
 		c12/c41//above}
 	\draw [draw=magenta, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
@@ -385,9 +386,33 @@ Die Zusammenhangskomponenten unseres \emph{Inzidenzgraphen} werden wir jetzt als
 
 Sei $C$ eine Zusammenhangskomponente von $G_{\mathcal{F}}$, die \emph{mehrdeutig} ist, also zwei Knoten $x,y$ aus der selben Sequenz enthält. Wir wählen die \emph{mehrdeutigen} Knoten $x$ und $y$ als \emph{Quelle} und \emph{Senke} unseres \emph{Flussnetzwerks}. Die ungerichteten Kanten des \emph{Inzidenzgraphen} werden durch zwei antiparallele gerichtete Kanten ersetzt. \cite{cpm10} benutzen als Kapazitäten jeweils 1. Meiner Meinung nach wäre es hingegen sinnvoller die Kapazitäten so zu wählen, dass ähnliche Symbole seltener voneinander durch den \emph{minimalen Schnitt} und das damit einhergehende Löschen von Kanten getrennt werden. Das können wir beispielsweise erreichen, indem wir uns an den Ähnlichkeitswerten unserer Substitutionsmatrix orientieren. Weil \emph{Flussnetzwerke} nicht-negative Kapazitäten erwarten, müssen die Werte gegebenenfalls modifiziert werden, indem wir den betragsmäßig größten Eintrag der Matrix zu allen Einträgen addieren. Das bedeutet, dass bei unserer $(+3/-1)$-Substitutionsmatrix aus dem Beispiel zwischen übereinstimmenden Symbolen eine Kapazität von 6 und zwischen nicht übereinstimmendes eine von 2 benutzt wird. Ob dieser Ansatz einen Vorteil bietet werden wir später bei der Evaluierung meiner Implementierung feststellen.
 
-Als nächstes benutzen wir einen Algorithmus zur Bestimmung des \emph{maximalen Flusses}. Wie mit dem \emph{Max-Flow-Min-Cut-Satz} gezeigt, bestimmen wir durch die Bestimmung des \emph{maximalen Flusses} auch gleichzeitig einen \emph{minimalen Schnitt}. Das ist die \enquote{schmalste} Verbindungsstelle zwischen der \emph{Quelle} und der \emph{Senke} und wir hoffen durch Löschen der dazugehörigen Kanten die \emph{Mehrdeutigkeit} aufzulösen und die dichtbesetzten Untergraphen zu erhalten. Im Original wird der Algorithmus von Edmonds-Karp benutzt, während wir stattdessen einen \emph{Push-Relabel-Algorithmus} mit Laufzeit \emph{$\oh(|V|^2\cdot \sqrt{|E|})$} für die Komplexität betrachten und in unserer Implementierung verwenden. Nachdem der \emph{minimale Schnitt} bestimmt wurde, löschen wir alle Kanten zwischen den Mengen $A$ und $B$. Auf diese Art und Weise wird unsere Zusammenhangskomponente $C$ in zwei neue Zusammenhangskomponenten $A$ und $B$ aufgeteilt. Dieses Verfahren wiederholen wir solange, bis es keine \emph{mehrdeutigen} Äquivalenzklassen mehr gibt.
+Als nächstes benutzen wir einen Algorithmus zur Bestimmung des \emph{maximalen Flusses}. Wie mit dem \emph{Max-Flow-Min-Cut-Satz} gezeigt, bestimmen wir durch die Bestimmung des \emph{maximalen Flusses} auch gleichzeitig einen \emph{minimalen Schnitt}. Das ist die \enquote{schmalste} Verbindungsstelle zwischen der \emph{Quelle} und der \emph{Senke} und wir hoffen durch Löschen der dazugehörigen Kanten die \emph{Mehrdeutigkeit} aufzulösen und die dichtbesetzten Untergraphen zu erhalten. Im Original wird der Algorithmus von Edmonds-Karp benutzt, während wir stattdessen einen \emph{Push-Relabel-Algorithmus} mit Laufzeit \emph{$\oh(|V|^2\cdot \sqrt{|E|})$} für die Komplexität betrachten und in unserer Implementierung verwenden. Nachdem der \emph{minimale Schnitt} bestimmt wurde, löschen wir alle Kanten zwischen den Mengen $A$ und $B$. Auf diese Art und Weise wird unsere Zusammenhangskomponente $C$ in zwei neue Zusammenhangskomponenten $A$ und $B$ aufgeteilt. Dieses Verfahren wiederholen wir solange, bis es keine \emph{mehrdeutigen} Äquivalenzklassen mehr gibt.  \improvement{Graphik aus CPM10 mit Zusammenhangskomponenten einfügen.}
 
-Unglücklicherweise können die Zusammenhangskomponenten bei \emph{Alignments} zwischen vielen langen Sequenzen sehr groß werden. \cite{cpm10} haben daher eine Grenze $k = \max\{\deg(v)| v \in \mathcal{S}\}$ eingeführt, die sukzessive gesenkt wird, bis alle \emph{Mehrdeutigkeiten} aufgelöst wurden. $k$ wird so benutzt, dass alle Kanten zwischen Knoten mit Grad $< k$ zunächst nicht betrachtet werden, sodass andere kleinere Zusammenhangskomponenten vorliegen. Als erstes werden für den reduzierten Kantensatz $E_k = \{(u,v) \in E|\min{\deg(u),\deg(v)}\}$ solange \emph{minimale Schnitte} berechnet und Kanten gelöscht, bis für den Graph mit weniger Kanten keine \emph{mehrdeutigen} Zusammenhangskomponenten mehr existierten. Danach wird $k$ um eins reduziert und das Vorgehen auf dem neuen Kantensatz wiederholt. Sobald $k$ auf null gesetzt wurde, hat man alle Knoten betrachtet und es liegen nur noch \emph{partielle Zuweisungsspalten} vor.
+
+\begin{algorithm}
+	\caption{Algorithmus zum Auflösen von Mehrdeutigkeiten}
+	\label{alg:amb_res}
+	\begin{algorithmic}[1]
+		\Require \emph{Inzidenzgraph} $G_{\mathcal{F}} = (\mathcal{S},E_{\mathcal{F}})$ über einem Satz \emph{Fragmente} $\mathcal{F}$
+		\Procedure{ResolveAmbiguities}{$G_{\mathcal{F}}$}
+			\State{$E \gets E_{\mathcal{F}}$}
+			\State{Berechne Zusammenhangskomponenten von $G_{\mathcal{F}}$}
+			\While{es ex. \emph{mehrdeutige} Zusammenhangskomponente $C$ von $G_{\mathcal{F}}$}
+				\While{es ex. \emph{mehrdeutige} Knoten $x,y$ aus der selben Sequenz}
+					\State{Wähle Sequenz $S_i$ mit max. Anzahl an \emph{mehrdeutigen} Knoten in $C$}
+					\State{Wähle $s = \text{argmin}\{\deg(v)|v \in C\: \text{und}\: v \in S_i\}$}
+					\State{Wähle $t = \text{argmax}\{\deg(v)|v \in C\: \text{und}\: v \in S_i\}$}
+					\State{Definiere \emph{Flussnetzwerk} auf $C$ mit \emph{Quelle} $s$ und \emph{Senke} $t$}
+					\State{Benutze \textrm{PushRelabel}, um \emph{minimalen Schnitt} $C_1$ und $C_2$ zu bestimmen}
+					\State{Lösche Kanten zwischen $C_1$ und $C_2$ aus $E$}
+				\EndWhile
+			\EndWhile
+		\State{\textbf{return} \emph{nicht-mehrdeutigen} Subgraphen $(\mathcal{S},E)$ von $G_{\mathcal{F}}$}
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+Unglücklicherweise können die Zusammenhangskomponenten bei \emph{Alignments} zwischen vielen langen Sequenzen sehr groß werden. \cite{cpm10} haben daher eine Grenze $k = \max\{\deg(v)| v \in \mathcal{S}\}$ eingeführt, die sukzessive gesenkt wird, bis alle \emph{Mehrdeutigkeiten} aufgelöst wurden. $k$ wird so benutzt, dass alle Kanten zwischen Knoten mit Grad $< k$ zunächst nicht betrachtet werden, sodass andere kleinere Zusammenhangskomponenten vorliegen. Als erstes werden für den reduzierten Kantensatz $E_k = \{(u,v) \in E|\min\{\deg(u),\deg(v)\}\}$ solange \emph{minimale Schnitte} berechnet und Kanten gelöscht, bis für den Graph mit weniger Kanten keine \emph{mehrdeutigen} Zusammenhangskomponenten mehr existierten. Danach wird $k$ um eins reduziert und das Vorgehen auf dem neuen Kantensatz wiederholt. Sobald $k$ auf null gesetzt wurde, hat man alle Knoten betrachtet und es liegen nur noch \emph{partielle Zuweisungsspalten} vor.
 
 Abgesehen von der verbesserten Laufzeit scheint dieses Vorgehen aber keine Vorteile zu bieten und falls doch, werden diese in \cite{cpm10} nicht genannt. Deshalb verzichte ich auf die Grenze $k$ und gehe davon aus, dass aufgrund des deutlich effizienteren Algorithmus für den \emph{maximalen Flusses} und die Verwendung einer schnellen Graphimplementierung aus einer Bibliothek keine Laufzeitprobleme für die üblichen Anwendungsgrößen auftreten.
 
@@ -399,13 +424,428 @@ Bis jetzt wurde nur gesagt, dass wir \emph{mehrdeutige} Zusammenhangskomponenten
 	\item Sollte es mehr als einen \emph{minimalen Schnitt} geben, dann orientieren wir uns an dem Ergebnis des Algorithmus der Implementierung und wählen die Partitionierung, die sich durch die nur durch Kanten mit \emph{Restwertkapazität} 0 verbundenen Subgraphen im \emph{Restwertgraphen} ergibt. 
 \end{enumerate}
 
+\subsection{Beispiel von \textrm{ResolveAmbiguities}}
+
+Exemplarisch betrachten wir die grüne Zusammenhangskomponente, weil diese die meisten Knoten enthält und werden an ihrem Beispiel solange den \emph{minimalen Schnitt} durchführen, bis keine \emph{Inkonsistenzen} mehr vorliegen. Die \emph{Quelle} ist grün, während die \emph{Senke} rot dargestellt ist.
+
+\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	mysenke/.style={
+		circle,
+		draw=black,
+		fill=red,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},	
+	myquelle/.style={
+		circle,
+		draw=black,
+		fill=green,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 0.9cm
+	]
+	% erste Sequenz
+	\node[mycircle] (c11) {A};
+	\node[mycircle,right=of c11] (c12) {D};
+	\node[mycircle,right=of c12] (c13) {G};
+	\node[mycircle,right=of c13] (c14) {T};
+	\node[mycircle,right=of c14] (c15) {C};
+	\node[mycircle,right=of c15] (c16) {T};
+	\node[mycircle,right=of c16] (c17) {C};
+	\node[mycircle,right=of c17] (c18) {A};
+	
+	% zweite Sequenz
+	\node[mycircle,below=of c11] (c21) {G};
+	\node[mycircle,right=of c21] (c22) {T};
+	\node[mycircle,right=of c22] (c23) {C};
+	\node[mycircle,right=of c23] (c24) {A};
+	\node[mycircle,right=of c24] (c25) {D};
+	\node[mycircle,right=of c25] (c26) {C};
+	\node[mycircle,right=of c26] (c27) {T};
+	\node[mycircle,right=of c27] (c28) {C};
+	\node[mycircle,right=of c28] (c29) {A};
+	
+	% dritte Sequenz
+	\node[mycircle,below=of c21] (c31) {T};
+	\node[mycircle,right=of c31] (c32) {A};
+	\node[mycircle,right=of c32] (c33) {T};
+	\node[mycircle,right=of c33] (c34) {C};
+	\node[mycircle,right=of c34] (c35) {A};
+	\node[mycircle,right=of c35] (c36) {D};
+	\node[mycircle,right=of c36] (c37) {G};
+	\node[mycircle,right=of c37] (c38) {G};
+	
+	% vierte Sequenz
+	\node[mycircle,below=of c31] (c41) {D};
+	\node[mycircle,right=of c41] (c42) {G};
+	\node[mycircle,right=of c42] (c43) {T};
+	\node[mysenke,right=of c43] (c44) {C};
+	\node[mycircle,right=of c44] (c45) {A};
+	\node[mycircle,right=of c45] (c46) {D};
+	\node[myquelle,right=of c46] (c47) {A};
+	\node[mycircle,right=of c47] (c48) {T};
+	\node[mycircle,right=of c48] (c49) {C};
+
+	% Zweite Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c17/c34/{0,6}/above,
+		c15/c32/{0,2}/above,
+		c34/c44/{0,6}/above,
+		c23/c34/{0,6}/above,
+		c17/c28/{0,6}/above,
+		c23/c44/{0,6}/above,
+		c28/c49/{0,6}/above,
+		c15/c26/{2/6}/above,
+		c15/c44/{2,6}/above,
+		c17/c49/{0,6}/below}
+	\draw [Stealth-Stealth, draw=black, double=white, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c26/c47/{2/2}/above}
+	\draw [Stealth-Stealth, draw=black, double=white, dotted, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	\end{tikzpicture}
+\end{center}
+
+Sowohl $S_2$, als auch $S_4$ haben drei Knoten in $C$. Wir wählen hier $S_4[7]$ als \emph{Quelle} und $S_4[4]$ als \emph{Senke}, weil diese den kleinsten bzw. größten Knotengrad haben. In diesem Fall passiert nichts spannendes, weil der \emph{minimale Schnitt} aufgrund der Kante mit Kapazität 2 direkt die \emph{Quelle} vom Rest der Zusammenhangskomponente trennt.
+
+Im nächsten Schritt hat $S_2$ mit 3 die meisten Knoten in $C$. Da alle zwei der Knoten Grad 2 haben, entscheiden wir uns für $S_2[6]$ als \emph{Quelle} und $S_2[8]$ als \emph{Senke}. Auch hier wird direkt die erste Kante an der \emph{Quelle} gelöscht.
+
+\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	mysenke/.style={
+		circle,
+		draw=black,
+		fill=red,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},	
+	myquelle/.style={
+		circle,
+		draw=black,
+		fill=green,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 0.9cm
+	]
+	% erste Sequenz
+	\node[mycircle] (c11) {A};
+	\node[mycircle,right=of c11] (c12) {D};
+	\node[mycircle,right=of c12] (c13) {G};
+	\node[mycircle,right=of c13] (c14) {T};
+	\node[mycircle,right=of c14] (c15) {C};
+	\node[mycircle,right=of c15] (c16) {T};
+	\node[mycircle,right=of c16] (c17) {C};
+	\node[mycircle,right=of c17] (c18) {A};
+	
+	% zweite Sequenz
+	\node[mycircle,below=of c11] (c21) {G};
+	\node[mycircle,right=of c21] (c22) {T};
+	\node[mysenke,right=of c22] (c23) {C};
+	\node[mycircle,right=of c23] (c24) {A};
+	\node[mycircle,right=of c24] (c25) {D};
+	\node[myquelle,right=of c25] (c26) {C};
+	\node[mycircle,right=of c26] (c27) {T};
+	\node[mycircle,right=of c27] (c28) {C};
+	\node[mycircle,right=of c28] (c29) {A};
+	
+	% dritte Sequenz
+	\node[mycircle,below=of c21] (c31) {T};
+	\node[mycircle,right=of c31] (c32) {A};
+	\node[mycircle,right=of c32] (c33) {T};
+	\node[mycircle,right=of c33] (c34) {C};
+	\node[mycircle,right=of c34] (c35) {A};
+	\node[mycircle,right=of c35] (c36) {D};
+	\node[mycircle,right=of c36] (c37) {G};
+	\node[mycircle,right=of c37] (c38) {G};
+	
+	% vierte Sequenz
+	\node[mycircle,below=of c31] (c41) {D};
+	\node[mycircle,right=of c41] (c42) {G};
+	\node[mycircle,right=of c42] (c43) {T};
+	\node[mycircle,right=of c43] (c44) {C};
+	\node[mycircle,right=of c44] (c45) {A};
+	\node[mycircle,right=of c45] (c46) {D};
+	\node[mycircle,right=of c46] (c47) {A};
+	\node[mycircle,right=of c47] (c48) {T};
+	\node[mycircle,right=of c48] (c49) {C};
+	
+	% Zweite Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c17/c34/{0,6}/above,
+		c15/c32/{0,2}/above,
+		c34/c44/{0,6}/above,
+		c23/c34/{0,6}/above,
+		c17/c28/{0,6}/above,
+		c23/c44/{6,6}/above,
+		c28/c49/{0,6}/above,
+		c15/c44/{6,6}/above,
+		c17/c49/{0,6}/below}
+	\draw [Stealth-Stealth, draw=black, double=white, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c26/c15/{6/6}/above}
+	\draw [Stealth-Stealth, draw=black, double=white, dotted, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	\end{tikzpicture}
+\end{center}
+
+Gehen nun wieder zu Sequenz $S_4$ und wählen $S_4[9]$ als \emph{Quelle} und $S_4[4]$ als \emph{Senke}. Hier haben wir zwei relativ dichte Subgraphen, die nur durch die eine Kante $(S_1[7] \rightarrow S_3[4])$ miteinander verbunden sind. Diese löschen wir und danach gibt es in der rechten Zusammenhangskomponente keine \emph{Mehrdeutigkeiten} mehr. 
+
+\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	mysenke/.style={
+		circle,
+		draw=black,
+		fill=red,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},	
+	myquelle/.style={
+		circle,
+		draw=black,
+		fill=green,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 0.9cm
+	]
+	% erste Sequenz
+	\node[mycircle] (c11) {A};
+	\node[mycircle,right=of c11] (c12) {D};
+	\node[mycircle,right=of c12] (c13) {G};
+	\node[mycircle,right=of c13] (c14) {T};
+	\node[mycircle,right=of c14] (c15) {C};
+	\node[mycircle,right=of c15] (c16) {T};
+	\node[mycircle,right=of c16] (c17) {C};
+	\node[mycircle,right=of c17] (c18) {A};
+	
+	% zweite Sequenz
+	\node[mycircle,below=of c11] (c21) {G};
+	\node[mycircle,right=of c21] (c22) {T};
+	\node[mycircle,right=of c22] (c23) {C};
+	\node[mycircle,right=of c23] (c24) {A};
+	\node[mycircle,right=of c24] (c25) {D};
+	\node[mycircle,right=of c25] (c26) {C};
+	\node[mycircle,right=of c26] (c27) {T};
+	\node[mycircle,right=of c27] (c28) {C};
+	\node[mycircle,right=of c28] (c29) {A};
+	
+	% dritte Sequenz
+	\node[mycircle,below=of c21] (c31) {T};
+	\node[mycircle,right=of c31] (c32) {A};
+	\node[mycircle,right=of c32] (c33) {T};
+	\node[mycircle,right=of c33] (c34) {C};
+	\node[mycircle,right=of c34] (c35) {A};
+	\node[mycircle,right=of c35] (c36) {D};
+	\node[mycircle,right=of c36] (c37) {G};
+	\node[mycircle,right=of c37] (c38) {G};
+	
+	% vierte Sequenz
+	\node[mycircle,below=of c31] (c41) {D};
+	\node[mycircle,right=of c41] (c42) {G};
+	\node[mycircle,right=of c42] (c43) {T};
+	\node[mysenke,right=of c43] (c44) {C};
+	\node[mycircle,right=of c44] (c45) {A};
+	\node[mycircle,right=of c45] (c46) {D};
+	\node[mycircle,right=of c46] (c47) {A};
+	\node[mycircle,right=of c47] (c48) {T};
+	\node[myquelle,right=of c48] (c49) {C};
+	
+	% Zweite Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c15/c32/{0,2}/above,
+		c34/c44/{0,6}/above,
+		c23/c34/{6,6}/above,
+		c17/c28/{0,6}/above,
+		c23/c44/{6,6}/above,
+		c28/c49/{0,6}/above,
+		c15/c44/{6,6}/above,
+		c17/c49/{6,6}/below}
+	\draw [Stealth-Stealth, draw=black, double=white, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c17/c34/{6/6}/above}
+	\draw [Stealth-Stealth, draw=black, double=white, dotted, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	\end{tikzpicture}
+\end{center}
+
+Abschließend wird noch die Verbindung zwischen dem \texttt{A} aus der zweiten Sequenz und dem \texttt{C} an der fünften Stelle der ersten gelöscht, was hier nicht mehr graphisch dargestellt wurde. Danach sind alle \emph{Mehrdeutigkeiten} aufgelöst und es liegen nur noch \emph{partielle Zuweisungsspalten} vor.
+
+Wenn wir den Algorithmus auch auf allen anderen Zusammenhangskomponenten anwenden, dann kommen wir zu folgendem \emph{Inzidenzgraphen} ohne \emph{Mehrdeutigkeiten}:
+ 
+\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 1.1cm
+	]
+	% erste Sequenz
+	\node[mycircle] (c11) {A};
+	\node[mycircle,right=of c11] (c12) {D};
+	\node[mycircle,right=of c12] (c13) {G};
+	\node[mycircle,right=of c13] (c14) {T};
+	\node[mycircle,right=of c14] (c15) {C};
+	\node[mycircle,right=of c15] (c16) {T};
+	\node[mycircle,right=of c16] (c17) {C};
+	\node[mycircle,right=of c17] (c18) {A};
+	
+	% zweite Sequenz
+	\node[mycircle,below=of c11] (c21) {G};
+	\node[mycircle,right=of c21] (c22) {T};
+	\node[mycircle,right=of c22] (c23) {C};
+	\node[mycircle,right=of c23] (c24) {A};
+	\node[mycircle,right=of c24] (c25) {D};
+	\node[mycircle,right=of c25] (c26) {C};
+	\node[mycircle,right=of c26] (c27) {T};
+	\node[mycircle,right=of c27] (c28) {C};
+	\node[mycircle,right=of c28] (c29) {A};
+	
+	% dritte Sequenz
+	\node[mycircle,below=of c21] (c31) {T};
+	\node[mycircle,right=of c31] (c32) {A};
+	\node[mycircle,right=of c32] (c33) {T};
+	\node[mycircle,right=of c33] (c34) {C};
+	\node[mycircle,right=of c34] (c35) {A};
+	\node[mycircle,right=of c35] (c36) {D};
+	\node[mycircle,right=of c36] (c37) {G};
+	\node[mycircle,right=of c37] (c38) {G};
+	
+	% vierte Sequenz
+	\node[mycircle,below=of c31] (c41) {D};
+	\node[mycircle,right=of c41] (c42) {G};
+	\node[mycircle,right=of c42] (c43) {T};
+	\node[mycircle,right=of c43] (c44) {C};
+	\node[mycircle,right=of c44] (c45) {A};
+	\node[mycircle,right=of c45] (c46) {D};
+	\node[mycircle,right=of c46] (c47) {A};
+	\node[mycircle,right=of c47] (c48) {T};
+	\node[mycircle,right=of c48] (c49) {C};
+	
+	
+	% Erste Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c14/c22//above,
+		c33/c22//above,
+		c33/c43//above,
+		c22/c43//above,
+		c27/c48//above,
+		c14/c43//above,
+		c16/c48//above,
+		c16/c27//above}
+	\draw [draw=blue, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	
+	% Zweite Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c34/c44//above,
+		c23/c34//above,
+		c17/c28//above,
+		c23/c44//above,
+		c28/c49//above,
+		c15/c44//above,
+		c17/c49//above}
+	\draw [draw=green, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	
+	% Dritte Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c18/c35//above,
+		c35/c24//above,
+		c35/c45//above,
+		c24/c45//above}
+	\draw [draw=red, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	
+	% Vierte Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c25/c36//above,
+		c25/c46//above,
+		c36/c46//above}
+	\draw [draw=cyan, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	
+	% Fünfte Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c21/c42//above,
+		c13/c21//above,
+		c13/c42//above}
+	\draw [draw=lime, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	
+	% Sechste Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c12/c41//above}
+	\draw [draw=magenta, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	\end{tikzpicture}
+\end{center}
+
+Obwohl in diesem Graphen keine \emph{Mehrdeutigkeiten} mehr existieren, ist die Zuordnung noch nicht \emph{konsistent}. Das liegt an Überkreuzungen, wie der zwischen $(S_1[8] \rightarrow S_3[5] \rightarrow S_4[5])$ (rot) und $(S_1[7] \rightarrow S_4[9])$ (grün). 
+
 \subsection{Komplexität}
 
-Möglicherweise bessere Laufzeit, wenn alle Kanten Kapazität 1 haben (s. Karzanov/Even); für Push-Relabel nichts gefunden.
+Die Laufzeit von \textrm{ResolveAmbiguities} wird von der Laufzeit zur Berechnung des \emph{minimalen Schnitts} durch \textrm{PushRelabel} dominiert \citep{cpm10}. Diese hängt von der Größe unserer Zusammenhangskomponenten ab. Im schlimmsten Fall besteht der \emph{Inzidenzgraph} aus einer einzigen Zusammenhangskomponente bei der jeder Knoten mit mindestens einem Knoten aus jeder anderen Sequenz verbunden ist. In diesem Fall muss sie in vielen Schritten zerkleinert werden muss, bis nur noch \emph{partielle Zuweisungsspalten} übrig bleiben. Eine Zusammenhangskomponente kann $n\cdot L$ Knoten und $\oh(n^2\cdot L)$ Kanten haben. Das liegt daran, dass wir als Grundlage unsere paarweisen \emph{Alignments} benutzen, bei denen jede \emph{Stelle} für jede andere Sequenz mit höchstens einer \emph{Stelle} aus dieser verbunden ist. 
 
-$\oh(n^4\cdot L^{7/2})$
+\textrm{PushRelabel} hat eine Komplexität von $\oh(|V|^2\cdot \sqrt{|E|})$, um einen \emph{minimalen Schnitt} zu berechnen. Weil $|V| \in \oh(n\cdot L)$ und $|E| \in \oh(n^2\cdot L)$ gelten, braucht man für einen Durchlauf also $\oh(n^3\cdot L^{5/2})$. Wenn wir Pech haben, entfernt jeder Aufruf unseres Algorithmus für den \emph{maximalen Fluss} nur einen einzigen Knoten aus der Zusammenhangskomponente. Das resultiert in $n\cdot L$ Aufrufen und einer Gesamtlaufzeit von $\oh(n^4\cdot L^{7/2})$.
+
+Möglicherweise lässt sich eine bessere Laufzeit erreichen, wenn alle Kanten eine uniforme Kapazität haben, wie das bei der Variante der Autoren der Fall ist. Es lässt sich zeigen, dass das ein deutlich leichteres Problem ist \citep{gt14} und nach Karzanov und Even hat eine Variante des Algorithmus von Dinic in diesem Fall gute Laufzeiten.
+
+Glücklicherweise sind die Zusammenhangskomponenten im Allgemeinen nicht so groß und in den meisten Fällen trennt man mit dem \emph{minimalen Schnitt} auch nicht nur einzelne Knoten ab. Bei Testläufen auf der Protein-Referenzdatenbank BAliBASE haben \cite{cpm10} die Referenzmenge RV12 genauer betrachtet. RV12 besteht aus 88 Sequenzfamilien, die im Schnitt zehn Sequenzen enthielt. Messungen haben ergeben, dass die \emph{Inzidenzgraphen} auf diesen Sequenzfamilien im Schnitt 2877 Knoten und 10952 in 223 Zusammenhangskomponenten enthalten haben. Auf diesen Sequenzen lassen sich in guten Laufzeiten von weniger als einer Minute multiple \emph{Sequenzalignments} berechnen. Anders sah es auf der Sequenzfamilie BB30003 aus. Diese besteht aus 142 Sequenzen und resultiert in einem monströsen \emph{Inzidenzgraphen}, der nur aus einer einzigen Zusammenhangskomponente besteht. Nach einer Laufzeit von 20 Stunden ohne Ergebnis wurde der Lauf auf Graphen, der $1,5\cdot 10^6$ Kanten enthält, erfolglos abgebrochen. Erst mit einer Begrenzung des minimalen \emph{Fragmentgewichts} auf 4 ließ sich in 13 Stunden ein Ergebnis erzielen. 
 
 \section{Sukzessorgraphen und der Algorithmus von Pitschi}
+
+\subsection{Aufbau des Sukzessorgraphen}
+
+Wie wir gesehen haben, ist die Menge an Zuweisungen nach dem \textrm{ResolveAmbiguities}-Aufruf noch nicht \emph{konsistent}
+
+\subsection{Komplexität}
+
 $\oh(n^3\cdot L)$ für n-faches Topological Sort auf einem Knoten mit $\oh(n^2\cdot L)$-vielen Kanten im schlimmsten Fall.
 
 \section{Ankerpunkte}

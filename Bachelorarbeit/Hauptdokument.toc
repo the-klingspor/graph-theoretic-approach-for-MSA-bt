@@ -47,16 +47,19 @@
 \contentsline {subsection}{\numberline {4.2.1}Konstruieren des Inzidenzgraphen}{46}{subsection.4.2.1}
 \contentsline {subsection}{\numberline {4.2.2}Beispiel Inzidenzgraph}{47}{subsection.4.2.2}
 \contentsline {subsection}{\numberline {4.2.3}Mehrdeutigkeiten Aufl\IeC {\"o}sen}{48}{subsection.4.2.3}
-\contentsline {subsection}{\numberline {4.2.4}Komplexit\IeC {\"a}t}{49}{subsection.4.2.4}
-\contentsline {section}{\numberline {4.3}Sukzessorgraphen und der Algorithmus von Pitschi}{49}{section.4.3}
-\contentsline {section}{\numberline {4.4}Ankerpunkte}{50}{section.4.4}
-\contentsline {section}{\numberline {4.5}Gesamtkomplexit\IeC {\"a}t}{50}{section.4.5}
-\contentsline {chapter}{\numberline {5}Programmierung}{51}{chapter.5}
-\contentsline {section}{\numberline {5.1}Speichereffiziente Umsetzung der dynamischen Programmierung}{51}{section.5.1}
-\contentsline {chapter}{\numberline {6}Validierung der Ergebnisse}{53}{chapter.6}
-\contentsline {section}{\numberline {6.1}Vorstellung BAliBase und (D)IRMBASE}{53}{section.6.1}
-\contentsline {section}{\numberline {6.2}Test auf BAliBase}{53}{section.6.2}
-\contentsline {section}{\numberline {6.3}Test auf DIRMBASE und IRMBASE}{53}{section.6.3}
-\contentsline {chapter}{\numberline {7}Fazit}{55}{chapter.7}
-\contentsline {section}{\numberline {7.1}Zusammenfassung}{55}{section.7.1}
-\contentsline {section}{\numberline {7.2}Future Works}{55}{section.7.2}
+\contentsline {subsection}{\numberline {4.2.4}Beispiel von \textrm {ResolveAmbiguities}}{50}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.5}Komplexit\IeC {\"a}t}{51}{subsection.4.2.5}
+\contentsline {section}{\numberline {4.3}Sukzessorgraphen und der Algorithmus von Pitschi}{52}{section.4.3}
+\contentsline {subsection}{\numberline {4.3.1}Aufbau des Sukzessorgraphen}{52}{subsection.4.3.1}
+\contentsline {subsection}{\numberline {4.3.2}Komplexit\IeC {\"a}t}{52}{subsection.4.3.2}
+\contentsline {section}{\numberline {4.4}Ankerpunkte}{52}{section.4.4}
+\contentsline {section}{\numberline {4.5}Gesamtkomplexit\IeC {\"a}t}{52}{section.4.5}
+\contentsline {chapter}{\numberline {5}Programmierung}{53}{chapter.5}
+\contentsline {section}{\numberline {5.1}Speichereffiziente Umsetzung der dynamischen Programmierung}{53}{section.5.1}
+\contentsline {chapter}{\numberline {6}Validierung der Ergebnisse}{55}{chapter.6}
+\contentsline {section}{\numberline {6.1}Vorstellung BAliBase und (D)IRMBASE}{55}{section.6.1}
+\contentsline {section}{\numberline {6.2}Test auf BAliBase}{55}{section.6.2}
+\contentsline {section}{\numberline {6.3}Test auf DIRMBASE und IRMBASE}{55}{section.6.3}
+\contentsline {chapter}{\numberline {7}Fazit}{57}{chapter.7}
+\contentsline {section}{\numberline {7.1}Zusammenfassung}{57}{section.7.1}
+\contentsline {section}{\numberline {7.2}Future Works}{57}{section.7.2}
