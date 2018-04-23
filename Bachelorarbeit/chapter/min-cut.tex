@@ -227,6 +227,178 @@ Die Erkenntnis, die man aus diesem Satz zieht, ist, dass man Algorithmen zur Ber
 
 \section{Inzidenzgraphen und das Auflösen von Inkonsistenzen mit Hilfe von Flussnetzwerken}
 
+\subsection{Konstruieren des Inzidenzgraphen}
+
+Wir starten wie bei DIALIGN	zunächst mit paarweisen \emph{Alignments}. Unser Ziel ist es Übereinstimmungen zu finden, die in möglichst vielen Sequenzen gleichzeitig vorkommen. Das ist ein vielversprechender Ansatz, weil die gesuchten Motive oft in vielen sich überlappenden \emph{Fragmente} vorkommen, während Überlappungen bei zufälligen Übereinstimmungen unwahrscheinlich sind. Dazu konstruieren wir einen sogenannten \emph{Inzidenzgraphen}, der alle \emph{Stellen} als Knoten enthält, die durch Kanten verbunden sind, falls es ein sie verbindendes \emph{Fragment} gibt. Mit Hilfe eines Algorithmus zur Berechnung des \emph{maximalen Flusses} bestimmen wir \emph{minimale Schnitte}, bis nur noch dichte Zusammenhangskomponenten übrig bleiben, die jeweils höchstens einen Knoten aus jeder Sequenz enthalten \citep{cpm10}.
+
+\begin{definition}[Mehrdeutigkeit und partielle Zuweisungsspalten]
+	Es sei eine Menge an Sequenzen $S$ mit \emph{Stellenraum} $\mathcal{S}$ gegeben. Eine Teilmenge $C \subset \mathcal{S}$ nennen wir \emph{mehrdeutig}, wenn es mindestens eine Sequenz $S_i$ gibt, sodass $C \cap S_i$ zwei oder mehr \emph{Stellen} $(i,p), (i,p') \in \mathcal{S}$ enthält. In diesem Fall nennen wir auch $(i,p)$ und $(i,p')$ \emph{mehrdeutig}. Analog nennen wir eine Äquivalenzrelation $\mathcal{R}$ \emph{mehrdeutig}, wenn $\mathcal{R}$ eine \emph{mehrdeutige} Äquivalenzklasse enthält.
+	
+	Eine \emph{nicht-mehrdeutige} Teilmenge $C \subset \mathcal{S}$ bezeichnen wir als \emph{partielle Zuweisungsspalte}.
+\end{definition}
+
+Es lässt sich folgern, dass eine \emph{konsistente} Äquivalenzrelation auch nicht \emph{mehrdeutig} ist, während das Gegenteil im Allgemeinen nicht gilt. Das liegt daran, dass es überkreuzte Zuweisungen geben kann, die aber \emph{partielle Zuweisungsspalten} sind. \emph{Nicht-mehrdeutige} Äquivalenzrelationen bestehen nur aus \emph{partiellen Zuweisungsspalten}.
+
+Im Folgenden sei eine Menge von \emph{Fragmenten} $\mathcal{F} = \{f_1, \dots, f_k\}$ gegeben. Normalerweise werden dies die \emph{Fragmente} unserer paarweisen \emph{Alignments} sein, aber theoretisch kann man auch anders bestimmte benutzen. Wir wollen möglichst wenige Verbindungen aus der durch die \emph{Fragmente} induzierte Relation $\mathcal{R}$ löschen, bis eine \emph{nicht-mehrdeutige} Äquivalenzrelation $\mathcal{R'}$ bleibt.
+
+\begin{definition}[Inzidenzgraph]
+	Es sei ein \emph{Stellenraum} $\mathcal{S}$ mit einer Menge von \emph{Fragmenten} $\mathcal{F}$ auf diesem gegeben. Dann bezeichnen wir den ungerichteten Graphen $G_{\mathcal{F}} = (\mathcal{S},E_{\mathcal{F}})$ als \emph{Inzidenzgraphen}. In diesem Graph existiert genau dann eine Kante $(u,v) \in E_{\mathcal{F}}$, wenn die \emph{Stellen} $u$ und $v$ in einem gemeinsamen \emph{Fragment} $f_i \in \mathcal{F}$ vorkommen.
+\end{definition} 
+
+Wie man sieht, sind die Zusammenhangskomponenten unseres \emph{Inzidenzgraphen} genau die Äquivalenzklassen der durch $\mathcal{F}$ induzierten Kanten. 
+
+\subsection{Beispiel Inzidenzgraph}
+
+Auch hier werden wir wieder unser Beispiel aus dem letzten Kapitel benutzen. Erinnern wir uns zunächst an die \emph{Fragmente} der paarweisen \emph{Alignments}. Die \emph{Überlappgewichte} brauchen wir für diesen Schritt des Algorithmus nicht, weil wir versuchen mit Hilfe von \emph{minimalen Schnitten} ein ähnliches aber besseres Ergebnis zu erreichen.
+
+\begin{tabular}{r|c|c||r|c|c||r|c|c}
+	Seq. & \emph{Frag.} & \emph{Ü-Gew.} & Seq. & \emph{Frag.} & \emph{Ü-Gew.} & Seq. & \emph{Frag.} & \emph{Ü-Gew.}\\
+	\hline
+	2 & \texttt{GTCADCTC} & \multirow{2}{*}{16} & 1 & \texttt{TCTCA} & \multirow{2}{*}{7} & 1 & \texttt{GT} &\multirow{2}{*}{2} \\
+	4 & \texttt{GTCADATC} &                     & 3 & \texttt{TATCA} &                     & 2 & \texttt{GT} & \\
+	3 & \texttt{TCAD} & \multirow{2}{*}{8} & 1 & \texttt{CTCA} & \multirow{2}{*}{8} & 1 & \texttt{TC} & \multirow{2}{*}{2} \\
+	4 & \texttt{TCAD} &                     & 2 & \texttt{CTCA} &                          & 4 & \texttt{TC} & \\
+	2 & \texttt{TCAD} & \multirow{2}{*}{8} & 1 & \texttt{DGTC} & \multirow{2}{*}{8} &    &   & \\
+	3 & \texttt{TCAD} &                     & 4 & \texttt{DGTC} &                     &    &   & \\
+\end{tabular}
+
+Diese \emph{Fragmente} überführen wir direkt in einen \emph{Inzidenzgraphen} bei denen die \emph{Stellen} als Knoten und die Verbindungen in gemeinsamen \emph{Fragmenten} als Kanten übertragen werden. Um die Übersichtlichkeit halbwegs zu wahren, wurden die Kanten jeder Zusammenhangskomponente jeweils in einer Farbe markiert.
+
+\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill=gray,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 1.1cm
+	]
+	% erste Sequenz
+	\node[mycircle] (c11) {A};
+	\node[mycircle,right=of c11] (c12) {D};
+	\node[mycircle,right=of c12] (c13) {G};
+	\node[mycircle,right=of c13] (c14) {T};
+	\node[mycircle,right=of c14] (c15) {C};
+	\node[mycircle,right=of c15] (c16) {T};
+	\node[mycircle,right=of c16] (c17) {C};
+	\node[mycircle,right=of c17] (c18) {A};
+	
+	% zweite Sequenz
+	\node[mycircle,below=of c11] (c21) {G};
+	\node[mycircle,right=of c21] (c22) {T};
+	\node[mycircle,right=of c22] (c23) {C};
+	\node[mycircle,right=of c23] (c24) {A};
+	\node[mycircle,right=of c24] (c25) {D};
+	\node[mycircle,right=of c25] (c26) {C};
+	\node[mycircle,right=of c26] (c27) {T};
+	\node[mycircle,right=of c27] (c28) {C};
+	\node[mycircle,right=of c28] (c29) {A};
+	
+	% dritte Sequenz
+	\node[mycircle,below=of c21] (c31) {T};
+	\node[mycircle,right=of c31] (c32) {A};
+	\node[mycircle,right=of c32] (c33) {T};
+	\node[mycircle,right=of c33] (c34) {C};
+	\node[mycircle,right=of c34] (c35) {A};
+	\node[mycircle,right=of c35] (c36) {D};
+	\node[mycircle,right=of c36] (c37) {G};
+	\node[mycircle,right=of c37] (c38) {G};
+	
+	% vierte Sequenz
+	\node[mycircle,below=of c31] (c41) {D};
+	\node[mycircle,right=of c41] (c42) {G};
+	\node[mycircle,right=of c42] (c43) {T};
+	\node[mycircle,right=of c43] (c44) {C};
+	\node[mycircle,right=of c44] (c45) {A};
+	\node[mycircle,right=of c45] (c46) {D};
+	\node[mycircle,right=of c46] (c47) {A};
+	\node[mycircle,right=of c47] (c48) {T};
+	\node[mycircle,right=of c48] (c49) {C};
+		
+	
+	% Dritte Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c16/c33//above,
+		c14/c22//above,
+		c33/c22//above,
+		c33/c43//above,
+		c22/c43//above,
+		c27/c48//above,
+		c14/c31//above,
+		c14/c43//above,
+		c16/c48//above,
+		c16/c27//above}
+	\draw [draw=blue, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	
+	% Vierte Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c17/c34//above,
+		c34/c44//above,
+		c23/c34//above,
+		c17/c28//above,
+		c23/c44//above,
+		c28/c49//above,
+		c15/c32//above,
+		c15/c26//above,
+		c15/c44//above,
+		c17/c49//above,
+		c26/c47//above}
+	\draw [draw=green, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	
+	% Fünfte Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c18/c35//above,
+		c35/c24//above,
+		c35/c45//above,
+		c24/c45//above,
+		c18/c29//above}
+	\draw [draw=red, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	
+	%  Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c25/c36//above,
+		c25/c46//above,
+		c36/c46//above}
+	\draw [draw=cyan, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+	
+		%  Zusammenhangskomponente
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c21/c42//above,
+		c13/c21//above,
+		c13/c42//above}
+	\draw [draw=lime, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c12/c41//above}
+	\draw [draw=magenta, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	\end{tikzpicture}
+\end{center}
+
+\subsection{Mehrdeutigkeiten Auflösen}
+
+Die Zusammenhangskomponenten unseres \emph{Inzidenzgraphen} werden wir jetzt als \emph{Flussnetzwerke} interpretieren, um mit Hilfe eines Algorithmus zur Berechnung eines \emph{minimalen Schnitts} solange Kanten zu entfernen, bis alle \emph{Mehrdeutigkeiten} aufgelöst sind.
+
+Sei $C$ eine Zusammenhangskomponente von $G_{\mathcal{F}}$, die \emph{mehrdeutig} ist, also zwei Knoten $x,y$ aus der selben Sequenz enthält. Wir wählen die \emph{mehrdeutigen} Knoten $x$ und $y$ als \emph{Quelle} und \emph{Senke} unseres \emph{Flussnetzwerks}. Die ungerichteten Kanten des \emph{Inzidenzgraphen} werden durch zwei antiparallele gerichtete Kanten ersetzt. \cite{cpm10} benutzen als Kapazitäten jeweils 1. Meiner Meinung nach wäre es hingegen sinnvoller die Kapazitäten so zu wählen, dass ähnliche Symbole seltener voneinander durch den \emph{minimalen Schnitt} und das damit einhergehende Löschen von Kanten getrennt werden. Das können wir beispielsweise erreichen, indem wir uns an den Ähnlichkeitswerten unserer Substitutionsmatrix orientieren. Weil \emph{Flussnetzwerke} nicht-negative Kapazitäten erwarten, müssen die Werte gegebenenfalls modifiziert werden, indem wir den betragsmäßig größten Eintrag der Matrix zu allen Einträgen addieren. Das bedeutet, dass bei unserer $(+3/-1)$-Substitutionsmatrix aus dem Beispiel zwischen übereinstimmenden Symbolen eine Kapazität von 6 und zwischen nicht übereinstimmendes eine von 2 benutzt wird. Ob dieser Ansatz einen Vorteil bietet werden wir später bei der Evaluierung meiner Implementierung feststellen.
+
+Als nächstes benutzen wir einen Algorithmus zur Bestimmung des \emph{maximalen Flusses}. Wie mit dem \emph{Max-Flow-Min-Cut-Satz} gezeigt, bestimmen wir durch die Bestimmung des \emph{maximalen Flusses} auch gleichzeitig einen \emph{minimalen Schnitt}. Das ist die \enquote{schmalste} Verbindungsstelle zwischen der \emph{Quelle} und der \emph{Senke} und wir hoffen durch Löschen der dazugehörigen Kanten die \emph{Mehrdeutigkeit} aufzulösen und die dichtbesetzten Untergraphen zu erhalten. Im Original wird der Algorithmus von Edmonds-Karp benutzt, während wir stattdessen einen \emph{Push-Relabel-Algorithmus} mit Laufzeit \emph{$\oh(|V|^2\cdot \sqrt{|E|})$} für die Komplexität betrachten und in unserer Implementierung verwenden. Nachdem der \emph{minimale Schnitt} bestimmt wurde, löschen wir alle Kanten zwischen den Mengen $A$ und $B$. Auf diese Art und Weise wird unsere Zusammenhangskomponente $C$ in zwei neue Zusammenhangskomponenten $A$ und $B$ aufgeteilt. Dieses Verfahren wiederholen wir solange, bis es keine \emph{mehrdeutigen} Äquivalenzklassen mehr gibt.
+
+Unglücklicherweise können die Zusammenhangskomponenten bei \emph{Alignments} zwischen vielen langen Sequenzen sehr groß werden. \cite{cpm10} haben daher eine Grenze $k = \max\{\deg(v)| v \in \mathcal{S}\}$ eingeführt, die sukzessive gesenkt wird, bis alle \emph{Mehrdeutigkeiten} aufgelöst wurden. $k$ wird so benutzt, dass alle Kanten zwischen Knoten mit Grad $< k$ zunächst nicht betrachtet werden, sodass andere kleinere Zusammenhangskomponenten vorliegen. Als erstes werden für den reduzierten Kantensatz $E_k = \{(u,v) \in E|\min{\deg(u),\deg(v)}\}$ solange \emph{minimale Schnitte} berechnet und Kanten gelöscht, bis für den Graph mit weniger Kanten keine \emph{mehrdeutigen} Zusammenhangskomponenten mehr existierten. Danach wird $k$ um eins reduziert und das Vorgehen auf dem neuen Kantensatz wiederholt. Sobald $k$ auf null gesetzt wurde, hat man alle Knoten betrachtet und es liegen nur noch \emph{partielle Zuweisungsspalten} vor.
+
+Abgesehen von der verbesserten Laufzeit scheint dieses Vorgehen aber keine Vorteile zu bieten und falls doch, werden diese in \cite{cpm10} nicht genannt. Deshalb verzichte ich auf die Grenze $k$ und gehe davon aus, dass aufgrund des deutlich effizienteren Algorithmus für den \emph{maximalen Flusses} und die Verwendung einer schnellen Graphimplementierung aus einer Bibliothek keine Laufzeitprobleme für die üblichen Anwendungsgrößen auftreten.
+
+Bis jetzt wurde nur gesagt, dass wir \emph{mehrdeutige} Zusammenhangskomponenten auswählen und für diese jeweils einen Knoten aus der selben Sequenz als \emph{Quelle} und \emph{Senke} wählen. Abschließend müssen wir also noch festlegen in welcher Reihenfolge diese gewählt werden. Für die Zusammenhangskomponenten müssen wir keine Reihenfolge festlegen, weil diese unabhängig voneinander sind. Sei eine \emph{mehrdeutige} Zusammenhangskomponente $C$ gegeben. Dann mag es mehrere Sequenzen geben, die alle zu mehr als einem Knoten in $C$ korrespondieren. Außerdem muss es nicht unbedingt einen eindeutigen \emph{minimalen Schnitt} geben, sondern es kann mehrere solche geben. Wir entscheiden uns für dieses Vorgehen:
+
+\begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
+	\item Falls es mehrere Sequenzen gibt, die zwei oder mehr \emph{mehrdeutige} \emph{Stellen} in $C$ enthalten, wähle die Sequenz $S_i$ mit den meisten \emph{mehrdeutigen} Knoten in dieser Zusammenhangskomponente.
+	\item Sobald $S_i$ bestimmt ist, wähle unter allen \emph{Stellen} aus dieser Sequenz in $C$ den Knoten mit dem niedrigsten Knotengrad als Quelle und den mit dem höchsten als \emph{Senke}.
+	\item Sollte es mehr als einen \emph{minimalen Schnitt} geben, dann orientieren wir uns an dem Ergebnis des Algorithmus der Implementierung und wählen die Partitionierung, die sich durch die nur durch Kanten mit \emph{Restwertkapazität} 0 verbundenen Subgraphen im \emph{Restwertgraphen} ergibt. 
+\end{enumerate}
+
 \subsection{Komplexität}
 
 Möglicherweise bessere Laufzeit, wenn alle Kanten Kapazität 1 haben (s. Karzanov/Even); für Push-Relabel nichts gefunden.

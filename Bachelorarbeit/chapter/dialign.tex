@@ -58,7 +58,7 @@ Im Folgenden wollen wir zwei Beispiele betrachten, um das Konzept der \emph{Kons
 		c_1 & c_2 & c_3 & c_4 \arrow[u, no head] & c_5
 	\end{tikzcd}
 	\end{center}
-	Für alle \emph{Stellen}, die aus der selben kommen Sequenz stammen, gilt $x \preceq_{\mathcal{R} y \implies x \preceq y}$, wie beispielsweise für $a_1$ und $a_5$: $a_1 \mathcal{A} c_3, c_3 \preceq c_4, c_4 \mathcal{A} b_4, b_4 \mathcal{A} a_3$ und $a_3 \preceq a_5$. Es folgt $a_1 \preceq_{\mathcal{R}} a_5$. Also ist die Relation auf $\mathcal{S}$ \emph{konsistent} und somit ein \emph{Alignment}.
+	Für alle \emph{Stellen}, die aus der selben kommen Sequenz stammen, gilt $x \preceq_{\mathcal{R}} y \implies x \preceq y$, wie beispielsweise für $a_1$ und $a_5$: $a_1 \mathcal{A} c_3, c_3 \preceq c_4, c_4 \mathcal{A} b_4, b_4 \mathcal{A} a_3$ und $a_3 \preceq a_5$. Es folgt $a_1 \preceq_{\mathcal{R}} a_5$. Also ist die Relation auf $\mathcal{S}$ \emph{konsistent} und somit ein \emph{Alignment}.
 	
 	\begin{center}
 	\begin{tikzcd}[/tikz/commutative diagrams/sep=tiny]
@@ -76,7 +76,7 @@ Es lässt sich zeigen, dass eine Relation $\mathcal{A}$ genau dann ein \emph{Ali
 	\begin{center}
 	\begin{tikzcd}[/tikz/commutative diagrams/sep=tiny]
 		- & - & A_1 \arrow[dd, no head] & a_2 & A_3 \arrow[d, no head] & a_4 & a_5 \\
-		b_1 & B_2 \arrow[d, no head] & - & b_3 & B_4 \arrow[d, no head] & b_5 & - \\
+		b_1 & B_2 \arrow[d, no head] &  & b_3 & B_4 \arrow[d, no head] & b_5 & - \\
 		c_1 & C_2 & C_3 & - & C_4 & c_5 & -
 	\end{tikzcd}
 	\end{center}
@@ -1578,7 +1578,7 @@ Die restlichen \emph{Fragmente} unserer paarweisen \emph{Alignments} sind leider
 
 Nach diesem ersten Durchlauf unseres Ansatzes sind wir jedoch noch nicht fertig. Es kann beispielsweise sein, dass wir ein wichtiges Motiv haben, dass in mehreren Sequenzen vorkommt und somit Teil unseres multiplen \emph{Alignments} sein sollte. Bei zwei Sequenzen war es jedoch nicht im paarweisen \emph{Alignment} enthalten, weil stattdessen ein zufälliges, aber größeres \emph{Fragment} ausgewählt wurde. Wenn wir Glück haben, findet dieses aber nicht den Weg in unser multiples \emph{Alignment}, weil es im Vergleich zu anderen \emph{Fragmenten} mit denen es \emph{inkonsistent} war ein geringeres Gewicht hat. Deshalb führen wir zwischen allen Teilsequenzen, die durch unsere \emph{Ankerpunkte} vorgegeben sind, unser DIALIGN-Verfahren nochmal durch und wiederholen dies, bis es keine neuen \emph{Fragmente} mit positivem Gewicht mehr gibt \citep{mdw96}. In der Praxis stellt man fest, dass es in der Regel zu höchstens drei Iterationen kommt \citep{m99}. Wir können daher annehmen, dass die Anzahl an Durchläufen unseres Verfahrens konstant ist und für die Laufzeit nicht weiter in Betracht gezogen werden muss.
 
-Denken wir an unser Beispiel zurück, dann stellen wir fest, dass das Fragment $f_{3,2,2} = {\texttt{DG}}\choose{DG}$ aus der ersten und vierten Sequenz das positive Gewicht 2 hat. Es kann also unter Aktualisierung unseres \emph{Alignmentgraphen} in unser multiples \emph{Alignment} aufgenommen werden. Weitere geeignete \emph{Fragmente} der Teilsequenzen gibt es nicht. Bei der nächsten Iteration stellt man demnach fest, dass kein neues \emph{Fragment} ein positives Gewicht hat und wir können das Alignieren abbrechen.
+Denken wir an unser Beispiel zurück, dann stellen wir fest, dass das Fragment $f_{3,2,2} = $$ {\texttt{DG}}\choose{\texttt{DG}}$ aus der ersten und vierten Sequenz das positive Gewicht 2 hat. Es kann also unter Aktualisierung unseres \emph{Alignmentgraphen} in unser multiples \emph{Alignment} aufgenommen werden. Weitere geeignete \emph{Fragmente} der Teilsequenzen gibt es nicht. Bei der nächsten Iteration stellt man demnach fest, dass kein neues \emph{Fragment} ein positives Gewicht hat und wir können das Alignieren abbrechen.
 
 Als abschließenden Schritt müssen wir noch unsere Ausgabe vorbereiten. Das Ziel ist dabei alignierte Symbole als Groß- und \emph{Waisen} als Kleinbuchstaben darzustellen. Zudem sollen die \emph{Zuweisungsspalten} genau übereinander stehen, wofür unter Umständen das Einfügen  von Leerzeichen in die Ausgabesequenzen nötig ist. Hierfür sortieren wir alle \emph{Fragmente} für jede Sequenz nach Startpunkten und traversieren diese, sowie die Sequenzen selbst, der Reihe nach durch, wobei wir bei Bedarf Lücken einfügen. Da die Länge jeder Sequenz in $\oh(1)$ ist, ist dies in $\oh(n^2\cdot L)$ möglich \citep{m99}. \improvement{Alignmentgraphen für das Einfügen von Lücken benutzen?}
 
