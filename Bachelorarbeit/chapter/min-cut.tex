@@ -2,9 +2,9 @@
 \label{ch:min-cut}
 Da es, wie im letzten Kapitel gezeigt, auf manchen Sequenzfamilien durch die gierige Heuristik von DIALIGN zu suboptimalen \emph{Scores} und \emph{Alignments} kommt, werden wir jetzt einen verbesserten graphtheoretischen Ansatz von \cite{cpm10} betrachten.
 
-Dazu benötigen wir zwei verschiedene Graphen: zum einen den \emph{Inzidenzgraphen}, bei dem alle \emph{Stellen} Knoten sind und ihre \emph{Anker} Zusammenhangskomponenten. Der zweite ist der \emph{Sukzessorgraph}, der die Zusammenhangskomponenten unseres \emph{Inzidenzgraphen} als Knoten und die natürliche Ordnung auf den Sequenzen als Kanten benutzt. Man kann sich vorstellen, dass genau dann eine Kante zwischen zwei  Diese beiden Datenstrukturen werden wir benutzen, um \emph{Inkonsistenzen} aufzulösen. Wenn wir uns an die Definition von \emph{Konsistenz} aus dem letzten Kapitel erinnern, dann stellen wir fest, dass es zwei Arten von ihr gibt: zum einen implizite, transitive Mehrfachzuweisungen bei denen einer \emph{Stelle} einer Sequenze mehrere \emph{Stellen} einer anderen Sequenz zugeordnet sind und zum anderen überkreuzte Zuweisungen.
+Dazu benötigen wir zwei verschiedene Graphen: zum einen den \emph{Inzidenzgraphen}, bei dem alle \emph{Stellen} Knoten sind und ihre \emph{Anker} Zusammenhangskomponenten. Der zweite ist der \emph{Sukzessionsgraph}, der die Zusammenhangskomponenten unseres \emph{Inzidenzgraphen} als Knoten und die natürliche Ordnung auf den Sequenzen als Kanten benutzt. Man kann sich vorstellen, dass genau dann eine Kante zwischen zwei  Diese beiden Datenstrukturen werden wir benutzen, um \emph{Inkonsistenzen} aufzulösen. Wenn wir uns an die Definition von \emph{Konsistenz} aus dem letzten Kapitel erinnern, dann stellen wir fest, dass es zwei Arten von ihr gibt: zum einen implizite, transitive Mehrfachzuweisungen bei denen einer \emph{Stelle} einer Sequenze mehrere \emph{Stellen} einer anderen Sequenz zugeordnet sind und zum anderen überkreuzte Zuweisungen.
 
-Als Ausgangspunkt starten wir wieder mit unseren paarweisen \emph{Alignments} aus DIALIGN. \emph{Überlappgewichte} brauchen wir in unserem Fall nicht. Dann konstruieren wir mit Hilfe dieser Zuweisungen unseren \emph{Inzidenzgraphen} und benutzen einen Algorithmus zur Berechnung des minimalen Schnitts (\enquote{min-cut}) auf den Zusammenhangskomponenten, um alle \emph{Inkonsistenzen} aufgrund von transitiven Mehrfachzuweisungen aufzulösen. Die so entstehenden Zusammenhangskomponenten benutzen wir, um einen \emph{Sukzessorgraphen} aufzubauen. Dank eines Algorithmus von \cite{pdc10} können wir mit diesem Überkreuzungen aus unserer Relation löschen. Alle dieser Konzepte werden wir im Laufe dieses Kapitel formal definieren, genauer analysieren und die Korrektheit der Aussagen beweisen.
+Als Ausgangspunkt starten wir wieder mit unseren paarweisen \emph{Alignments} aus DIALIGN. \emph{Überlappgewichte} brauchen wir in unserem Fall nicht. Dann konstruieren wir mit Hilfe dieser Zuweisungen unseren \emph{Inzidenzgraphen} und benutzen einen Algorithmus zur Berechnung des minimalen Schnitts (\enquote{min-cut}) auf den Zusammenhangskomponenten, um alle \emph{Inkonsistenzen} aufgrund von transitiven Mehrfachzuweisungen aufzulösen. Die so entstehenden Zusammenhangskomponenten benutzen wir, um einen \emph{Sukzessionsgraphen} aufzubauen. Dank eines Algorithmus von \cite{pdc10} können wir mit diesem Überkreuzungen aus unserer Relation löschen. Alle dieser Konzepte werden wir im Laufe dieses Kapitel formal definieren, genauer analysieren und die Korrektheit der Aussagen beweisen.
  
 \section{Flussnetzwerke}
 
@@ -245,7 +245,7 @@ Im Folgenden sei eine Menge von \emph{Fragmenten} $\mathcal{F} = \{f_1, \dots, f
 	Es sei ein \emph{Stellenraum} $\mathcal{S}$ mit einer Menge von \emph{Fragmenten} $\mathcal{F}$ auf diesem gegeben. Dann bezeichnen wir den ungerichteten Graphen $G_{\mathcal{F}} = (\mathcal{S},E_{\mathcal{F}})$ als \emph{Inzidenzgraphen}. In diesem Graph existiert genau dann eine Kante $(u,v) \in E_{\mathcal{F}}$, wenn die \emph{Stellen} $u$ und $v$ in einem gemeinsamen \emph{Fragment} $f_i \in \mathcal{F}$ vorkommen.
 \end{definition} 
 
-Wie man sieht, sind die Zusammenhangskomponenten unseres \emph{Inzidenzgraphen} genau die Äquivalenzklassen der durch $\mathcal{F}$ induzierten Kanten. 
+Wie man sieht, sind die Zusammenhangskomponenten unseres \emph{Inzidenzgraphen} genau die Äquivalenzklassen der durch $\mathcal{F}$ induzierten Kanten. Weil diese nicht weiter nützlich sind, kann man \emph{Stellen}, die nicht mit anderen verbunden sind, von vornherein ignorieren beziehungsweise sie löschen, wenn sie nach dem Entfernen von Kanten Grad 0 haben. So lässt sich etwas Speicherplatz sparen und die Ergebnisse dieses Algorithmus können direkt für den nächsten Schritt weiterverwendet werden. Um die Positionierung der Zusammenhangskomponenten im \emph{Inzidenzgraph} zu verdeutlichen, lassen wir sie in unseren graphischen Beispiele aber stehen.
 
 \subsection{Beispiel Inzidenzgraph}
 
@@ -838,17 +838,153 @@ Möglicherweise lässt sich eine bessere Laufzeit erreichen, wenn alle Kanten ei
 
 Glücklicherweise sind die Zusammenhangskomponenten im Allgemeinen nicht so groß und in den meisten Fällen trennt man mit dem \emph{minimalen Schnitt} auch nicht nur einzelne Knoten ab. Bei Testläufen auf der Protein-Referenzdatenbank BAliBASE haben \cite{cpm10} die Referenzmenge RV12 genauer betrachtet. RV12 besteht aus 88 Sequenzfamilien, die im Schnitt zehn Sequenzen enthielt. Messungen haben ergeben, dass die \emph{Inzidenzgraphen} auf diesen Sequenzfamilien im Schnitt 2877 Knoten und 10952 in 223 Zusammenhangskomponenten enthalten haben. Auf diesen Sequenzen lassen sich in guten Laufzeiten von weniger als einer Minute multiple \emph{Sequenzalignments} berechnen. Anders sah es auf der Sequenzfamilie BB30003 aus. Diese besteht aus 142 Sequenzen und resultiert in einem monströsen \emph{Inzidenzgraphen}, der nur aus einer einzigen Zusammenhangskomponente besteht. Nach einer Laufzeit von 20 Stunden ohne Ergebnis wurde der Lauf auf Graphen, der $1,5\cdot 10^6$ Kanten enthält, erfolglos abgebrochen. Erst mit einer Begrenzung des minimalen \emph{Fragmentgewichts} auf 4 ließ sich in 13 Stunden ein Ergebnis erzielen. 
 
-\section{Sukzessorgraphen und der Algorithmus von Pitschi}
+\section{Sukzessionsgraphen und der Algorithmus von Pitschi}
 
-\subsection{Aufbau des Sukzessorgraphen}
+\subsection{Aufbau des Sukzessionsgraphen}
 
-Wie wir gesehen haben, ist die Menge an Zuweisungen nach dem \textrm{ResolveAmbiguities}-Aufruf noch nicht \emph{konsistent}
+Wie wir gesehen haben, ist die Menge an Zuweisungen nach dem \textrm{ResolveAmbiguities}-Aufruf noch nicht \emph{konsistent}, aber es liegen keine \emph{Mehrdeutigkeiten} mehr vor. Das zwingt uns dazu weitere Verbindungen aus der Äquivalenzrelation zu löschen, bis diese ein \emph{Alignment}, also \emph{konsistent} ist. Wir führen dazu eine Datenstruktur ein, die die Zusammenhangskomponenten des reduzierten \emph{Inzidenzgraphen} nach ihrer Ordnung in den beteiligten Sequenzen ordnet.
+
+\begin{definition}[Sukzessionsgraph]
+	Es sei eine Menge an Sequenzen $S$ mit \emph{Stellenraum} $\mathcal{S}$ gegeben. Für diese Sequenzen liegt eine Menge $\mathcal{C}$ von Zusammenhangskomponenten vor, die alle \emph{partielle Zuweisungsspalten} sind. Dann definieren wir den \emph{Sukzessionsgraph} $SG(\mathcal{C}) = (\mathcal{C},E)$ als gerichteten, gewichteten Graphen. In $SG(\mathcal{C})$ fügen wir genau dann eine Kante $e = (C,C')$ für $C,C' \in \mathcal{C}$ ein, wenn eine Sequenz $S_i \in S$ existiert, für die \emph{Stellen} $s = (i,p) \in C$ und $s' = (i,p') \in C'$ vorliegen mit $p < p'$ und außerdem keine \emph{Stelle} $s = (i,p'')$ in einem anderen Knoten $C''$ mit $p < p'' < p'$ vorhanden ist. Das Gewicht von $e$ ist die Anzahl an Sequenzen für die die obige Bedingung gilt. Des Weiteren setzen wir voraus, dass alle Zusammenhangskomponenten mindestens zwei Knoten enthalten.
+	Außerdem fügen wir zwei zusätzliche Knoten $v_{start}$ und $v_{end}$ ein. $v_{start}$ ist mit allen Knoten verbunden, die die erste \emph{Stelle} einer Sequenz enthalten. Zusätzlich sind alle Knoten, die die letzte \emph{Stelle} einer Sequenz enthalten mit $v_{end}$ über eine Kante verbunden.
+\end{definition}
+
+
+Wie man sieht sind zwei Knoten $C$ und $C'$ aus dem \emph{Sukzessionsgraphen} genau dann miteinander verbunden, wenn es in diesen \emph{Stellen} aus der selben Sequenz gibt, bei denen die aus $C$ links von der in $C'$ stehen. Die zusätzlich eingefügten Knoten $v_{start}$ und $v_{end}$ brauchen wir im Algorithmus von Pitschi, um die Konnektivität des Graphen zu erhalten, wenn wir Kanten aus dem Graph löschen. Das werden wir später tun, um \emph{Inkonsistenzen} zu entfernen. Setzen wir nicht voraus, dass die Knoten von $SG$ mindestens zwei \emph{Stellen} enthalten, dann liefert der Algorithmus von Pitschi suboptimale Ergebnisse, wie wir später sehen werden. \cite{cpm10} und \cite{pdc10} sind an dieser Stelle nicht eindeutig. 
+
+Als Beispiel konstruieren wir aus dem reduzierten \emph{Inzidenzgraphen} des letzten Schritts einen \emph{Sukzessionsgraphen}. Die Knotenfarben wurden in der Farbe der Kanten des alten Graphen gewählt.
+
+\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 1.1cm
+	]
+	
+	\node[mycircle,fill=gray] at (0.5,-0.5) (c1) {$v_{start}$};
+	\node[mycircle,fill=magenta] at (2,1.5) (c2) {\begin{tabular}{c}
+		$(1,2)$ \\ $(4,1)$
+		\end{tabular}};
+	\node[mycircle,fill=lime] at (4,1.5) (c3) {\begin{tabular}{c}
+		$(1,3)$ \\ $(2,1)$ \\ $(4,2)$
+		\end{tabular}};
+	\node[mycircle,fill=blue] at (4,-0.5) (c4) {\begin{tabular}{c}
+		$(1,4)$ \\ $(2,2)$ \\ $(3,3)$ \\ $(4,3)$
+		\end{tabular}};
+	\node[mycircle,fill=green] at (6,-0.5) (c5) {\begin{tabular}{c}
+		$(1,5)$ \\ $(2,3)$ \\ $(3,4)$ \\ $(4,4)$
+		\end{tabular}};
+	\node[mycircle,fill=red] at (8,-0.5) (c6) {\begin{tabular}{c}
+		$(1,8)$ \\ $(2,4)$ \\ $(3,5)$ \\ $(4,5)$
+		\end{tabular}};
+	\node[mycircle,fill=cyan] at (10,-0.5) (c7) {\begin{tabular}{c}
+		$(2,5)$ \\ $(3,6)$ \\ $(4,6)$
+		\end{tabular}};
+	\node[mycircle,fill=blue] at (8,1.5) (c8) {\begin{tabular}{c}
+		$(1,6)$ \\ $(2,5)$ \\ $(4,6)$
+		\end{tabular}};
+	\node[mycircle,fill=green] at (10,1.5) (c9) {\begin{tabular}{c}
+		$(1,7)$ \\ $(2,8)$ \\ $(4,9)$
+		\end{tabular}};
+	\node[mycircle, fill=gray] at (12,-0.5) (c10) {$v_{end}$};
+	% Kanten ohne Cycle
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1/c2/2/above,
+		c1/c3/1/below,
+		c2/c3/2/above,	
+		c1/c4/1/above,
+		c3/c4/3/above,
+		c4/c5/4/above,
+		c5/c6/3/above,
+		c5/c8/1/above,
+		c9/c10/2/above,
+		c7/c10/1/above}	
+	\draw [myarrow] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
+	
+	\draw [myarrow] (c6) to[bend right] node[sloped,font=\tiny,below] {1} (c10);
+		
+	% Cycle%	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c6/c7/3/above,
+		c8/c9/3/above}
+	\draw [myarrow, draw=red] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);	
+
+	\draw [myarrow, draw=red] (c7) -- node[sloped,font=\tiny,above, pos=0.25] {2} (c8);	
+	\draw [myarrow, draw=red] (c9) -- node[sloped,font=\tiny,above, pos=0.25] {1} (c6);		
+	\end{tikzpicture}
+\end{center}
+
+\begin{lemma}
+	Die Menge $\mathcal{C}$ ist genau dann \emph{konsistent}, wenn $SG(\mathcal{C})$ ein gerichteter, azyklischer Graph (DAG) ist.
+\end{lemma}
+
+\begin{beweis}
+	\bewhin \hspace{2pt} Sei $\mathcal{C}$ eine \emph{konsistente} Menge von Zusammenhangskomponenten mit der induzierten Äquivalenzrelation $\mathcal{R}$. Dann folgt aus $x \preceq_{\mathcal{R}} y$ auch $x \preceq y$ für alle Sequenzen. Angenommen es gibt in $SG(\mathcal{C})$ einen Zyklus. Dann gibt es Knoten $C, C'$ mit \emph{Stellen} $s_1, s_2 \in C$ und $s_1',s_2' \in C'$ mit folgenden Eigenschaften:
+	\begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
+		\item $s_1, s_1' \in S_1$ und $s_2,s_2' \in S_2$ 
+		\item $pos(s_1) < pos(s_1')$ und $pos(s_2') < pos(s_2)$
+	\end{enumerate}
+	Diese muss es geben, sonst gäbe es keinen Zyklus im Graphen. Für diese \emph{Stellen} gelten $s_1' \mathcal{R} s_2'$, $s_2' \preceq s_2$ und $s_2 \mathcal{R} s_1$, woraus $s_1' \preceq_{\mathcal{R}} s_1$ folgt. Es gilt aufgrund von $pos(s_1) < pos(s_1')$, weshalb $s_1 \npreceq s_1'$ folgt. Das steht im Widerspruch dazu, dass $\mathcal{C}$ \emph{konsistent} war.
+	
+	\bewrueck \hspace{2pt} Wir benutzen einen Kontrapositionsbeweis und es sei eine \emph{inkonsistente} Menge $\mathcal{C}$ gegeben. Dann existiert eine Sequenz $S_1$, die \emph{Stellen} $s_1,s_1' \in S_1$ mit folgenden Eigenschaften enthält:
+	\begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
+		\item $s_1 \preceq_{\mathcal{R}} s_1'$
+		\item $s_1 \npreceq s_1'$
+	\end{enumerate}
+	Aus $s_1 \preceq_{\mathcal{R}} s_1'$ folgt, dass es zwei Knoten $C$ und $C'$ gibt mit $s_1 \in C$ und $s_1' \in C'$, die in $SG(\mathcal{C})$ über einen Pfad verbunden sind. Der Pfad kann aber nicht über eine Kante laufen, die zu $S_1$ gehört, denn $s_1 \npreceq s_1'$ gilt. Aus dieser Bedingung folgt aber, dass einen Pfad von $C'$ zu $C'$ geben muss. Da es sowohl von $C$ nach $C'$, als auch von $C'$ nach $C$ Pfade gibt, kann $SG(\mathcal{C})$ nicht azyklisch sein.
+\end{beweis}
+
+\subsection{Der Algorithmus von Pitschi}
+
+Aufgrund des gerade gezeigten Lemmas folgt, dass wir eine \emph{konsistente} Menge von \emph{partiellen Zuweisungsspalten} finden, wenn deren \emph{Sukzessionsgraph} azyklisch ist. Der Algorithmus von \cite{pdc10} sieht zwei Schritte vor, um aus dem potentiell zyklischen \emph{Sukzessionsgraphen} einen kreisfreien zu konstruieren, der mit einer \emph{konsistenten} Menge von \emph{partiellen Zuweisungsspalten} korrespondiert:
+
+\begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
+	\item Lösche Kanten aus dem \emph{Sukzessionsgraphen}, bis dieser kreisfrei ist.
+	\item Benutze den so entstandenen DAG, um zu entscheiden, welche \emph{Stellen} aus den jeweiligen Knoten gelöscht werden müssen, um \emph{Inkonsistenzen} zu entfernen.
+\end{enumerate}
+
+Wir beginnen mit der Transformation des zyklischen Graphen in einen azyklischen, indem wir Kanten entfernen. Optimal wäre es Kanten mit einer minimalen Summe von Kantengewichten zu entfernen. Leider ist dieses Problem, das auch als \enquote{minimal weighted feedback arc set}-Problem bekannt ist, NP-schwer. Als Folge bedienen wir uns einfach einer einfachen Heuristik, indem wir sukzessive eine Grenze $k$ erhöhen und in jedem Schritt alle Kanten mit einem Gewicht kleiner als $k$ löschen, bis es keinen Zyklus im Graphen mehr gibt. Formal definieren wir die Menge an Kanten, die mindestens das Gewicht $k\in \mathbb{N}$ hat als 
+\begin{equation}
+\begin{split}
+	& E_k \coloneqq \{(u,v)\in E | w(u,v) > k\: \text{oder}\: u = v_{start}\: \text{oder}\: v = v_{end}\}\: \text{mit} \\
+	& k^* \coloneqq \min\{k > 0 | (V,E_k)\: \text{ist azyklisch}\}
+\end{split}
+\end{equation}
+
+Für den Fall, dass durch das Löschen von Kanten der Graph nicht mehr zusammenhängend ist, fügen wir für jede Zusammenhangskomponente und jede an dieser beteiligten Sequenz eine Kante vom Startzustand $v_{start}$ zum Knoten mit der kleinsten \emph{Stelle} aus der gewählten Sequenz ein. Analog gehen wir mit den größten \emph{Stellen} und dem Endzustand $v_{end}$ vor. 
+
+Bei unserem Beispiel ist glücklicherweise nur Zyklus vorhanden, der 
+
+\subsection{Algorithmus zur Bestimmung des längsten Pfads}
+
+\subsection{Probleme bei der Heuristik zum Entfernen von Kanten}
+
+circular permutation -> alle Kanten gelöscht
+
+viele Kanten entfernt, die nichts mit dem Zyklus zu tun haben
+
+\subsection{Ankerpunkte}
+
+\cite{mpps06} haben einen semiautomatisierten Ansatz für das \emph{multiple sequence alignment}-Problem entwickelt. Bei diesem kann der Benutzer, der über Expertenwissen verfügt, vorgeben, welche Positionen der Sequenzen auf jeden Fall miteinander \emph{aligniert} werden sollen. Das ist insbesondere dann nützlich, wenn es Abschnitte gibt, die sich mathematisch gesehen sehr ähnlich sind, deren Zuordnung biologisch aber falsch wäre. Ein Beispiel für solche Sequenzen haben wir mit den \emph{Hoxgenen} des Pufferfisches im Abschnitt über die Schwächen von DIALIGN bereits kennengelernt. Es hat sich herausgestellt, dass das semiautomatisierte Verfahren bei vielen Tests auf der Referenzdatenbank BAliBASE bessere Ergebnisse geliefert hat, wenn die Startpunkte aller Motive als \emph{Verankerungen} gesetzt wurden.
+
+Das Verfahren funktioniert so, dass der Experte \emph{Fragmente} (was auch nur paarweise Zuweisungen sein können) wählt und diese mit einer Dringlichkeit an DIALIGN übergibt. Wie im Standardalgorithmus werden dann gierig die \emph{Fragmente} mit maximaler Dringlichkeit gewählt, die zu allen bereits gewählten \emph{konsistent} sind. Zwischen diesen \emph{Verankerungen} wird dann ganz normal DIALIGN durchgeführt, wodurch die restlichen Abschnitte automatisiert \emph{aligniert} werden.
+
+\cite{cpm10} benutzten die bereits vorliegende Infrastruktur in DIALIGN, um die \emph{Zuweisungsspalten}, die der Algorithmus von Pitschi geliefert hat, als \emph{Verankerungen} ins \emph{Alignment} zu integrieren. Weil diese Möglichkeit in unserer Implementierung nicht bereits vorhanden ist, werden wir die Resultate des \emph{Min-Cut}-Ansatzes direkt mit Hilfe von \textrm{EdgeAddition} und dem \emph{Alignmentgraphen} in unser Ergebnis integrieren. Neben dem Übergeben von \emph{konsistenten Zuweisungsspalten} als \emph{Verankerungen} hat man auch Versuche mit \emph{partiellen Zuweisungsspalten} gemacht. Hier war die gierige Heuristik von DIALIGN aber nicht erfolgreich und die Ergebnisse waren schlechter als mit dem Algorithmus von Pitschi. Aus diesem Grund werden wir den zweiten Ansatz nicht weiter behandeln.
 
 \subsection{Komplexität}
 
 $\oh(n^3\cdot L)$ für n-faches Topological Sort auf einem Knoten mit $\oh(n^2\cdot L)$-vielen Kanten im schlimmsten Fall.
 
-\section{Ankerpunkte}
+\section{Zusammenfassung}
 
-\section{Gesamtkomplexität}
+\subsection{Gesamtkomplexität}
 $\oh(n^4\cdot L^{7/2})$ 
+
+\subsection{Evaluierung}

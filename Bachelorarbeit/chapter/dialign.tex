@@ -43,7 +43,7 @@ Nachdem wir bis jetzt nur umgangssprachlich mit \emph{Alignments} und \emph{Kons
 \begin{definition}[Alignment und Konsistenz]
 	Ein \emph{Alignment} $\mathcal{A}$ ist eine Äquivalenzrelation auf der Menge $\mathcal{S}$, die ein bestimmtes \emph{Konsistenzkriterium} erfüllt. Sei zunächst $\mathcal{R}$ eine beliebige binäre Relation auf $\mathcal{S}$. Wir können diese mit `$\preceq$' zu der Präordnung (auch Quasiordnung genannt) $\preceq_{\mathcal{R}=(\preceq \cup \mathcal{R})_t}$ erweitern, also einer zweistelligen Relation, die reflexiv und transitiv, aber nicht antisymmetrisch ist. Hierbei bezeichnet $\mathcal{X}_t$ die transitive Hülle einer Relation $\mathcal{X}$. 
 	
-	Wir bezeichnen $\mathcal{R}$ als \emph{konsistent}, wenn $\preceq_{\mathcal{R}}=(\preceq \cup\: \mathcal{R})_t$ die natürliche Ordnung auf jeder Sequenz erhält, also $x \preceq_{\mathcal{R}} y \implies x \preceq y$ für alle $x,y \in S_i \forall 1\leq i \leq n$ gilt. Außerdem nennen wir eine Menge von Relationen $\{\mathcal{R}_1, \dots, \mathcal{R}_n\}$ \emph{konsistent}, wenn ihre Vereinigung $\cup_i \mathcal{R}_i$ \emph{konsistent} ist, sowie ein Paar $(x,y) \in \mathcal{S}^2$ \emph{konsistent} mit einer Relation $\mathcal{R}$, falls $\mathcal{R} \cup \{(x,y)\}$ \emph{konsistent} ist.
+	Wir bezeichnen $\mathcal{R}$ als \emph{konsistent}, wenn $\preceq_{\mathcal{R}}=(\preceq \cup\: \mathcal{R})_t$ die natürliche Ordnung auf jeder Sequenz erhält, also $x \preceq_{\mathcal{R}} y \implies x \preceq y$ für alle $x,y \in S_i \forall 1\leq i\leq n$ gilt. Außerdem nennen wir eine Menge von Relationen $\{\mathcal{R}_1, \dots, \mathcal{R}_n\}$ \emph{konsistent}, wenn ihre Vereinigung $\cup_i \mathcal{R}_i$ \emph{konsistent} ist, sowie ein Paar $(x,y) \in \mathcal{S}^2$ \emph{konsistent} mit einer Relation $\mathcal{R}$, falls $\mathcal{R} \cup \{(x,y)\}$ \emph{konsistent} ist.
 	
 	Für ein Alignment $\mathcal{A}$ und $(x,y)$ gilt $x\mathcal{A}y$ genau dann, wenn die \emph{Stellen} $x$ und $y$ durch $\mathcal{A}$ aligniert werden oder identisch sind.
 \end{definition}
@@ -53,7 +53,7 @@ Im Folgenden wollen wir zwei Beispiele betrachten, um das Konzept der \emph{Kons
 \begin{beispiel}
 	\begin{center}
 	\begin{tikzcd}[/tikz/commutative diagrams/sep=tiny]
-		a_1 \arrow[rrdd, no head] & a_2 & a_3 & a_4 & a_5 \\
+		a_1 \arrow[rrdd, no head, bend left] & a_2 & a_3 & a_4 & a_5 \\
 		b_1 \arrow[d, no head] & b_2 & b_3 & b_4 \arrow[lu, no head] & b_5 \\
 		c_1 & c_2 & c_3 & c_4 \arrow[u, no head] & c_5
 	\end{tikzcd}
@@ -80,7 +80,7 @@ Es lässt sich zeigen, dass eine Relation $\mathcal{A}$ genau dann ein \emph{Ali
 		c_1 & C_2 & C_3 & - & C_4 & c_5 & -
 	\end{tikzcd}
 	\end{center}
-Alle Symbole, die Teil einer Zuweisungsspalte sind, also einer Äquivalenzklasse mit mehr als einer \emph{Stelle}, wurden als Großbuchstabe dargestellt, während die unalignierten kleingeschrieben wurden.
+Alle Symbole, die Teil einer Zuweisungsspalte sind, also einer Äquivalenzklasse mit mehr als einer \emph{Stelle}, wurden als Großbuchstabe dargestellt, während die nicht-alignierten kleingeschrieben wurden.
 \end{beispiel}
 
 Da DIALIGN ein segmentbasiertes Alignmentverfahren ist, brauchen wir noch eine Bezeichnung für eine paarweise, lückenlose Zuweisung von direkt aufeinanderfolgenden Elementen zweier Sequenzen.
@@ -489,9 +489,7 @@ Das paarweise Alignment zwischen \texttt{ADGTCTCA} und \texttt{GTCADCTCA} sieht 
 	\texttt{adGT---CTCA} \\
 	\texttt{--GTcadCTCA} 
 \end{center}
-Hierbei wurden alignierte \emph{Stellen} großgeschrieben und als \emph{Zuweisungsspalten} genau übereinander gereiht.
-
-Dies sind die Ergebnisse der anderen \emph{Alignments}:
+Hierbei wurden alignierte \emph{Stellen} großgeschrieben und als \emph{Zuweisungsspalten} genau übereinander gereiht. Dies sind die Ergebnisse der anderen \emph{Alignments}:
 \vspace{8pt}
 
 \begin{tabular}{r|c|c||r|c|c}
@@ -1603,7 +1601,7 @@ Das finale \emph{Alignment} unserer vier Beispielsequenzen mit DIALIGN 2.2 und e
 	
 	Mit unserem speichereffizienten Algorithmus lässt sich jedes paarweise \emph{Alignment} in $\oh(L^2)$ Zeit und mit $\oh(N_{\max}) \in \oh(L^2)$ Speicherplatz berechnen \citep{m02}. Da es $\oh(n^2)$ paarweise \emph{Alignments} gibt, folgt hierfür die Laufzeit in $\oh(n^2\cdot L^2)$. Die Werte für unsere \emph{Fragmente} speichern wir sortiert in einer $\oh(n^2)$ großen Tabelle, wobei jeder Eintrag auf die Liste von \emph{Fragmenten} eines paarweisen \emph{Alignments} verweist. Da jedes von diesen bis zu $\oh(L)$ Segmente enthält, folgt der Speicherverbrauch von $\oh(n^2\cdot L)$ zu diesem Zeitpunkt.
 	
-	Mit Hilfe unserer Tabelle und dem parallelen traversieren sortierter Listen können wir in-place und in $\oh(n^3\cdot L)$ Zeit unsere \emph{Überlappgewichte} berechnen.
+	Mit Hilfe unserer Tabelle und dem parallelen traversieren sortierter Listen können wir in-place und in $\oh(n^3\cdot L)$ Zeit unsere \emph{Überlappgewichte} berechnen. Mein Verbesserung dieses Schrittes ist an dieser Stelle wichtig, weil sonst der naive Ansatz mit Laufzeit $\oh(n^4\cdot L^2)$ die Gesamtkomplexität dominiert hätte.
 	
 	Bevor wir die \emph{Fragmente} gierig in unser multiples \emph{Alignment} einfügen können, müssen wir sie alle auf Basis ihrer \emph{Überlappgewichte} sortieren. Mit einem effizienten Algorithmus wie beispielsweise Heapsort ist dies in $\oh(n^2\cdot L\cdot \log(n^2\cdot L))$ Rechenschritten möglich. 
 	
@@ -1611,7 +1609,7 @@ Das finale \emph{Alignment} unserer vier Beispielsequenzen mit DIALIGN 2.2 und e
 	
 	Das vorbereiten der Ausgabe ist wie gerade erwähnt in $\oh(n^2\cdot L)$ Zeit möglich.
 	
-	Somit dominieren die \emph{Konsistenzgrenzen} die Laufzeit und je nach $N_{\max}$ in unseren paarweisen \emph{Alignments} auch den Speicherverbrauch. Es folgt die behauptete Laufzeit von $\oh(n^3\cdot L + n^2\cdot L^2)$ Rechenschritten und benötigter Speicherplatz in $\oh(N_{\max} + n^2\cdot L)$. 
+	Somit dominieren die \emph{Konsistenzgrenzen} die Laufzeit und je nach $N_{\max}$ in unseren paarweisen \emph{Alignments} auch den Speicherverbrauch. Es folgt die behauptete Laufzeit von $\oh(n^3\cdot L + n^2\cdot L^2)$ Rechenschritten und der benötigte Speicherplatz von $\oh(N_{\max} + n^2\cdot L)$. 
 \end{beweis}
 
 \section{Evaluierung, Zusammenfassung und Schwächen des Ansatzes}
