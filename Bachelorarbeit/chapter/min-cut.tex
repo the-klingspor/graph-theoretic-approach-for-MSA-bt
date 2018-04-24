@@ -834,7 +834,7 @@ Die Laufzeit von \textrm{ResolveAmbiguities} wird von der Laufzeit zur Berechnun
 
 \textrm{PushRelabel} hat eine Komplexität von $\oh(|V|^2\cdot \sqrt{|E|})$, um einen \emph{minimalen Schnitt} zu berechnen. Weil $|V| \in \oh(n\cdot L)$ und $|E| \in \oh(n^2\cdot L)$ gelten, braucht man für einen Durchlauf also $\oh(n^3\cdot L^{5/2})$. Wenn wir Pech haben, entfernt jeder Aufruf unseres Algorithmus für den \emph{maximalen Fluss} nur einen einzigen Knoten aus der Zusammenhangskomponente. Das resultiert in $n\cdot L$ Aufrufen und einer Gesamtlaufzeit von $\oh(n^4\cdot L^{7/2})$.
 
-Möglicherweise lässt sich eine bessere Laufzeit erreichen, wenn alle Kanten eine uniforme Kapazität haben, wie das bei der Variante der Autoren der Fall ist. Es lässt sich zeigen, dass das ein deutlich leichteres Problem ist \citep{gt14} und nach Karzanov und Even hat eine Variante des Algorithmus von Dinic in diesem Fall gute Laufzeiten.
+Möglicherweise lässt sich eine bessere Laufzeit erreichen, wenn alle Kanten eine uniforme Kapazität haben, wie das bei der Variante der Autoren der Fall ist. Es lässt sich zeigen, dass das ein deutlich leichteres Problem ist \citep{gt14} und nach Karzanov und Even hat eine Variante des Algorithmus von Dinic in diesem Fall gute Laufzeiten. 
 
 Glücklicherweise sind die Zusammenhangskomponenten im Allgemeinen nicht so groß und in den meisten Fällen trennt man mit dem \emph{minimalen Schnitt} auch nicht nur einzelne Knoten ab. Bei Testläufen auf der Protein-Referenzdatenbank BAliBASE haben \cite{cpm10} die Referenzmenge RV12 genauer betrachtet. RV12 besteht aus 88 Sequenzfamilien, die im Schnitt zehn Sequenzen enthielt. Messungen haben ergeben, dass die \emph{Inzidenzgraphen} auf diesen Sequenzfamilien im Schnitt 2877 Knoten und 10952 in 223 Zusammenhangskomponenten enthalten haben. Auf diesen Sequenzen lassen sich in guten Laufzeiten von weniger als einer Minute multiple \emph{Sequenzalignments} berechnen. Anders sah es auf der Sequenzfamilie BB30003 aus. Diese besteht aus 142 Sequenzen und resultiert in einem monströsen \emph{Inzidenzgraphen}, der nur aus einer einzigen Zusammenhangskomponente besteht. Nach einer Laufzeit von 20 Stunden ohne Ergebnis wurde der Lauf auf Graphen, der $1,5\cdot 10^6$ Kanten enthält, erfolglos abgebrochen. Erst mit einer Begrenzung des minimalen \emph{Fragmentgewichts} auf 4 ließ sich in 13 Stunden ein Ergebnis erzielen. 
 
@@ -888,7 +888,7 @@ Als Beispiel konstruieren wir aus dem reduzierten \emph{Inzidenzgraphen} des let
 		$(2,5)$ \\ $(3,6)$ \\ $(4,6)$
 		\end{tabular}};
 	\node[mycircle,fill=blue] at (8,1.5) (c8) {\begin{tabular}{c}
-		$(1,6)$ \\ $(2,5)$ \\ $(4,6)$
+		$(1,6)$ \\ $(2,7)$ \\ $(4,8)$
 		\end{tabular}};
 	\node[mycircle,fill=green] at (10,1.5) (c9) {\begin{tabular}{c}
 		$(1,7)$ \\ $(2,8)$ \\ $(4,9)$
@@ -950,6 +950,8 @@ Aufgrund des gerade gezeigten Lemmas folgt, dass wir eine \emph{konsistente} Men
 	\item Benutze den so entstandenen DAG, um zu entscheiden, welche \emph{Stellen} aus den jeweiligen Knoten gelöscht werden müssen, um \emph{Inkonsistenzen} zu entfernen.
 \end{enumerate}
 
+\subsubsection{Entfernen der Kanten}
+
 Wir beginnen mit der Transformation des zyklischen Graphen in einen azyklischen, indem wir Kanten entfernen. Optimal wäre es Kanten mit einer minimalen Summe von Kantengewichten zu entfernen. Leider ist dieses Problem, das auch als \enquote{minimal weighted feedback arc set}-Problem bekannt ist, NP-schwer. Als Folge bedienen wir uns einfach einer einfachen Heuristik, indem wir sukzessive eine Grenze $k$ erhöhen und in jedem Schritt alle Kanten mit einem Gewicht kleiner als $k$ löschen, bis es keinen Zyklus im Graphen mehr gibt. Formal definieren wir die Menge an Kanten, die mindestens das Gewicht $k\in \mathbb{N}$ hat als 
 \begin{equation}
 \begin{split}
@@ -958,9 +960,85 @@ Wir beginnen mit der Transformation des zyklischen Graphen in einen azyklischen,
 \end{split}
 \end{equation}
 
-Für den Fall, dass durch das Löschen von Kanten der Graph nicht mehr zusammenhängend ist, fügen wir für jede Zusammenhangskomponente und jede an dieser beteiligten Sequenz eine Kante vom Startzustand $v_{start}$ zum Knoten mit der kleinsten \emph{Stelle} aus der gewählten Sequenz ein. Analog gehen wir mit den größten \emph{Stellen} und dem Endzustand $v_{end}$ vor. 
+Für den Fall, dass durch das Löschen von Kanten der Graph nicht mehr zusammenhängend ist, fügen wir für jede Zusammenhangskomponente und jede an dieser beteiligten Sequenz eine Kante vom Startzustand $v_{start}$ zum Knoten mit der kleinsten \emph{Stelle} aus der gewählten Sequenz ein. Analog gehen wir mit den größten \emph{Stellen} und dem Endzustand $v_{end}$ vor. Diese Menge dieser Kanten nennen wir $E_c$. Auf diese Weise ist sichergestellt, dass der azyklische Graph $G^* = (V,E_{k^*}\cup E_c)$ zusammenhängend ist und über jeden Knoten ein Pfad vom Start- zum Endzustand führt.
 
-Bei unserem Beispiel ist glücklicherweise nur Zyklus vorhanden, der 
+\subsubsection{Beispiel zum Entfernen von Kanten}
+
+Bei unserem Beispiel ist glücklicherweise nur Zyklus vorhanden, der bereits in $(V,E_1)$ nicht mehr vorhanden ist. Wir löschen also alle Kanten mit Kantengewicht 1 oder weniger, die nicht zum Start- oder Endknoten gehören. Entfernte Kanten wurden gestrichelt dargestellt. Das sieht dann so aus:  
+
+\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 1.1cm
+	]
+	
+	\node[mycircle,fill=gray] at (0.5,-0.5) (c1) {$v_{start}$};
+	\node[mycircle,fill=magenta] at (2,1.5) (c2) {\begin{tabular}{c}
+		$(1,2)$ \\ $(4,1)$
+		\end{tabular}};
+	\node[mycircle,fill=lime] at (4,1.5) (c3) {\begin{tabular}{c}
+		$(1,3)$ \\ $(2,1)$ \\ $(4,2)$
+		\end{tabular}};
+	\node[mycircle,fill=blue] at (4,-0.5) (c4) {\begin{tabular}{c}
+		$(1,4)$ \\ $(2,2)$ \\ $(3,3)$ \\ $(4,3)$
+		\end{tabular}};
+	\node[mycircle,fill=green] at (6,-0.5) (c5) {\begin{tabular}{c}
+		$(1,5)$ \\ $(2,3)$ \\ $(3,4)$ \\ $(4,4)$
+		\end{tabular}};
+	\node[mycircle,fill=red] at (8,-0.5) (c6) {\begin{tabular}{c}
+		$(1,8)$ \\ $(2,4)$ \\ $(3,5)$ \\ $(4,5)$
+		\end{tabular}};
+	\node[mycircle,fill=cyan] at (10,-0.5) (c7) {\begin{tabular}{c}
+		$(2,5)$ \\ $(3,6)$ \\ $(4,6)$
+		\end{tabular}};
+	\node[mycircle,fill=blue] at (8,1.5) (c8) {\begin{tabular}{c}
+		$(1,6)$ \\ $(2,7)$ \\ $(4,8)$
+		\end{tabular}};
+	\node[mycircle,fill=green] at (10,1.5) (c9) {\begin{tabular}{c}
+		$(1,7)$ \\ $(2,8)$ \\ $(4,9)$
+		\end{tabular}};
+	\node[mycircle, fill=gray] at (12,-0.5) (c10) {$v_{end}$};
+	% Kanten ohne Cycle
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1/c2/2/above,
+		c1/c3/1/below,
+		c2/c3/2/above,	
+		c1/c4/1/above,
+		c3/c4/3/right,
+		c4/c5/4/above,
+		c5/c6/3/above,
+		c9/c10/2/above,
+		c7/c10/1/above}	
+	\draw [myarrow] (\i) -- node[font=\tiny,\p] {\txt} (\j);
+	
+	\draw [myarrow] (c6) to[bend right] node[font=\tiny,below] {1} (c10);
+
+	\draw [myarrow,dotted] (c5) -- node[font=\tiny,above] {1} (c8);
+	
+	% Cycle%	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c6/c7/3/above,
+		c8/c9/3/above}
+	\draw [myarrow, draw=red] (\i) -- node[font=\tiny,\p] {\txt} (\j);	
+	
+	\draw [myarrow, draw=red] (c7) -- node[font=\tiny,above, pos=0.25] {2} (c8);	
+	\draw [myarrow, draw=red, dotted] (c9) -- node[font=\tiny,above, pos=0.25] {1} (c6);		
+	\end{tikzpicture}
+\end{center}
+
+\subsubsection{Entfernen von Stellen}
+
+Als nächstes lernen wir einen von \cite{pdc10} entwickelten Algorithmus kennen, der eine minimale Anzahl an \emph{Stellen} aus dem verkleinerten \emph{Sukzessionsgraphen} $G^*$ löscht, um alle \emph{Inkonsistenzen} zu entfernen. Dabei orientiert sich der Algorithmus an der linearen Halbordnung $\preceq$ über $\mathcal{S}$ und der Halbordnung auf dem DAG, die ersterer angepasst werden soll. Wir bezeichnen die Halbordnung auf $\mathcal{C}$, die durch den Graph $G^*$ induziert wird, als $\preceq^{*}$.
+
+Sei eine Sequenz $S_i \in S$ gegeben. Dann ist $\mathcal{C}_{S_i}$ die Teilmenge von Zusammenhangskomponenten aus $\mathcal{C}$, die \emph{Stellen} aus $S_i$ enthalten. Wir definieren außerdem eine Beschränkung der Knoten aus $G^*$ von $\mathcal{C}_{S_i}$ als $V_{S_i} = \mathcal{C}_{S_i} \cup \{v_{start},v_{end}\}$. Auf diesen existiert eine Ordnung $\preceq_{S_i}$, die durch die natürliche Ordnung auf $S_i$ gegeben ist, und die Halbordnung $\preceq_{S_i}^{*}$ des Graphen mit reduzierter Knotenmenge. Wir definieren $\mathcal{R}_{S_i} = \preceq_{S_i} \cap \preceq_{S_i}^{*}$. Diese Relation 
 
 \subsection{Algorithmus zur Bestimmung des längsten Pfads}
 

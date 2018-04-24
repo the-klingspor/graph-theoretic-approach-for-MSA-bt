@@ -52,12 +52,16 @@
 \contentsline {section}{\numberline {4.3}Sukzessionsgraphen und der Algorithmus von Pitschi}{52}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Aufbau des Sukzessionsgraphen}{52}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}Der Algorithmus von Pitschi}{53}{subsection.4.3.2}
-\contentsline {subsection}{\numberline {4.3.3}Algorithmus zur Bestimmung des l\IeC {\"a}ngsten Pfads}{54}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}Ankerpunkte}{54}{subsection.4.3.4}
-\contentsline {subsection}{\numberline {4.3.5}Komplexit\IeC {\"a}t}{55}{subsection.4.3.5}
-\contentsline {section}{\numberline {4.4}Zusammenfassung}{55}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Gesamtkomplexit\IeC {\"a}t}{55}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Evaluierung}{55}{subsection.4.4.2}
+\contentsline {subsubsection}{\nonumberline Entfernen der Kanten}{54}{section*.21}
+\contentsline {subsubsection}{\nonumberline Beispiel zum Entfernen von Kanten}{54}{section*.22}
+\contentsline {subsubsection}{\nonumberline Entfernen von Stellen}{54}{section*.23}
+\contentsline {subsection}{\numberline {4.3.3}Algorithmus zur Bestimmung des l\IeC {\"a}ngsten Pfads}{55}{subsection.4.3.3}
+\contentsline {subsection}{\numberline {4.3.4}Probleme bei der Heuristik zum Entfernen von Kanten}{55}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}Ankerpunkte}{55}{subsection.4.3.5}
+\contentsline {subsection}{\numberline {4.3.6}Komplexit\IeC {\"a}t}{56}{subsection.4.3.6}
+\contentsline {section}{\numberline {4.4}Zusammenfassung}{56}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Gesamtkomplexit\IeC {\"a}t}{56}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Evaluierung}{56}{subsection.4.4.2}
 \contentsline {chapter}{\numberline {5}Programmierung}{57}{chapter.5}
 \contentsline {section}{\numberline {5.1}Speichereffiziente Umsetzung der dynamischen Programmierung}{57}{section.5.1}
 \contentsline {chapter}{\numberline {6}Validierung der Ergebnisse}{59}{chapter.6}
