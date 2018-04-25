@@ -830,6 +830,8 @@ Obwohl in diesem Graphen keine \emph{Mehrdeutigkeiten} mehr existieren, ist die 
 
 \subsection{Komplexität}
 
+Der \emph{Inzidenzgraph} lässt sich aus den \emph{Fragmenten} der paarweisen \emph{Alignments} in $\oh(n^2\cdot)$ berechnen, weil es $\oh(n^2)$ davon gibt, die bis zu $\oh(L)$ Verbindungen enthalten.
+
 Die Laufzeit von \textrm{ResolveAmbiguities} wird von der Laufzeit zur Berechnung des \emph{minimalen Schnitts} durch \textrm{PushRelabel} dominiert \citep{cpm10}. Diese hängt von der Größe unserer Zusammenhangskomponenten ab. Im schlimmsten Fall besteht der \emph{Inzidenzgraph} aus einer einzigen Zusammenhangskomponente bei der jeder Knoten mit mindestens einem Knoten aus jeder anderen Sequenz verbunden ist. In diesem Fall muss sie in vielen Schritten zerkleinert werden muss, bis nur noch \emph{partielle Zuweisungsspalten} übrig bleiben. Eine Zusammenhangskomponente kann $n\cdot L$ Knoten und $\oh(n^2\cdot L)$ Kanten haben. Das liegt daran, dass wir als Grundlage unsere paarweisen \emph{Alignments} benutzen, bei denen jede \emph{Stelle} für jede andere Sequenz mit höchstens einer \emph{Stelle} aus dieser verbunden ist. 
 
 \textrm{PushRelabel} hat eine Komplexität von $\oh(|V|^2\cdot \sqrt{|E|})$, um einen \emph{minimalen Schnitt} zu berechnen. Weil $|V| \in \oh(n\cdot L)$ und $|E| \in \oh(n^2\cdot L)$ gelten, braucht man für einen Durchlauf also $\oh(n^3\cdot L^{5/2})$. Wenn wir Pech haben, entfernt jeder Aufruf unseres Algorithmus für den \emph{maximalen Fluss} nur einen einzigen Knoten aus der Zusammenhangskomponente. Das resultiert in $n\cdot L$ Aufrufen und einer Gesamtlaufzeit von $\oh(n^4\cdot L^{7/2})$.
@@ -1182,7 +1184,15 @@ Das Verfahren funktioniert so, dass der Experte \emph{Fragmente} (die auch nur p
 
 \subsection{Komplexität}
 
-$\oh(n^3\cdot L)$ für n-faches Topological Sort auf einem Knoten mit $\oh(n^2\cdot L)$-vielen Kanten im schlimmsten Fall.
+Der \emph{Sukzessionsgraph} $SG(C)$ kann aus dem \emph{Inzidenzgraphen} in $\oh(n\cdot L)$ Rechenschritten berechnet werden, weil es höchstens so viele \emph{partielle Zuweisungsspalten} gegeben kann. Außerdem ist die Anzahl der direkten Nachfolger pro Sequenz auch durch $L$ begrenzt, was eine obere Grenze für die Anzahl der Kanten liefert.
+
+Die transitive Hülle für $G^{+}$ berechnen wir beispielsweise durch Breitensuche für jeden Knoten. Weil es $\oh(n\cdot L)$ Knoten geben kann und jeder dieser Aufrufe $\oh(n\cdot L)$ Rechenschritte benötigt, weil dies die maximale Anzahl an Kanten und Knoten ist, folgt hierfür die Laufzeit von $\oh(n^2\cdot L^2)$. Überlegungen für einen effizienteren Algorithmus haben sich als fruchtlos erwiesen. Für diesen hätten wir zuerst eine topologische Sortierung berechnet und von hinten nach vorne bearbeitet. Die transitive Hülle eines Knotens $u$ kann dabei durch Vereinigung aller Knoten $v$ mit $(u,v) \in E$ sowie deren transitive Hülle berechnet werden. Im schlimmsten Fall habe ich $\o(L)$ Ebenen in meinem Graphen mit je bis zu $\oh(n)$ Knoten und $\oh(n)$ Kanten in andere Ebenen. Es kommt pro Ebene also zu bis zu $\oh(n)$ vielen Vereinigungen. Weil die Mengen, die miteinander vereinigt werden, aber bis zu $\oh(n\cdot L)$ Elemente enthalten (potentiell erreichbare Knoten), komme ich selbst unter Verwendung von Bit-Sets und Vereinigung über das bitweise Oder auf Kosten von $\oh(n^2\cdot L)$ pro Ebene. Auf Grund der $\oh(L)$ Ebenen bleibt es bei der Laufzeit von $\oh(n^2\cdot L^2)$, selbst wenn dieser Algorithmus in der Praxis sehr schnell sein dürfte. Weil ich im Allgemeinen nicht davon ausgehen kann, dass mein Graph signifikant viel weniger starke Zusammenhangskomponenten als Knoten insgesamt enthält, liefert auch der Algorithmus von Purdom keine bessere Laufzeit.
+
+Für das Konstruieren der Graphen $G_{S_i}$ unserer Sequenzen $S_1, \dots, S_n$ benötigen wir jeweils lineare Zeit in der Größe des Graphen $G^{+}$, um zu überprüfen welche Knoten \emph{Stellen} der jeweiligen Sequenz enthalten und welche Kanten die Relation $\mathcal{R}_{S_i}$ erfüllen. Zwar kann es grundsätzlich $\oh(n\cdot L)$ Knoten geben und jeder Knoten bis zu $\oh(n)$ \emph{Stellen}, aber die Gesamtanzahl an \emph{Stellen} ist durch $n\cdot L$ begrenzt. Bei $n$ Sequenzen folgt die Laufzeit in $\oh(n^2\cdot L)$.
+
+Die längsten Pfade für alle Sequenzen benötigen $\oh(n\cdot L^2)$ für $n$-faches Topological Sort auf einem Graphen mit $\oh(L)$-vielen Knoten und somit $\oh(L^2)$ Kanten im schlimmsten Fall (transitive Hülle). Die topologischen Sortierungen der Knoten werden ebenfalls $n$-mal traversiert, womit eine Laufzeit von $\oh(n\cdot L)$ folgt.
+
+Insgesamt dominiert das Berechnen der transitiven Hülle die Komplexität des Algorithmus von Pitschi mit $\oh(n^2\cdot L^2)$. Weil der vorangegangene Schritt mit den \emph{minimalen Schnitten} aber ohnehin eine deutlich höhere Komplexität hat, ist es müßig hier nach effizienteren Ansätzen zu suchen. 
 
 \section{Abschluss und Zusammenfassung}
 
