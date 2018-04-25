@@ -1036,11 +1036,135 @@ Bei unserem Beispiel ist glücklicherweise nur Zyklus vorhanden, der bereits in 
 
 \subsubsection{Entfernen von Stellen}
 
-Als nächstes lernen wir einen von \cite{pdc10} entwickelten Algorithmus kennen, der eine minimale Anzahl an \emph{Stellen} aus dem verkleinerten \emph{Sukzessionsgraphen} $G^*$ löscht, um alle \emph{Inkonsistenzen} zu entfernen. Dabei orientiert sich der Algorithmus an der linearen Halbordnung $\preceq$ über $\mathcal{S}$ und der Halbordnung auf dem DAG, die ersterer angepasst werden soll. Wir bezeichnen die Halbordnung auf $\mathcal{C}$, die durch den Graph $G^*$ induziert wird, als $\preceq^{*}$.
+Als nächstes lernen wir einen von \cite{pdc10} entwickelten Algorithmus kennen, der eine minimale Anzahl an \emph{Stellen} aus dem verkleinerten \emph{Sukzessionsgraphen} $G^{*}$ löscht, um alle \emph{Inkonsistenzen} zu entfernen. Dabei orientiert sich der Algorithmus an der linearen Halbordnung $\preceq$ über $\mathcal{S}$ und der Halbordnung auf dem DAG, die ersterer angepasst werden soll. Wir bezeichnen die Halbordnung auf $\mathcal{C}$, die durch den Graph $G^{*}$ induziert wird, als $\preceq^{*}$.
 
-Sei eine Sequenz $S_i \in S$ gegeben. Dann ist $\mathcal{C}_{S_i}$ die Teilmenge von Zusammenhangskomponenten aus $\mathcal{C}$, die \emph{Stellen} aus $S_i$ enthalten. Wir definieren außerdem eine Beschränkung der Knoten aus $G^*$ von $\mathcal{C}_{S_i}$ als $V_{S_i} = \mathcal{C}_{S_i} \cup \{v_{start},v_{end}\}$. Auf diesen existiert eine Ordnung $\preceq_{S_i}$, die durch die natürliche Ordnung auf $S_i$ gegeben ist, und die Halbordnung $\preceq_{S_i}^{*}$ des Graphen mit reduzierter Knotenmenge. Wir definieren $\mathcal{R}_{S_i} = \preceq_{S_i} \cap \preceq_{S_i}^{*}$. Diese Relation 
+Sei eine Sequenz $S_i \in S$ gegeben. Dann ist $\mathcal{C}_{S_i}$ die Teilmenge von Zusammenhangskomponenten aus $\mathcal{C}$, die \emph{Stellen} aus $S_i$ enthalten. Wir definieren außerdem eine Beschränkung der Knoten aus $G^{*}$ von $\mathcal{C}_{S_i}$ als $V_{S_i} = \mathcal{C}_{S_i} \cup \{v_{start},v_{end}\}$. Auf diesen existiert eine Ordnung $\preceq_{S_i}$, die durch die natürliche Ordnung auf $S_i$ gegeben ist, und die Halbordnung $\preceq_{S_i}^{*}$ des Graphen mit reduzierter Knotenmenge. Wir definieren $\mathcal{R}_{S_i} = \preceq_{S_i}\, \cap\, \preceq_{S_i}^{*}$. Diese Relation entspricht genau den Verbindungen der transitiven Hülle im ursprünglichen Graph, wenn man $G^{*}$ auf die Knoten aus $\mathcal{C}_{S_i}$ beschränkt. Sei dafür $G^{+} = (V,E^{+})$ die transitive Hülle $TC(G^{*})$ des DAG. Weil $G^{*}$ keine Zyklen enthält, kann auch $TC(G^{*})$ keine enthalten. Wir können $G^{*}$ auf jede unserer Sequenzen $S_i$ beschränken, indem wir den reduzierten Knotensatz $V_{S_i}$ benutzen und genau dann eine Kante zwischen zwei Knoten einfügen, falls diese in unserer Relation $\mathcal{R}_{S_i}$ liegen.
+
+\begin{definition}
+	Der Graph $G_{S_i}$ einer Sequenz $S_i$ ist definiert als Graph über der Knotenmenge $V_{S_i}$ und den Kanten $E_{S_i}$. Es gilt
+	\begin{equation}
+		(u,v) \in E_{S_i} \Longleftrightarrow u,v \in V_{S_i}, (u,v) \in E^{+}\: \text{und}\: u \preceq_{S_i} v \Longleftrightarrow u\: \mathcal{R}_{S_i}\: v
+	\end{equation}
+\end{definition}
+
+Pfade von $v_{start}$ nach $v_{end}$ in $G_{S_i}$ sind genau die Teilmengen von \emph{partiellen Zuweisungsspalten}, die bezüglich $S_i$ \emph{konsistent} sind. Das liegt daran, dass für zwei Knoten $u,v \in V_{S_i}$ auf einem solchen Pfad sowohl $u \preceq_{S_i} v$, als auch $u \preceq_{S_i}^{*} v$ gelten und damit $u \preceq_{S_i}^{*} v \implies u \preceq_{S_i} v$. Das war aber genau die Definition für \emph{Konsistenz}: dass die Relation die natürliche Ordnung auf den Sequenzen erhält. Wie entfernen daher alle \emph{Stellen} unserer Sequenz aus den Knoten, die nicht auf dem gewählten Pfad liegen, weil diese die \emph{Konsistenz} verletzen würden. \unsure{Reicht das als Beweis oder muss das mit dem DAG aus dem Lemma gezeigt werden?}
+
+Wenn wir jetzt für jede unserer Sequenzen $S_j$ einen Pfad von $v_{start}$ nach $v_{end}$ in $G_{S_j}$ wählen und alle nicht-besuchten \emph{Stellen}  aus ihren Knoten entfernen, dann hält die \emph{Konsistenzbedingung} auf der Relation, die durch die übriggebliebenen Zusammenhangskomponenten induziert wird. Das Resultat ist also ein \emph{Alignment}. Da wir aber nicht irgendein \emph{Alignment} erhalten wollen, sondern ein möglichst großes, wählen wir für jede Sequenz $S_i \in S$ den Pfad maximaler Länge durch $G_{S_i}$. Auf diese Weise löschen wir die minimale Anzahl an \emph{Stellen} aus ihren Zusammenhangskomponenten. Formal: Sei für eine Sequenz $S_i$ $g_{S_i}$ ein Pfad maximaler Länge $(v_{start}, u_1, \dots, u_n, v_{end})$ gegeben. Wir iterieren über alle Knoten $C \in \mathcal{C}_{S_i}$ und entfernen \emph{Stellen} $(i,p) \in C$, falls $C \notin g_{S_i}$. Wenn wir das für alle Sequenzen tun, dann nennen wir die Menge der reduzierten Zusammenhangskomponenten $C°$. Weil die mit $C°$ korrespondierende Relation ein \emph{Alignment} ist, wäre der \emph{Sukzessionsgraph} $SG(C°)$ ein DAG. Da die Pfade für jede Sequenz unabhängig voneinander sind, können wir diese in beliebiger Reihenfolge wählen, ohne dass dies einen Einfluss auf unser Ergebnis hat.
+
+Letztendlich folgt, dass das Problem die \emph{partiellen Zuweisungsspalten} auf \emph{konsistente Zuweisungsspalten} zu reduzieren auf die Suche nach Pfaden maximaler Länge durch gerichtete azyklische Graphen abbildbar ist \citep{cpm10}.
+
+\subsubsection{Beispiel zum Entfernen von Stellen mit dem Algorithmus von Pitschi}
+
+Bevor wir im nächsten Abschnitt genauer kennenlernen, wie man einen längsten Pfad im DAG eigentlich genau berechnet, betrachten wir unser Beispiel, in diesem Fall nur für die Sequenz $S_1$. Weil der Algorithmus zum Berechnen des längsten Pfades die Kantengewichte ignoriert und nur Knoten zählt, wurden diese nicht mehr angegeben. Formal handelt es sich hierbei um die Suche nach einem längsten Pfad in einem ungewichteten Graphen. Die Pfade, die über die Bildung der transitiven Hülle neu dazu kamen, sind grau angedeutet.
+
+\begin{center}
+	\begin{tikzpicture}[
+	mycircle/.style={
+		circle,
+		draw=black,
+		fill opacity = 0.3,
+		text opacity=1,
+		inner sep=0pt,
+		minimum size=15pt,
+		font=\tiny},
+	myarrow/.style={-Stealth},
+	node distance=0.6cm and 1.1cm
+	]
+	
+	\node[mycircle,fill=gray] at (0.5,-0.5) (c1) {$v_{start}$};
+	\node[mycircle,fill=magenta] at (2,2) (c2) {\begin{tabular}{c}
+		$(1,2)$ \\ $(4,1)$
+		\end{tabular}};
+	\node[mycircle,fill=lime] at (4,2) (c3) {\begin{tabular}{c}
+		$(1,3)$ \\ $(2,1)$ \\ $(4,2)$
+		\end{tabular}};
+	\node[mycircle,fill=blue] at (4,-0.5) (c4) {\begin{tabular}{c}
+		$(1,4)$ \\ $(2,2)$ \\ $(3,3)$ \\ $(4,3)$
+		\end{tabular}};
+	\node[mycircle,fill=green] at (6,-0.5) (c5) {\begin{tabular}{c}
+		$(1,5)$ \\ $(2,3)$ \\ $(3,4)$ \\ $(4,4)$
+		\end{tabular}};
+	\node[mycircle,fill=red] at (8,-0.5) (c6) {\begin{tabular}{c}
+		$(1,8)$ \\ $(2,4)$ \\ $(3,5)$ \\ $(4,5)$
+		\end{tabular}};
+	\node[mycircle,fill=blue] at (8,2) (c8) {\begin{tabular}{c}
+		$(1,6)$ \\ $(2,7)$ \\ $(4,8)$
+		\end{tabular}};
+	\node[mycircle,fill=green] at (10,2) (c9) {\begin{tabular}{c}
+		$(1,7)$ \\ $(2,8)$ \\ $(4,9)$
+		\end{tabular}};
+	\node[mycircle, fill=gray] at (12,-0.5) (c10) {$v_{end}$};
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1/c8//above,
+		c2.310/c10//above,
+		c3/c10//above,
+		c4/c8//above,
+		c4/c9//above,
+		c5/c9//above,
+		c8/c10//above}	
+	\draw [myarrow,lightgray] (\i) -- node[font=\tiny,\p] {\txt} (\j);
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1/c5//above,
+		c1/c6//above,
+		c1/c10//above,
+		c4/c5//above,
+		c4/c10//above,
+		c5/c10//above}	
+	\draw [myarrow,lightgray] (\i) to[bend right] node[font=\tiny,\p] {\txt} (\j);
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c2/c8//above,
+		c2/c9//above,
+		c3/c9//above}	
+	\draw [myarrow,lightgray] (\i) to[bend left] node[font=\tiny,\p] {\txt} (\j);
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1/c3//below,	
+		c1/c4//above,
+		c5/c6//above,
+		c8/c9//above,
+		c6/c10//above}	
+	\draw [myarrow] (\i) -- node[font=\tiny,\p] {\txt} (\j);
+	
+	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
+		c1/c2//above,
+		c2/c3//above,	
+		c3/c4//right,
+		c4/c5//above,
+		c5/c8//above,
+		c8/c9//above,
+		c9/c10//above}	
+	\draw [myarrow,red] (\i) -- node[font=\tiny,\p] {\txt} (\j);
+	
+	\end{tikzpicture}
+\end{center}
+
+\vspace{-5pt}
+
+Im Graphen $G_{S_1}$ gibt es eine Kante vom $(1,5)$er-Knoten zum $(1,6)$er, obwohl diese direkte Kante in $G^{*}$ gelöscht wurde. Das liegt an der Verbindung $(2,3) \rightarrow (2,4) \rightarrow (2,5) \rightarrow (2,7)$ und $(1,5) \preceq_{S_1} (1,6)$. Die Kante von $(1,8) \rightarrow (1,6)$ gibt es aber nicht, obwohl diese in der transitiven Hülle verbunden sind. Das liegt an $(1,8) \npreceq_{S_i} (1,6)$. Der hellblaue Knoten enthält keine \emph{Stelle} aus $S_1$ und ist daher nicht Teil von $V_{S_1}$.
+
+Wie schon beim Blick auf den ersten Sukzessionsgraphen vermutet, ist das Problem die \emph{Stelle} $(1,8)$, die für Überkreuzungen sorgt. Sie liegt nicht auf dem längsten Pfad (rot markiert) und wird daher aus der Zusammenhangskomponente des Knoten entfernt. Die längsten Pfade aller anderen Sequenzen besuchen auch alle Knoten der jeweiligen Graphen, weshalb keine weiteren Knoten modifiziert werden müssen.
 
 \subsection{Algorithmus zur Bestimmung des längsten Pfads}
+
+Für die Berechnung der längsten Pfade benutzen wir die \emph{topologische Sortierung} der Knoten der Graphen $G_{S_i}$ für alle Sequenzen $S_i \in S$. 
+
+\begin{definition}[Topologische Sortierung]
+	Es sei ein Graph $G = (V,E)$ gegeben. Eine \emph{topologische Sortierung} von $G$ ist eine lineare Aufzählung der Knoten in $V$ $f(v_1), \dots, f(x), \dots, f(y), \dots, f(v_n)$ bei der für alle Knoten $x,y \in V$ gilt:
+	$f(x) < f(y) \implies $  
+\end{definition}
+
+Algorithmus für TS
+
+Beweisen, dass Algo TS liefert auf DAG
+
+Algorithmus für längsten Pfad
+
+Beweis, dass Algo längsten Pfad liefert
+
+Beispiel an einem Graphen
 
 \subsection{Probleme bei der Heuristik zum Entfernen von Kanten}
 
@@ -1048,11 +1172,11 @@ circular permutation -> alle Kanten gelöscht
 
 viele Kanten entfernt, die nichts mit dem Zyklus zu tun haben
 
-\subsection{Ankerpunkte}
+\subsection{Verankerungen}
 
 \cite{mpps06} haben einen semiautomatisierten Ansatz für das \emph{multiple sequence alignment}-Problem entwickelt. Bei diesem kann der Benutzer, der über Expertenwissen verfügt, vorgeben, welche Positionen der Sequenzen auf jeden Fall miteinander \emph{aligniert} werden sollen. Das ist insbesondere dann nützlich, wenn es Abschnitte gibt, die sich mathematisch gesehen sehr ähnlich sind, deren Zuordnung biologisch aber falsch wäre. Ein Beispiel für solche Sequenzen haben wir mit den \emph{Hoxgenen} des Pufferfisches im Abschnitt über die Schwächen von DIALIGN bereits kennengelernt. Es hat sich herausgestellt, dass das semiautomatisierte Verfahren bei vielen Tests auf der Referenzdatenbank BAliBASE bessere Ergebnisse geliefert hat, wenn die Startpunkte aller Motive als \emph{Verankerungen} gesetzt wurden.
 
-Das Verfahren funktioniert so, dass der Experte \emph{Fragmente} (was auch nur paarweise Zuweisungen sein können) wählt und diese mit einer Dringlichkeit an DIALIGN übergibt. Wie im Standardalgorithmus werden dann gierig die \emph{Fragmente} mit maximaler Dringlichkeit gewählt, die zu allen bereits gewählten \emph{konsistent} sind. Zwischen diesen \emph{Verankerungen} wird dann ganz normal DIALIGN durchgeführt, wodurch die restlichen Abschnitte automatisiert \emph{aligniert} werden.
+Das Verfahren funktioniert so, dass der Experte \emph{Fragmente} (die auch nur paarweise Zuweisungen sein können) wählt und diese mit einer Dringlichkeit an DIALIGN übergibt. Wie im Standardalgorithmus werden dann gierig die \emph{Fragmente} mit maximaler Dringlichkeit gewählt, die zu allen bereits gewählten \emph{konsistent} sind. Zwischen diesen \emph{Verankerungen} wird dann ganz normal DIALIGN durchgeführt, wodurch die restlichen Abschnitte automatisiert \emph{aligniert} werden.
 
 \cite{cpm10} benutzten die bereits vorliegende Infrastruktur in DIALIGN, um die \emph{Zuweisungsspalten}, die der Algorithmus von Pitschi geliefert hat, als \emph{Verankerungen} ins \emph{Alignment} zu integrieren. Weil diese Möglichkeit in unserer Implementierung nicht bereits vorhanden ist, werden wir die Resultate des \emph{Min-Cut}-Ansatzes direkt mit Hilfe von \textrm{EdgeAddition} und dem \emph{Alignmentgraphen} in unser Ergebnis integrieren. Neben dem Übergeben von \emph{konsistenten Zuweisungsspalten} als \emph{Verankerungen} hat man auch Versuche mit \emph{partiellen Zuweisungsspalten} gemacht. Hier war die gierige Heuristik von DIALIGN aber nicht erfolgreich und die Ergebnisse waren schlechter als mit dem Algorithmus von Pitschi. Aus diesem Grund werden wir den zweiten Ansatz nicht weiter behandeln.
 
@@ -1060,7 +1184,7 @@ Das Verfahren funktioniert so, dass der Experte \emph{Fragmente} (was auch nur p
 
 $\oh(n^3\cdot L)$ für n-faches Topological Sort auf einem Knoten mit $\oh(n^2\cdot L)$-vielen Kanten im schlimmsten Fall.
 
-\section{Zusammenfassung}
+\section{Abschluss und Zusammenfassung}
 
 \subsection{Gesamtkomplexität}
 $\oh(n^4\cdot L^{7/2})$ 
