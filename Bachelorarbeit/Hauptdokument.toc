@@ -52,23 +52,24 @@
 \contentsline {section}{\numberline {4.3}Sukzessionsgraphen und der Algorithmus von Pitschi}{52}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Aufbau des Sukzessionsgraphen}{52}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}Der Algorithmus von Pitschi}{54}{subsection.4.3.2}
-\contentsline {subsubsection}{\nonumberline Entfernen der Kanten}{54}{section*.21}
-\contentsline {subsubsection}{\nonumberline Beispiel zum Entfernen von Kanten}{54}{section*.22}
-\contentsline {subsubsection}{\nonumberline Entfernen von Stellen}{55}{section*.23}
-\contentsline {subsubsection}{\nonumberline Beispiel zum Entfernen von Stellen mit dem Algorithmus von Pitschi}{56}{section*.25}
-\contentsline {subsection}{\numberline {4.3.3}Algorithmus zur Bestimmung des l\IeC {\"a}ngsten Pfads}{56}{subsection.4.3.3}
-\contentsline {subsection}{\numberline {4.3.4}Probleme bei der Heuristik zum Entfernen von Kanten}{57}{subsection.4.3.4}
-\contentsline {subsection}{\numberline {4.3.5}Verankerungen}{57}{subsection.4.3.5}
-\contentsline {subsection}{\numberline {4.3.6}Komplexit\IeC {\"a}t}{57}{subsection.4.3.6}
-\contentsline {section}{\numberline {4.4}Abschluss und Zusammenfassung}{58}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Gesamtkomplexit\IeC {\"a}t}{58}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Evaluierung}{58}{subsection.4.4.2}
-\contentsline {chapter}{\numberline {5}Programmierung}{59}{chapter.5}
-\contentsline {section}{\numberline {5.1}Speichereffiziente Umsetzung der dynamischen Programmierung}{59}{section.5.1}
-\contentsline {chapter}{\numberline {6}Validierung der Ergebnisse}{61}{chapter.6}
-\contentsline {section}{\numberline {6.1}Vorstellung BAliBase und (D)IRMBASE}{61}{section.6.1}
-\contentsline {section}{\numberline {6.2}Test auf BAliBase}{61}{section.6.2}
-\contentsline {section}{\numberline {6.3}Test auf DIRMBASE und IRMBASE}{61}{section.6.3}
-\contentsline {chapter}{\numberline {7}Fazit}{63}{chapter.7}
-\contentsline {section}{\numberline {7.1}Zusammenfassung}{63}{section.7.1}
-\contentsline {section}{\numberline {7.2}Future Works}{63}{section.7.2}
+\contentsline {subsubsection}{\nonumberline Entfernen der Kanten}{54}{section*.22}
+\contentsline {subsubsection}{\nonumberline Beispiel zum Entfernen von Kanten}{54}{section*.23}
+\contentsline {subsubsection}{\nonumberline Entfernen von Stellen}{55}{section*.24}
+\contentsline {subsubsection}{\nonumberline Beispiel zum Entfernen von Stellen mit dem Algorithmus von Pitschi}{56}{section*.26}
+\contentsline {subsection}{\numberline {4.3.3}Algorithmus zur Bestimmung des l\IeC {\"a}ngsten Pfads}{57}{subsection.4.3.3}
+\contentsline {subsubsection}{\nonumberline Laufzeit}{58}{section*.27}
+\contentsline {subsection}{\numberline {4.3.4}Verankerungen}{59}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}Komplexit\IeC {\"a}t}{59}{subsection.4.3.5}
+\contentsline {section}{\numberline {4.4}Abschluss und Zusammenfassung}{60}{section.4.4}
+\contentsline {subsection}{\numberline {4.4.1}Gesamtkomplexit\IeC {\"a}t}{60}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Probleme bei der Heuristik zum Entfernen von Kanten}{61}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Evaluierung}{61}{subsection.4.4.3}
+\contentsline {chapter}{\numberline {5}Programmierung}{63}{chapter.5}
+\contentsline {section}{\numberline {5.1}Speichereffiziente Umsetzung der dynamischen Programmierung}{63}{section.5.1}
+\contentsline {chapter}{\numberline {6}Validierung der Ergebnisse}{65}{chapter.6}
+\contentsline {section}{\numberline {6.1}Vorstellung BAliBase und (D)IRMBASE}{65}{section.6.1}
+\contentsline {section}{\numberline {6.2}Test auf BAliBase}{65}{section.6.2}
+\contentsline {section}{\numberline {6.3}Test auf DIRMBASE und IRMBASE}{65}{section.6.3}
+\contentsline {chapter}{\numberline {7}Fazit}{67}{chapter.7}
+\contentsline {section}{\numberline {7.1}Zusammenfassung}{67}{section.7.1}
+\contentsline {section}{\numberline {7.2}Future Works}{67}{section.7.2}

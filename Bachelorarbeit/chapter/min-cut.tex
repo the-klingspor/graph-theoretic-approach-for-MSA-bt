@@ -384,7 +384,7 @@ Diese \emph{Fragmente} überführen wir direkt in einen \emph{Inzidenzgraphen} b
 
 Die Zusammenhangskomponenten unseres \emph{Inzidenzgraphen} werden wir jetzt als \emph{Flussnetzwerke} interpretieren, um mit Hilfe eines Algorithmus zur Berechnung eines \emph{minimalen Schnitts} solange Kanten zu entfernen, bis alle \emph{Mehrdeutigkeiten} aufgelöst sind.
 
-Sei $C$ eine Zusammenhangskomponente von $G_{\mathcal{F}}$, die \emph{mehrdeutig} ist, also zwei Knoten $x,y$ aus der selben Sequenz enthält. Wir wählen die \emph{mehrdeutigen} Knoten $x$ und $y$ als \emph{Quelle} und \emph{Senke} unseres \emph{Flussnetzwerks}. Die ungerichteten Kanten des \emph{Inzidenzgraphen} werden durch zwei antiparallele gerichtete Kanten ersetzt. \cite{cpm10} benutzen als Kapazitäten jeweils 1. Meiner Meinung nach wäre es hingegen sinnvoller die Kapazitäten so zu wählen, dass ähnliche Symbole seltener voneinander durch den \emph{minimalen Schnitt} und das damit einhergehende Löschen von Kanten getrennt werden. Das können wir beispielsweise erreichen, indem wir uns an den Ähnlichkeitswerten unserer Substitutionsmatrix orientieren. Weil \emph{Flussnetzwerke} nicht-negative Kapazitäten erwarten, müssen die Werte gegebenenfalls modifiziert werden, indem wir den betragsmäßig größten Eintrag der Matrix zu allen Einträgen addieren. Das bedeutet, dass bei unserer $(+3/-1)$-Substitutionsmatrix aus dem Beispiel zwischen übereinstimmenden Symbolen eine Kapazität von 6 und zwischen nicht übereinstimmendes eine von 2 benutzt wird. Ob dieser Ansatz einen Vorteil bietet werden wir später bei der Evaluierung meiner Implementierung feststellen.
+Sei $C$ eine Zusammenhangskomponente von $G_{\mathcal{F}}$, die \emph{mehrdeutig} ist, also zwei Knoten $x,y$ aus der selben Sequenz enthält. Wir wählen die \emph{mehrdeutigen} Knoten $x$ und $y$ als \emph{Quelle} und \emph{Senke} unseres \emph{Flussnetzwerks}. Die ungerichteten Kanten des \emph{Inzidenzgraphen} werden durch zwei antiparallele gerichtete Kanten ersetzt. \cite{cpm10} benutzen als Kapazitäten jeweils 1. Meiner Meinung nach wäre es hingegen sinnvoller die Kapazitäten so zu wählen, dass ähnliche Symbole seltener voneinander durch den \emph{minimalen Schnitt} und das damit einhergehende Löschen von Kanten getrennt werden. Das können wir beispielsweise erreichen, indem wir uns an den Ähnlichkeitswerten unserer Substitutionsmatrix orientieren. Weil \emph{Flussnetzwerke} nicht-negative Kapazitäten erwarten, müssen die Werte gegebenenfalls modifiziert werden, indem wir den betragsmäßig größten Eintrag der Matrix zu allen Einträgen addieren. Das bedeutet, dass bei unserer $(+3/-1)$-Substitutionsmatrix aus dem Beispiel zwischen übereinstimmenden Symbolen eine Kapazität von 6 und zwischen nicht übereinstimmendes eine von 2 benutzt wird. Leider war es aufgrund der begrenzten Zeit und des hohen Aufwands nicht möglich das ganze Verfahren zu implementieren. Eine Evaluierung mit echten \emph{Alignments} fehlt also leider. Weil ich den Ansatz mit den nicht-unitären Kapazitäten als sehr sinnvoll erachte, habe ich ihn bei unseren Beispielen verwendet.
 
 Als nächstes benutzen wir einen Algorithmus zur Bestimmung des \emph{maximalen Flusses}. Wie mit dem \emph{Max-Flow-Min-Cut-Satz} gezeigt, bestimmen wir durch die Bestimmung des \emph{maximalen Flusses} auch gleichzeitig einen \emph{minimalen Schnitt}. Das ist die \enquote{schmalste} Verbindungsstelle zwischen der \emph{Quelle} und der \emph{Senke} und wir hoffen durch Löschen der dazugehörigen Kanten die \emph{Mehrdeutigkeit} aufzulösen und die dichtbesetzten Untergraphen zu erhalten. Im Original wird der Algorithmus von Edmonds-Karp benutzt, während wir stattdessen einen \emph{Push-Relabel-Algorithmus} mit Laufzeit \emph{$\oh(|V|^2\cdot \sqrt{|E|})$} für die Komplexität betrachten und in unserer Implementierung verwenden. Nachdem der \emph{minimale Schnitt} bestimmt wurde, löschen wir alle Kanten zwischen den Mengen $A$ und $B$. Auf diese Art und Weise wird unsere Zusammenhangskomponente $C$ in zwei neue Zusammenhangskomponenten $A$ und $B$ aufgeteilt. Dieses Verfahren wiederholen wir solange, bis es keine \emph{mehrdeutigen} Äquivalenzklassen mehr gibt.  \improvement{Graphik aus CPM10 mit Zusammenhangskomponenten einfügen.}
 
@@ -412,7 +412,7 @@ Als nächstes benutzen wir einen Algorithmus zur Bestimmung des \emph{maximalen 
 	\end{algorithmic}
 \end{algorithm}
 
-Unglücklicherweise können die Zusammenhangskomponenten bei \emph{Alignments} zwischen vielen langen Sequenzen sehr groß werden. \cite{cpm10} haben daher eine Grenze $k = \max\{\deg(v)| v \in \mathcal{S}\}$ eingeführt, die sukzessive gesenkt wird, bis alle \emph{Mehrdeutigkeiten} aufgelöst wurden. $k$ wird so benutzt, dass alle Kanten zwischen Knoten mit Grad $< k$ zunächst nicht betrachtet werden, sodass andere kleinere Zusammenhangskomponenten vorliegen. Als erstes werden für den reduzierten Kantensatz $E_k = \{(u,v) \in E|\min\{\deg(u),\deg(v)\}\}$ solange \emph{minimale Schnitte} berechnet und Kanten gelöscht, bis für den Graph mit weniger Kanten keine \emph{mehrdeutigen} Zusammenhangskomponenten mehr existierten. Danach wird $k$ um eins reduziert und das Vorgehen auf dem neuen Kantensatz wiederholt. Sobald $k$ auf null gesetzt wurde, hat man alle Knoten betrachtet und es liegen nur noch \emph{partielle Zuweisungsspalten} vor.
+Unglücklicherweise können die Zusammenhangskomponenten bei \emph{Alignments} zwischen vielen langen Sequenzen sehr groß werden. \cite{cpm10} haben daher eine Grenze $k = \max\{\deg(v)| v \in \mathcal{S}\}$ eingeführt, die sukzessive gesenkt wird, bis alle \emph{Mehrdeutigkeiten} aufgelöst wurden. $k$ wird so benutzt, dass alle Kanten zwischen Knoten mit Grad $< k$ zunächst nicht betrachtet werden, sodass andere kleinere Zusammenhangskomponenten vorliegen. Als erstes werden für den reduzierten Kantensatz $E_k = \{(u,v) \in E|\min\{\deg(u),\deg(v)\}\}$ solange \emph{minimale Schnitte} berechnet und Kanten gelöscht, bis für den Graph mit weniger Kanten keine \emph{mehrdeutigen} Zusammenhangskomponenten mehr existierten. Danach wird $k$ um eins reduziert und das Vorgehen auf dem neuen Kantensatz wiederholt. Sobald $k$ auf null gesetzt wurde, hat man alle Knoten betrachtet und es liegen nur noch \emph{partielle Zuweisungsspalten} vor. \improvement{keine eigene Implementierung, also Text über k anpassen.}
 
 Abgesehen von der verbesserten Laufzeit scheint dieses Vorgehen aber keine Vorteile zu bieten und falls doch, werden diese in \cite{cpm10} nicht genannt. Deshalb verzichte ich auf die Grenze $k$ und gehe davon aus, dass aufgrund des deutlich effizienteren Algorithmus für den \emph{maximalen Flusses} und die Verwendung einer schnellen Graphimplementierung aus einer Bibliothek keine Laufzeitprobleme für die üblichen Anwendungsgrößen auftreten.
 
@@ -830,13 +830,13 @@ Obwohl in diesem Graphen keine \emph{Mehrdeutigkeiten} mehr existieren, ist die 
 
 \subsection{Komplexität}
 
-Der \emph{Inzidenzgraph} lässt sich aus den \emph{Fragmenten} der paarweisen \emph{Alignments} in $\oh(n^2\cdot)$ berechnen, weil es $\oh(n^2)$ davon gibt, die bis zu $\oh(L)$ Verbindungen enthalten.
+Der \emph{Inzidenzgraph} lässt sich aus den \emph{Fragmenten} der paarweisen \emph{Alignments} in $\oh(n^2\cdot L)$ berechnen, weil es $\oh(n^2)$ davon gibt, die bis zu $\oh(L)$ Verbindungen enthalten.
 
 Die Laufzeit von \textrm{ResolveAmbiguities} wird von der Laufzeit zur Berechnung des \emph{minimalen Schnitts} durch \textrm{PushRelabel} dominiert \citep{cpm10}. Diese hängt von der Größe unserer Zusammenhangskomponenten ab. Im schlimmsten Fall besteht der \emph{Inzidenzgraph} aus einer einzigen Zusammenhangskomponente bei der jeder Knoten mit mindestens einem Knoten aus jeder anderen Sequenz verbunden ist. In diesem Fall muss sie in vielen Schritten zerkleinert werden muss, bis nur noch \emph{partielle Zuweisungsspalten} übrig bleiben. Eine Zusammenhangskomponente kann $n\cdot L$ Knoten und $\oh(n^2\cdot L)$ Kanten haben. Das liegt daran, dass wir als Grundlage unsere paarweisen \emph{Alignments} benutzen, bei denen jede \emph{Stelle} für jede andere Sequenz mit höchstens einer \emph{Stelle} aus dieser verbunden ist. 
 
-\textrm{PushRelabel} hat eine Komplexität von $\oh(|V|^2\cdot \sqrt{|E|})$, um einen \emph{minimalen Schnitt} zu berechnen. Weil $|V| \in \oh(n\cdot L)$ und $|E| \in \oh(n^2\cdot L)$ gelten, braucht man für einen Durchlauf also $\oh(n^3\cdot L^{5/2})$. Wenn wir Pech haben, entfernt jeder Aufruf unseres Algorithmus für den \emph{maximalen Fluss} nur einen einzigen Knoten aus der Zusammenhangskomponente. Das resultiert in $n\cdot L$ Aufrufen und einer Gesamtlaufzeit von $\oh(n^4\cdot L^{7/2})$.
+\textrm{PushRelabel} hat eine Komplexität von $\oh(|V|^2\cdot \sqrt{|E|})$, um einen \emph{minimalen Schnitt} zu berechnen. Weil $|V| \in \oh(n\cdot L)$ und $|E| \in \oh(n^2\cdot L)$ gelten, braucht man für einen Durchlauf also $\oh(n^3\cdot L^{5/2})$. Wenn wir Pech haben, entfernt jeder Aufruf unseres Algorithmus für den \emph{maximalen Fluss} nur einen einzigen Knoten aus der Zusammenhangskomponente. Das resultiert in $n\cdot L$ Aufrufen und einer Gesamtlaufzeit von $\oh(n^4\cdot L^{7/2})$. Die Kosten für das Bestimmen der Zusammenhangskomponenten, das Finden der \emph{Quellen} und \emph{Senken} und das Löschen von Kanten liegen jeweils in linearer Größe zur Größe des Graphen und werden daher hier nicht weiter betrachtet. Für ersteres benutzt man beispielsweise eine Tiefensuche, fürs zweite eine Breitensuche und letzteres ist simples Iterieren über alle Kanten.
 
-Möglicherweise lässt sich eine bessere Laufzeit erreichen, wenn alle Kanten eine uniforme Kapazität haben, wie das bei der Variante der Autoren der Fall ist. Es lässt sich zeigen, dass das ein deutlich leichteres Problem ist \citep{gt14} und nach Karzanov und Even hat eine Variante des Algorithmus von Dinic in diesem Fall gute Laufzeiten. 
+Möglicherweise lässt sich eine bessere Laufzeit erreichen, wenn alle Kanten eine uniforme Kapazität haben, wie das bei der Variante der Autoren der Fall ist. Es lässt sich zeigen, dass das ein deutlich leichteres Problem ist \citep{gt14} und nach Karzanov und Even hat eine Variante des Algorithmus von Dinic in diesem Fall gute Laufzeiten.
 
 Glücklicherweise sind die Zusammenhangskomponenten im Allgemeinen nicht so groß und in den meisten Fällen trennt man mit dem \emph{minimalen Schnitt} auch nicht nur einzelne Knoten ab. Bei Testläufen auf der Protein-Referenzdatenbank BAliBASE haben \cite{cpm10} die Referenzmenge RV12 genauer betrachtet. RV12 besteht aus 88 Sequenzfamilien, die im Schnitt zehn Sequenzen enthielt. Messungen haben ergeben, dass die \emph{Inzidenzgraphen} auf diesen Sequenzfamilien im Schnitt 2877 Knoten und 10952 in 223 Zusammenhangskomponenten enthalten haben. Auf diesen Sequenzen lassen sich in guten Laufzeiten von weniger als einer Minute multiple \emph{Sequenzalignments} berechnen. Anders sah es auf der Sequenzfamilie BB30003 aus. Diese besteht aus 142 Sequenzen und resultiert in einem monströsen \emph{Inzidenzgraphen}, der nur aus einer einzigen Zusammenhangskomponente besteht. Nach einer Laufzeit von 20 Stunden ohne Ergebnis wurde der Lauf auf Graphen, der $1,5\cdot 10^6$ Kanten enthält, erfolglos abgebrochen. Erst mit einer Begrenzung des minimalen \emph{Fragmentgewichts} auf 4 ließ sich in 13 Stunden ein Ergebnis erzielen. 
 
@@ -854,7 +854,7 @@ Wie wir gesehen haben, ist die Menge an Zuweisungen nach dem \textrm{ResolveAmbi
 
 Wie man sieht sind zwei Knoten $C$ und $C'$ aus dem \emph{Sukzessionsgraphen} genau dann miteinander verbunden, wenn es in diesen \emph{Stellen} aus der selben Sequenz gibt, bei denen die aus $C$ links von der in $C'$ stehen. Die zusätzlich eingefügten Knoten $v_{start}$ und $v_{end}$ brauchen wir im Algorithmus von Pitschi, um die Konnektivität des Graphen zu erhalten, wenn wir Kanten aus dem Graph löschen. Das werden wir später tun, um \emph{Inkonsistenzen} zu entfernen. Setzen wir nicht voraus, dass die Knoten von $SG$ mindestens zwei \emph{Stellen} enthalten, dann liefert der Algorithmus von Pitschi suboptimale Ergebnisse, wie wir später sehen werden. \cite{cpm10} und \cite{pdc10} sind an dieser Stelle nicht eindeutig. 
 
-Als Beispiel konstruieren wir aus dem reduzierten \emph{Inzidenzgraphen} des letzten Schritts einen \emph{Sukzessionsgraphen}. Die Knotenfarben wurden in der Farbe der Kanten des alten Graphen gewählt.
+Als Beispiel konstruieren wir aus dem reduzierten \emph{Inzidenzgraphen} des letzten Schritts einen \emph{Sukzessionsgraphen}. Die Knotenfarben wurden in der Farbe der Zusammenhangskomponenten des \emph{Inzidenzgraphen} aus dem letzten Schritt gewählt.
 
 \begin{center}
 	\begin{tikzpicture}[
@@ -1151,28 +1151,64 @@ Wie schon beim Blick auf den ersten Sukzessionsgraphen vermutet, ist das Problem
 
 \subsection{Algorithmus zur Bestimmung des längsten Pfads}
 
-Für die Berechnung der längsten Pfade benutzen wir die \emph{topologische Sortierung} der Knoten der Graphen $G_{S_i}$ für alle Sequenzen $S_i \in S$. 
+Es sei ein gerichteter, azyklischer Graph $G = V,E$ gegeben. Ein einfacher Ansatz wäre es einen Algorithmus, der auch mit negativen Kantengewichten rechnen kann zu benutzen, um im Graphen mit negierten Kantengewichten $G^{-} = (V,E^{-})$ den kürzesten Pfad zu berechnen. Der kürzeste Pfad mit umgedrehten Kantengewichten entspricht genau dem längsten Pfad im Ursprungsgraph. Der Algorithmus von Bellman-Ford berechnet den kürzesten Pfad eines Ausgangsknotens (hier $v_start$) zu allen anderen Knoten im Graphen in $\oh(|V|\cdot |E|) = \oh(n^3\cdot L^3)$ in unserem Fall \cite{clrs09}. Anders als beispielsweise der gierige Algorithmus von Dijkstra kann Bellman-Ford auch mit negativen Kanten umgehen, solange der Graph keine negativen Zyklen enthält. 
+
+Weil unsere Graphen $G_{S_i}$ azyklisch sind lässt sich die Berechnung der längsten Pfade mit der \emph{topologischen Sortierung} der Knoten effizienter umsetzen.
 
 \begin{definition}[Topologische Sortierung]
-	Es sei ein Graph $G = (V,E)$ gegeben. Eine \emph{topologische Sortierung} von $G$ ist eine lineare Aufzählung der Knoten in $V$ $f(v_1), \dots, f(x), \dots, f(y), \dots, f(v_n)$ bei der für alle Knoten $x,y \in V$ gilt:
-	$f(x) < f(y) \implies $  
+	Eine \emph{topologische Sortierung} von DAG $G = (V,E)$ ist eine lineare Aufzählung der Knoten in $V$ bei der ein Knoten $v$ hinter einem Knoten $u$ auftaucht, wenn es eine Kante $(u,v)\in E$ gibt.
 \end{definition}
 
-Algorithmus für TS
+Die \emph{topologische Sortierung} liefert eine mögliche Aufzählung der Knoten, die die Halbordnung des Graphen erhält. Im Allgemeinen ist sie nicht eindeutig. Das Standardmotivation dafür ist das Anziehen von Kleidungsstücken: Ich muss meine Socken anziehen, bevor ich in meine Schuhe schlüpfen kann und es kommt zuerst die Unterwäsche und dann die Hose. Erst muss ich Unterhemd und oder T-Shirt anziehen, bevor der Pullover kommt. Diese Reihenfolgen lassen sich als DAG modellieren, wobei jede Kante zwischen Kleidungsstück $a$ und $b$ bedeutet, dass $a$ vor $b$ angezogen werden muss. Gültige \emph{topologische Sortierungen} für dieses vereinfachte Beispiel \footnote{Mr. Bean hat mit seiner Badehose bewiesen, dass die übliche Reihenfolge des An- und Ausziehens nicht unbedingt eingehalten werden muss.} sind also beispielsweise diese: \enquote{(Socken, Schuhe, Unterhose, Hose, Unterhemd, T-Shirt,Pullover)}, \enquote{(Socken, Unterhose, Schuhe, Unterhemd, T-Shirt, Pullover, Hose)} oder \enquote{(Unterhose, Hose, Socken, Unterhemd, T-Shirt, Pullover, Schuhe)}. 
 
-Beweisen, dass Algo TS liefert auf DAG
+Mit Hilfe einer Tiefensuche lässt sich die \emph{topologische Sortierung} in $\theta(|V| + |E|)$ berechnen \cite{clrs09}. Das Ergebnis ist eine Liste der Knoten in topologischer Reihenfolge. Die Liste können wir zur Berechnung des längsten Pfades nutzen, indem wir zusätzlich für jeden Knoten die Länge des längsten Pfades und den Vorgänger in diesem speichern. Wir starten bei $v_{start}$ mit Länge 0 und Vorgänger \enquote{NIL}. Aufgrund der gegebenen \emph{topologischen Sortierung} wissen wir, dass jeder Knoten erst dann bearbeitet wird, wenn seine Vorgänger bereits behandelt wurden. Vorgänger und längster Pfad bis zu diesem Knoten lassen sich also rekursiv berechnen:
 
-Algorithmus für längsten Pfad
+\begin{equation}
+\begin{split}
+	distance(v_{start}) & = 0 \\
+	distance(v)       & = \max\{distance(u) + w((u,v))\:|\:(u,v) \in E\ \wedge v \neq v_{start}\} 
+\end{split}
+\end{equation} 
 
-Beweis, dass Algo längsten Pfad liefert
+Der Vorgänger für die Knoten wird dann abhängig von der gewählten Kante gesetzt, die die größte Gesamtlänge liefert. Das Kantengewicht $w((u,v))$ ist in unserem Fall 1, weil wir nur die Anzahl der Knoten von $v_{start}$ bis $v_{end}$. Die Korrektheit des Algorithmus folgt aufgrund der Korrektheit der Rekursionsgleichung und weil $distance(u)$ wegen der \emph{topologischen Sortierung} bereits berechnet wurde für Knoten $v$, wenn eine Kante $(u,v)$ existiert.
 
-Beispiel an einem Graphen
+Jetzt kennen wir die Länge des längsten Pfades, müssen aber noch die Knoten, die zu diesem gehören, berechnen. Dazu nutzen wir einen Backtracking-Algorithmus, indem wir mit dem letzten Knoten starten und solange den Vorgänger auswählen, bis es keinen mehr gibt. Bei unserem Graphen $G_{S_i}$ ist das einfach, weil mit $v_{start}$ und $v_{end}$ auf jeden Fall der erste und letzte Knoten unseres längsten Pfads bekannt sind. In allgemeinen DAGs muss man zuerst in linearer Zeit einmal über die Liste iterieren und den Knoten mit der maximalen gespeicherten Länge als Endknoten des Pfads und Startknoten des Backtrackings wählen.
 
-\subsection{Probleme bei der Heuristik zum Entfernen von Kanten}
+\begin{algorithm}
+	\caption{LongestPath}
+	\label{alg:longestpath}
+	\begin{algorithmic}[1]
+		\Require DAG $G = (V,E)$
+		\Procedure{LongestPath}{$G$}
+			\State {$list_{ts} \gets topologicalSort(G)$}
+			\State {$v_{start}.distance \gets 0$}
+			\State {$v_{start}.pred \gets $ NIL}
+			\State {$current \gets list_{ts}.head$}
+			\While {$current.next \neq $ NIL} \Comment {Berechne Distanz zu $v_{end}$}
+				\State {$current \gets current.next$}
+				\State {$maxPred \gets argmax\{u.distance\:|\:(u,current.key) \in E\}$}
+				\State {$current.key.distance \gets maxPred.distance + 1$}
+				\State {$current.key.pred \gets maxPred$}			
+			\EndWhile
+			\State {$longestPath \gets empty$} \Comment {initialisiere Ausgabeliste}
+			\State {$longestPath.addFirst(v_{end}$}	
+			\State {$currentNode \gets v_{end}$}		
+			\While {$currentNode.pred \neq $ NIL} \Comment {Backtracking}
+				\State {$currentNode \gets currentNode.pred$}
+				\State {$longestPath.addFirst(currentNode)$}	
+			\EndWhile
+			\Return {$longestPath$}
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
 
-circular permutation -> alle Kanten gelöscht
+Im kommenden Kapitel wird die Implementierung dieses Algorithmus beispielhaft für das ganze Verfahren beschrieben. Da dort auch ein konkretes Beispiel behandelt wird, verzichte ich darauf an dieser Stelle.
 
-viele Kanten entfernt, die nichts mit dem Zyklus zu tun haben
+\subsubsection{Laufzeit}
+
+Im Allgemeinen hat dieser Algorithmus eine Laufzeit von $\oh(|V| + |E|)$. Die \emph{topologische Sortierung} benötigt $\theta(|V| + |E|)$ Rechenschritte. Für die Berechnung der Distanzwerte müssen in jedem der $\oh(|V|)$ Knoten das Maximum der Knoten über eingehende Kanten berechnet werden. Jede Kante wird nur einmalig betrachtet und somit ist die Summe der Kosten aller Maximumsoperationen in $\oh(|E|)$. Der Backtrackingprozess ist in linearer Zeit in der Größe der Anzahl der Knoten möglich.
+
+Wenn wir $G_{S_i}$ betrachten, dann stellen wir fest, dass $|V| \in \oh(L)$ und $|E| \in \oh(L^2)$ liegen aufgrund der zuvor berechneten transitiven Hülle. Für die Berechnung des längsten Pfads folgt somit eine Laufzeit von $\oh(L^2)$.
 
 \subsection{Verankerungen}
 
@@ -1186,17 +1222,38 @@ Das Verfahren funktioniert so, dass der Experte \emph{Fragmente} (die auch nur p
 
 Der \emph{Sukzessionsgraph} $SG(C)$ kann aus dem \emph{Inzidenzgraphen} in $\oh(n\cdot L)$ Rechenschritten berechnet werden, weil es höchstens so viele \emph{partielle Zuweisungsspalten} gegeben kann. Außerdem ist die Anzahl der direkten Nachfolger pro Sequenz auch durch $L$ begrenzt, was eine obere Grenze für die Anzahl der Kanten liefert.
 
-Die transitive Hülle für $G^{+}$ berechnen wir beispielsweise durch Breitensuche für jeden Knoten. Weil es $\oh(n\cdot L)$ Knoten geben kann und jeder dieser Aufrufe $\oh(n\cdot L)$ Rechenschritte benötigt, weil dies die maximale Anzahl an Kanten und Knoten ist, folgt hierfür die Laufzeit von $\oh(n^2\cdot L^2)$. Überlegungen für einen effizienteren Algorithmus haben sich als fruchtlos erwiesen. Für diesen hätten wir zuerst eine topologische Sortierung berechnet und von hinten nach vorne bearbeitet. Die transitive Hülle eines Knotens $u$ kann dabei durch Vereinigung aller Knoten $v$ mit $(u,v) \in E$ sowie deren transitive Hülle berechnet werden. Im schlimmsten Fall habe ich $\o(L)$ Ebenen in meinem Graphen mit je bis zu $\oh(n)$ Knoten und $\oh(n)$ Kanten in andere Ebenen. Es kommt pro Ebene also zu bis zu $\oh(n)$ vielen Vereinigungen. Weil die Mengen, die miteinander vereinigt werden, aber bis zu $\oh(n\cdot L)$ Elemente enthalten (potentiell erreichbare Knoten), komme ich selbst unter Verwendung von Bit-Sets und Vereinigung über das bitweise Oder auf Kosten von $\oh(n^2\cdot L)$ pro Ebene. Auf Grund der $\oh(L)$ Ebenen bleibt es bei der Laufzeit von $\oh(n^2\cdot L^2)$, selbst wenn dieser Algorithmus in der Praxis sehr schnell sein dürfte. Weil ich im Allgemeinen nicht davon ausgehen kann, dass mein Graph signifikant viel weniger starke Zusammenhangskomponenten als Knoten insgesamt enthält, liefert auch der Algorithmus von Purdom keine bessere Laufzeit.
+Die transitive Hülle für $G^{+}$ berechnen wir beispielsweise durch Breitensuche für jeden Knoten. Weil es $\oh(n\cdot L)$ Knoten geben kann und jeder dieser Aufrufe $\oh(n\cdot L)$ Rechenschritte benötigt, weil dies die maximale Anzahl an Kanten und Knoten ist, folgt hierfür die Laufzeit von $\oh(n^2\cdot L^2)$. Überlegungen für einen effizienteren Algorithmus haben sich als fruchtlos erwiesen. Für diesen hätten wir zuerst eine topologische Sortierung berechnet und von hinten nach vorne bearbeitet. Die transitive Hülle eines Knotens $u$ kann dabei durch Vereinigung aller Knoten $v$ mit $(u,v) \in E$ sowie deren transitive Hülle berechnet werden. Im schlimmsten Fall habe ich $\oh(L)$ Ebenen in meinem Graphen mit je bis zu $\oh(n)$ Knoten und $\oh(n)$ Kanten in andere Ebenen. Es kommt pro Ebene also zu bis zu $\oh(n)$ vielen Vereinigungen. Weil die Mengen, die miteinander vereinigt werden, aber bis zu $\oh(n\cdot L)$ Elemente enthalten (potentiell erreichbare Knoten), komme ich selbst unter Verwendung von Bit-Sets und Vereinigung über das bitweise Oder auf Kosten von $\oh(n^2\cdot L)$ pro Ebene. Auf Grund der $\oh(L)$ Ebenen bleibt es bei der Laufzeit von $\oh(n^2\cdot L^2)$, selbst wenn dieser Algorithmus in der Praxis sehr schnell sein dürfte. Weil ich im Allgemeinen nicht davon ausgehen kann, dass mein Graph signifikant viel weniger starke Zusammenhangskomponenten als Knoten insgesamt enthält, liefert auch der Algorithmus von Purdom keine bessere Laufzeit.
 
 Für das Konstruieren der Graphen $G_{S_i}$ unserer Sequenzen $S_1, \dots, S_n$ benötigen wir jeweils lineare Zeit in der Größe des Graphen $G^{+}$, um zu überprüfen welche Knoten \emph{Stellen} der jeweiligen Sequenz enthalten und welche Kanten die Relation $\mathcal{R}_{S_i}$ erfüllen. Zwar kann es grundsätzlich $\oh(n\cdot L)$ Knoten geben und jeder Knoten bis zu $\oh(n)$ \emph{Stellen}, aber die Gesamtanzahl an \emph{Stellen} ist durch $n\cdot L$ begrenzt. Bei $n$ Sequenzen folgt die Laufzeit in $\oh(n^2\cdot L)$.
 
-Die längsten Pfade für alle Sequenzen benötigen $\oh(n\cdot L^2)$ für $n$-faches Topological Sort auf einem Graphen mit $\oh(L)$-vielen Knoten und somit $\oh(L^2)$ Kanten im schlimmsten Fall (transitive Hülle). Die topologischen Sortierungen der Knoten werden ebenfalls $n$-mal traversiert, womit eine Laufzeit von $\oh(n\cdot L)$ folgt.
+Die längsten Pfade für alle Sequenzen benötigen $n$-mal $\oh(L^2)$. Zudem müssen die nicht besuchten \emph{Stellen} für jede Sequenz aus ihren Knoten gelöscht werden. Dazu iterieren wir wieder $n$-mal über die Graphen mit bis zu $\oh(L)$ Knoten. Wie schnell es möglich ist die \emph{Stellen} aus dem dazugehörigen Knoten zu löschen, hängt von der intern verwendeten Datenstruktur ab. Im schlimmsten Fall brauchen wir $\oh(n)$ Zeit für die Entfernung einer \emph{Stelle} aus einem Knoten. Alle Löschoperationen sind dementsprechend in $\oh(n^2\cdot L)$ Rechenschritten möglich.
 
 Insgesamt dominiert das Berechnen der transitiven Hülle die Komplexität des Algorithmus von Pitschi mit $\oh(n^2\cdot L^2)$. Weil der vorangegangene Schritt mit den \emph{minimalen Schnitten} aber ohnehin eine deutlich höhere Komplexität hat, ist es müßig hier nach effizienteren Ansätzen zu suchen. 
 
 \section{Abschluss und Zusammenfassung}
 
+Nach dem Algorithmus von Pitschi liegen uns \emph{konsistente Zuweisungsspalten} vor. Diese können aufgrund ihrer \emph{Konsistenz} direkt in das finale \emph{Alignment} eingefügt werden. Trotzdem müssen wir die \emph{Transitivitätsgrenzen} mit dem \emph{Alignmentgraphen} verwalten. Das liegt daran, dass wir wie bei DIALIGN zwischen den ursprünglichen \emph{Konsistenzgrenzen} auf den Teilsequenzen DIALIGN benutzen. Auch hier kann davon ausgegangen werden, dass die Anzahl der Durchläufe konstant ist. Zu guter Letzt wird die Ausgabe vorbereitet. Das Vorgehen ist an dieser Stelle identisch mit dem der ursprünglichen DIALIGN-Implementierung, das in Kapitel 3 beschrieben wurde.
+ 
 \subsection{Gesamtkomplexität}
-$\oh(n^4\cdot L^{7/2})$ 
+
+\begin{korollar}
+	Mit dem \emph{Min-Cut}-Ansatz von \cite{cpm10} lässt sich ein multiples \emph{Sequenzalignment} in $\oh(n^4\cdot L^{7/2})$ Zeit berechnen.
+\end{korollar}
+
+\begin{beweis}
+	DIALIGN berechnet die $\oh(n^2)$ paarweisen \emph{Alignments} in $\oh(n^2\cdot L^2)$ Rechenschritten. Die Laufzeit der Berechnung der \emph{partiellen Zuweisungsspalten} mit Hilfe des \emph{minimalen Schnitts} liegt in $\oh(n^4\cdot L^{7/2})$. Der Algorithmus von Pitschi hat eine Komplexität in $\oh(n^2\cdot L^2)$. Für den \emph{Alignmentgraphen} sind nach wie vor $\oh(n^3\cdot L^2 + n^2\cdot L^2)$ Berechnungen nötig. Es folgt, dass der \emph{minimalen Schnitte} auf dem \emph{Inzidenzgraphen} die Laufzeit dominiert, womit sich eine Gesamtkomplexität von $\oh(n^4\cdot L^{7/2})$ ergibt.
+\end{beweis}
+
+\subsection{Probleme bei der Heuristik zum Entfernen von Kanten}
+
+Die Heuristik zum Entfernen von Kanten kann bei einigen Sequenzen zu größeren Problemen führen. Diese Heuristik funktionierte so, dass sie eine Grenze $k$ für das minimale Kantengewicht sukzessive erhöhte und alle Kanten unter $k$ entfernte, bis die Menge an Kanten ohne Zyklus war. 
+
+In den meisten Fällen ist das kein Problem, weil man davon ausgeht, dass die wichtigen Motive, die wir finden wollen, in der gleichen Reihenfolge innerhalb der Eingabesequenzen liegen. Problematisch sind hingegen Sequenzfamilien, bei denen zwei (oder mehr)größere Abschnitte in ihrer Reihenfolge vertauscht wurden und einige Sequenzen diese in der einen, die anderen aber in den der anderen Reihenfolge haben. \improvement{Grafik einfügen.}
+
+Sind die vertauschten Abschnitte lang genug, dann werden sie Teil der paarweisen \emph{Alignments}. Weil es sich bei ihnen um Überkreuzungen handelt, entfernt der \emph{Min-Cut}-Ansatz sie im Allgemeinen auch nicht. Kommen diese Permutationen in genug Sequenzen vor (beispielsweise allen), dann ist das Ergebnis ein \emph{Sukzessionsgraph} mit einem Zyklus, der Kanten mit sehr hohen Kantengewichten enthält. Um diese Zyklen aufzulösen, wird dann auch eine sehr hohe Grenze $k^{*}$ benötigt. Im schlimmsten Fall werden so alle Kanten im Graph gelöscht, in jedem Fall aber sehr viele, die nichts mit dem eigentlichen Zyklus zu tun haben, weil der Schritt global Kanten löscht. Somit gehen viele wichtige oder alle Verbindungen in unserem \emph{Alignment} verloren. Wir wollen am liebsten, dass die überkreuzten Stellen nicht aligniert werden, der Rest hingegen ganz normal.
+
+Bis jetzt haben wir dieses Problem nur auf theoretischer Ebene betrachtet. Es gibt aber Sequenzfamilien, bei denen ein solches Verhalten wirklich auftritt. Ein Beispiel dafür ist die sogenannte \emph{zirkuläre Permutation} bei Proteinen. Bei diesen kommen zwar die selben Abschnitte, aber in veränderter Reihenfolge vor. Ein Beispiel sind die abstrahierten Proteinsequenzen [A,B,C,D] und [B,C,D,A]. Erstmalig wurde dieses Phänomen von \cite{chhe79} beschrieben. Wenn es im Laufe der Zeit zu einer zirkulären Permutation gekommen ist, deren Ergebnis zwei Sequenzen sind und wir eine Sequenzfamilie vorliegen haben, bei der die eine Hälfte von der einen und die andere von der anderen dieser Sequenzen abstammt, dann kann es durchaus zum oben beschriebenen Verhalten kommen.
+
+Mit einer verbesserten Heuristik zum Entfernen von Kanten aus dem \emph{Sukzessionsgraph}, um die Zyklen aufzulösen, könnte man diesem Problem vorbeugen. Ein solcher Algorithmus wurde beispielsweise von \cite{els93} beschrieben, der in $\oh(|E|)$ Zeit einen DAG berechnet und dabei höchstens $|E|/2 - |V|/6$ Kanten entfernt. Leider entfernt auch dieser im Allgemeinen sehr viele Kanten, die nichts mit dem Zyklus zu tun haben. Weil man bei nahezu allen Sequenzfamilien davon ausgehen kann, dass Permutationen kein Problem sind, halte ich die ursprüngliche Heuristik zunächst für praktikabler. Denkbar ist aber ein hybrider Ansatz, bei dem wir überprüfen wie viele Kanten $E_{k^{*}}$ im Verhältnis zur alten Kantenanzahl enthält. Ist dieses Verhältnis zu gering (beispielsweise kleiner als 3/4), benutzen wir stattdessen den Algorithmus von Eades, Lin und Smyth auf den ursprünglichen Kanten unseres \emph{Sukzessionsgraphen}.
 
 \subsection{Evaluierung}
