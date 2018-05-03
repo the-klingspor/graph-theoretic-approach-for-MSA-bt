@@ -828,7 +828,7 @@ Wenn wir den Algorithmus auch auf allen anderen Zusammenhangskomponenten anwende
 
 Obwohl in diesem Graphen keine \emph{Mehrdeutigkeiten} mehr existieren, ist die Zuordnung noch nicht \emph{konsistent}. Das liegt an Überkreuzungen, wie der zwischen $(S_1[8] \rightarrow S_3[5] \rightarrow S_4[5])$ (rot) und $(S_1[7] \rightarrow S_4[9])$ (grün). 
 
-\subsection{Komplexität}
+\subsection{Komplexität}\label{ch:ra_kompl}
 
 Der \emph{Inzidenzgraph} lässt sich aus den \emph{Fragmenten} der paarweisen \emph{Alignments} in $\oh(n^2\cdot L)$ berechnen, weil es $\oh(n^2)$ davon gibt, die bis zu $\oh(L)$ Verbindungen enthalten.
 
@@ -838,7 +838,7 @@ Die Laufzeit von \textrm{ResolveAmbiguities} wird von der Laufzeit zur Berechnun
 
 Möglicherweise lässt sich eine bessere Laufzeit erreichen, wenn alle Kanten eine uniforme Kapazität haben, wie das bei der Variante der Autoren der Fall ist. Es lässt sich zeigen, dass das ein deutlich leichteres Problem ist \citep{gt14} und nach Karzanov und Even hat eine Variante des Algorithmus von Dinic in diesem Fall gute Laufzeiten.
 
-Glücklicherweise sind die Zusammenhangskomponenten im Allgemeinen nicht so groß und in den meisten Fällen trennt man mit dem \emph{minimalen Schnitt} auch nicht nur einzelne Knoten ab. Bei Testläufen auf der Protein-Referenzdatenbank BAliBASE haben \cite{cpm10} die Referenzmenge RV12 genauer betrachtet. RV12 besteht aus 88 Sequenzfamilien, die im Schnitt zehn Sequenzen enthielt. Messungen haben ergeben, dass die \emph{Inzidenzgraphen} auf diesen Sequenzfamilien im Schnitt 2877 Knoten und 10952 in 223 Zusammenhangskomponenten enthalten haben. Auf diesen Sequenzen lassen sich in guten Laufzeiten von weniger als einer Minute multiple \emph{Sequenzalignments} berechnen. Anders sah es auf der Sequenzfamilie BB30003 aus. Diese besteht aus 142 Sequenzen und resultiert in einem monströsen \emph{Inzidenzgraphen}, der nur aus einer einzigen Zusammenhangskomponente besteht. Nach einer Laufzeit von 20 Stunden ohne Ergebnis wurde der Lauf auf Graphen, der $1,5\cdot 10^6$ Kanten enthält, erfolglos abgebrochen. Erst mit einer Begrenzung des minimalen \emph{Fragmentgewichts} auf 4 ließ sich in 13 Stunden ein Ergebnis erzielen. 
+Glücklicherweise sind die Zusammenhangskomponenten im Allgemeinen nicht so groß und in den meisten Fällen trennt man mit dem \emph{minimalen Schnitt} auch nicht nur einzelne Knoten ab. Bei Testläufen auf der Protein-Referenzdatenbank BAliBASE haben \cite{cpm10} die Referenzmenge RV12 genauer betrachtet. Sie besteht aus 88 Sequenzfamilien, die im Schnitt zehn Sequenzen enthielten. Messungen haben ergeben, dass die \emph{Inzidenzgraphen} auf diesen Sequenzfamilien im Schnitt 2877 Knoten und 10952 in 223 Zusammenhangskomponenten enthalten haben. Auf diesen Sequenzen lassen sich in guten Laufzeiten von weniger als einer Minute multiple \emph{Sequenzalignments} berechnen. Anders sah es auf der Sequenzfamilie BB30003 aus. Diese besteht aus 142 Sequenzen und resultiert in einem monströsen \emph{Inzidenzgraphen}, der nur aus einer einzigen Zusammenhangskomponente besteht. Nach einer Laufzeit von 20 Stunden ohne Ergebnis wurde der Lauf auf Graphen, der $1,5\cdot 10^6$ Kanten enthält, erfolglos abgebrochen. Erst mit einer Begrenzung des minimalen \emph{Fragmentgewichts} auf 4 ließ sich in 13 Stunden ein Ergebnis erzielen. 
 
 \section{Sukzessionsgraphen und der Algorithmus von Pitschi}
 
@@ -1233,6 +1233,42 @@ Insgesamt dominiert das Berechnen der transitiven Hülle die Komplexität des Al
 \section{Abschluss und Zusammenfassung}
 
 Nach dem Algorithmus von Pitschi liegen uns \emph{konsistente Zuweisungsspalten} vor. Diese können aufgrund ihrer \emph{Konsistenz} direkt in das finale \emph{Alignment} eingefügt werden. Trotzdem müssen wir die \emph{Transitivitätsgrenzen} mit dem \emph{Alignmentgraphen} verwalten. Das liegt daran, dass wir wie bei DIALIGN zwischen den ursprünglichen \emph{Konsistenzgrenzen} auf den Teilsequenzen DIALIGN benutzen. Auch hier kann davon ausgegangen werden, dass die Anzahl der Durchläufe konstant ist. Zu guter Letzt wird die Ausgabe vorbereitet. Das Vorgehen ist an dieser Stelle identisch mit dem der ursprünglichen DIALIGN-Implementierung, das in Kapitel 3 beschrieben wurde.
+
+Ein Nachteil des \emph{Min-Cut}-Ansatzes ist das Lösen vom streng segmentbasierten Ansatz von DIALIGN. Dieser stellt zwar nach wie vor die Basis des Verfahrens dar, aber durch die \emph{minimalen Schnitte} und den Algorithmus von Pitschi werden einzelne Verbindungen gelöscht. Möglicherweise sind unter den gelöschten Zuweisungen auch \emph{konsistente} dabei. Um sicherzustellen, dass diese Teil des \emph{Alignments} sind, wenn sie zu Unrecht gelöscht wurden, iterieren wir einmalig über alle ursprünglichen \emph{Fragmente} der paarweisen \emph{Alignments} und fügen \emph{konsistente} Zuweisungen von nicht mehr miteinander alignierten \emph{Stellen} ein, wenn diese einen positiven Ähnlichkeitswert haben. 
+
+\subsection{Beispiel}
+
+Nach dem Berechnen der \emph{konsistenten Zuweisungsspalten} sieht das multiple \emph{Alignment} für unser Beispiel so aus. Der Übersichtlichkeit halber wurden hier bereits Lücken eingefügt, um die Zuweisungen zu verdeutlichen. Eigentlich erfolgt dieser Schritt erst ganz am Ende des Verfahrens.
+
+\ttfamily
+\begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
+	\item aDGTC---TCa
+	\item --GTCADcTCa
+	\item -taTCADgg--
+	\item -DGTCADaTC-
+\end{enumerate}
+\normalfont
+
+Schaut man sich die letzten \emph{Stellen} der Sequenzen 1 und 2 an, dann stellt man fest, dass deren Symbole identisch sind und sie zudem Teil des \emph{Fragments} \texttt{CTCA} am Ende der beiden Sequenzen waren. Beim linearen Durchlauf über alle \emph{Fragmente} stellen wir also fest, dass diese \emph{konsistent} sind und fügen sie in das \emph{Alignment} ein.
+
+Versucht man jetzt DIALIGN auf den Teilsequenzen zwischen den bereits zugewiesenen \emph{Stellen} zu benutzen, stellt man fest, dass es keine weiteren \emph{Fragmente} mit positiven \emph{Überlappgewichten} gibt. Nach dem ersten \emph{DIALIGN}-Lauf wird also abgebrochen und die finale Ausgabe kann vorbereitet werden.
+
+Das Ergebnis sieht letztendlich wie folgt aus. Auf der rechten Seite sehen Sie zum Vergleich das Ergebnis von DIALIGN 2.2 mit der gierigen Heuristik.
+
+\ttfamily
+\begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
+	\item aDGTC---TCA \hspace{3cm} aDGTCTCA-----
+	\item --GTCADcTCA \hspace{3cm} --G--TCADCTCa
+	\item -taTCADgg-- \hspace{3cm} ---TATCADgg--
+	\item -DGTCADaTC- \hspace{3cm} -DG--TCADATC-
+\end{enumerate}
+\normalfont
+
+Wie man sieht kommt dieses \emph{Alignment} mit deutlich weniger eingefügten Lücken aus. Das liegt daran, dass nicht wenige große \emph{Fragmente} mit hohen Gewichten das ganze \emph{Alignment} dominieren können und andere sinnvolle Zuweisungen aufgrund der gierigen Heuristik verhindern.
+
+Welches der beiden Ergebnisse besser ist, lässt sich nicht zweifelsfrei sagen, weil diese DNA-Sequenzen willkürlich gewählt wurden und es in ihnen keine biologisch bedeutenden Motive gibt. Man kann die Ergebnisse aber mathematisch über die Anzahl an identischen und abweichenden Paaren von Zuweisungen vergleichen.
+
+Beim \emph{Min-Cut-Alignment} gibt es dabei 30 Zuweisungen identischer Symbole und keine von abweichenden. DIALIGN 2.2 liefert uns hingegen 28 übereinstimmende und 2 abweichende Paare von \emph{Stellen}. Dieses Ergebnis deutet auf jeden Fall auf die Vorteile des graphtheoretischen Ansatzes hin. 
  
 \subsection{Gesamtkomplexität}
 
@@ -1254,6 +1290,52 @@ Sind die vertauschten Abschnitte lang genug, dann werden sie Teil der paarweisen
 
 Bis jetzt haben wir dieses Problem nur auf theoretischer Ebene betrachtet. Es gibt aber Sequenzfamilien, bei denen ein solches Verhalten wirklich auftritt. Ein Beispiel dafür ist die sogenannte \emph{zirkuläre Permutation} bei Proteinen. Bei diesen kommen zwar die selben Abschnitte, aber in veränderter Reihenfolge vor. Ein Beispiel sind die abstrahierten Proteinsequenzen [A,B,C,D] und [B,C,D,A]. Erstmalig wurde dieses Phänomen von \cite{chhe79} beschrieben. Wenn es im Laufe der Zeit zu einer zirkulären Permutation gekommen ist, deren Ergebnis zwei Sequenzen sind und wir eine Sequenzfamilie vorliegen haben, bei der die eine Hälfte von der einen und die andere von der anderen dieser Sequenzen abstammt, dann kann es durchaus zum oben beschriebenen Verhalten kommen.
 
-Mit einer verbesserten Heuristik zum Entfernen von Kanten aus dem \emph{Sukzessionsgraph}, um die Zyklen aufzulösen, könnte man diesem Problem vorbeugen. Ein solcher Algorithmus wurde beispielsweise von \cite{els93} beschrieben, der in $\oh(|E|)$ Zeit einen DAG berechnet und dabei höchstens $|E|/2 - |V|/6$ Kanten entfernt. Leider entfernt auch dieser im Allgemeinen sehr viele Kanten, die nichts mit dem Zyklus zu tun haben. Weil man bei nahezu allen Sequenzfamilien davon ausgehen kann, dass Permutationen kein Problem sind, halte ich die ursprüngliche Heuristik zunächst für praktikabler. Denkbar ist aber ein hybrider Ansatz, bei dem wir überprüfen wie viele Kanten $E_{k^{*}}$ im Verhältnis zur alten Kantenanzahl enthält. Ist dieses Verhältnis zu gering (beispielsweise kleiner als 3/4), benutzen wir stattdessen den Algorithmus von Eades, Lin und Smyth auf den ursprünglichen Kanten unseres \emph{Sukzessionsgraphen}.
+Mit einer verbesserten Heuristik zum Entfernen von Kanten aus dem \emph{Sukzessionsgraph}, um die Zyklen aufzulösen, könnte man diesem Problem vorbeugen. Ein solcher Algorithmus wurde beispielsweise von \cite{els93} beschrieben, der in $\oh(|E|)$ Zeit einen DAG berechnet und dabei höchstens $|E|/2 - |V|/6$ Kanten entfernt. Leider löscht auch dieser im Allgemeinen sehr viele Kanten, die nichts mit dem Zyklus zu tun haben. Weil man bei nahezu allen Sequenzfamilien davon ausgehen kann, dass Permutationen kein Problem sind, halte ich die ursprüngliche Heuristik zunächst für praktikabler. Denkbar ist aber ein hybrider Ansatz, bei dem wir überprüfen wie viele Kanten $E_{k^{*}}$ im Verhältnis zur alten Kantenanzahl enthält. Ist dieses Verhältnis zu gering (beispielsweise kleiner als 3/4), benutzen wir stattdessen den Algorithmus von Eades, Lin und Smyth auf den ursprünglichen Kanten unseres \emph{Sukzessionsgraphen}.
 
 \subsection{Evaluierung}
+
+\cite{cpm10} haben ihre Implementierung des Verfahrens einer Vielzahl an Tests unterzogen, um sie mit einer breiten Auswahl an etablierten Verfahren zu vergleichen. Die Ergebnisse wurden dabei auf drei Referenzdatenbanken getestet, die jeweils eine Menge von \emph{alignierten} Sequenzfamilien zur Verfügung stellen für die eine biologisch korrekte Zuweisung bekannt ist. Zum Test auf globale verwandten Sequenzen wurde die Referenzdatenbank BAliBASE benutzt. Diese enthält \emph{Alignments} von Proteinsequenzen, die auf der ganzen Länge der Sequenzen Ähnlichkeiten haben. Lokal verwandte Sequenzen haben hingegen nur an einzelnen Stellen Ähnlichkeiten und zwischen diesen verwandten Segmenten sind nicht in Beziehung zueinander stehende Symbole. Für diese Art von Sequenzen wurden Tests auf den Datenbanken IRMBASE (Proteine) und DIRMBASE (DNA) durchgeführt.
+
+Für mehrere Sequenzfamilien dieser Datenbanken wurden dann mit dem \emph{Min-Cut-Ansatz} und durch andere \emph{Alignmentprogramme}, wie DIALIGN 2.2 und DIALIGN TX (neueste Version von DIALIGN), T-COFFEE, MAFFT, \emph{Alignments} berechnet und miteinander verglichen. Für die Vergleiche dienten wieder der \emph{sum-of-pairs-Score} (SP) und der \emph{(total-)column-Score} (TC), die die Anzahl an korrekten Paaren beziehungsweise komplett korrekten Spalten im Vergleich zum \emph{Referenzalignment} angeben.
+
+\subsubsection{Lokale Alignments auf IRMBASE2 und DIRMBASE1}
+
+Die Sequenzen der Referenzdatenbanken IRMBASE2 und DIRMBASE1 wurden so konstruiert, dass in zufällig erstellte und nicht zueinander in Beziehung stehende Sequenzen lokal einzelne Motive hinzugefügt wurden.
+
+Es hat sich herausgestellt, dass die neueste Version von DIALIGN TX nach wie vor die besten Ergebnisse auf lokal verwandten Sequenzen liefert, gefolgt von DIALIGN 2.2. Der \emph{Min-Cut}-Ansatz hatte auf den Proteinsequenzen von DIRMBASE starke Ergebnisse ergeben, die mit denen der beiden DIALIGN-Varianten vergleichbar sind. Auf DNA-Sequenzen waren die Ergebnisse nach wie vor ordentlich, aber signifikant schlechter im Vergleich zu den beiden gierigen Verfahren. Im Vergleich zu den globalen \emph{Alignierern}, wie CLUSTALW 2.0 oder T-COFFEE schnitt das \emph{Min-Cut}-Verfahren aber sehr gut ab \citep{cpm10}. Die einzige Ausnahme ist das Programm MAFFT, das Sequenzen mit Hilfe der schnellen Fouriertransformation gruppiert und sie dann progressiv \emph{aligniert}. MAFFT lieferte auf Protein- und DNA-Sequenzen gute Ergebnisse, die beinahe an die der DIALIGN-Varianten herankommen.
+
+\subsubsection{BALiBASE3}
+
+Ein Problem bei den Tests war aber die Laufzeit auf einigen Sequenzfamilien. Wie bereits in Abschnitt \ref{ch:ra_kompl} über die Komplexität von \textrm{ResolveAmbiguities} beschrieben, war die Laufzeit auf einigen Sequenzfamilien so lang, dass es nicht möglich war in angemessener Zeit \emph{Alignments} zu berechnen. Deshalb sah man sich dazu gezwungen zusätzlich eine Grenze $T$ für das minimale Gewicht eines \emph{Fragments} einzuführen, wodurch die Anzahl der Kanten im \emph{Inzidenzgraphen} verringert wird. Diese Grenze $T$ sorgt im Gegenzug zur verbesserten Laufzeit aber auch für etwas schlechtere Ergebnisse \citep{cpm10}.
+
+Insgesamt stellt der neue Ansatz auf global verwandten \emph{Sequenzfamilien} eine deutliche Verbesserung zu \emph{DIALIGN 2.2} dar. So waren bei allen sechs getesteten Referenzmengen, die jeweils eine Vielzahl an Sequenzfamilien enthalten, die Ergebnisse des \emph{min-cut}-Verfahrens besser. Das gilt sowohl für die SP-, als auch für die TC-\emph{Scores}. Mit den besten globalen \emph{Alignierer} kann das Verfahren zwar nicht konkurrieren, der verbreitete progressive Algorithmus CLUSTALW 2.0 wurde aber in allen Tests geschlagen. 
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

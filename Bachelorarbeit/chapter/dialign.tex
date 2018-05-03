@@ -233,13 +233,6 @@ Hier gilt $\hat{f} = argmax\{W(f) : f\: \text{endet in}\: (i,j) \}$. Jetzt stehe
 
 \subsection{Speichereffiziente Berechnung der paarweisen \emph{Alignments}}
 
-In diesem Abschnitt beschäftigen wir uns mit einer sehr speichereffizienten und schnellen Implementierung des soeben gesehenen Ansatzes. Zunächst beschränken wir die maximale Länge eines \emph{Fragments} $l_{\max}$ auf eine kleine, feste Zahl, beispielsweise 40. Je nach gewünschter Genauigkeit und benötigter Geschwindigkeit kann man diesen Wert vergrößern oder verkleinern. Auch wenn diese Einschränkung den maximal zu erreichenden \emph{Score} senkt und wir daher keine perfekten \emph{Alignments} mehr berechnen, hat $l_{\max}$ in der Praxis kaum einen Einfluss auf die Güte der Ergebnisse. Das liegt daran, dass wir im Fall von geringen Ähnlichkeiten zwischen Sequenzen nur selten \emph{Fragmente} mit Längen haben, die $l_\{max\}$ überschreiten und im Fall von sehr ähnlichen Sequenzen können wir lange \emph{Fragmente} auch in mehrere kleinere in der Größenordnung unserer Begrenzung aufteilen. Wir werden zeigen, dass mit dieser Einschränkung ein paarweises \emph{Alignment} in $\oh(L^2)$ Zeit und $\oh(L+N_{\max})$ Speicherplatz berechnet werden kann, wobei $N_{\max}$ die Anzahl an gleichzeitig gespeicherten \emph{Fragmenten} ist \citep{m02}, die durch $|F|$ begrenzt wird.
-
-Wir gehen unsere \emph{Score}matrix Spalte für Spalte von links nach rechts durch. An jeder Position $(i,j)$ berechnen wir mit \ref{eq:praefixgewicht} und \ref{eq:vorgaenger} $W(f)$ und $P(f)$ für alle \emph{Fragmente }$f \in \{f_{i+k,j+k,k} : 1 \leq k \leq l_{\max}\}$, die an der Stelle $(i,j)$ beginnen. Dabei speichern wir Pointer auf $W(f)$ und $P(f)$ in den Listen $F_{j+k}$, die mit der Spalte $j+k$ assoziiert werden in denen die jeweiligen \emph{Fragmente enden}. Alles was wir dafür an Informationen benötigen sind $Sc[i\!-\!1,j\!-\!1]$ und $Pr[i\!-\!1,j\!-\!1]$. Deshalb müssen wir nicht permanent die ganze Matrix vorhalten, sondern benötigen nur die zuletzt berechnete und die aktuelle Spalte für $Sc$ und $Pr$, also vier eindimensionale Arrays der Länge $L_1$.
-
-Bevor wir zur $(j+1)$-ten Spalte übergehen, berechnen wir alle Einträge von 1 bis $i$ für die $j$-te Spalte. Dazu greifen wir auf die Werte der vorhergehenden Spalte $(j-1)$ und auf die zuvor gespeicherten Listen aller \emph{Fragmente} $F_j$ zu , die in der $j$-ten Spalte enden, wobei wir die Formeln \ref{eq:praefixgewicht2} und \ref{eq:vorgaenger2} benutzen. Man kann sich überlegen, dass für jeden Eintrag $(i,j)$ höchstens $l_{\max} \in \oh(1)$ \emph{Fragmente} gespeichert wurden. Sobald wir mit der Berechnung der $j-ten$ Spalte fertig sind, können wir die Werte von $Pr[i,j-1]$ und $Sc[i,j-1]$ für $1 \leq i \leq L_1$ löschen.
-
-Diesen Vorgang wiederholen wir, bis wir schlussendlich auch alle Werte der letzten, also $L_2$-ten, Spalte berechnet haben. Dann kennen wir mit $Sc[L_1,L_2]$ den \emph{Score} des paarweisen \emph{Alignments} und können mithilfe der Backtrackingprozedur \ref{eq:backtracking} die \emph{Fragmente} aus denen es besteht bestimmen. Dazu brauchen wir die Mengen $F_j$, deren Einträge aber glücklicherweise nicht alle dauerhaft gespeichert werden müssen. Sobald $Sc[i,j]$ und $Pr[i,j]$ für eine Position $i,j)$ berechnet wurden, können wir alle \emph{Fragmente}, die dort enden, löschen, abgesehen von $Pr[i,j]$, für das immer noch in Frage kommt, dass es Teil der optimalen Kette von \emph{Fragmenten} ist. Sollte $Pr[i,j]$ nicht in $(i,j)$ enden, können wir sogar alle Einträge aus $F_j$ löschen, die in Zeile $i$ enden.
 
 \begin{algorithm}
 	\caption{Speichereffizientes paarweises DIALIGN}
@@ -249,37 +242,46 @@ Diesen Vorgang wiederholen wir, bis wir schlussendlich auch alle Werte der letzt
 		\Require Zwei Sequenzen $S_1$ und $S_2$ mit den Längen $L_1$ und $L_2$
 		\Procedure{pairwiseAlignment}{$S_1$, $S_2$, $l_max$}
 		\For{$i \gets 0$}{$L_1$}
-			\State $Sc[i,0] \gets 0$
+		\State $Sc[i,0] \gets 0$
 		\EndFor
 		\For{$j \gets 1$ \textbf{to} $L_2$}
-			\For{$i \gets 1$ \textbf{to} $L_1$}
-				\For{$l \gets 1$ \textbf{to} $l_{\max}$}\label{algl:fragmentgewichte}
-					\State $W(f_{i+l,j+l,l}) \gets w^*(f_{i+l,j+l,l}) + Sc[i\!-\!1,j\!-\!1]$
-					\State $P(f_{i+l,j+l,l}) \gets Pr[i\!-\!1,j\!-\!1]$
-					\State $F_{j+l} \gets F_{j+l} \cup {f_{i+l.j+l,l}}$\Comment{{\small Speichere \emph{Fragment} für Spalte in der es endet}}\label{algl:fragmentliste}
-				\EndFor
-				\State
-					$Sc[i,j] = \max
-					\begin{cases}
-						Sc[i\!-\!1,j], \\
-						Sc[i,j\!-\!1], \\
-						\max{W(f): f\: \text{endet in}\: (i,j)}
-					\end{cases}$\label{algl:praefix}
-				\State Setze $Pr[i,j]$ analog zu $Sc[i,j]$
-				\State lösche $Sc[i,j\!-\!1]$ und $Pr[i,j\!-\!1]$\Comment{{\small Lösche alte Spalteneinträge}}
-				\ForAll{$f_{i,j,k} \in F_j$ mit $f \neq Pr[i,j]$}
-					\State lösche $F_{i,j,k}$\Comment{{\small Lösche die, die in keiner opt. Kette in $(i,j)$ enden}}
-				\EndFor
-			\EndFor
+		\For{$i \gets 1$ \textbf{to} $L_1$}
+		\For{$l \gets 1$ \textbf{to} $l_{\max}$}\label{algl:fragmentgewichte}
+		\State $W(f_{i+l,j+l,l}) \gets w^*(f_{i+l,j+l,l}) + Sc[i\!-\!1,j\!-\!1]$
+		\State $P(f_{i+l,j+l,l}) \gets Pr[i\!-\!1,j\!-\!1]$
+		\State $F_{j+l} \gets F_{j+l} \cup {f_{i+l.j+l,l}}$\Comment{{\small Speichere \emph{Fragment} für Spalte in der es endet}}\label{algl:fragmentliste}
+		\EndFor
+		\State
+		$Sc[i,j] = \max
+		\begin{cases}
+		Sc[i\!-\!1,j], \\
+		Sc[i,j\!-\!1], \\
+		\max{W(f): f\: \text{endet in}\: (i,j)}
+		\end{cases}$\label{algl:praefix}
+		\State Setze $Pr[i,j]$ analog zu $Sc[i,j]$
+		\State lösche $Sc[i,j\!-\!1]$ und $Pr[i,j\!-\!1]$\Comment{{\small Lösche alte Spalteneinträge}}
+		\ForAll{$f_{i,j,k} \in F_j$ mit $f \neq Pr[i,j]$}
+		\State lösche $F_{i,j,k}$\Comment{{\small Lösche die, die in keiner opt. Kette in $(i,j)$ enden}}
+		\EndFor
+		\EndFor
 		\EndFor
 		\State $f_0 \gets Pr[L_1,L_2]$
 		\While{$f_k \neq \textbf{NIL}\:$}\Comment{{\small Backtracking, um \emph{Alignment} zu bestimmen}}
-			\State $f_{k+1} \gets P(f_{k})$
-			\State $k \gets k+1$
+		\State $f_{k+1} \gets P(f_{k})$
+		\State $k \gets k+1$
 		\EndWhile 
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
+
+
+In diesem Abschnitt beschäftigen wir uns mit einer sehr speichereffizienten und schnellen Implementierung des soeben gesehenen Ansatzes. Zunächst beschränken wir die maximale Länge eines \emph{Fragments} $l_{\max}$ auf eine kleine, feste Zahl, beispielsweise 40. Je nach gewünschter Genauigkeit und benötigter Geschwindigkeit kann man diesen Wert vergrößern oder verkleinern. Auch wenn diese Einschränkung den maximal zu erreichenden \emph{Score} senkt und wir daher keine perfekten \emph{Alignments} mehr berechnen, hat $l_{\max}$ in der Praxis kaum einen Einfluss auf die Güte der Ergebnisse. Das liegt daran, dass wir im Fall von geringen Ähnlichkeiten zwischen Sequenzen nur selten \emph{Fragmente} mit Längen haben, die $l_\{max\}$ überschreiten und im Fall von sehr ähnlichen Sequenzen können wir lange \emph{Fragmente} auch in mehrere kleinere in der Größenordnung unserer Begrenzung aufteilen. Wir werden zeigen, dass mit dieser Einschränkung ein paarweises \emph{Alignment} in $\oh(L^2)$ Zeit und $\oh(L+N_{\max})$ Speicherplatz berechnet werden kann, wobei $N_{\max}$ die Anzahl an gleichzeitig gespeicherten \emph{Fragmenten} ist \citep{m02}, die durch $|F|$ begrenzt wird.
+
+Wir gehen unsere \emph{Score}matrix Spalte für Spalte von links nach rechts durch. An jeder Position $(i,j)$ berechnen wir mit \ref{eq:praefixgewicht} und \ref{eq:vorgaenger} $W(f)$ und $P(f)$ für alle \emph{Fragmente }$f \in \{f_{i+k,j+k,k} : 1 \leq k \leq l_{\max}\}$, die an der Stelle $(i,j)$ beginnen. Dabei speichern wir Pointer auf $W(f)$ und $P(f)$ in den Listen $F_{j+k}$, die mit der Spalte $j+k$ assoziiert werden in denen die jeweiligen \emph{Fragmente enden}. Alles was wir dafür an Informationen benötigen sind $Sc[i\!-\!1,j\!-\!1]$ und $Pr[i\!-\!1,j\!-\!1]$. Deshalb müssen wir nicht permanent die ganze Matrix vorhalten, sondern benötigen nur die zuletzt berechnete und die aktuelle Spalte für $Sc$ und $Pr$, also vier eindimensionale Arrays der Länge $L_1$.
+
+Bevor wir zur $(j+1)$-ten Spalte übergehen, berechnen wir alle Einträge von 1 bis $i$ für die $j$-te Spalte. Dazu greifen wir auf die Werte der vorhergehenden Spalte $(j-1)$ und auf die zuvor gespeicherten Listen aller \emph{Fragmente} $F_j$ zu , die in der $j$-ten Spalte enden, wobei wir die Formeln \ref{eq:praefixgewicht2} und \ref{eq:vorgaenger2} benutzen. Man kann sich überlegen, dass für jeden Eintrag $(i,j)$ höchstens $l_{\max} \in \oh(1)$ \emph{Fragmente} gespeichert wurden. Sobald wir mit der Berechnung der $j-ten$ Spalte fertig sind, können wir die Werte von $Pr[i,j-1]$ und $Sc[i,j-1]$ für $1 \leq i \leq L_1$ löschen.
+
+Diesen Vorgang wiederholen wir, bis wir schlussendlich auch alle Werte der letzten, also $L_2$-ten, Spalte berechnet haben. Dann kennen wir mit $Sc[L_1,L_2]$ den \emph{Score} des paarweisen \emph{Alignments} und können mithilfe der Backtrackingprozedur \ref{eq:backtracking} die \emph{Fragmente} aus denen es besteht bestimmen. Dazu brauchen wir die Mengen $F_j$, deren Einträge aber glücklicherweise nicht alle dauerhaft gespeichert werden müssen. Sobald $Sc[i,j]$ und $Pr[i,j]$ für eine Position $i,j)$ berechnet wurden, können wir alle \emph{Fragmente}, die dort enden, löschen, abgesehen von $Pr[i,j]$, für das immer noch in Frage kommt, dass es Teil der optimalen Kette von \emph{Fragmenten} ist. Sollte $Pr[i,j]$ nicht in $(i,j)$ enden, können wir sogar alle Einträge aus $F_j$ löschen, die in Zeile $i$ enden.
 
 Da wir wissen, dass nur \emph{Fragmente} mit positiven Gewichten Teil unseres \emph{Alignments} sein können, sind wir in der Lage die Mengen $F_j$ von gespeicherten \emph{Fragmenten} weiter einzuschränken. Wenn die Teilsumme von Ähnlichkeitswerten bis zu einem bestimmten Punkt negativ, können wir den Durchlauf von \algref{alg:speichereffizient}{algl:fragmentgewichte} sofort abbrechen, weil wir wissen, dass wir ein besseres \emph{Alignment} finden, wenn wir den Teil mit der negativen Summe von Gewichten ignorieren. Außerdem gibt es zwei Situationen bei denen wir die Berechnung der Gewichte für Fragmente zwar nicht abbrechen, aber wissen, dass das aktuell betrachtete Element nicht gespeichert werden muss:
 

@@ -15,27 +15,27 @@
 \contentsline {subsection}{\numberline {3.2.3}Gewichtsfunktionen in DIALIGN 2}{10}{subsection.3.2.3}
 \contentsline {section}{\numberline {3.3}Paarweise Alignments mit dynamischer Programmierung}{11}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}Speichereffiziente Berechnung der paarweisen \emph {Alignments}}{13}{subsection.3.3.1}
-\contentsline {subsection}{\numberline {3.3.2}Laufzeit}{16}{subsection.3.3.2}
+\contentsline {subsection}{\numberline {3.3.2}Laufzeit}{15}{subsection.3.3.2}
 \contentsline {subsection}{\numberline {3.3.3}Beispiel zur Berechnung paarweiser \emph {Alignments}}{16}{subsection.3.3.3}
 \contentsline {section}{\numberline {3.4}\IeC {\"U}berlappgewichte}{19}{section.3.4}
-\contentsline {subsection}{\numberline {3.4.1}Umsetzung im Programm und Laufzeit}{20}{subsection.3.4.1}
+\contentsline {subsection}{\numberline {3.4.1}Umsetzung im Programm und Laufzeit}{19}{subsection.3.4.1}
 \contentsline {subsection}{\numberline {3.4.2}Beispiel \IeC {\"U}berlappgewichte}{21}{subsection.3.4.2}
 \contentsline {section}{\numberline {3.5}Konsistenz}{22}{section.3.5}
 \contentsline {subsection}{\numberline {3.5.1}Berechnung der transitiven H\IeC {\"u}lle eines gerichteten Graphen}{24}{subsection.3.5.1}
 \contentsline {subsection}{\numberline {3.5.2}Konsistenzgrenzen durch Berechnung der transitiven H\IeC {\"u}lle}{27}{subsection.3.5.2}
-\contentsline {subsection}{\numberline {3.5.3}Einbindung in DIALIGN}{31}{subsection.3.5.3}
+\contentsline {subsection}{\numberline {3.5.3}Einbindung in DIALIGN}{30}{subsection.3.5.3}
 \contentsline {subsection}{\numberline {3.5.4}Evaluation von DIALIGN mit der GABIOS-LIB}{31}{subsection.3.5.4}
-\contentsline {subsection}{\numberline {3.5.5}Beispiel Konsistenzgrenzen}{32}{subsection.3.5.5}
-\contentsline {subsubsection}{\nonumberline Ursprungszustand}{32}{section*.13}
+\contentsline {subsection}{\numberline {3.5.5}Beispiel Konsistenzgrenzen}{31}{subsection.3.5.5}
+\contentsline {subsubsection}{\nonumberline Ursprungszustand}{31}{section*.13}
 \contentsline {subsubsection}{\nonumberline Erstes Fragment}{32}{section*.14}
 \contentsline {subsubsection}{\nonumberline Zweites Fragment}{33}{section*.15}
-\contentsline {subsubsection}{\nonumberline Drittes Fragment}{34}{section*.16}
+\contentsline {subsubsection}{\nonumberline Drittes Fragment}{33}{section*.16}
 \contentsline {subsubsection}{\nonumberline Viertes Fragment}{34}{section*.17}
-\contentsline {subsubsection}{\nonumberline Weitere Fragmente}{35}{section*.18}
-\contentsline {section}{\numberline {3.6}Abschluss des Verfahrens}{35}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Gesamtkomplexit\IeC {\"a}t}{36}{subsection.3.6.1}
-\contentsline {section}{\numberline {3.7}Evaluierung, Zusammenfassung und Schw\IeC {\"a}chen des Ansatzes}{37}{section.3.7}
-\contentsline {subsection}{\numberline {3.7.1}Evaluierung}{37}{subsection.3.7.1}
+\contentsline {subsubsection}{\nonumberline Weitere Fragmente}{34}{section*.18}
+\contentsline {section}{\numberline {3.6}Abschluss des Verfahrens}{34}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Gesamtkomplexit\IeC {\"a}t}{35}{subsection.3.6.1}
+\contentsline {section}{\numberline {3.7}Evaluierung, Zusammenfassung und Schw\IeC {\"a}chen des Ansatzes}{36}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}Evaluierung}{36}{subsection.3.7.1}
 \contentsline {subsection}{\numberline {3.7.2}Zusammenfassung}{37}{subsection.3.7.2}
 \contentsline {subsection}{\numberline {3.7.3}Schw\IeC {\"a}chen von DIALIGN}{38}{subsection.3.7.3}
 \contentsline {chapter}{\numberline {4}Ein Min-Cut-Ansatz f\IeC {\"u}r das Konsistenzproblem}{41}{chapter.4}
@@ -61,15 +61,14 @@
 \contentsline {subsection}{\numberline {4.3.4}Verankerungen}{59}{subsection.4.3.4}
 \contentsline {subsection}{\numberline {4.3.5}Komplexit\IeC {\"a}t}{59}{subsection.4.3.5}
 \contentsline {section}{\numberline {4.4}Abschluss und Zusammenfassung}{60}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Gesamtkomplexit\IeC {\"a}t}{60}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Probleme bei der Heuristik zum Entfernen von Kanten}{61}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}Evaluierung}{61}{subsection.4.4.3}
-\contentsline {chapter}{\numberline {5}Programmierung}{63}{chapter.5}
-\contentsline {section}{\numberline {5.1}Speichereffiziente Umsetzung der dynamischen Programmierung}{63}{section.5.1}
-\contentsline {chapter}{\numberline {6}Validierung der Ergebnisse}{65}{chapter.6}
-\contentsline {section}{\numberline {6.1}Vorstellung BAliBase und (D)IRMBASE}{65}{section.6.1}
-\contentsline {section}{\numberline {6.2}Test auf BAliBase}{65}{section.6.2}
-\contentsline {section}{\numberline {6.3}Test auf DIRMBASE und IRMBASE}{65}{section.6.3}
-\contentsline {chapter}{\numberline {7}Fazit}{67}{chapter.7}
-\contentsline {section}{\numberline {7.1}Zusammenfassung}{67}{section.7.1}
-\contentsline {section}{\numberline {7.2}Future Works}{67}{section.7.2}
+\contentsline {subsection}{\numberline {4.4.1}Beispiel}{60}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Gesamtkomplexit\IeC {\"a}t}{61}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Probleme bei der Heuristik zum Entfernen von Kanten}{62}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}Evaluierung}{62}{subsection.4.4.4}
+\contentsline {subsubsection}{\nonumberline Lokale Alignments auf IRMBASE2 und DIRMBASE1}{63}{section*.29}
+\contentsline {subsubsection}{\nonumberline BALiBASE3}{63}{section*.30}
+\contentsline {chapter}{\numberline {5}Programmierung}{65}{chapter.5}
+\contentsline {section}{\numberline {5.1}Speichereffiziente Umsetzung der dynamischen Programmierung}{65}{section.5.1}
+\contentsline {chapter}{\numberline {6}Fazit}{67}{chapter.6}
+\contentsline {section}{\numberline {6.1}Zusammenfassung}{67}{section.6.1}
+\contentsline {section}{\numberline {6.2}Future Works}{67}{section.6.2}
