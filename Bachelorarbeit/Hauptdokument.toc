@@ -67,6 +67,7 @@
 \contentsline {subsection}{\numberline {4.4.4}Evaluierung}{62}{subsection.4.4.4}
 \contentsline {subsubsection}{\nonumberline Lokale Alignments auf IRMBASE2 und DIRMBASE1}{63}{section*.29}
 \contentsline {subsubsection}{\nonumberline BALiBASE3}{63}{section*.30}
+\contentsline {subsubsection}{\nonumberline Betrachtung der Scores im Vergleich}{64}{section*.31}
 \contentsline {chapter}{\numberline {5}Programmierung}{65}{chapter.5}
 \contentsline {section}{\numberline {5.1}Speichereffiziente Umsetzung der dynamischen Programmierung}{65}{section.5.1}
 \contentsline {chapter}{\numberline {6}Fazit}{67}{chapter.6}

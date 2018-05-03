@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.19)  3 MAY 2018 17:45
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.19)  3 MAY 2018 20:21
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -4055,7 +4055,15 @@ pro-gres-siv \T1/SourceSansPro-LF/m/it/10.95 ali-gniert\T1/SourceSansPro-LF/m/n
 /10.95 . MAFFT lie-fer-te auf Protein-
  []
 
-)
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1316.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1316.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1316.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1316.
+[63])
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 256.
 Package babel Info: Redefining ngerman shorthand "~
@@ -4064,24 +4072,10 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 256.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 256.
- [63]
+ [64]
 \openout2 = `chapter/Programmierung.aux'.
 
  (./chapter/Programmierung.tex
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
- [64
-
-
-
-
-]
 chapter 5.
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
@@ -4100,7 +4094,12 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 258.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 258.
- [65]
+ [65
+
+
+
+
+]
 \openout2 = `chapter/Fazit.aux'.
 
  (./chapter/Fazit.tex
@@ -4204,10 +4203,10 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 45122 strings out of 494830
- 857152 string characters out of 6177580
- 1185437 words of memory out of 5000000
- 47192 multiletter control sequences out of 15000+600000
+ 45124 strings out of 494830
+ 857177 string characters out of 6177580
+ 1185477 words of memory out of 5000000
+ 47193 multiletter control sequences out of 15000+600000
  854765 words of font info for 255 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  73i,27n,95p,10479b,1042s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -4240,10 +4239,10 @@ nts/type1/public/txfonts/txsyb.pfb><c:/texlive/2017/texmf-dist/fonts/type1/publ
 ic/txfonts/txsyc.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/newtx/txsys
 .pfb><c:/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8a.pfb><c:/texlive/
 2017/texmf-dist/fonts/type1/public/nimbus15/zcoN-Regular.pfb>
-Output written on Hauptdokument.pdf (75 pages, 663855 bytes).
+Output written on Hauptdokument.pdf (75 pages, 666391 bytes).
 PDF statistics:
- 1390 PDF objects out of 1440 (max. 8388607)
- 1257 compressed objects within 13 object streams
- 325 named destinations out of 1000 (max. 500000)
+ 1396 PDF objects out of 1440 (max. 8388607)
+ 1263 compressed objects within 13 object streams
+ 326 named destinations out of 1000 (max. 500000)
  826 words of extra memory for PDF output out of 10000 (max. 10000000)
 
