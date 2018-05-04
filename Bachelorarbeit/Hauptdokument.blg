@@ -7,51 +7,48 @@ A level-1 auxiliary file: chapter/DP.aux
 A level-1 auxiliary file: chapter/dialign.aux
 A level-1 auxiliary file: chapter/min-cut.aux
 A level-1 auxiliary file: chapter/Programmierung.aux
-A level-1 auxiliary file: chapter/Validierung.aux
 A level-1 auxiliary file: chapter/Fazit.aux
 The style file: german.bst
 A level-1 auxiliary file: chapter/EidesstattlicheErklaerung.aux
 Database file #1: Quellen.bib
-Warning--empty journal in els93
-You've used 21 entries,
+You've used 22 entries,
             2828 wiz_defined-function locations,
-            720 strings with 7772 characters,
-and the built_in function-call counts, 13238 in all, are:
-= -- 1105
-> -- 474
-< -- 33
-+ -- 189
-- -- 163
-* -- 954
-:= -- 1988
-add.period$ -- 71
-call.type$ -- 21
-change.case$ -- 156
-chr.to.int$ -- 22
+            724 strings with 7918 characters,
+and the built_in function-call counts, 13830 in all, are:
+= -- 1149
+> -- 508
+< -- 34
++ -- 202
+- -- 175
+* -- 1003
+:= -- 2086
+add.period$ -- 74
+call.type$ -- 22
+change.case$ -- 164
+chr.to.int$ -- 23
 cite$ -- 22
-duplicate$ -- 992
-empty$ -- 984
-format.name$ -- 225
-if$ -- 2684
+duplicate$ -- 1036
+empty$ -- 1020
+format.name$ -- 240
+if$ -- 2794
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 201
-newline$ -- 110
-num.names$ -- 84
-pop$ -- 408
+missing$ -- 211
+newline$ -- 115
+num.names$ -- 88
+pop$ -- 425
 preamble$ -- 1
-purify$ -- 138
+purify$ -- 146
 quote$ -- 0
-skip$ -- 434
+skip$ -- 450
 stack$ -- 0
-substring$ -- 627
-swap$ -- 568
-text.length$ -- 23
+substring$ -- 638
+swap$ -- 594
+text.length$ -- 24
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 186
-warning$ -- 1
-while$ -- 85
+type$ -- 195
+warning$ -- 0
+while$ -- 88
 width$ -- 0
-write$ -- 287
-(There was 1 warning)
+write$ -- 301

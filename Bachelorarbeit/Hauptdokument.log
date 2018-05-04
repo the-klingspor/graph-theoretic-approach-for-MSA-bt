@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.19)  3 MAY 2018 20:21
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.19)  4 MAY 2018 17:11
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -4127,10 +4127,47 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 4.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 6.
+(babel)             in language  on input line 15.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 6.
-)
+(babel)             in language  on input line 15.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 15.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 15.
+[67]
+Overfull \hbox (5.1538pt too wide) in paragraph at lines 19--20
+\T1/SourceSansPro-LF/m/n/10.95 Hil-fe der Bi-blio-thek ^^R  Boost Graph Li-bra-
+ry^^P um-ge-setzt. Die-ser Al-go-rith-mus stellt einen wich-
+ []
+
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 21.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 21.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 32.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 32.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 32.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 32.
+[68]
+Overfull \hbox (0.13226pt too wide) in paragraph at lines 32--33
+\T1/SourceSansPro-LF/m/n/10.95 Durch-lauf der \T1/SourceSansPro-LF/m/it/10.95 w
+hi-le\T1/SourceSansPro-LF/m/n/10.95 -Schleife für je-de Zu-sam-men-hangs-kom-po
+-nen-te im \T1/SourceSansPro-LF/m/it/10.95 In-zi-denz-gra-
+ []
+
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 47.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 47.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 47.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 47.
+[69])
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 260.
 Package babel Info: Redefining ngerman shorthand "~
@@ -4139,29 +4176,20 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 260.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 260.
- [67] (./Hauptdokument.bbl
+ [70] (./Hauptdokument.bbl
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
+(babel)             in language  on input line 95.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
+(babel)             in language  on input line 95.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1.
+(babel)             in language  on input line 95.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1.
- [68
+(babel)             in language  on input line 95.
+ [71
 
 
 
-]
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 95.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 95.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 95.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 95.
- [69])
+])
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 267.
 Package babel Info: Redefining ngerman shorthand "~
@@ -4170,7 +4198,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 267.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 267.
- [70]
+ [72]
 \openout2 = `chapter/EidesstattlicheErklaerung.aux'.
 
 
@@ -4183,7 +4211,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 267.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 267.
- [71
+ [73
 
 
 
@@ -4203,10 +4231,10 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 45124 strings out of 494830
- 857177 string characters out of 6177580
- 1185477 words of memory out of 5000000
- 47193 multiletter control sequences out of 15000+600000
+ 45128 strings out of 494830
+ 857233 string characters out of 6177580
+ 1185611 words of memory out of 5000000
+ 47196 multiletter control sequences out of 15000+600000
  854765 words of font info for 255 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  73i,27n,95p,10479b,1042s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -4239,10 +4267,10 @@ nts/type1/public/txfonts/txsyb.pfb><c:/texlive/2017/texmf-dist/fonts/type1/publ
 ic/txfonts/txsyc.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/newtx/txsys
 .pfb><c:/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8a.pfb><c:/texlive/
 2017/texmf-dist/fonts/type1/public/nimbus15/zcoN-Regular.pfb>
-Output written on Hauptdokument.pdf (75 pages, 666391 bytes).
+Output written on Hauptdokument.pdf (77 pages, 676072 bytes).
 PDF statistics:
- 1396 PDF objects out of 1440 (max. 8388607)
- 1263 compressed objects within 13 object streams
- 326 named destinations out of 1000 (max. 500000)
+ 1414 PDF objects out of 1440 (max. 8388607)
+ 1279 compressed objects within 13 object streams
+ 327 named destinations out of 1000 (max. 500000)
  826 words of extra memory for PDF output out of 10000 (max. 10000000)
 

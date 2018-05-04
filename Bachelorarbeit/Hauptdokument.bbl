@@ -1,4 +1,4 @@
-\begin{thebibliography}{21}
+\begin{thebibliography}{22}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{Abdedda\"{i}m(1997)}]{a97}
@@ -50,7 +50,7 @@ Dinitz, Y.
 \bibitem[{Eades \emph{et~al.}(1993)Eades, Lin und Smyth}]{els93}
 Eades, P., Lin, X. und Smyth, W.
 \newblock A fast and effective heuristic for the feedback arc set problem.
-\newblock Band~47:319--323 (1993).
+\newblock \emph{Information Processing Letters}, Band~47:319--323 (1993).
 
 \bibitem[{Goldberg und Tarjan(1988)}]{gt88}
 Goldberg, A. und Tarjan, R.
@@ -114,6 +114,13 @@ Pearson, W.
 Pitschi, F., Dechauvelle, C. und Corel, E.
 \newblock Automatic detection of anchor points for multiple sequence alignment.
 \newblock \emph{BMC Bioinformatics}, Band 11:445 (2010).
+
+\bibitem[{Schmollinger \emph{et~al.}(2004)Schmollinger, Nieselt, Kaufmann und
+  Morgenstern}]{snkm04}
+Schmollinger, M., Nieselt, K., Kaufmann, M. und Morgenstern, B.
+\newblock {DIALIGN P: Fast pair-wise and multiple sequence alignment using
+  parallel processors}.
+\newblock \emph{BMC Bioinformatics}, Band 5:128 (2004).
 
 \bibitem[{Subramanian \emph{et~al.}(2008)Subramanian, Kaufman und
   Morgenstern}]{DIALIGNTX}
