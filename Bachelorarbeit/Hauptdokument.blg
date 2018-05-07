@@ -3,7 +3,6 @@ Capacity: max_strings=100000, hash_size=100000, hash_prime=85009
 The top-level auxiliary file: Hauptdokument.aux
 A level-1 auxiliary file: chapter/Titelblatt.aux
 A level-1 auxiliary file: chapter/Einleitung.aux
-A level-1 auxiliary file: chapter/DP.aux
 A level-1 auxiliary file: chapter/dialign.aux
 A level-1 auxiliary file: chapter/min-cut.aux
 A level-1 auxiliary file: chapter/Programmierung.aux
@@ -11,44 +10,44 @@ A level-1 auxiliary file: chapter/Fazit.aux
 The style file: german.bst
 A level-1 auxiliary file: chapter/EidesstattlicheErklaerung.aux
 Database file #1: Quellen.bib
-You've used 22 entries,
+You've used 23 entries,
             2828 wiz_defined-function locations,
-            724 strings with 7918 characters,
-and the built_in function-call counts, 13830 in all, are:
-= -- 1149
-> -- 508
-< -- 34
-+ -- 202
-- -- 175
-* -- 1003
-:= -- 2086
-add.period$ -- 74
-call.type$ -- 22
-change.case$ -- 164
-chr.to.int$ -- 23
-cite$ -- 22
-duplicate$ -- 1036
-empty$ -- 1020
-format.name$ -- 240
-if$ -- 2794
+            728 strings with 8043 characters,
+and the built_in function-call counts, 14197 in all, are:
+= -- 1185
+> -- 518
+< -- 35
++ -- 206
+- -- 178
+* -- 1020
+:= -- 2154
+add.period$ -- 78
+call.type$ -- 23
+change.case$ -- 170
+chr.to.int$ -- 24
+cite$ -- 23
+duplicate$ -- 1063
+empty$ -- 1044
+format.name$ -- 244
+if$ -- 2864
 int.to.chr$ -- 1
 int.to.str$ -- 1
-missing$ -- 211
-newline$ -- 115
-num.names$ -- 88
-pop$ -- 425
+missing$ -- 216
+newline$ -- 121
+num.names$ -- 92
+pop$ -- 433
 preamble$ -- 1
-purify$ -- 146
+purify$ -- 151
 quote$ -- 0
-skip$ -- 450
+skip$ -- 462
 stack$ -- 0
-substring$ -- 638
-swap$ -- 594
+substring$ -- 651
+swap$ -- 605
 text.length$ -- 24
 text.prefix$ -- 0
 top$ -- 0
-type$ -- 195
+type$ -- 204
 warning$ -- 0
-while$ -- 88
+while$ -- 91
 width$ -- 0
-write$ -- 301
+write$ -- 315
