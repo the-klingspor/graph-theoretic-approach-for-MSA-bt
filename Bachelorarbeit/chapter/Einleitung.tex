@@ -12,7 +12,7 @@ Betrachten wir dazu zwei kleine Beispiele von Wörtern, die häufig falsch gesch
 \ttfamily
 \begin{center}
 \begin{tabular}{ccc}
-		O-RGINAL & \hspace{2cm} & SYLVESTER \\
+		OR-GINAL & \hspace{2cm} & SYLVESTER \\
 		ORIGINAL & \hspace{2cm} & SILVESTER
 \end{tabular}
 \end{center}
@@ -26,7 +26,13 @@ Ein zweites großes Einsatzgebiet des \emph{multiple sequence Alignment}-Problem
 
 \section{Der Algorithmus von Needleman-Wunsch}
 
+Einer der ersten Algorithmen zur Berechnung von paarweisen \emph{Alignments} war der von \cite{nw70}. Dieser weist Zuweisungen auf Symbolebene zwischen zwei Sequenzen Werte zu und das Ziel ist es mit Hilfe von dynamischer Programmierung die Summe dieser Werte zu maximieren. Wir werden in den nächsten Abschnitten zunächst das Paradigma der dynamischen Programmierung kennenlernen, bevor wir es beim Algorithmus von Needleman-Wunsch benutzen. Unter Verwendung des Algorithmus lässt sich danach die Komplexität des \emph{multiple sequence Alignment}-Problems verdeutlichen, die uns den Anlass gibt in den nächsten Kapiteln zwei leistungsstarke Heuristiken zu betrachten.
+
 \subsection{Dynamische Programmierung}
+
+Die dynamische Programmierung ist ein Prinzip zum algorithmischen Lösen eines Optimierungsproblems. Dazu wird ein größeres Problem unter Zuhilfenahme der Lösungen von sich überschneidenden Teilproblemen gelöst, wobei die zuvor berechneten Lösungen gespeichert werden. Durch die Wiederverwendung der bereits gelösten Teilprobleme lässt sich auf diese Weise die oft exponentielle Laufzeit eines naiven Algorithmus auf polynomielle Laufzeit verringern. Dabei muss man beachten, ob es für den jeweiligen Kontext angemessen ist den höheren Speicherbedarf aufgrund der zu speichernden Werte für die verbesserte Laufzeit in Kauf zu nehmen. Oft wird die dynamische Programmierung mit dem \emph{divide and conquer}-Prinzip verwechselt. Beide Paradigmen darauf basieren ein Problem in kleinere Teilprobleme zu zerlegen. Der Hauptunterschied zwischen ihnen ist, dass das Problem bei \emph{divide and conquer} in disjunkte Teilprobleme zerlegt wird, statt in sich überlappende. Denken wir beispielsweise an Mergesort zurück: hier sortiere ich ein Feld, indem ich immer größer werdende disjunkte Teilfelder miteinander verschmelze.
+
+In der Regel stellt man bei der dynamischen Programmierung zunächst eine Rekursionsgleichung auf mit deren Hilfe sich das Problem beschreiben lässt. Im Gegensatz zur \emph{Memoisation} wird diese Rekursionsgleichung jedoch nicht direkt und \emph{top-down} umgesetzt. Stattdessen werden \emph{bottom-up} zunächst die Basisfälle berechnet und darauf aufbauend immer größere Teilprobleme gelöst. Die Berechnung erfolgt dabei aber nichtsdestoweniger der Rekursionsformel entsprechend.
 
 \subsection{Der Algorithmus}
 

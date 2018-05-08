@@ -1,4 +1,4 @@
-\begin{thebibliography}{23}
+\begin{thebibliography}{24}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{Abdedda\"{i}m(1997)}]{a97}
@@ -104,6 +104,12 @@ Morgenstern, B., Frech, K., Dress, A. und Werner, T.
 Morgenstern, B., Prohaska, S., D., P. und Stadler, P.
 \newblock Multiple sequence alignment with user-defined anchor points.
 \newblock \emph{Algorithms for Molecular Biology}, Band 1:6 (2006).
+
+\bibitem[{Needleman und Wunsch(1970)}]{nw70}
+Needleman, S. und Wunsch, C.
+\newblock A general method applicable to the search for similarities in the
+  amino acids of two proteins.
+\newblock \emph{Journal of Molecular Biology}, Band~48:443--453 (1970).
 
 \bibitem[{Pearson(2013)}]{p13}
 Pearson, W.

@@ -1,4 +1,4 @@
-This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.19)  7 MAY 2018 18:36
+This is pdfTeX, Version 3.14159265-2.6-1.40.18 (TeX Live 2017/W32TeX) (preloaded format=pdflatex 2018.4.19)  8 MAY 2018 16:45
 entering extended mode
  \write18 enabled.
  %&-line parsing enabled.
@@ -2695,19 +2695,28 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 27.
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/b/n' will be
-(Font)              scaled to size 12.0pt on input line 29.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 29.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 29.
+(Font)              scaled to size 12.0pt on input line 31.
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 31.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 31.
 Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 33.
+(babel)             in language  on input line 34.
 Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 33.
+(babel)             in language  on input line 34.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 34.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 34.
+ [2]
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 37.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 37.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 39.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 39.
 )
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 250.
@@ -2717,11 +2726,25 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 250.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 250.
- [2]
+
+[3]
 \openout2 = `chapter/dialign.aux'.
 
+ (./chapter/dialign.tex
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1.
+ [4
 
-(./chapter/dialign.tex
+
+
+
+]
 chapter 2.
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
@@ -2754,12 +2777,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 35.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 35.
-[3
-
-
-
-
-]
+[5]
 Package mdframed Info: mdframed works in twoside mode on input line 36.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
@@ -2792,7 +2810,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 71.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 71.
-[4]
+[6]
 Overfull \hbox (6.30818pt too wide) in paragraph at lines 83--84
 \T1/SourceSansPro-LF/m/n/10.95 als ei-ner \T1/SourceSansPro-LF/m/it/10.95 Stel-
 le\T1/SourceSansPro-LF/m/n/10.95 , wur-den als Groÿ-buch-sta-be dar-ge-stellt, 
@@ -2823,7 +2841,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 98.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 98.
-[5]
+[7]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 109.
 Package babel Info: Redefining ngerman shorthand "~
@@ -2836,7 +2854,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 122.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 122.
- [6]
+ [8]
 Overfull \hbox (3.71284pt too wide) in paragraph at lines 129--130
 [][]\T1/SourceSansPro-LF/m/n/10.95 Henikoff und He-ni-koff[] ([]1992[]) ha-ben 
 meh-re-re Sub-sti-tu-ti-ons-ma-tri-zen ent-wi-ckelt. Die Zahl
@@ -2856,7 +2874,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 138.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 138.
-[7]
+[9]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 139.
 Package babel Info: Redefining ngerman shorthand "~
@@ -2869,7 +2887,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 161.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 161.
- [8]
+ [10]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 161.
 Package babel Info: Redefining ngerman shorthand "~
@@ -2894,7 +2912,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 188.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 188.
- [9]
+ [11]
 Package mdframed Info: mdframed works in twoside mode on input line 190.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
@@ -2915,7 +2933,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 229.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 229.
- [10]
+ [12]
 LaTeX Font Info:    Font shape `T1/SourceSansPro-LF/b/it' will be
 (Font)              scaled to size 12.0pt on input line 234.
 Package babel Info: Redefining ngerman shorthand "|
@@ -2949,7 +2967,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 279.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 279.
-[11]
+[13]
 LaTeX Font Info:    Try loading font information for TS1+SourceSansPro-LF on in
 put line 289.
  (c:/texlive/2017/texmf-dist/tex/latex/sourcesanspro/ts1sourcesanspro-lf.fd
@@ -2966,7 +2984,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 292.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 292.
- [12]
+ [14]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 300.
 Package babel Info: Redefining ngerman shorthand "~
@@ -2995,7 +3013,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 310.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 310.
-[13]
+[15]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 314.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3016,7 +3034,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 378.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 378.
- [14]
+ [16]
 Overfull \hbox (26.73318pt too wide) in paragraph at lines 378--396
 [][] 
  []
@@ -3032,7 +3050,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 450.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 450.
- [15]
+ [17]
 Overfull \hbox (7.95056pt too wide) in paragraph at lines 450--466
 [][] 
  []
@@ -3060,7 +3078,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 513.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 513.
- [16]
+ [18]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 532.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3074,7 +3092,7 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 535.
 
-[17]
+[19]
 Package mdframed Info: mdframed works in twoside mode on input line 539.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
@@ -3122,7 +3140,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 569.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 569.
-[18]
+[20]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 612.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3131,7 +3149,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 612.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 612.
- [19]
+ [21]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 613.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3152,7 +3170,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 646.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 646.
- [20]
+ [22]
 Package mdframed Info: mdframed works in twoside mode on input line 647.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
@@ -3197,7 +3215,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 688.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 688.
-[21]
+[23]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 689.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3218,7 +3236,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 705.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 705.
- [22]
+ [24]
 Overfull \hbox (1.2782pt too wide) in paragraph at lines 719--720
 [][] 
  []
@@ -3231,7 +3249,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 770.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 770.
-[23]
+[25]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 781.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3240,7 +3258,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 781.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 781.
- [24]
+ [26]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 783.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3271,7 +3289,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 806.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 806.
- [25]
+ [27]
 Package mdframed Info: mdframed works in twoside mode on input line 811.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
@@ -3288,7 +3306,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 829.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 829.
- [26]
+ [28]
 Package mdframed Info: mdframed works in twoside mode on input line 831.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
@@ -3313,7 +3331,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 845.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 845.
-[27]
+[29]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 849.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3333,7 +3351,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 860.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 860.
- [28]
+ [30]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 865.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3347,7 +3365,7 @@ Package babel Info: Redefining ngerman shorthand "|
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 979.
 
-[29]
+[31]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1129.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3356,7 +3374,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1129.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1129.
- [30]
+ [32]
 Overfull \hbox (26.3943pt too wide) in paragraph at lines 1245--1256
 \T1/SourceSansPro-LF/m/n/10.95 . []
  []
@@ -3369,7 +3387,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1405.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1405.
-[31]
+[33]
 Overfull \hbox (8.44598pt too wide) in paragraph at lines 1538--1554
 \T1/SourceSansPro-LF/m/n/10.95 . [] 
  []
@@ -3386,7 +3404,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1580.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1580.
-[32]
+[34]
 Overfull \hbox (5.16365pt too wide) in paragraph at lines 1581--1582
 []\T1/SourceSansPro-LF/m/n/10.95 Denken wir an un-ser Bei-spiel zu-rück, dann s
 tel-len wir fest, dass das Frag-ment $\OML/ntxmi/m/it/10.95 f[] \U/ntxmia/m/it/
@@ -3413,7 +3431,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1607.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1607.
-[33]
+[35]
 Overfull \hbox (0.67839pt too wide) in paragraph at lines 1614--1615
 []\T1/SourceSansPro-LF/m/n/10.95 Somit do-mi-nie-ren die \T1/SourceSansPro-LF/m
 /it/10.95 Kon-sis-tenz-gren-zen \T1/SourceSansPro-LF/m/n/10.95 die Lauf-zeit un
@@ -3437,7 +3455,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1630.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1630.
-[34]
+[36]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1632.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3456,7 +3474,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1639.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1639.
-[35]
+[37]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1640.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3473,7 +3491,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1647.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1647.
- [36])
+ [38])
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 252.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3482,7 +3500,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 252.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 252.
- [37]
+ [39]
 \openout2 = `chapter/min-cut.aux'.
 
  (./chapter/min-cut.tex
@@ -3494,7 +3512,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1.
- [38
+ [40
 
 
 
@@ -3521,7 +3539,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 16.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 16.
-[39]
+[41]
 Package mdframed Info: mdframed works in twoside mode on input line 21.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
@@ -3557,7 +3575,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 35.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 35.
-[40]
+[42]
 Package mdframed Info: mdframed works in twoside mode on input line 82.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
@@ -3578,7 +3596,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 129.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 129.
- [41]
+ [43]
 Overfull \hbox (2.935pt too wide) in paragraph at lines 129--130
 \T1/SourceSansPro-LF/m/n/10.95 wen-de-te einen so-ge-nann-ten \T1/SourceSansPro
 -LF/m/it/10.95 Rest-wert-gra-phen\T1/SourceSansPro-LF/m/n/10.95 , der für je-de
@@ -3600,7 +3618,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 134.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 134.
-[42]
+[44]
 Overfull \hbox (0.30162pt too wide) in paragraph at lines 135--136
 \T1/SourceSansPro-LF/m/it/10.95 na-mi-schen Bäu-men\T1/SourceSansPro-LF/m/n/10.
 95 . \T1/SourceSansPro-LF/m/it/10.95 Dy-na-mi-sche Bäu-me \T1/SourceSansPro-LF/
@@ -3635,7 +3653,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 209.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 209.
-[43]
+[45]
 Package mdframed Info: mdframed works in twoside mode on input line 211.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
@@ -3676,7 +3694,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 238.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 238.
- [44]
+ [46]
 Package mdframed Info: Not enough space on this page on input line 238.
 Package mdframed Info: mdframed works in twoside mode on input line 244.
 Package mdframed Info: mdframed detected package amsthm 
@@ -3698,7 +3716,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 266.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 266.
- [45]
+ [47]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 383.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3711,9 +3729,9 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 390.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 390.
- [46]
+ [48]
 
-LaTeX Warning: Marginpar on page 47 moved.
+LaTeX Warning: Marginpar on page 49 moved.
 
 
 Overfull \hbox (9.72124pt too wide) in paragraph at lines 415--416
@@ -3730,7 +3748,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 423.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 423.
-[47]
+[49]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 427.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3749,7 +3767,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 714.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 714.
-[48]
+[50]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 831.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3762,7 +3780,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 838.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 838.
- [49]
+ [51]
 Overfull \hbox (3.11395pt too wide) in paragraph at lines 841--842
 []\T1/SourceSansPro-LF/m/n/10.95 Glücklicherweise sind die Zu-sam-men-hangs-kom
 -po-nen-ten im All-ge-mei-nen nicht so groÿ
@@ -3792,7 +3810,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 852.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 852.
-[50]
+[52]
 
 LaTeX Font Warning: Font shape `OT1/cmr/m/n' in size <6.5> not available
 (Font)              size <6> substituted on input line 873.
@@ -3826,7 +3844,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 944.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 944.
-[51]
+[53]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 946.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3839,7 +3857,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1037.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1037.
- [52]
+ [54]
 Overfull \hbox (0.6027pt too wide) in paragraph at lines 1041--1042
 \T1/SourceSansPro-LF/m/n/10.95 der ei-ne mi-ni-ma-le An-zahl an \T1/SourceSansP
 ro-LF/m/it/10.95 Stel-len \T1/SourceSansPro-LF/m/n/10.95 aus dem ver-klei-ner-t
@@ -3899,7 +3917,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1055.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1055.
-[53]
+[55]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1152.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3912,7 +3930,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1155.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1155.
- [54]
+ [56]
 Package mdframed Info: mdframed works in twoside mode on input line 1158.
 Package mdframed Info: mdframed detected package amsthm 
  changed the theorem header of amsthm
@@ -3929,33 +3947,33 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1174.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1174.
- [55]
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1212.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1212.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1212.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1212.
- [56]
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1213.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1213.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1221.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1221.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1226.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1226.
-Package babel Info: Redefining ngerman shorthand "|
-(babel)             in language  on input line 1226.
-Package babel Info: Redefining ngerman shorthand "~
-(babel)             in language  on input line 1226.
  [57]
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1212.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1212.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1212.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1212.
+ [58]
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1213.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1213.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1221.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1221.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1226.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1226.
+Package babel Info: Redefining ngerman shorthand "|
+(babel)             in language  on input line 1226.
+Package babel Info: Redefining ngerman shorthand "~
+(babel)             in language  on input line 1226.
+ [59]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1233.
 Package babel Info: Redefining ngerman shorthand "~
@@ -3978,7 +3996,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1242.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1242.
-[58]
+[60]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1273.
 Package babel Info: Redefining ngerman shorthand "~
@@ -4003,7 +4021,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1286.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1286.
- [59]
+ [61]
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1295.
 Package babel Info: Redefining ngerman shorthand "~
@@ -4016,7 +4034,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1298.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1298.
- [60]
+ [62]
 Overfull \hbox (7.02634pt too wide) in paragraph at lines 1299--1300
 []\T1/SourceSansPro-LF/m/n/10.95 Für meh-re-re Se-quenz-fa-mi-li-en die-ser Da-
 ten-ban-ken wur-den dann mit dem \T1/SourceSansPro-LF/m/it/10.95 Min-Cut-Ansatz
@@ -4045,7 +4063,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1316.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1316.
-[61])
+[63])
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 254.
 Package babel Info: Redefining ngerman shorthand "~
@@ -4054,7 +4072,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 254.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 254.
- [62]
+ [64]
 \openout2 = `chapter/Programmierung.aux'.
 
  (./chapter/Programmierung.tex
@@ -4076,7 +4094,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 256.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 256.
- [63
+ [65
 
 
 
@@ -4093,7 +4111,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 1.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 1.
- [64
+ [66
 
 
 
@@ -4116,7 +4134,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 15.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 15.
-[65]
+[67]
 Overfull \hbox (5.1538pt too wide) in paragraph at lines 19--20
 \T1/SourceSansPro-LF/m/n/10.95 Hil-fe der Bi-blio-thek ^^R  Boost Graph Li-bra-
 ry^^P um-ge-setzt. Die-ser Al-go-rith-mus stellt einen wich-
@@ -4134,7 +4152,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 32.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 32.
-[66]
+[68]
 Overfull \hbox (0.13226pt too wide) in paragraph at lines 32--33
 \T1/SourceSansPro-LF/m/n/10.95 Durch-lauf der \T1/SourceSansPro-LF/m/it/10.95 w
 hi-le\T1/SourceSansPro-LF/m/n/10.95 -Schleife für je-de Zu-sam-men-hangs-kom-po
@@ -4149,7 +4167,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 47.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 47.
-[67])
+[69])
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 258.
 Package babel Info: Redefining ngerman shorthand "~
@@ -4158,7 +4176,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 258.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 258.
- [68] (./Hauptdokument.bbl
+ [70] (./Hauptdokument.bbl
 Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 95.
 Package babel Info: Redefining ngerman shorthand "~
@@ -4167,7 +4185,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 95.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 95.
- [69
+ [71
 
 
 
@@ -4180,7 +4198,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 265.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 265.
- [70]
+ [72]
 \openout2 = `chapter/EidesstattlicheErklaerung.aux'.
 
 
@@ -4193,7 +4211,7 @@ Package babel Info: Redefining ngerman shorthand "|
 (babel)             in language  on input line 265.
 Package babel Info: Redefining ngerman shorthand "~
 (babel)             in language  on input line 265.
- [71
+ [73
 
 
 
@@ -4213,10 +4231,10 @@ LaTeX Font Warning: Size substitutions with differences
 
  ) 
 Here is how much of TeX's memory you used:
- 45114 strings out of 494830
- 857039 string characters out of 6177580
- 1184499 words of memory out of 5000000
- 47192 multiletter control sequences out of 15000+600000
+ 45120 strings out of 494830
+ 857098 string characters out of 6177580
+ 1184548 words of memory out of 5000000
+ 47195 multiletter control sequences out of 15000+600000
  854765 words of font info for 255 fonts, out of 8000000 for 9000
  36 hyphenation exceptions out of 8191
  73i,27n,95p,10479b,1042s stack positions out of 5000i,500n,10000p,200000b,80000s
@@ -4249,10 +4267,10 @@ nts/type1/public/txfonts/txsyb.pfb><c:/texlive/2017/texmf-dist/fonts/type1/publ
 ic/txfonts/txsyc.pfb><c:/texlive/2017/texmf-dist/fonts/type1/public/newtx/txsys
 .pfb><c:/texlive/2017/texmf-dist/fonts/type1/urw/times/utmri8a.pfb><c:/texlive/
 2017/texmf-dist/fonts/type1/public/nimbus15/zcoN-Regular.pfb>
-Output written on Hauptdokument.pdf (75 pages, 684246 bytes).
+Output written on Hauptdokument.pdf (77 pages, 686098 bytes).
 PDF statistics:
- 1404 PDF objects out of 1440 (max. 8388607)
- 1271 compressed objects within 13 object streams
- 324 named destinations out of 1000 (max. 500000)
+ 1417 PDF objects out of 1440 (max. 8388607)
+ 1282 compressed objects within 13 object streams
+ 327 named destinations out of 1000 (max. 500000)
  810 words of extra memory for PDF output out of 10000 (max. 10000000)
 
