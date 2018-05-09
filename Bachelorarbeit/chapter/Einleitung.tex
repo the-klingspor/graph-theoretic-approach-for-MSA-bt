@@ -60,6 +60,109 @@ Unser Ziel ist es jetzt aus allen möglichen \emph{Alignments} von $S_1$ und $S_
 	\end{equation}
 \end{definition}
 
-Der \emph{Score} ist für ein \emph{Alignment} beim Algorithmus von Needleman-Wunsch also als die Summe aller \emph{Ähnlichkeitswerte} von einander zugewiesenen Symbolen der beiden Sequenzen definiert, von denen die \emph{Gap Penalties} aller eingefügten Lücken abgezogen werden. Das Ziel wird es jetzt sein eine Rekursionsgleichung aufzustellen mit deren Hilfe man diesen \emph{Score} maximieren kann. 
+Der \emph{Score} ist für ein \emph{Alignment} beim Algorithmus von Needleman-Wunsch also als die Summe aller \emph{Ähnlichkeitswerte} von einander zugewiesenen Symbolen der beiden Sequenzen definiert, von denen die \emph{Gap Penalties} aller eingefügten Lücken abgezogen werden. Das Ziel wird es jetzt sein eine Rekursionsgleichung aufzustellen mit deren Hilfe man diesen \emph{Score} maximieren kann. Der maximale \emph{Score} eines \emph{Alignments} gibt uns ein Maß für die Ähnlichkeit zweier Sequenzen an: je höher er ist, desto mehr gleiche oder ähnliche Symbole wurden einander zugewiesen und desto weniger Lücken mussten wir in die Sequenzen einfügen.
+
+\begin{beispiel}
+	Betrachten wir als kleines Beispiel zwei \emph{Alignments} des Worts \enquote{Original} in richtiger und fehlerhafter Schreibweise. Hierbei gilt $\alpha_{i,j} = 1$ für $i \neq j$ und $\alpha_{i,i} = 0$, sowie $\delta = 2$.
+	
+	\footnotesize
+	\begin{center}
+	\begin{tikzcd}
+	O \arrow[d, no head] & R \arrow[d, no head] & G \arrow[d, no head] & I \arrow[d, no head] & N \arrow[d, no head] & A \arrow[d, no head] & L \arrow[d, no head] & - \\
+	O & R & I & G & I & N & A & L
+	\end{tikzcd}
+	\end{center}
+	\normalsize
+	
+	Wie man sieht haben wir zwei Übereinstimmungen (O und R), fünf Abweichungen und eine eingefügte Lücke in die erste Sequenz. Der \emph{Score} dieses \emph{Alignments} beträgt also $2\cdot 1 - 2 = 0$. Nun zum zweiten:
+	
+	\footnotesize
+	\begin{center}
+		\begin{tikzcd}
+		O \arrow[d, no head] & R \arrow[d, no head] & - & G \arrow[d, no head] & I \arrow[d, no head] & N \arrow[d, no head] & A \arrow[d, no head] & L \arrow[d, no head] \\
+		O & R & I & G & I & N & A & L
+		\end{tikzcd}
+	\end{center}
+	\normalsize
+	
+	Hier haben wir sieben Übereinstimmungen, keine Abweichung und wiederum eine Lücke. Der sich ergebende \emph{Score} ist somit $5$, was ein deutlich besseres Maß für die Ähnlichkeit beider Sequenzen darstellt.
+\end{beispiel}
+
+Die Art der Beschreibung und die Zwischenschritte  sind im Folgenden an \cite{kt05} angelehnt, die den Algorithmus von Needleman-Wunsch modern aufbereitet haben. Anders als \cite{nw70} berechnen sie jedoch nicht das maximale Gewicht eines \emph{Alignment}, sondern stattdessen die maximalen Kosten, wobei die Zuweisung zwischen gleichen Symbolen geringe Kosten hat und \emph{Gap Penalties} addiert statt subtrahiert werden. Das Ergebnis ist letztendlich das gleiche, aber ich orientiere mich hierbei an der originalen Veröffentlichung, weil es später bei DIALIGN auch darum gehen wird den (dort leicht anders definierten) \emph{Score} zu maximieren.
+
+Zunächst starten wir mit der einfachen Feststellung, dass die letzten Elemente von $S_1$ und $S_2$, $S_1[n]$ und $S_2[m]$, entweder miteinander aligniert sind oder das nicht der Fall ist. Diese Aussage gilt aber auch für alle Teilsequenzen, die nicht über die ganze gehen und das bietet uns einen Ansatz für die dynamische Programmierung. 
+
+\begin{lemma}
+	Sei $\mathcal{R}$ ein \emph{Alignment} von $S_1$ und $S_2$. Falls $(n,m) \notin \mathcal{R}$ gilt, dann ist $S_1[n]$ oder $S_2[m]$ kein Element der jeweils anderen Sequenz zugeordnet. 
+\end{lemma}
+
+\begin{beweis}
+	Angenommen es gilt $(n,m) \notin \mathcal{R}$ und es existieren Indizes $i < n$ und $j < m$ für die gilt $(i,m) \in \mathcal{R}$ und $(n,j) \in \mathcal{R}$. Dann überkreuzen sich diese beiden Zuweisungen und das ist ein Widerspruch zu unserer Definition eines  \emph{Alignments}.
+\end{beweis}
+
+Dieses Lemma können wir jetzt zu einem ersten Ansatz für die Rekursionsformel zur Berechnung des maximalen \emph{Scores} umformulieren, denn bei einem optimalen \emph{Alignment} tritt genau eine der folgenden drei Situationen ein:
+
+\begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
+	\item $(n,m) \in \mathcal{R}$
+	\item $\nexists\: j \in \{1 \leq j < m\}$ mit $(n,j) \in \mathcal{R}$ - $S_1[n]$ ist nicht zugewiesen
+	\item $\nexists\: i \in \{1 \leq i < n\}$ mit $(i,m) \in \mathcal{R}$ - $S_2[m]$ ist nicht zugewiesen
+\end{enumerate}
+
+Sei $OPT(i,j)$ der maximale \emph{Score} der Teilsequenzen $S_1[1,\dots,i]$ und $S_2[1,\dots,j]$. $OPT$ können wir in Anlehnung an die drei Fälle oben rekursiv berechnen. Entweder alignieren wir die Elemente an den Stellen $i$ und $j$ miteinander oder $S_1[i]$ wird nicht zugeordnet oder $S_2[j]$ wird nicht zugeordnet. Im zweiten und dritten Fall muss dann in der jeweils einen anderen Sequenz eine Lücke eingefügt werden.
+
+\begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
+	\item $OPT(i,j) = OPT(i-1,j-1) + \alpha_{S_1[i],S_2[j]}$
+	\item $OPT(i,j) = OPT(i-1,j) - \delta$
+	\item $OPT(i,j) = OPT(i,j-1) - \delta$
+\end{enumerate}
+
+$OPT$ lässt sich dann maximieren, indem man über die drei möglichen Fälle das Maximum berechnet. Damit ergibt sich auch die Rekursionsgleichung, die wir dann zur Berechnung des optimalen \emph{Scores} der ganzen Sequenzen mit dynamischer Programmierung benutzen können. Für den Fall, dass eine Teilsequenz die Länge 0 hat, müssen wir so viele Lücken einfügen, wie die andere Teilsequenz lang ist. $(i,j) \in \mathcal{R}$ gilt genau dann, wenn bei $OPT(i,j)$ der erste Fall gewählt wurde.
+
+\begin{korollar}
+	Es gelte $1 \leq i \leq n$ und $1 \leq j \leq m$. Dann folgt für den maximalen \emph{Score} $OPT(i,j)$ der Teilsequenzen bis zu den Indizes $i$ und $j$:
+	\begin{equation}
+	\begin{split}
+		OPT(i,j) & = \max\{OPT(i-1,j-1) + \alpha_{S_1[i],S_2[j]}, OPT(i-1,j) - \delta, OPT(i,j-1) - \delta\} \\
+		OPT(i,0) & = i\cdot \delta \\
+		OPT(0,j) & = j\cdot \delta 
+	\end{split}
+	\end{equation}
+\end{korollar}
+
+Diese Rekursionsformel können wir direkt in einem Algorithmus münden lassen. Wie man sieht ist dieser anders als die Rekursionsgleichung nicht \emph{top-down}, sondern \emph{bottom-up} formuliert. Alle möglichen Einträge in der Matrix $O[1,\dots,n][1,\dots,m]$ werden unter Verwendung der zuvor berechneten Teilprobleme berechnet und gespeichert. 
+
+\begin{algorithm}
+	\caption{Algorithmus für die Berechnung des maximalen \emph{Scores} zweier Sequenzen $S_1$ und $S_2$ unter Verwendung von Ähnlichkeitswerten $\alpha$ und \emph{Gap Penalty} $\delta$}
+	\label{alg:opt_nw}
+	\begin{algorithmic}[1]
+		\Procedure{OptSequenceAlignment}{$S_1, S_2, \alpha, \delta$}
+		\State {$n \gets |S_1|$}
+		\State {$m \gets |S_2|$}
+		\State Lege Array $O[0,\dots,n][0,\dots,m]$ an.
+		\For {$i = 0 \textbf{ to } n$} \Comment {Fülle $S_2$ mit Lücken}
+			\State {$O[i][0] \gets i\cdot \delta$}
+		\EndFor
+		\For {$j = 0 \textbf{ to } m$} \Comment {Fülle $S_1$ mit Lücken}
+			\State {$O[0][j] \gets j\cdot \delta$}
+		\EndFor
+		\For {$i = 0 \textbf{ to } n$}
+			\For {$j = 0 \textbf{ to } m$}
+				\State {$O[i][j] \gets \max\{O[i-1,j-1] + \alpha_{S_1[i],S_2[j]}, O[i-1,j] - \delta, O[i,j-1] - \delta\}$}
+			\EndFor
+		\EndFor
+		\State {\textbf{return} $O[n][m]$}
+		\EndProcedure
+	\end{algorithmic}
+\end{algorithm}
+
+Bis jetzt haben wir lediglich den Wert einer optimalen Lösung bestimmt, aber noch nicht diese optimale Lösung selbst. Das geschieht durch einen einfachen Backtrackingprozess bei dem wir mit $O[n][m]$ starten. Für $O[i][j]$ müssen wir dann nur die Einträge $O[i-1][j-1]$, $O[i-1][j]$ und $O[i,j-1]$ betrachten, um festzustellen, ob $(i,j) \in \mathcal{R}$ oder in welche der beiden Sequenzen in diesem Schritt eine Lücke eingefügt wurde.
 
 \section{Komplexität}
+
+
+
+
+
+
+
+

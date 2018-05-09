@@ -1,4 +1,4 @@
-\begin{thebibliography}{27}
+\begin{thebibliography}{28}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{Abdedda\"{i}m(1997)}]{a97}
@@ -77,6 +77,11 @@ Henikoff, S. und Henikoff, J.
 \newblock Amino acid substitution matrices from protein blocks.
 \newblock In \emph{Proceedings of the National Academy of Sciences, USA}, Band
   89:22, Seiten 10915--10919. Natl. Acad. Sci. USA (1992).
+
+\bibitem[{Kleinberg und Tardos(2005)}]{kt05}
+Kleinberg, J. und Tardos, E.
+\newblock \emph{{Algorithm Design}}.
+\newblock Pearson, first Auf\/lage (2005).
 
 \bibitem[{Morgenstern(1999)}]{m99}
 Morgenstern, B.

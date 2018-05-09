@@ -5,7 +5,7 @@ In diesem Kapitel stelle ich zunächst das DIALIGN-Verfahren für multiples Sequ
 DIALIGN	kann genau wie Needleman-Wunsch im Sinne der jeweiligen Zielfunktion mathematisch optimale paarweise \emph{Alignments} berechnen. Anders als bei letzterem, kann man aber auch mit Hilfe einer Heuristik effizient multiple Alignments berechnen, die aus drei oder mehr Sequenzen bestehen. Das grobe Vorgehen sieht dabei wie folgt aus:
 
 \begin{algorithm}
-	\caption{DIALIGN}
+	\caption{DIALIGN-Algorithmus zur Berechnung eines multiplen \emph{Alignments} einer Menge von Sequenzen $S = \{S_1,\dots,S_n\}$}
 	\label{alg:dialign}
 	\begin{algorithmic}[1]
 		\Require Menge $S$ von Sequenzen mit $|S| = n$
@@ -17,7 +17,7 @@ DIALIGN	kann genau wie Needleman-Wunsch im Sinne der jeweiligen Zielfunktion mat
 			\end{varwidth}
 		\State Sortiere alle Fragmente der paarweisen Alignments nach ihrem Gewicht als $f_{1, \dots, n}$
 		\State $A \gets \emptyset$ \Comment{Initialisiere Ausgabe für Alignment}
-		\For{i=1, \dots , n} 
+		\For{$i = 1$ \textbf{ to } $n$} 
 			\If{$f_i$ ist zu allen bisher gewählten Fragmenten \emph{konsistent}}
 				\State $A \cup \{f_i\}$\Comment{Füge $f_i$ zum \emph{Alignment} hinzu}
 			\EndIf
