@@ -1,4 +1,4 @@
-\begin{thebibliography}{24}
+\begin{thebibliography}{27}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{Abdedda\"{i}m(1997)}]{a97}
@@ -20,6 +20,16 @@ Ahuja, R., Kodialam, M., Mishra, A. und Orlin, J.
 \newblock Computational investigations of maximum flow algorithms.
 \newblock \emph{European Journal of Operational Research}, Band 97:3:509--542
   (1997).
+
+\bibitem[{Bellman(1957)}]{b57}
+Bellman, R.
+\newblock \emph{{Dynamic Programming}}.
+\newblock Princeton University Press (1957).
+
+\bibitem[{Bellman(1984)}]{b84}
+Bellman, R.
+\newblock \emph{{Eye of the Hurricane}}.
+\newblock World Scientific Publishing (1984).
 
 \bibitem[{Corel \emph{et~al.}(2010)Corel, Pitschi und Morgenstern}]{cpm10}
 Corel, E., Pitschi, F. und Morgenstern, B.
@@ -120,6 +130,11 @@ Pearson, W.
 Pitschi, F., Dechauvelle, C. und Corel, E.
 \newblock Automatic detection of anchor points for multiple sequence alignment.
 \newblock \emph{BMC Bioinformatics}, Band 11:445 (2010).
+
+\bibitem[{Russell und Norvig(2009)}]{rn09}
+Russell, S. und Norvig, P.
+\newblock \emph{{Artificial Intelligence: A Modern Approach}}.
+\newblock Prentice Hall, 3rd Auf\/lage (2009).
 
 \bibitem[{Schmollinger \emph{et~al.}(2004)Schmollinger, Nieselt, Kaufmann und
   Morgenstern}]{snkm04}
