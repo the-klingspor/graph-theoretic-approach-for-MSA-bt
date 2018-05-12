@@ -46,13 +46,13 @@ Ob diese Geschichte wirklich war ist, ist fraglich, denn die erste Arbeit Bellma
 
 Der Algorithmus von Needleman-Wunsch ist ein \emph{Alignierer} auf der Basis von einzelnen Symbolen \citep{nw70}. Da dieses Kapitel einen eher motivierenden Charakter hat, werden wir den Algorithmus auf einer etwas informaleren Ebene betrachten. Zunächst lernen wir dafür eine etwas einfachere Definition eines \emph{Alignments} kennenlernen, die wir im nächsten Kapitel durch eine komplexere, aber äquivalente ergänzen, die sich insbesondere auch für multiple eignet, die aus mehr als zwei Sequenzen bestehen.
 
-\begin{definition}[Alignment (NW)]
+\begin{definition}[Alignment (Needleman-Wunsch)]
 	Seien $S_1[1,\dots, n]$ und $S_2[1,\dots,m]$ zwei Zeichenketten über einem endlichen Alphabet. Eine Relation $\mathcal{R}$ zwischen Symbolen dieser beiden Sequenzen ist genau dann ein \emph{Alignment}, wenn für alle Paare von Zweiertupeln $S_1[i],S_2[j]$ und $S_1[i'],S_2[j']$ aus $\mathcal{R}$ gilt, dass aus $i < i'$ auch $j < j'$ folgt. Mit anderen Worten: es gibt keine überkreuzten Zuweisungen.
 \end{definition}
 
 Unser Ziel ist es jetzt aus allen möglichen \emph{Alignments} von $S_1$ und $S_2$ das beste zu finden. Dazu brauchen wir eine Möglichkeit die Güte von \emph{Alignments} zu vergleichen. Wenn zwei Symbole $s = S_1[i]$ und $s' = S_2[j]$ einander zugewiesen werden, dann weisen wir diesen ein Gewicht $\alpha_{s,t}$ zu, abhängig von der Ähnlichkeit der beiden Symbole. Oft wird hier nur zwischen Übereinstimmungen und Abweichungen unterschieden, aber in manchen Kontexten wie beispielsweise Proteinsequenzen mag es auch andere Möglichkeiten geben. Genauer widmen wir uns diesem Thema in Abschnitt \ref{subsec:subs_matr}. Wird hingegen eine Lücke in eine der beiden Sequenzen eingefügt, dann ziehen wir dann Kosten in der Höhe $\delta$ ab (sog. \emph{Gap Penalty}).
 
-\begin{definition}{Score (NW)}
+\begin{definition}[Score (Needleman-Wunsch)]
 	Gegeben seien zwei Sequenzen $S_1$ und $S_2$ und ein \emph{Alignment} $\mathcal{R}$, sowie die \emph{Ähnlichkeitswerte} $\alpha$ und  der \emph{Gap Penalty} $\delta$. Dann definieren wir:
 	
 	\begin{equation}
@@ -88,7 +88,7 @@ Der \emph{Score} ist für ein \emph{Alignment} beim Algorithmus von Needleman-Wu
 	Hier haben wir sieben Übereinstimmungen, keine Abweichung und wiederum eine Lücke. Der sich ergebende \emph{Score} ist somit $5$, was ein deutlich besseres Maß für die Ähnlichkeit beider Sequenzen darstellt.
 \end{beispiel}
 
-Die Art der Beschreibung und die Zwischenschritte  sind im Folgenden an \cite{kt05} angelehnt, die den Algorithmus von Needleman-Wunsch modern aufbereitet haben. Anders als \cite{nw70} berechnen sie jedoch nicht das maximale Gewicht eines \emph{Alignment}, sondern stattdessen die maximalen Kosten, wobei die Zuweisung zwischen gleichen Symbolen geringe Kosten hat und \emph{Gap Penalties} addiert statt subtrahiert werden. Das Ergebnis ist letztendlich das gleiche, aber ich orientiere mich hierbei an der originalen Veröffentlichung, weil es später bei DIALIGN auch darum gehen wird den (dort leicht anders definierten) \emph{Score} zu maximieren.
+Die Art der Beschreibung und die Zwischenschritte  sind im Folgenden an \cite{kt05} angelehnt, die den Algorithmus von Needleman-Wunsch modern aufbereitet haben. Anders als \cite{nw70} berechnen sie jedoch nicht das maximale Gewicht eines \emph{Alignment}, sondern stattdessen die maximalen Kosten, wobei die Zuweisung zwischen gleichen Symbolen geringe Kosten hat und \emph{Gap Penalties} addiert statt subtrahiert werden. Das entspricht der Minimierung der sogenannten \emph{Editierdistanz} von Levenshtein, einem äquivalenten Problem. Das Ergebnis ist letztendlich das gleiche, aber ich orientiere mich hierbei an der originalen Veröffentlichung, weil es später bei DIALIGN auch darum gehen wird den (dort leicht anders definierten) \emph{Score} zu maximieren.
 
 Zunächst starten wir mit der einfachen Feststellung, dass die letzten Elemente von $S_1$ und $S_2$, $S_1[n]$ und $S_2[m]$, entweder miteinander aligniert sind oder das nicht der Fall ist. Diese Aussage gilt aber auch für alle Teilsequenzen, die nicht über die ganze gehen und das bietet uns einen Ansatz für die dynamische Programmierung. 
 
@@ -155,9 +155,48 @@ Diese Rekursionsformel können wir direkt in einem Algorithmus münden lassen. W
 	\end{algorithmic}
 \end{algorithm}
 
-Bis jetzt haben wir lediglich den Wert einer optimalen Lösung bestimmt, aber noch nicht diese optimale Lösung selbst. Das geschieht durch einen einfachen Backtrackingprozess bei dem wir mit $O[n][m]$ starten. Für $O[i][j]$ müssen wir dann nur die Einträge $O[i-1][j-1]$, $O[i-1][j]$ und $O[i,j-1]$ betrachten, um festzustellen, ob $(i,j) \in \mathcal{R}$ oder in welche der beiden Sequenzen in diesem Schritt eine Lücke eingefügt wurde.
+Bis jetzt haben wir lediglich den Wert einer optimalen Lösung bestimmt, aber noch nicht diese optimale Lösung selbst. Das geschieht durch einen einfachen Backtrackingprozess bei dem wir mit $O[n][m]$ starten. Für $O[i][j]$ müssen wir dann nur die Einträge $O[i-1][j-1]$, $O[i-1][j]$ und $O[i,j-1]$ betrachten, um festzustellen, ob $(i,j) \in \mathcal{R}$ oder in welche der beiden Sequenzen in diesem Schritt eine Lücke eingefügt wurde. Ist $O[i][j] - \alpha_{S_1[i-1],S_2[j-1]} = O[i-1][j-1]$, dann kann ich $(i-1,j-1)$ zum \emph{Alignment} hinzufügen. Stimmt hingegen $O[i][j] - \delta = O[i-1,j]$, dann wurde an dieser Stelle eine Lücke in $S_1$ eingefügt. Der Fall einer Lücke in $S_2$ funktioniert analog. Wie man sieht ist es auch möglich, dass zwei oder alle drei dieser Fälle eintreten. In diesem Fall gibt es mehr als ein mögliches perfektes paarweises \emph{Alignment}. \improvement{Noch ein kleines Beispiel mit einer Tabelle?}
+
+\begin{lemma}
+	Für zwei Sequenzen $S_1$ und $S_2$ kann der \emph{Score} eines optimalen \emph{Alignments} $\mathcal{R}$ in $\oh(n\cdot m)$ Zeit und $\oh(n\cdot)$ Speicherplatz berechnet werden.
+\end{lemma}
+
+\begin{beweis}
+	Die Korrektheit des Algorithmus \ref{alg:opt_nw} folgt aus der Korrektheit der Rekursionsgleichung. Die Laufzeit ergibt sich aus den zwei ineinander geschachtelten for-Schleifen. Diese laufen über je $n$ beziehungsweise $m$ Indizes, ohne dass diese innerhalb der Schleifenläufe verändert werden. Jeder Schleifendurchlauf hat konstante Kosten, da nur das Maximum von $\oh(1)$ Zahlen bestimmt werden muss, die zuvor in konstanter Zeit berechnet wurden.
+\end{beweis}
+
+\begin{korollar}
+	Für zwei Sequenzen $S_1$ und $S_2$ kann ein optimales \emph{Alignments} $\mathcal{R}$ in $\oh(n\cdot m)$ Zeit und $\oh(n\cdot)$ Speicherplatz berechnet werden.
+\end{korollar}
+
+\begin{beweis}
+	Wie zuvor gezeigt kann in der selben Zeit- und Speicherkomplexität der \emph{Score} eines optimalen \emph{Alignments} berechnet werden. Mit einem einfachen Backtrackingprozess kann man jetzt feststellen, welche Zuweisungen Teil eines dazugehörigen \emph{Alignments} sind. Dafür betrachte ich wie oben beschrieben für den Tabelleneintrag $O[i][j]$ die Einträge  $O[i-1][j-1]$, $O[i-1][j]$ und $O[i,j-1]$. Man stellt fest, dass in jedem Schritt mindestens einer der beiden Indizes gesenkt wird. Das bedeutet, dass nach höchstens $\oh(n+m)$ Schritten alle Zuweisungen oder Lücken bestimmt wurden. Jeder einzelne Schritt ist in konstanter Zeit möglich, weil jeweils lediglich drei Tabelleneinträge betrachtet werden müssen. 
+\end{beweis}
+
+Dan Hirschberg hat einen Algorithmus entwickelt, der den Algorithmus von Needleman-Wunsch mit Hilfe eines \emph{divide and conquer}-Ansatzes in $\oh(n+m)$ Speicherplatz umsetzt \citep{h75}. Diese Verbesserung kann bei langen Sequenzen einen großen Unterschied in der Laufzeit machen, weil es zu weniger Seitenfehlern kommt. Auf diesen Algorithmus möchte ich hier nicht weiter eingehen, aber wir werden im kommenden Kapitel einen ähnlichen Algorithmus zum speicherplatzeffizienten berechnen von segmentbasierten paarweisen \emph{Alignments} kennenlernen.
 
 \section{Komplexität}
+
+Als nächstes widmen wir uns der Komplexität des \emph{multiple sequence Alignment}-Problems. Diese werden wir nicht formal beweisen, aber anhand des gerade kennengelernten Algorithmus von Needleman-Wunsch anschaulich motivieren.
+
+Man kann die Modellierung nach Needleman-Wunsch auch als Graphen interpretieren, bei dem der Algorithmus einen längsten Pfad durch diesen Graphen findet. Der Graph ist dabei ein tabellenartiger planarer Graph, bei dem alle Knoten mit den dreien nach rechts und unten verbunden sind, falls es diese gibt. Auf den diagonalen Kanten stehen dabei die Gewichte für das alignieren zweier Symbole der Sequenzen und auf den waage- und senkrechten $-\delta$ für das Einfügen einer Lücke.
+
+\footnotesize
+\begin{center}
+\begin{tikzcd}[/tikz/commutative diagrams/sep=large]
+	O[0,0] \arrow[r] \arrow[d] \arrow[rd] & ... \arrow[d] \arrow[rd] & ... \arrow[d] \arrow[r] & O[0,m] \arrow[d] \\
+	... \arrow[r] \arrow[rd] & O[i-1,j-1] \arrow{rd}[near start, sloped]{\alpha_{S_1[i-1],S_2[j-1]}} \arrow{d}{\delta} \arrow{r}{\delta} & O[i-1,j] \arrow[r] \arrow[rd] \arrow{d}{\delta} & ... \\
+	... \arrow[d] \arrow[r] \arrow[rd] & O[i,j-1] \arrow[d] \arrow[rd] \arrow{r}{\delta} & O[i,j] \arrow[d] \arrow[rd] \arrow[r] & ... \arrow[d] \\
+	O[n,0] \arrow[r] & ... & ... \arrow[r] & O[n,m]
+\end{tikzcd}
+\end{center}
+\normalsize
+
+Grundsätzlich lässt sich damit das Vorgehen des Algorithmus von Needleman-Wunsch zum alignieren von einer Menge $S = \{S_1,\dots,S_n\}$ von Sequenzen erweitern. Dazu benötigt man dann aber eine $n$-dimensionale Matrix mit $l_1\cdot \dots \cdot l_n$ Einträgen, wobei $l_i$ die Länge der Sequenz $S_i$ ist, beziehungsweise einen Graphen mit derselben Anzahl an Knoten. Setzt man $l_{max} \coloneqq \max\{l_1,\dots,l_n\}$, dann muss man $\oh(l_{max}^n)$ Einträge der Matrix berechnen. Durch die höhere Anzahl an Sequenzen steigen auch die Kosten für die Berechnung eines einzelnen Eintrags. Betrachten wir beispielsweise die Berechnung eines Eintrages der Tabelle für drei Sequenzen. In diesem Schritt habe ich die Möglichkeit in keine der Sequenzen eine Lücke einzufügen und alle drei Symbole miteinander zu alignieren (1 Möglichkeit), in eine der Sequenzen eine Lücke einzufügen (3 Möglichkeiten) oder in zwei der Sequenzen eine Lücke einzufügen (3 Möglichkeiten). In alle Sequenzen eine Lücke einzufügen ergibt in diesem Kontext keinen Sinn, aber man erkennt trotzdem, dass die Anzahl an Möglichkeiten in jedem Schritt in der Größe der Potenzmenge von $S$, also $\oh(2^n)$ liegt. Somit folgt eine Laufzeit von $\oh(2^n\cdot l_{max}^n)$ für die Berechnung eines optimalen multiplen \emph{Alignments} mit dem Algorithmus von Needleman-Wunsch. \cite{wj94} haben formal bewiesen, dass es nicht möglich ist unter angemessenen Einschränkungen ein multiples \emph{Alignment} in deterministisch polynomieller Zeit zu berechnen. Das \emph{multipe sequence Alignment}-Problem ist somit \emph{NP-schwer} mit der Komplexität $\oh(n^l)$.
+
+Aufgrund dieser Erkenntnis ist es im Allgemeinen nicht möglich mathematisch exakte multiple \emph{Alignments} zu berechnen. Wenn man bedenkt, dass es für manche \emph{Sequenzanalysen} nötig ist hunderte Sequenzen, die oft mehr als tausend Zeichen lang sind, miteinander zu vergleichen, ist es mit der oben genannten Laufzeit illusorisch Needleman-Wunsch zu benutzen,. Stattdessen sind wir dazu gezwungen Heuristiken zu entwickeln, die in angemessener Zeit eine möglichst gute Annäherung an das perfekte Ergebnis liefern. Mit DIALIGN von \cite{mdw96} und der graphtheoretischen Erweiterung von \cite{cpm10} werden wir dafür zwei leistungsstarke Heuristiken kennenlernen und analysieren.
+
+
 
 
 

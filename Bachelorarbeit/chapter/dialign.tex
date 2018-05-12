@@ -233,8 +233,13 @@ Hier gilt $\hat{f} = argmax\{W(f) : f\: \text{endet in}\: (i,j) \}$. Jetzt stehe
 
 \subsection{Speichereffiziente Berechnung der paarweisen \emph{Alignments}}
 
+In diesem Abschnitt beschäftigen wir uns mit einer sehr speichereffizienten und schnellen Umsetzung des soeben gesehenen Ansatzes. Zunächst beschränken wir die maximale Länge eines \emph{Fragments} $l_{\max}$ auf eine kleine, feste Zahl, beispielsweise 40. Je nach gewünschter Genauigkeit und benötigter Geschwindigkeit kann man diesen Wert vergrößern oder verkleinern. Auch wenn diese Einschränkung den maximal zu erreichenden \emph{Score} senkt und wir daher keine perfekten \emph{Alignments} mehr berechnen, hat $l_{\max}$ in der Praxis kaum einen Einfluss auf die Güte der Ergebnisse. Das liegt daran, dass wir im Fall von geringen Ähnlichkeiten zwischen Sequenzen nur selten \emph{Fragmente} mit Längen haben, die $l_\{max\}$ überschreiten und im Fall von sehr ähnlichen Sequenzen können wir lange \emph{Fragmente} auch in mehrere kleinere in der Größenordnung unserer Begrenzung aufteilen. Wir werden zeigen, dass mit dieser Einschränkung ein paarweises \emph{Alignment} in $\oh(L^2)$ Zeit und $\oh(L+N_{\max})$ Speicherplatz berechnet werden kann, wobei $N_{\max}$ die Anzahl an gleichzeitig gespeicherten \emph{Fragmenten} ist \citep{m02}, die durch $|F|$ begrenzt wird.
 
-\begin{algorithm}
+Wir gehen unsere \emph{Score}matrix Spalte für Spalte von links nach rechts durch. An jeder Position $(i,j)$ berechnen wir mit \ref{eq:praefixgewicht} und \ref{eq:vorgaenger} $W(f)$ und $P(f)$ für alle \emph{Fragmente }$f \in \{f_{i+k,j+k,k} : 1 \leq k \leq l_{\max}\}$, die an der Stelle $(i,j)$ beginnen. Dabei speichern wir Pointer auf $W(f)$ und $P(f)$ in den Listen $F_{j+k}$, die mit der Spalte $j+k$ assoziiert werden in denen die jeweiligen \emph{Fragmente enden}. Alles was wir dafür an Informationen benötigen sind $Sc[i\!-\!1,j\!-\!1]$ und $Pr[i\!-\!1,j\!-\!1]$. Deshalb müssen wir nicht permanent die ganze Matrix vorhalten, sondern benötigen nur die zuletzt berechnete und die aktuelle Spalte für $Sc$ und $Pr$, also vier eindimensionale Arrays der Länge $L_1$.
+
+
+
+\begin{algorithm}[H]
 	\caption{Speichereffizientes paarweises DIALIGN}
 	\label{alg:speichereffizient}
 	\begin{algorithmic}[1]
@@ -259,25 +264,20 @@ Hier gilt $\hat{f} = argmax\{W(f) : f\: \text{endet in}\: (i,j) \}$. Jetzt stehe
 		\max{W(f): f\: \text{endet in}\: (i,j)}
 		\end{cases}$\label{algl:praefix}
 		\State Setze $Pr[i,j]$ analog zu $Sc[i,j]$
-		\State lösche $Sc[i,j\!-\!1]$ und $Pr[i,j\!-\!1]$\Comment{{\small Lösche alte Spalteneinträge}}
+		\State Lösche $Sc[i,j\!-\!1]$ und $Pr[i,j\!-\!1]$\Comment{{\small Lösche alte Spalteneinträge}}
 		\ForAll{$f_{i,j,k} \in F_j$ mit $f \neq Pr[i,j]$}
 		\State lösche $F_{i,j,k}$\Comment{{\small Lösche die, die in keiner opt. Kette in $(i,j)$ enden}}
 		\EndFor
 		\EndFor
 		\EndFor
 		\State $f_0 \gets Pr[L_1,L_2]$
-		\While{$f_k \neq \textbf{NIL}\:$}\Comment{{\small Backtracking, um \emph{Alignment} zu bestimmen}}
+		\While{$f_k \neq \text{NIL}\:$}\Comment{{\small Backtracking, um \emph{Alignment} zu bestimmen}}
 		\State $f_{k+1} \gets P(f_{k})$
 		\State $k \gets k+1$
 		\EndWhile 
 		\EndProcedure
 	\end{algorithmic}
 \end{algorithm}
-
-
-In diesem Abschnitt beschäftigen wir uns mit einer sehr speichereffizienten und schnellen Implementierung des soeben gesehenen Ansatzes. Zunächst beschränken wir die maximale Länge eines \emph{Fragments} $l_{\max}$ auf eine kleine, feste Zahl, beispielsweise 40. Je nach gewünschter Genauigkeit und benötigter Geschwindigkeit kann man diesen Wert vergrößern oder verkleinern. Auch wenn diese Einschränkung den maximal zu erreichenden \emph{Score} senkt und wir daher keine perfekten \emph{Alignments} mehr berechnen, hat $l_{\max}$ in der Praxis kaum einen Einfluss auf die Güte der Ergebnisse. Das liegt daran, dass wir im Fall von geringen Ähnlichkeiten zwischen Sequenzen nur selten \emph{Fragmente} mit Längen haben, die $l_\{max\}$ überschreiten und im Fall von sehr ähnlichen Sequenzen können wir lange \emph{Fragmente} auch in mehrere kleinere in der Größenordnung unserer Begrenzung aufteilen. Wir werden zeigen, dass mit dieser Einschränkung ein paarweises \emph{Alignment} in $\oh(L^2)$ Zeit und $\oh(L+N_{\max})$ Speicherplatz berechnet werden kann, wobei $N_{\max}$ die Anzahl an gleichzeitig gespeicherten \emph{Fragmenten} ist \citep{m02}, die durch $|F|$ begrenzt wird.
-
-Wir gehen unsere \emph{Score}matrix Spalte für Spalte von links nach rechts durch. An jeder Position $(i,j)$ berechnen wir mit \ref{eq:praefixgewicht} und \ref{eq:vorgaenger} $W(f)$ und $P(f)$ für alle \emph{Fragmente }$f \in \{f_{i+k,j+k,k} : 1 \leq k \leq l_{\max}\}$, die an der Stelle $(i,j)$ beginnen. Dabei speichern wir Pointer auf $W(f)$ und $P(f)$ in den Listen $F_{j+k}$, die mit der Spalte $j+k$ assoziiert werden in denen die jeweiligen \emph{Fragmente enden}. Alles was wir dafür an Informationen benötigen sind $Sc[i\!-\!1,j\!-\!1]$ und $Pr[i\!-\!1,j\!-\!1]$. Deshalb müssen wir nicht permanent die ganze Matrix vorhalten, sondern benötigen nur die zuletzt berechnete und die aktuelle Spalte für $Sc$ und $Pr$, also vier eindimensionale Arrays der Länge $L_1$.
 
 Bevor wir zur $(j+1)$-ten Spalte übergehen, berechnen wir alle Einträge von 1 bis $i$ für die $j$-te Spalte. Dazu greifen wir auf die Werte der vorhergehenden Spalte $(j-1)$ und auf die zuvor gespeicherten Listen aller \emph{Fragmente} $F_j$ zu , die in der $j$-ten Spalte enden, wobei wir die Formeln \ref{eq:praefixgewicht2} und \ref{eq:vorgaenger2} benutzen. Man kann sich überlegen, dass für jeden Eintrag $(i,j)$ höchstens $l_{\max} \in \oh(1)$ \emph{Fragmente} gespeichert wurden. Sobald wir mit der Berechnung der $j-ten$ Spalte fertig sind, können wir die Werte von $Pr[i,j-1]$ und $Sc[i,j-1]$ für $1 \leq i \leq L_1$ löschen.
 
@@ -321,7 +321,7 @@ Um das Verfahren, das diese Bachelorarbeit behandelt, genauer zu verstehen, widm
 	\item DGTCADATC
 \end{enumerate}
 \normalfont
-Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises \emph{Alignment} zwischen den ersten beiden Sequenzen. Dazu nehmen wir eine Substitutionsmatrix mit $+3$ für Übereinstimmungen und $-1$ für Abweichungen. Der Korrekturterm $K = \ln(L_i) + \ln(L_j)$ aus unserer Gewichtsfunktion $w^*$ beträgt für alle Sequenzpaare gerundet 4.
+Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises \emph{Alignment} zwischen den ersten beiden Sequenzen. Dazu nehmen wir eine Substitutionsmatrix mit $+3$ für Übereinstimmungen und $-1$ für Abweichungen. Der Korrekturterm $K = \ln(L_i) + \ln(L_j)$ aus unserer Gewichtsfunktion $w^*$ beträgt für alle Sequenzpaare gerundet 4. \improvement{Habt ihr eine Idee wie man dieses monströse Beispiel halbwegs schön vermitteln kann? Ich habe erstmal alles hier so reingeklatscht, das kann ich nachher auch noch (teilweise) in den Anhang auslagern.}
 
 \scriptsize
 \begin{tabular}{r|cc|cc|l}
@@ -703,12 +703,6 @@ Sei im Folgenden eine Menge $\mathcal{P} = \{P_1, \dots, P_k\}$ von Pfaden auf u
 
 Für einen Knoten $x$ sei $P(x)$ das Tupel, das in jedem Eintrag $P(x)[i]$ für $1\leq i \leq k$ die Anzahl an Vorgängern von $x$ im Pfad $P_i$ angibt. In anderen Worten ist $P(x)[i]$ die maximale Position eines Vorgängers in $P_i$. Analog definieren wir $S(x)$, wobei  $S(x)[i]$ der minimale Nachfolger von $x$ in $S_i$ ist. Wie man sich denken kann, entsprechen $S(x)$ und $P(x)$ genau unseren \emph{Transitivitätsgrenzen} aus dem Kontext von \emph{Alignments} und wir verwenden diese Begriffe synonym. Das werden wir später auch noch beweisen. Gibt es Vorgänger oder Nachfolger nicht, setzen wir diese Werte auf 0 beziehungsweise die Länge des Pfads, um den es geht, addiert mit eins.
 
-Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $pos(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $pos(y) \geq S(x)[j]$. Wie man sieht ist es also möglich die transitive Hülle auf $\oh(k \cdot \nu)$ Speicherplatz zu sichern, wenn man ein SSDP mit k Pfaden hat. Das kann signifikant weniger sein, als die $\oh(\nu^2)$ Kanten, die man im naiven Ansatz speichern muss.
-
-\improvement{Beispiel S(x) und P(x)}
-
-Als nächstes führen wir eine Funktion ein, die die \emph{Transitivitätsgrenzen} nach dem Hinzufügen einer einzelnen Kante aktualisiert. Wollen wir unseren Graphen um mehr als eine Kante ergänzen, fügen wir sie der Reihe nach hinzu und rufen jedes Mal inkrementell die Funktion auf. Das ist beispielsweise der Fall, wenn wir ein längeres \emph{Fragment} zu unserem \emph{Alignment} hinzufügen. Im Folgenden seien die transitive Hülle und die \emph{Transitivitätsgrenzen} unseres ursprünglichen Graphen gegeben. Sei außerdem $(x,y)$ die Kante, die wir ergänzen.
-
 \scriptsize
 \begin{wrapfigure}{r}{6cm}
 	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
@@ -721,6 +715,12 @@ Als nächstes führen wir eine Funktion ein, die die \emph{Transitivitätsgrenze
 	\label{abb:kante_eing}
 \end{wrapfigure}
 \normalsize
+
+Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $pos(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $pos(y) \geq S(x)[j]$. Wie man sieht ist es also möglich die transitive Hülle auf $\oh(k \cdot \nu)$ Speicherplatz zu sichern, wenn man ein SSDP mit k Pfaden hat. Das kann signifikant weniger sein, als die $\oh(\nu^2)$ Kanten, die man im naiven Ansatz speichern muss.
+
+\improvement{Beispiel S(x) und P(x)}
+
+Als nächstes führen wir eine Funktion ein, die die \emph{Transitivitätsgrenzen} nach dem Hinzufügen einer einzelnen Kante aktualisiert. Wollen wir unseren Graphen um mehr als eine Kante ergänzen, fügen wir sie der Reihe nach hinzu und rufen jedes Mal inkrementell die Funktion auf. Das ist beispielsweise der Fall, wenn wir ein längeres \emph{Fragment} zu unserem \emph{Alignment} hinzufügen. Im Folgenden seien die transitive Hülle und die \emph{Transitivitätsgrenzen} unseres ursprünglichen Graphen gegeben. Sei außerdem $(x,y)$ die Kante, die wir ergänzen.
 
 Nun wählen wir einen beliebigen, aber festen Knoten $u \in V$, dessen \emph{Transitivitätsgrenzen} wir aktualisieren. $P(u)$ und $S(u)$ bezeichnen dabei die Grenzen vor und $P(u)'$ und $S(u)'$ die Grenzen nach dem Hinzufügen. Als erstes kann man sich überlegen, dass die \emph{Vorgängergrenze} immer nur wachsen kann, während die \emph{Nachfolgergrenze} höchstens sinkt. Des Weiteren kann sich durch eine Kante von $x$ nach $y$ nur die \emph{Vorgängergrenze} von $u$ in einer Sequenz verändern, wenn $u$ ein Nachfolger von $y$ war und die \emph{Nachfolgergrenze}, wenn es ein Vorgänger von $x$ war. Im ersten Fall, wählt man dann das Maximum der beiden möglichen Werte aus und in letzterem das Minimum.  
 

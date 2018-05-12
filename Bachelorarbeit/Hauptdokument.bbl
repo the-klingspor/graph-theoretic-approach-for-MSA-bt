@@ -1,4 +1,4 @@
-\begin{thebibliography}{28}
+\begin{thebibliography}{30}
 \providecommand{\natexlab}[1]{#1}
 
 \bibitem[{Abdedda\"{i}m(1997)}]{a97}
@@ -77,6 +77,11 @@ Henikoff, S. und Henikoff, J.
 \newblock Amino acid substitution matrices from protein blocks.
 \newblock In \emph{Proceedings of the National Academy of Sciences, USA}, Band
   89:22, Seiten 10915--10919. Natl. Acad. Sci. USA (1992).
+
+\bibitem[{Hirschberg(1975)}]{h75}
+Hirschberg, D.S.
+\newblock {A Linear Space Algorithm for Computing Maximal Common Subsequences}.
+\newblock \emph{Commun. ACM}, Band~18:341--343 (1975).
 
 \bibitem[{Kleinberg und Tardos(2005)}]{kt05}
 Kleinberg, J. und Tardos, E.
@@ -169,5 +174,10 @@ Vingron, M. und Sibbald, P.
   generalized sequences.
 \newblock In \emph{Proceedings of the National Academy of Sciences, USA}, Band
   90:19, Seite 8777–8781. Natl. Acad. Sci. USA (1993).
+
+\bibitem[{Wang und Jiang(1994)}]{wj94}
+Wang, L. und Jiang, T.
+\newblock On the complexity of multiple sequence alignment.
+\newblock \emph{Journal of Computational Biology}, Band~4:337--348 (1994).
 
 \end{thebibliography}
