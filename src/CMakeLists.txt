@@ -1,17 +1,34 @@
 cmake_minimum_required(VERSION 3.10)
-project(src)
+project(remove_inconsistent_sites)
 
 set(CMAKE_CXX_STANDARD 11)
 
-add_executable(src longest_path_runner.cpp)
+set(CMAKE_CXX_FLAGS "-std=c++0x -Wall")
 
-target_include_directories(src PRIVATE ${C/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src})
+set (MY_SOURCE_DIR "C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src")
+
+set (TARGET_H
+        site.h
+        succession_node.h
+        succession_graph_seq.h
+        )
+
+set (TARGET_SRC
+        site.cpp
+        succession_node.cpp
+        succession_graph_seq.cpp
+        )
+
+include_directories( ${MY_SOURCE_DIR})
 
 # see https://cmake.org/cmake/help/latest/module/FindBoost.html
 find_package(Boost)
 
-include_directories(${C/Users/Joschi/Documents/Programmieren/boost_1_66_0/boost})
+include_directories(${MY_SOURCE_DIR}/boost_1_66_0)
+
+add_executable(remove_inconsistent_sites longest_path_runner.cpp ${TARGET_H} ${TARGET_SRC})
+
 # Note: a target should be already defined using 'add_executable' or 'add_library'
-target_link_libraries(src ${Boost_LIBRARIES})
+target_link_libraries(remove_inconsistent_sites ${Boost_LIBRARIES})
 
 
