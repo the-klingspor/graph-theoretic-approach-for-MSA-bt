@@ -1,0 +1,28 @@
+#IncludeRegexLine: ^[ 	]*[#%][ 	]*(include|import)[ 	]*[<"]([^">]+)([">])
+
+#IncludeRegexScan: ^.*$
+
+#IncludeRegexComplain: ^$
+
+#IncludeRegexTransform: 
+
+C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/Site.h
+
+C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/longest_path_runner.cpp
+iostream
+-
+vector
+-
+succession_node.h
+C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/succession_node.h
+site.h
+C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/site.h
+
+C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/site.h
+
+C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/succession_node.h
+vector
+-
+Site.h
+C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/Site.h
+
