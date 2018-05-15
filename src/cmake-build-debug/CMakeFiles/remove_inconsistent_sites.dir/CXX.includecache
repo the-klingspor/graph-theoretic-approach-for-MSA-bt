@@ -15811,7 +15811,7 @@ succession_node.h
 C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/succession_node.h
 
 C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/succession_node.h
-vector
+unordered_map
 -
 Site.h
 C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/Site.h

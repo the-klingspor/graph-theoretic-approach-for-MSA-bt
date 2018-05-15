@@ -1,3 +1,4 @@
 src/boost_1_66_0/
 src/.idea/
 src/cmake-build-debug/
+src/tests/cmake-build-debug/

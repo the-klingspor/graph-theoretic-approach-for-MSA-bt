@@ -12,10 +12,9 @@ typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::bidirectionalS> G
 class LongestPathRunner{
 public:
     void run(){
-        auto sites = std::vector<Site>();
+        auto sites = std::unordered_map<unsigned int, Site>();
         for (unsigned int seq = 0; seq < 4; seq++) {
-            Site mySite = Site(seq, seq + 2);
-            sites.push_back(mySite);
+            sites.insert({seq, Site(seq, seq + 2)});
         }
 
         SuccessionNode myNode(sites);
@@ -39,18 +38,19 @@ public:
         boost::add_edge(5, 6, graphData);
 
         SuccessionGraphSeq graphSeqOne(1, graphData);
-        std::deque<unsigned int> longestPath = graphSeqOne.longestPath();
-        for(unsigned int i: longestPath){
-            std::cout << i << " ";
+        std::deque<SuccessionNode> longestPath = graphSeqOne.longestPath();
+
+        for(SuccessionNode s : longestPath){
+            std::cout << " @TODO " << std::endl;
         }
         std::cout << std::endl;
         return;
     };
     void printNode(SuccessionNode& node){
-        std::vector<Site> sitesReturned = node.getSites();
-        for (Site s : sitesReturned){
-            std::cout << "Sequence: " << s.getSequence() << " ";
-            std::cout << "Position: " << s.getPosition() << std::endl;
+        std::unordered_map<unsigned int, Site> sitesReturned = node.getSites();
+        for (auto it : sitesReturned){
+            std::cout << "Sequence: " << it.second.getSequence() << " ";
+            std::cout << "Position: " << it.second.getPosition() << std::endl;
         }
     }
 };

@@ -12,26 +12,35 @@
 
 //==================================
 // included dependencies
-#include <vector>
+#include <unordered_map>
 #include "Site.h"
 
 //==================================
 /**
- * A wrapper class for the nodes of a succession graph. It holds a set of sites.
+ * @brief A wrapper class for the nodes of a succession graph. It holds a set of sites.
  *
  * @Require each sequence can have at most one site in each node.
+ *
+ * @author Joschka Strueber
+ * @version 1.0
  */
 class SuccessionNode{
 private:
-    std::vector<Site> sites; // internal representation of the set of sites of this node
+    std::unordered_map<unsigned int, Site> sites; /// internal representation of the set of sites of this node
 
-    SuccessionNode(const SuccessionNode& rhs);
-    SuccessionNode&operator=(const SuccessionNode& rhs);
 public:
-    SuccessionNode(std::vector<Site>& sites);
+    SuccessionNode(std::unordered_map<unsigned int, Site>& sites);
 
     /**
-     * Deletes a site from sites, if it is part of the node.
+     * @brief compares this SuccessionNode with a second one for equality
+     *
+     * @param rhs the SuccessionNode to compare this to.
+     * @return Whether or nor they have the same set of sites.
+     */
+    bool operator==(const SuccessionNode& rhs) const;
+
+    /**
+     * @brief Deletes a site from sites, if it is part of the node.
      *
      * @param site the site that is to be removed from the set of sites of this node.
      * @pre the node contains the site at most once
@@ -40,7 +49,7 @@ public:
     void deleteSite(const Site& site);
 
     /**
-     * Deletes the site that belong to the given sequence number.
+     * @brief Deletes the site that belong to the given sequence number.
      *
      * @param sequence the sequence which site is to be removed from this node, if there exists one
      * @pre the node contains at most one site from this sequence
@@ -49,9 +58,9 @@ public:
     void deleteSiteOfSeq(unsigned int sequence);
 
     /**
-     * Returns this node's set of sites.
+     * @brief Returns this node's set of sites.
      */
-    std::vector<Site> getSites();
+    std::unordered_map<unsigned int, Site> getSites() const;
 };
 
 #endif //SRC_SUCCESSION_NODE_H

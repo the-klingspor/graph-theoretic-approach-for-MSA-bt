@@ -36,6 +36,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "CMakeFiles/3.10.3/CMakeCXXCompiler.cmake"
   "CMakeFiles/3.10.3/CMakeRCCompiler.cmake"
   "CMakeFiles/3.10.3/CMakeSystem.cmake"
+  "../tests/CMakeLists.txt"
   )
 
 # The corresponding makefile is:
@@ -47,9 +48,13 @@ set(CMAKE_MAKEFILE_OUTPUTS
 # Byproducts of CMake generate step:
 set(CMAKE_MAKEFILE_PRODUCTS
   "CMakeFiles/CMakeDirectoryInformation.cmake"
+  "tests/CMakeFiles/CMakeDirectoryInformation.cmake"
   )
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
   "CMakeFiles/remove_inconsistent_sites.dir/DependInfo.cmake"
+  "tests/CMakeFiles/site_test.dir/DependInfo.cmake"
+  "tests/CMakeFiles/succession_node_test.dir/DependInfo.cmake"
+  "tests/CMakeFiles/succession_graph_seq_test.dir/DependInfo.cmake"
   )

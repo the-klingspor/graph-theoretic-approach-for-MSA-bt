@@ -9,14 +9,18 @@ Site::Site(unsigned int seq, unsigned int pos)
          position(pos)
         {}
 
-unsigned int Site::getSequence(){
+unsigned int Site::getSequence() const{
     return sequence;
 }
-unsigned int Site::getPosition(){
+unsigned int Site::getPosition() const{
     return position;
 }
 
 bool Site::operator==(const Site& rhs) const{
-    return (this->position == rhs.position) && (this->sequence == rhs.sequence);
+    return (sequence == rhs.getSequence()) && (position == rhs.getPosition());
+}
+
+bool Site::operator<=(const Site& rhs) const{
+    return (sequence == rhs.getSequence()) && (position <= rhs.getPosition());
 }
 

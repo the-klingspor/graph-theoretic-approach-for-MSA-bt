@@ -4,42 +4,30 @@
 
 #include "succession_node.h"
 
-SuccessionNode::SuccessionNode(std::vector<Site>& sites)
+SuccessionNode::SuccessionNode(std::unordered_map<unsigned int, Site>& sites)
         : sites(sites)
-{}
+        {}
+
+bool SuccessionNode::operator==(const SuccessionNode& rhs) const{
+    return sites==rhs.getSites();
+}
 
 void SuccessionNode::deleteSite(const Site& site){
-    unsigned int size = sites.size();
-    unsigned int removeIndex = 0;
-    // iterate over all sites until the site to delete is found
-    for (unsigned int i = 0; i < size; i++){
-        if (sites.at(i) == site){
-            removeIndex = i;
-            break;
+    /// check if the searched site is part of sites
+    auto foundSiteIt = sites.find(site.getSequence());
+    if (foundSiteIt != sites.end()){
+        Site foundSite = foundSiteIt->second;
+        /// erase it, if an equal site was found
+        if (foundSite == site){
+            sites.erase(site.getSequence());
         }
-    }
-    // erase found site from the set of sites
-    if (removeIndex < size) {
-        sites.erase(sites.begin() + removeIndex);
     }
 }
 
 void SuccessionNode::deleteSiteOfSeq(unsigned int sequence){
-    unsigned int size = sites.size();
-    unsigned int removeIndex = 0;
-    // iterate over all sites until the site to delete is found
-    for (unsigned int i = 0; i < size; i++){
-        if (sites.at(i).getSequence() == sequence){
-            removeIndex = i;
-            break;
-        }
-    }
-    // erase found site from the set of sites
-    if (removeIndex < size) {
-        sites.erase(sites.begin() + removeIndex);
-    }
+    sites.erase(sequence);
 }
 
-std::vector<Site> SuccessionNode::getSites(){
+std::unordered_map<unsigned int, Site> SuccessionNode::getSites() const{
     return sites;
 }

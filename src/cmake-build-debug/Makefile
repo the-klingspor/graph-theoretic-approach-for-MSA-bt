@@ -122,6 +122,45 @@ remove_inconsistent_sites/fast:
 	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/build
 .PHONY : remove_inconsistent_sites/fast
 
+#=============================================================================
+# Target rules for targets named site_test
+
+# Build rule for target.
+site_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 site_test
+.PHONY : site_test
+
+# fast build rule for target.
+site_test/fast:
+	$(MAKE) -f tests\CMakeFiles\site_test.dir\build.make tests/CMakeFiles/site_test.dir/build
+.PHONY : site_test/fast
+
+#=============================================================================
+# Target rules for targets named succession_node_test
+
+# Build rule for target.
+succession_node_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 succession_node_test
+.PHONY : succession_node_test
+
+# fast build rule for target.
+succession_node_test/fast:
+	$(MAKE) -f tests\CMakeFiles\succession_node_test.dir\build.make tests/CMakeFiles/succession_node_test.dir/build
+.PHONY : succession_node_test/fast
+
+#=============================================================================
+# Target rules for targets named succession_graph_seq_test
+
+# Build rule for target.
+succession_graph_seq_test: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 succession_graph_seq_test
+.PHONY : succession_graph_seq_test
+
+# fast build rule for target.
+succession_graph_seq_test/fast:
+	$(MAKE) -f tests\CMakeFiles\succession_graph_seq_test.dir\build.make tests/CMakeFiles/succession_graph_seq_test.dir/build
+.PHONY : succession_graph_seq_test/fast
+
 longest_path_runner.obj: longest_path_runner.cpp.obj
 
 .PHONY : longest_path_runner.obj
@@ -239,6 +278,9 @@ help:
 	@echo ... remove_inconsistent_sites
 	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... site_test
+	@echo ... succession_node_test
+	@echo ... succession_graph_seq_test
 	@echo ... longest_path_runner.obj
 	@echo ... longest_path_runner.i
 	@echo ... longest_path_runner.s

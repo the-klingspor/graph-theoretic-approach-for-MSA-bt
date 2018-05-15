@@ -9,8 +9,9 @@ SuccessionGraphSeq::SuccessionGraphSeq(int seq, Graph& data)
           data(data)
         {}
 
-std::deque<SuccessionNode> SuccessionGraphSeq::longestPath(){
+std::deque<SuccessionNode> SuccessionGraphSeq::longestPath() const{
     /// compute the topological order and store it in a deque
+    /// no need to ensure the graph is a DAG
     std::deque<unsigned int> topologicalOrder;
     boost::topological_sort(this->data, std::front_inserter(topologicalOrder));
     /// start with the first vertex v_start, which has no predecessor or distance to the start
@@ -23,8 +24,7 @@ std::deque<SuccessionNode> SuccessionGraphSeq::longestPath(){
 
     /// return the deque containing the vertices on a longest path from v_start to v_end
 
-
-    return;
+    return longestPath;
 }
 
 /**
