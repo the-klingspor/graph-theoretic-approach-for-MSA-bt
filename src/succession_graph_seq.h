@@ -21,13 +21,17 @@
 
 //==================================
 
-/// Define a bidirectional type of graph that allows accessing the in-edges of every node.
-typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::bidirectionalS> Graph;
+/// Define a Vertex Property for holding a site object
+struct VertexProperty{
+    SuccessionNode vertex;
+};
+
+/// Define a bidirectional type of graph where every vertex holds a SuccessionNode object
+typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::directedS, VertexProperty> Graph;
 
 /**
  * \brief A class representing the succession graph limited to the nodes and edges corresponding to a single sequence.
  *
- * @Require Objects of this class must have start and end nodes v_start and v_end.
  * @Require They have to consist of a single connected component.
  * @Require All nodes have to be on a path from v_start to v_end.
  * @Require All nodes have to contain a site from the corresponding sequence.
@@ -45,17 +49,31 @@ typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::bidirectionalS> G
  */
 class SuccessionGraphSeq{
 private:
-    int sequence;       /// number of the sequence this graph belongs to
-    Graph& data;        /// the actual data of the succession graph restricted on this sequence
+    unsigned int sequence;              /// number of the sequence this graph belongs to
+    Graph& data;                        /// the actual data of the succession graph restricted on this sequence
+    Graph::vertex_descriptor vStart;    /// artificial start vector of the succession graph
+    Graph::vertex_descriptor vEnd;      /// artificial end vector of the succession graph
 
-    SuccessionGraphSeq(SuccessionGraphSeq& rhs);                    // prevent copy constructor to be called
-    SuccessionGraphSeq& operator=(const SuccessionGraphSeq& rhs);   // prevent assignments
+    SuccessionGraphSeq(SuccessionGraphSeq& rhs);                    /// prevent copy constructor to be called
+    SuccessionGraphSeq& operator=(const SuccessionGraphSeq& rhs);   /// prevent assignments
 
 public:
-    SuccessionGraphSeq(int seq, Graph& data);
+    SuccessionGraphSeq(unsigned int seq, Graph& data, Graph::vertex_descriptor startVertex,
+                       Graph::vertex_descriptor endVertex);
 
     /**
-     *  Computes the longest path..
+     * @return this graph's start vertex
+     */
+    Graph::vertex_descriptor getStartVertex() const;
+
+    /**
+     * @return this node's end vertex
+     */
+    Graph::vertex_descriptor getEndVertex() const;
+
+
+    /**
+     *  @brief Computes the longest path.
      *
      *  This method computes the longest chain of SuccessionNodes on any path from v_start to v_end. All nodes on this
      *  path including both v_start and v_end are returned as part of a double ended queue (deque). If several longest

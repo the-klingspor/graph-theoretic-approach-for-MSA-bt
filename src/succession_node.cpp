@@ -4,6 +4,10 @@
 
 #include "succession_node.h"
 
+SuccessionNode::SuccessionNode()
+        : sites()
+        {}
+
 SuccessionNode::SuccessionNode(std::unordered_map<unsigned int, Site>& sites)
         : sites(sites)
         {}

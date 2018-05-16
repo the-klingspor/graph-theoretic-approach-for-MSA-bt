@@ -29,6 +29,14 @@ private:
     std::unordered_map<unsigned int, Site> sites; /// internal representation of the set of sites of this node
 
 public:
+    /**
+     * Default constructor with empty set of sites.
+     */
+    SuccessionNode();
+
+    /**
+     * Constructor that builds a new succession node for a set of sites.
+     */
     SuccessionNode(std::unordered_map<unsigned int, Site>& sites);
 
     /**
@@ -58,7 +66,7 @@ public:
     void deleteSiteOfSeq(unsigned int sequence);
 
     /**
-     * @brief Returns this node's set of sites.
+     * return this node's set of sites.
      */
     std::unordered_map<unsigned int, Site> getSites() const;
 };

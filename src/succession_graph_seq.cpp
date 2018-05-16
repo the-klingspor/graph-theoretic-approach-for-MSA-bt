@@ -3,11 +3,23 @@
 //
 
 #include "succession_graph_seq.h"
+#include <iostream>
 
-SuccessionGraphSeq::SuccessionGraphSeq(int seq, Graph& data)
+SuccessionGraphSeq::SuccessionGraphSeq(unsigned int seq, Graph& data, Graph::vertex_descriptor startVertex,
+                                       Graph::vertex_descriptor endVertex)
         : sequence(seq),
-          data(data)
+          data(data),
+          vStart(startVertex),
+          vEnd(endVertex)
         {}
+
+Graph::vertex_descriptor SuccessionGraphSeq::getStartVertex() const{
+    return vStart;
+}
+
+Graph::vertex_descriptor SuccessionGraphSeq::getEndVertex() const{
+    return vEnd;
+}
 
 std::deque<SuccessionNode> SuccessionGraphSeq::longestPath() const{
     /// compute the topological order and store it in a deque
@@ -15,6 +27,7 @@ std::deque<SuccessionNode> SuccessionGraphSeq::longestPath() const{
     std::deque<unsigned int> topologicalOrder;
     boost::topological_sort(this->data, std::front_inserter(topologicalOrder));
     /// start with the first vertex v_start, which has no predecessor or distance to the start
+
 
     /// compute for every vertex the predecessor and distance according to the topological order
 
