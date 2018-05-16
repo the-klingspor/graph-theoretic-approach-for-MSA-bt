@@ -14,6 +14,7 @@
 // included dependencies
 #include <deque>
 #include <iterator>
+#include <unordered_map>
 
 #include "succession_node.h"
 #include "boost/graph/adjacency_list.hpp"
@@ -28,6 +29,9 @@ struct VertexProperty{
 
 /// Define a bidirectional type of graph where every vertex holds a SuccessionNode object
 typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::directedS, VertexProperty> Graph;
+
+/// Define a shorter name for the type of vertices
+typedef Graph::vertex_descriptor vertex_t;
 
 /**
  * \brief A class representing the succession graph limited to the nodes and edges corresponding to a single sequence.
@@ -49,27 +53,27 @@ typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::directedS, Vertex
  */
 class SuccessionGraphSeq{
 private:
-    unsigned int sequence;              /// number of the sequence this graph belongs to
-    Graph& data;                        /// the actual data of the succession graph restricted on this sequence
-    Graph::vertex_descriptor vStart;    /// artificial start vector of the succession graph
-    Graph::vertex_descriptor vEnd;      /// artificial end vector of the succession graph
+    unsigned int sequence;  /// number of the sequence this graph belongs to
+    Graph& data;            /// the actual data of the succession graph restricted on this sequence; it is a directed,
+                            /// unweighted graph fulfilling the above requirements
+    vertex_t vStart;        /// artificial start vector of the succession graph
+    vertex_t vEnd;          /// artificial end vector of the succession graph
 
     SuccessionGraphSeq(SuccessionGraphSeq& rhs);                    /// prevent copy constructor to be called
     SuccessionGraphSeq& operator=(const SuccessionGraphSeq& rhs);   /// prevent assignments
 
 public:
-    SuccessionGraphSeq(unsigned int seq, Graph& data, Graph::vertex_descriptor startVertex,
-                       Graph::vertex_descriptor endVertex);
+    SuccessionGraphSeq(unsigned int seq, Graph& data, vertex_t startVertex, vertex_t endVertex);
 
     /**
      * @return this graph's start vertex
      */
-    Graph::vertex_descriptor getStartVertex() const;
+    vertex_t getStartVertex() const;
 
     /**
      * @return this node's end vertex
      */
-    Graph::vertex_descriptor getEndVertex() const;
+    vertex_t getEndVertex() const;
 
 
     /**

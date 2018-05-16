@@ -234,7 +234,7 @@
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/longest_path_runner.cpp">
+		<Unit filename="C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/main.cpp">
 			<Option target="remove_inconsistent_sites"/>
 		</Unit>
 		<Unit filename="C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/site.cpp">

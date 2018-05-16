@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.10)
-project(remove_inconsistent_sites)
+project(longest_path)
 
 ##########################
 #        OPTIONS         #
@@ -32,10 +32,10 @@ endif (Boost_NO_SYSTEM_PATHS)
 find_package(Boost)
 include_directories(${BOOST_ROOT})
 
-add_executable(remove_inconsistent_sites longest_path_runner.cpp ${TARGET_H} ${TARGET_SRC})
+add_executable(longest_path main.cpp ${TARGET_H} ${TARGET_SRC})
 
 # Note: a target should be already defined using 'add_executable' or 'add_library'
-target_link_libraries(remove_inconsistent_sites ${Boost_LIBRARIES})
+target_link_libraries(longest_path ${Boost_LIBRARIES})
 
 add_library(Catch INTERFACE)
 target_include_directories(Catch INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/tests})

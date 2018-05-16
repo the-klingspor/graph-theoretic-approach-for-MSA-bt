@@ -212,7 +212,7 @@ CMAKE_OBJCOPY:FILEPATH=C:/MinGW/bin/objcopy.exe
 CMAKE_OBJDUMP:FILEPATH=C:/MinGW/bin/objdump.exe
 
 //Value Computed by CMake
-CMAKE_PROJECT_NAME:STATIC=remove_inconsistent_sites
+CMAKE_PROJECT_NAME:STATIC=longest_path
 
 //Path to a program.
 CMAKE_RANLIB:FILEPATH=C:/MinGW/bin/ranlib.exe
@@ -291,6 +291,18 @@ USE_CUDA:BOOL=OFF
 
 //Use OpenMP
 USE_OPENMP:BOOL=OFF
+
+//Value Computed by CMake
+longest_BINARY_DIR:STATIC=C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/cmake-build-debug
+
+//Value Computed by CMake
+longest_SOURCE_DIR:STATIC=C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src
+
+//Value Computed by CMake
+longest_path_BINARY_DIR:STATIC=C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/cmake-build-debug
+
+//Value Computed by CMake
+longest_path_SOURCE_DIR:STATIC=C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src
 
 //Value Computed by CMake
 remove_BINARY_DIR:STATIC=C:/Users/Joschi/Documents/Studium/Bachelorarbeit/graph-theoretic-approach-for-MSA-bt/src/cmake-build-debug

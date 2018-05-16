@@ -56,29 +56,29 @@ include CMakeFiles/remove_inconsistent_sites.dir/progress.make
 # Include the compile flags for this target's objects.
 include CMakeFiles/remove_inconsistent_sites.dir/flags.make
 
-CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj: CMakeFiles/remove_inconsistent_sites.dir/flags.make
-CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj: CMakeFiles/remove_inconsistent_sites.dir/includes_CXX.rsp
-CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj: ../longest_path_runner.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Joschi\Documents\Studium\Bachelorarbeit\graph-theoretic-approach-for-MSA-bt\src\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj"
-	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\remove_inconsistent_sites.dir\longest_path_runner.cpp.obj -c C:\Users\Joschi\Documents\Studium\Bachelorarbeit\graph-theoretic-approach-for-MSA-bt\src\longest_path_runner.cpp
+CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj: CMakeFiles/remove_inconsistent_sites.dir/flags.make
+CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj: CMakeFiles/remove_inconsistent_sites.dir/includes_CXX.rsp
+CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj: ../main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=C:\Users\Joschi\Documents\Studium\Bachelorarbeit\graph-theoretic-approach-for-MSA-bt\src\cmake-build-debug\CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj"
+	C:\MinGW\bin\g++.exe  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles\remove_inconsistent_sites.dir\main.cpp.obj -c C:\Users\Joschi\Documents\Studium\Bachelorarbeit\graph-theoretic-approach-for-MSA-bt\src\main.cpp
 
-CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.i"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Joschi\Documents\Studium\Bachelorarbeit\graph-theoretic-approach-for-MSA-bt\src\longest_path_runner.cpp > CMakeFiles\remove_inconsistent_sites.dir\longest_path_runner.cpp.i
+CMakeFiles/remove_inconsistent_sites.dir/main.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/remove_inconsistent_sites.dir/main.cpp.i"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E C:\Users\Joschi\Documents\Studium\Bachelorarbeit\graph-theoretic-approach-for-MSA-bt\src\main.cpp > CMakeFiles\remove_inconsistent_sites.dir\main.cpp.i
 
-CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.s"
-	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Joschi\Documents\Studium\Bachelorarbeit\graph-theoretic-approach-for-MSA-bt\src\longest_path_runner.cpp -o CMakeFiles\remove_inconsistent_sites.dir\longest_path_runner.cpp.s
+CMakeFiles/remove_inconsistent_sites.dir/main.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/remove_inconsistent_sites.dir/main.cpp.s"
+	C:\MinGW\bin\g++.exe $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S C:\Users\Joschi\Documents\Studium\Bachelorarbeit\graph-theoretic-approach-for-MSA-bt\src\main.cpp -o CMakeFiles\remove_inconsistent_sites.dir\main.cpp.s
 
-CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj.requires:
+CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj.requires:
 
-.PHONY : CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj.requires
+.PHONY : CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj.requires
 
-CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj.provides: CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj.requires
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj.provides.build
-.PHONY : CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj.provides
+CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj.provides: CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj.requires
+	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj.provides.build
+.PHONY : CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj.provides
 
-CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj.provides.build: CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj
+CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj.provides.build: CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj
 
 
 CMakeFiles/remove_inconsistent_sites.dir/site.cpp.obj: CMakeFiles/remove_inconsistent_sites.dir/flags.make
@@ -158,7 +158,7 @@ CMakeFiles/remove_inconsistent_sites.dir/succession_graph_seq.cpp.obj.provides.b
 
 # Object files for target remove_inconsistent_sites
 remove_inconsistent_sites_OBJECTS = \
-"CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj" \
+"CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj" \
 "CMakeFiles/remove_inconsistent_sites.dir/site.cpp.obj" \
 "CMakeFiles/remove_inconsistent_sites.dir/succession_node.cpp.obj" \
 "CMakeFiles/remove_inconsistent_sites.dir/succession_graph_seq.cpp.obj"
@@ -166,7 +166,7 @@ remove_inconsistent_sites_OBJECTS = \
 # External object files for target remove_inconsistent_sites
 remove_inconsistent_sites_EXTERNAL_OBJECTS =
 
-remove_inconsistent_sites.exe: CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj
+remove_inconsistent_sites.exe: CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj
 remove_inconsistent_sites.exe: CMakeFiles/remove_inconsistent_sites.dir/site.cpp.obj
 remove_inconsistent_sites.exe: CMakeFiles/remove_inconsistent_sites.dir/succession_node.cpp.obj
 remove_inconsistent_sites.exe: CMakeFiles/remove_inconsistent_sites.dir/succession_graph_seq.cpp.obj
@@ -182,7 +182,7 @@ CMakeFiles/remove_inconsistent_sites.dir/build: remove_inconsistent_sites.exe
 
 .PHONY : CMakeFiles/remove_inconsistent_sites.dir/build
 
-CMakeFiles/remove_inconsistent_sites.dir/requires: CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj.requires
+CMakeFiles/remove_inconsistent_sites.dir/requires: CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj.requires
 CMakeFiles/remove_inconsistent_sites.dir/requires: CMakeFiles/remove_inconsistent_sites.dir/site.cpp.obj.requires
 CMakeFiles/remove_inconsistent_sites.dir/requires: CMakeFiles/remove_inconsistent_sites.dir/succession_node.cpp.obj.requires
 CMakeFiles/remove_inconsistent_sites.dir/requires: CMakeFiles/remove_inconsistent_sites.dir/succession_graph_seq.cpp.obj.requires

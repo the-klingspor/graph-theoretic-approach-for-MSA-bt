@@ -3,44 +3,70 @@
 //
 
 #include "succession_graph_seq.h"
-#include <iostream>
 
-SuccessionGraphSeq::SuccessionGraphSeq(unsigned int seq, Graph& data, Graph::vertex_descriptor startVertex,
-                                       Graph::vertex_descriptor endVertex)
+SuccessionGraphSeq::SuccessionGraphSeq(unsigned int seq, Graph& data, vertex_t startVertex, vertex_t endVertex)
         : sequence(seq),
           data(data),
           vStart(startVertex),
           vEnd(endVertex)
         {}
 
-Graph::vertex_descriptor SuccessionGraphSeq::getStartVertex() const{
+vertex_t SuccessionGraphSeq::getStartVertex() const{
     return vStart;
 }
 
-Graph::vertex_descriptor SuccessionGraphSeq::getEndVertex() const{
+vertex_t SuccessionGraphSeq::getEndVertex() const{
     return vEnd;
 }
 
 std::deque<SuccessionNode> SuccessionGraphSeq::longestPath() const{
     /// compute the topological order and store it in a deque
-    /// no need to ensure the graph is a DAG
-    std::deque<unsigned int> topologicalOrder;
-    boost::topological_sort(this->data, std::front_inserter(topologicalOrder));
-    /// start with the first vertex v_start, which has no predecessor or distance to the start
+    /// no need to check if the graph is a DAG, this had to be ensured by the object that build this object
+    std::deque<vertex_t> topologicalOrder;
+    boost::topological_sort(data, std::front_inserter(topologicalOrder));
 
+    /// declare and initialize the maps for storing the distances and predecessors
+    std::unordered_map<vertex_t, vertex_t> predecessors;
+    std::unordered_map<vertex_t, unsigned int> distances;
+
+    for(auto& vertex : topologicalOrder){
+        predecessors.emplace(vertex, 0);
+        distances.emplace(vertex, 0);
+    }
 
     /// compute for every vertex the predecessor and distance according to the topological order
+    typedef boost::graph_traits < Graph >::adjacency_iterator adjacency_iterator;
+
+    for (unsigned int i = 0; i < topologicalOrder.size(); i++){
+        vertex_t currentVertex = topologicalOrder.at(i);
+        unsigned int currentDistance = distances.at(currentVertex);
+        /// retrieve edges of current vertex
+        std::pair<adjacency_iterator, adjacency_iterator> neighbors = boost::adjacent_vertices(currentVertex, data);
+
+        while(neighbors.first != neighbors.second){
+            vertex_t currentNeighbor = *neighbors.first;
+            if (currentDistance + 1 > distances.at(currentNeighbor)){ /// longer path to neighbor found -> edit entries
+                distances.erase(currentNeighbor);
+                distances.emplace(currentNeighbor, currentDistance + 1);
+                predecessors.erase(currentNeighbor);
+                predecessors.emplace(currentNeighbor, currentVertex);
+            }
+            neighbors.first++;
+        }
+    }
 
     /// start with the last vertex v_end, which has to be part of the longest path, and add it to the output variable
     std::deque<SuccessionNode> longestPath;
-    /// as long as the current vertex has a predecessor, add it to the output
+    vertex_t longestPathVertex = vEnd;
+
+    /// as long as the current vertex is valid, add its SuccessionNode to the output and set the current vertex to its
+    /// predecessor
+    while (longestPathVertex != vStart){
+        longestPath.emplace_front(data[longestPathVertex].vertex);
+        longestPathVertex = predecessors.at(longestPathVertex);
+    }
+    longestPath.emplace_front(data[vStart].vertex);
 
     /// return the deque containing the vertices on a longest path from v_start to v_end
-
     return longestPath;
 }
-
-/**
- * @TODO: mapping der Knoten des Graphen auf die SuccessionNode-Objekte -- permanent
- * @TODO: mapping der Knoten auf Vorgänger und Distanz zum Startknoten -- während des Algorithmus
- */

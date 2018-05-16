@@ -55,17 +55,6 @@ CMAKE_BINARY_DIR = C:\Users\Joschi\Documents\Studium\Bachelorarbeit\graph-theore
 #=============================================================================
 # Targets provided globally by CMake.
 
-# Special rule for the target edit_cache
-edit_cache:
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
-	"C:\Program Files\JetBrains\CLion 2018.1.2\bin\cmake\bin\cmake.exe" -E echo "No interactive CMake dialog available."
-.PHONY : edit_cache
-
-# Special rule for the target edit_cache
-edit_cache/fast: edit_cache
-
-.PHONY : edit_cache/fast
-
 # Special rule for the target rebuild_cache
 rebuild_cache:
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "Running CMake to regenerate build system..."
@@ -76,6 +65,17 @@ rebuild_cache:
 rebuild_cache/fast: rebuild_cache
 
 .PHONY : rebuild_cache/fast
+
+# Special rule for the target edit_cache
+edit_cache:
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --cyan "No interactive CMake dialog available..."
+	"C:\Program Files\JetBrains\CLion 2018.1.2\bin\cmake\bin\cmake.exe" -E echo "No interactive CMake dialog available."
+.PHONY : edit_cache
+
+# Special rule for the target edit_cache
+edit_cache/fast: edit_cache
+
+.PHONY : edit_cache/fast
 
 # The main all target
 all: cmake_check_build_system
@@ -110,17 +110,17 @@ depend:
 .PHONY : depend
 
 #=============================================================================
-# Target rules for targets named remove_inconsistent_sites
+# Target rules for targets named longest_path
 
 # Build rule for target.
-remove_inconsistent_sites: cmake_check_build_system
-	$(MAKE) -f CMakeFiles\Makefile2 remove_inconsistent_sites
-.PHONY : remove_inconsistent_sites
+longest_path: cmake_check_build_system
+	$(MAKE) -f CMakeFiles\Makefile2 longest_path
+.PHONY : longest_path
 
 # fast build rule for target.
-remove_inconsistent_sites/fast:
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/build
-.PHONY : remove_inconsistent_sites/fast
+longest_path/fast:
+	$(MAKE) -f CMakeFiles\longest_path.dir\build.make CMakeFiles/longest_path.dir/build
+.PHONY : longest_path/fast
 
 #=============================================================================
 # Target rules for targets named site_test
@@ -161,32 +161,32 @@ succession_graph_seq_test/fast:
 	$(MAKE) -f tests\CMakeFiles\succession_graph_seq_test.dir\build.make tests/CMakeFiles/succession_graph_seq_test.dir/build
 .PHONY : succession_graph_seq_test/fast
 
-longest_path_runner.obj: longest_path_runner.cpp.obj
+main.obj: main.cpp.obj
 
-.PHONY : longest_path_runner.obj
+.PHONY : main.obj
 
 # target to build an object file
-longest_path_runner.cpp.obj:
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj
-.PHONY : longest_path_runner.cpp.obj
+main.cpp.obj:
+	$(MAKE) -f CMakeFiles\longest_path.dir\build.make CMakeFiles/longest_path.dir/main.cpp.obj
+.PHONY : main.cpp.obj
 
-longest_path_runner.i: longest_path_runner.cpp.i
+main.i: main.cpp.i
 
-.PHONY : longest_path_runner.i
+.PHONY : main.i
 
 # target to preprocess a source file
-longest_path_runner.cpp.i:
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.i
-.PHONY : longest_path_runner.cpp.i
+main.cpp.i:
+	$(MAKE) -f CMakeFiles\longest_path.dir\build.make CMakeFiles/longest_path.dir/main.cpp.i
+.PHONY : main.cpp.i
 
-longest_path_runner.s: longest_path_runner.cpp.s
+main.s: main.cpp.s
 
-.PHONY : longest_path_runner.s
+.PHONY : main.s
 
 # target to generate assembly for a file
-longest_path_runner.cpp.s:
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.s
-.PHONY : longest_path_runner.cpp.s
+main.cpp.s:
+	$(MAKE) -f CMakeFiles\longest_path.dir\build.make CMakeFiles/longest_path.dir/main.cpp.s
+.PHONY : main.cpp.s
 
 site.obj: site.cpp.obj
 
@@ -194,7 +194,7 @@ site.obj: site.cpp.obj
 
 # target to build an object file
 site.cpp.obj:
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/site.cpp.obj
+	$(MAKE) -f CMakeFiles\longest_path.dir\build.make CMakeFiles/longest_path.dir/site.cpp.obj
 .PHONY : site.cpp.obj
 
 site.i: site.cpp.i
@@ -203,7 +203,7 @@ site.i: site.cpp.i
 
 # target to preprocess a source file
 site.cpp.i:
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/site.cpp.i
+	$(MAKE) -f CMakeFiles\longest_path.dir\build.make CMakeFiles/longest_path.dir/site.cpp.i
 .PHONY : site.cpp.i
 
 site.s: site.cpp.s
@@ -212,7 +212,7 @@ site.s: site.cpp.s
 
 # target to generate assembly for a file
 site.cpp.s:
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/site.cpp.s
+	$(MAKE) -f CMakeFiles\longest_path.dir\build.make CMakeFiles/longest_path.dir/site.cpp.s
 .PHONY : site.cpp.s
 
 succession_graph_seq.obj: succession_graph_seq.cpp.obj
@@ -221,7 +221,7 @@ succession_graph_seq.obj: succession_graph_seq.cpp.obj
 
 # target to build an object file
 succession_graph_seq.cpp.obj:
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/succession_graph_seq.cpp.obj
+	$(MAKE) -f CMakeFiles\longest_path.dir\build.make CMakeFiles/longest_path.dir/succession_graph_seq.cpp.obj
 .PHONY : succession_graph_seq.cpp.obj
 
 succession_graph_seq.i: succession_graph_seq.cpp.i
@@ -230,7 +230,7 @@ succession_graph_seq.i: succession_graph_seq.cpp.i
 
 # target to preprocess a source file
 succession_graph_seq.cpp.i:
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/succession_graph_seq.cpp.i
+	$(MAKE) -f CMakeFiles\longest_path.dir\build.make CMakeFiles/longest_path.dir/succession_graph_seq.cpp.i
 .PHONY : succession_graph_seq.cpp.i
 
 succession_graph_seq.s: succession_graph_seq.cpp.s
@@ -239,7 +239,7 @@ succession_graph_seq.s: succession_graph_seq.cpp.s
 
 # target to generate assembly for a file
 succession_graph_seq.cpp.s:
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/succession_graph_seq.cpp.s
+	$(MAKE) -f CMakeFiles\longest_path.dir\build.make CMakeFiles/longest_path.dir/succession_graph_seq.cpp.s
 .PHONY : succession_graph_seq.cpp.s
 
 succession_node.obj: succession_node.cpp.obj
@@ -248,7 +248,7 @@ succession_node.obj: succession_node.cpp.obj
 
 # target to build an object file
 succession_node.cpp.obj:
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/succession_node.cpp.obj
+	$(MAKE) -f CMakeFiles\longest_path.dir\build.make CMakeFiles/longest_path.dir/succession_node.cpp.obj
 .PHONY : succession_node.cpp.obj
 
 succession_node.i: succession_node.cpp.i
@@ -257,7 +257,7 @@ succession_node.i: succession_node.cpp.i
 
 # target to preprocess a source file
 succession_node.cpp.i:
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/succession_node.cpp.i
+	$(MAKE) -f CMakeFiles\longest_path.dir\build.make CMakeFiles/longest_path.dir/succession_node.cpp.i
 .PHONY : succession_node.cpp.i
 
 succession_node.s: succession_node.cpp.s
@@ -266,7 +266,7 @@ succession_node.s: succession_node.cpp.s
 
 # target to generate assembly for a file
 succession_node.cpp.s:
-	$(MAKE) -f CMakeFiles\remove_inconsistent_sites.dir\build.make CMakeFiles/remove_inconsistent_sites.dir/succession_node.cpp.s
+	$(MAKE) -f CMakeFiles\longest_path.dir\build.make CMakeFiles/longest_path.dir/succession_node.cpp.s
 .PHONY : succession_node.cpp.s
 
 # Help Target
@@ -275,15 +275,15 @@ help:
 	@echo ... all (the default if no target is provided)
 	@echo ... clean
 	@echo ... depend
-	@echo ... remove_inconsistent_sites
-	@echo ... edit_cache
 	@echo ... rebuild_cache
+	@echo ... longest_path
+	@echo ... edit_cache
 	@echo ... site_test
 	@echo ... succession_node_test
 	@echo ... succession_graph_seq_test
-	@echo ... longest_path_runner.obj
-	@echo ... longest_path_runner.i
-	@echo ... longest_path_runner.s
+	@echo ... main.obj
+	@echo ... main.i
+	@echo ... main.s
 	@echo ... site.obj
 	@echo ... site.i
 	@echo ... site.s

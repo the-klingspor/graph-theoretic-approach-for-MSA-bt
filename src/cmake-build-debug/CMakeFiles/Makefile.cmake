@@ -53,7 +53,7 @@ set(CMAKE_MAKEFILE_PRODUCTS
 
 # Dependency information for all targets:
 set(CMAKE_DEPEND_INFO_FILES
-  "CMakeFiles/remove_inconsistent_sites.dir/DependInfo.cmake"
+  "CMakeFiles/longest_path.dir/DependInfo.cmake"
   "tests/CMakeFiles/site_test.dir/DependInfo.cmake"
   "tests/CMakeFiles/succession_node_test.dir/DependInfo.cmake"
   "tests/CMakeFiles/succession_graph_seq_test.dir/DependInfo.cmake"

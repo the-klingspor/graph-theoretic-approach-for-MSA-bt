@@ -1,5 +1,5 @@
 file(REMOVE_RECURSE
-  "CMakeFiles/remove_inconsistent_sites.dir/longest_path_runner.cpp.obj"
+  "CMakeFiles/remove_inconsistent_sites.dir/main.cpp.obj"
   "CMakeFiles/remove_inconsistent_sites.dir/site.cpp.obj"
   "CMakeFiles/remove_inconsistent_sites.dir/succession_node.cpp.obj"
   "CMakeFiles/remove_inconsistent_sites.dir/succession_graph_seq.cpp.obj"

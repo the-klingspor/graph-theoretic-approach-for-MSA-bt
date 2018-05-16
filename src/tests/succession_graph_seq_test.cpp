@@ -91,7 +91,7 @@ TEST_CASE("Longest path for small nontrivial graph", "[LP nontriv graph]"){
     siteSet2.insert({s1_2.getSequence(), s1_2});
     siteSet2.insert({s2_3.getSequence(), s2_3});
 
-    graphData[v0].vertex = SuccessionNode(siteSet2);
+    graphData[v1].vertex = SuccessionNode(siteSet2);
 
     // Add edges
     boost::add_edge(vStart, vEnd, graphData);
@@ -204,9 +204,9 @@ TEST_CASE("Longest path for sequences of bachelor thesis example", "[LP BT graph
     Site s4_8(4,8);
 
     std::unordered_map<unsigned int, Site> siteSet5;
-    siteSet4.insert({s1_6.getSequence(), s1_6});
-    siteSet4.insert({s2_7.getSequence(), s2_7});
-    siteSet4.insert({s4_8.getSequence(), s4_8});
+    siteSet5.insert({s1_6.getSequence(), s1_6});
+    siteSet5.insert({s2_7.getSequence(), s2_7});
+    siteSet5.insert({s4_8.getSequence(), s4_8});
 
     graphData[v5].vertex = SuccessionNode(siteSet5);
 
@@ -216,9 +216,9 @@ TEST_CASE("Longest path for sequences of bachelor thesis example", "[LP BT graph
     Site s4_9(4,9);
 
     std::unordered_map<unsigned int, Site> siteSet6;
-    siteSet4.insert({s1_7.getSequence(), s1_7});
-    siteSet4.insert({s2_8.getSequence(), s2_8});
-    siteSet4.insert({s4_9.getSequence(), s4_9});
+    siteSet6.insert({s1_7.getSequence(), s1_7});
+    siteSet6.insert({s2_8.getSequence(), s2_8});
+    siteSet6.insert({s4_9.getSequence(), s4_9});
 
     graphData[v6].vertex = SuccessionNode(siteSet6);
 
