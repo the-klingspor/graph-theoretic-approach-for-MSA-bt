@@ -276,7 +276,7 @@ TEST_CASE("Longest path for sequences of bachelor thesis example", "[LP BT graph
     // Initialize graph
     SuccessionGraphSeq succGraph(1, graphData, vStart, vEnd);
 
-    // expected output is deque with two empty SuccNodes and a SuccessionNode with two site in the middle.
+    // expected output is deque with every node but the red one (v4 with siteSet4)
     auto expected = std::deque<SuccessionNode>();
     expected.emplace_back(SuccessionNode());
     expected.emplace_back(SuccessionNode(siteSet0));
@@ -292,5 +292,70 @@ TEST_CASE("Longest path for sequences of bachelor thesis example", "[LP BT graph
 }
 
 TEST_CASE("Longest path with several possibilities", "[LP sev poss]"){
+     Graph graphData;
 
+    // Add start and end vertices
+    Graph::vertex_descriptor vStart = boost::add_vertex(graphData);
+    Graph::vertex_descriptor vEnd   = boost::add_vertex(graphData);
+    Graph::vertex_descriptor v0     = boost::add_vertex(graphData);
+    Graph::vertex_descriptor v1     = boost::add_vertex(graphData);
+    Graph::vertex_descriptor v2     = boost::add_vertex(graphData);
+
+    // Set SuccessionNodes of vertices
+    Site s1_1(1,1);
+    Site s2_2(2,2);
+
+    Site s1_2(1,2);
+    Site s2_3(2,3);
+
+    Site s1_3(1,3);
+    Site s2_1(2,1);
+
+    std::unordered_map<unsigned int, Site> siteSet0;
+    siteSet0.insert({s1_1.getSequence(), s1_1});
+    siteSet0.insert({s2_2.getSequence(), s2_2});
+
+    graphData[v0].vertex = SuccessionNode(siteSet0);
+
+    std::unordered_map<unsigned int, Site> siteSet1;
+    siteSet1.insert({s1_2.getSequence(), s1_2});
+    siteSet1.insert({s2_3.getSequence(), s2_3});
+
+    graphData[v1].vertex = SuccessionNode(siteSet1);
+
+    std::unordered_map<unsigned int, Site> siteSet2;
+    siteSet2.insert({s1_3.getSequence(), s1_3});
+    siteSet2.insert({s2_1.getSequence(), s2_1});
+
+    graphData[v2].vertex = SuccessionNode(siteSet2);
+
+    // Add edges
+    boost::add_edge(vStart, vEnd, graphData);
+    boost::add_edge(vStart, v0, graphData);
+    boost::add_edge(vStart, v1, graphData);
+    boost::add_edge(vStart, v2, graphData);
+    boost::add_edge(v0, v2, graphData);
+    boost::add_edge(v1, v2, graphData);
+    boost::add_edge(v0, vEnd, graphData);
+    boost::add_edge(v1, vEnd, graphData);
+    boost::add_edge(v2, vEnd, graphData);
+
+    // Initialize graph
+    SuccessionGraphSeq succGraph(1, graphData, vStart, vEnd);
+
+    // both vStart -> v0 -> v2 -> vEnd and vStart -> v1 -> v2 -> vEnd are valid longest paths
+    auto posLP1 = std::deque<SuccessionNode>();
+    posLP1.emplace_back(SuccessionNode());
+    posLP1.emplace_back(SuccessionNode(siteSet0));
+    posLP1.emplace_back(SuccessionNode(siteSet2));
+    posLP1.emplace_back(SuccessionNode());
+
+    auto posLP2 = std::deque<SuccessionNode>();
+    posLP2.emplace_back(SuccessionNode());
+    posLP2.emplace_back(SuccessionNode(siteSet1));
+    posLP2.emplace_back(SuccessionNode(siteSet2));
+    posLP2.emplace_back(SuccessionNode());
+
+    std::deque<SuccessionNode> output = succGraph.longestPath();
+    REQUIRE((posLP1 == output || posLP2 == output));
 }
