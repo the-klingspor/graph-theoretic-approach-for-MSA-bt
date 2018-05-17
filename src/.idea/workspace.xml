@@ -30,7 +30,7 @@
   <component name="ExecutionTargetManager" SELECTED_TARGET="CMakeBuildProfile:Debug" />
   <component name="FileEditorManager">
     <leaf SIDE_TABS_SIZE_LIMIT_KEY="300">
-      <file leaf-file-name="succession_graph_seq_test.cpp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="succession_graph_seq_test.cpp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/tests/succession_graph_seq_test.cpp">
           <provider selected="true" editor-type-id="text-editor">
             <state relative-caret-position="442">
@@ -38,6 +38,15 @@
               <folding>
                 <element signature="e#56#76#0" expanded="true" />
               </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CMakeLists.txt" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+          <provider selected="true" editor-type-id="text-editor">
+            <state relative-caret-position="559">
+              <caret line="37" column="34" selection-start-line="37" selection-start-column="34" selection-end-line="37" selection-end-column="34" />
             </state>
           </provider>
         </entry>
@@ -328,12 +337,12 @@
       <workItem from="1526302842898" duration="19852000" />
       <workItem from="1526377056145" duration="30198000" />
       <workItem from="1526463819195" duration="2329000" />
-      <workItem from="1526468508423" duration="24289000" />
+      <workItem from="1526468508423" duration="25466000" />
     </task>
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="88291000" />
+    <option name="totallyTimeSpent" value="89468000" />
   </component>
   <component name="TodoView">
     <todo-panel id="selected-file">
@@ -348,14 +357,14 @@
     <frame x="55" y="-7" width="1659" height="975" extended-state="6" />
     <editor active="true" />
     <layout>
-      <window_info content_ui="combo" id="Project" order="0" visible="true" weight="0.093711466" />
+      <window_info active="true" content_ui="combo" id="Project" order="0" visible="true" weight="0.093711466" />
       <window_info anchor="bottom" id="TODO" order="6" weight="0.32896304" />
       <window_info anchor="bottom" id="Messages" order="11" sideWeight="0.49940404" weight="0.27294397" />
       <window_info anchor="bottom" id="CMake" order="7" weight="0.23480333" />
       <window_info anchor="bottom" id="Event Log" order="8" side_tool="true" />
       <window_info anchor="bottom" id="Find" order="1" weight="0.32896304" />
       <window_info anchor="bottom" id="Version Control" order="9" show_stripe_button="false" />
-      <window_info active="true" anchor="bottom" id="Run" order="2" visible="true" weight="0.3206198" />
+      <window_info anchor="bottom" id="Run" order="2" weight="0.3206198" />
       <window_info id="Structure" order="1" side_tool="true" weight="0.25" />
       <window_info anchor="bottom" id="Terminal" order="10" weight="0.32896304" />
       <window_info id="Favorites" order="2" side_tool="true" />
@@ -707,13 +716,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
-      <provider selected="true" editor-type-id="text-editor">
-        <state relative-caret-position="559">
-          <caret line="37" column="34" selection-start-line="37" selection-start-column="34" selection-end-line="37" selection-end-column="34" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/succession_graph_seq.cpp">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="68">
@@ -748,6 +750,13 @@
           <folding>
             <element signature="e#56#76#0" expanded="true" />
           </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/CMakeLists.txt">
+      <provider selected="true" editor-type-id="text-editor">
+        <state relative-caret-position="559">
+          <caret line="37" column="34" selection-start-line="37" selection-start-column="34" selection-end-line="37" selection-end-column="34" />
         </state>
       </provider>
     </entry>
