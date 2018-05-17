@@ -7,47 +7,54 @@ A level-1 auxiliary file: chapter/dialign.aux
 A level-1 auxiliary file: chapter/min-cut.aux
 A level-1 auxiliary file: chapter/Programmierung.aux
 A level-1 auxiliary file: chapter/Fazit.aux
-The style file: german.bst
+The style file: alphadin.bst
 A level-1 auxiliary file: chapter/EidesstattlicheErklaerung.aux
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated wiz_functions (elt_size=4) to 6000 items from 3000.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
+Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: Quellen.bib
+Warning--empty pages in d06
 You've used 30 entries,
-            2828 wiz_defined-function locations,
-            767 strings with 8716 characters,
-and the built_in function-call counts, 17546 in all, are:
-= -- 1460
-> -- 620
-< -- 45
-+ -- 248
-- -- 211
-* -- 1251
-:= -- 2698
-add.period$ -- 99
+            4793 wiz_defined-function locations,
+            1077 strings with 10517 characters,
+and the built_in function-call counts, 17491 in all, are:
+= -- 1724
+> -- 585
+< -- 325
++ -- 427
+- -- 202
+* -- 1252
+:= -- 3053
+add.period$ -- 35
 call.type$ -- 30
-change.case$ -- 211
-chr.to.int$ -- 31
-cite$ -- 30
-duplicate$ -- 1310
-empty$ -- 1317
-format.name$ -- 300
-if$ -- 3527
+change.case$ -- 160
+chr.to.int$ -- 30
+cite$ -- 31
+duplicate$ -- 564
+empty$ -- 1343
+format.name$ -- 380
+if$ -- 3551
 int.to.chr$ -- 1
-int.to.str$ -- 1
-missing$ -- 270
-newline$ -- 156
-num.names$ -- 120
-pop$ -- 537
+int.to.str$ -- 0
+missing$ -- 123
+newline$ -- 167
+num.names$ -- 90
+pop$ -- 218
 preamble$ -- 1
-purify$ -- 190
+purify$ -- 220
 quote$ -- 0
-skip$ -- 562
+skip$ -- 861
 stack$ -- 0
-substring$ -- 793
-swap$ -- 726
-text.length$ -- 27
-text.prefix$ -- 0
+substring$ -- 1002
+swap$ -- 139
+text.length$ -- 103
+text.prefix$ -- 9
 top$ -- 0
-type$ -- 255
-warning$ -- 0
-while$ -- 115
-width$ -- 0
-write$ -- 404
+type$ -- 282
+warning$ -- 1
+while$ -- 170
+width$ -- 33
+write$ -- 379
+(There was 1 warning)

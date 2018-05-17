@@ -61,9 +61,11 @@
 \usepackage{wrapfig}
 \usepackage{hyperref}
 \hypersetup{linktoc=all}
-\usepackage[authoryear]{natbib}
+\usepackage[numbers]{natbib}
 \usepackage{xargs}                      % Use more than one optional parameter in a new commands
 \usepackage{varwidth}
+\usepackage[ngerman=ngerman-x-latest]{hyphsubst}
+\usepackage{microtype}
 % ===========================================================
 
 
@@ -232,6 +234,22 @@ qed=\qedsymbol]%
 
 \newenvironment{beispiel}{}{\par\medskip}
 
+% Hyphenation
+% ===========================================================
+\hyphenation{Al-go-rith-mus}
+\hyphenation{Nee-dle-man}
+\hyphenation{Se-quenz-a-lign-ment}
+\hyphenation{Align-ment}
+\hyphenation{Se-quenz-a-lign-ments}
+\hyphenation{Align-ments}
+\hyphenation{Haupt-an-wen-dungs-ge-bie-te}
+\hyphenation{Stan-dard-an-satz}
+\hyphenation{Ami-no-säu-ren}
+
+% ===========================================================
+
+\raggedbottom
+
 \begin{document}
 \pagenumbering{roman}
 
@@ -258,7 +276,8 @@ qed=\qedsymbol]%
 \include{chapter/Fazit}
 
 % Literaturverzeichnis
-\bibliographystyle{german}
+%\bibliographystyle{german}
+\bibliographystyle{alphadin}
 \bibliography{Quellen}
 
 % Eidesstattliche Erklärung

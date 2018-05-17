@@ -1,44 +1,35 @@
-cmake_minimum_required(VERSION 3.10)
-project(longest_path)
 
-##########################
-#        OPTIONS         #
-##########################
+cmake_minimum_required(VERSION 3.0)
+project(longest_path)
 
 option(BUILD_TESTS "Run tests using CATCH framework" ON)
 
-
 set(CMAKE_CXX_STANDARD 11)
-
-set(CMAKE_CXX_FLAGS "-std=c++0x -Wall")
-
-set (TARGET_H
-        site.h
-        succession_node.h
-        succession_graph_seq.h
-        )
+if (MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /W4")
+elseif (CMAKE_COMPILER_IS_GNUCC OR CMAKE_COMPILER_IS_GNUCXX)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -Wall -pedantic")
+endif()
 
 set (TARGET_SRC
-        site.cpp
-        succession_node.cpp
-        succession_graph_seq.cpp)
+        ${CMAKE_SOURCE_DIR}/site.cpp
+        ${CMAKE_SOURCE_DIR}/succession_node.cpp
+        ${CMAKE_SOURCE_DIR}/succession_graph_seq.cpp
+        )
 
-set(Boost_NO_SYSTEM_PATHS TRUE)
-if (Boost_NO_SYSTEM_PATHS)
-    set(BOOST_ROOT "${CMAKE_CURRENT_SOURCE_DIR}/boost_1_66_0")
-    set(BOOST_INCLUDE_DIRS "${BOOST_ROOT}/include")
-    set(BOOST_LIBRARY_DIRS "${BOOST_ROOT}/lib")
-endif (Boost_NO_SYSTEM_PATHS)
 find_package(Boost)
-include_directories(${BOOST_ROOT})
+if (NOT ${Boost_FOUND})
+    message(STATUS "Boost not found. Using own...")
+    #TODO: bcp fÃ¼r boost graph, evtl auf System testen
+    # wo definitv kein boost drauf ist, damit der das nicht irgendwie
+    # trotzdem findet
+    set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/boost-graph")
+endif()
 
-add_executable(longest_path main.cpp ${TARGET_H} ${TARGET_SRC})
+add_executable(longest_path ${CMAKE_SOURCE_DIR}/main.cpp ${TARGET_SRC})
+target_include_directories(longest_path PUBLIC ${BOOST_ROOT} ${CMAKE_SOURCE_DIR})
 
-# Note: a target should be already defined using 'add_executable' or 'add_library'
-target_link_libraries(longest_path ${Boost_LIBRARIES})
-
-add_library(Catch INTERFACE)
-target_include_directories(Catch INTERFACE ${CMAKE_CURRENT_SOURCE_DIR}/tests})
+#Catch interface verschoeben in die untere Cmake
 
 # test targets
 if(BUILD_TESTS)

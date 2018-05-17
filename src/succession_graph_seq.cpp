@@ -29,19 +29,18 @@ std::deque<SuccessionNode> SuccessionGraphSeq::longestPath() const{
     std::unordered_map<vertex_t, vertex_t> predecessors;
     std::unordered_map<vertex_t, unsigned int> distances;
 
-    for(auto& vertex : topologicalOrder){
+    for(const auto& vertex : topologicalOrder){
         predecessors.emplace(vertex, 0);
         distances.emplace(vertex, 0);
     }
 
     /// compute for every vertex the predecessor and distance according to the topological order
-    typedef boost::graph_traits < Graph >::adjacency_iterator adjacency_iterator;
+    typedef boost::graph_traits <Graph>::adjacency_iterator adjacency_iterator;
 
-    for (unsigned int i = 0; i < topologicalOrder.size(); i++){
-        vertex_t currentVertex = topologicalOrder.at(i);
-        unsigned int currentDistance = distances.at(currentVertex);
+    for(const auto& vertex : topologicalOrder){
+        unsigned int currentDistance = distances.at(vertex);
         /// retrieve edges of current vertex
-        std::pair<adjacency_iterator, adjacency_iterator> neighbors = boost::adjacent_vertices(currentVertex, data);
+        std::pair<adjacency_iterator, adjacency_iterator> neighbors = boost::adjacent_vertices(vertex, data);
 
         while(neighbors.first != neighbors.second){
             vertex_t currentNeighbor = *neighbors.first;
@@ -49,7 +48,7 @@ std::deque<SuccessionNode> SuccessionGraphSeq::longestPath() const{
                 distances.erase(currentNeighbor);
                 distances.emplace(currentNeighbor, currentDistance + 1);
                 predecessors.erase(currentNeighbor);
-                predecessors.emplace(currentNeighbor, currentVertex);
+                predecessors.emplace(currentNeighbor, vertex);
             }
             neighbors.first++;
         }

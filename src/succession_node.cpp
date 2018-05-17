@@ -8,7 +8,7 @@ SuccessionNode::SuccessionNode()
         : sites()
         {}
 
-SuccessionNode::SuccessionNode(std::unordered_map<unsigned int, Site>& sites)
+SuccessionNode::SuccessionNode(const std::unordered_map<unsigned int, Site>& sites)
         : sites(sites)
         {}
 

@@ -58,13 +58,11 @@ private:
                             /// unweighted graph fulfilling the above requirements
     vertex_t vStart;        /// artificial start vector of the succession graph
     vertex_t vEnd;          /// artificial end vector of the succession graph
-
-    SuccessionGraphSeq(SuccessionGraphSeq& rhs);                    /// prevent copy constructor to be called
-    SuccessionGraphSeq& operator=(const SuccessionGraphSeq& rhs);   /// prevent assignments
-
 public:
     SuccessionGraphSeq(unsigned int seq, Graph& data, vertex_t startVertex, vertex_t endVertex);
 
+    SuccessionGraphSeq(SuccessionGraphSeq& rhs) = delete;                    /// prevent copy constructor to be called
+    SuccessionGraphSeq& operator=(const SuccessionGraphSeq& rhs) = delete;   /// prevent assignments
     /**
      * @return this graph's start vertex
      */

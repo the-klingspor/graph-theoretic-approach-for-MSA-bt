@@ -13,7 +13,7 @@
 //==================================
 // included dependencies
 #include <unordered_map>
-#include "Site.h"
+#include "site.h"
 
 //==================================
 /**
@@ -37,7 +37,7 @@ public:
     /**
      * Constructor that builds a new succession node for a set of sites.
      */
-    SuccessionNode(std::unordered_map<unsigned int, Site>& sites);
+    SuccessionNode(const std::unordered_map<unsigned int, Site>& sites);
 
     /**
      * @brief compares this SuccessionNode with a second one for equality
