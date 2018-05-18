@@ -5,7 +5,7 @@ Einer der ersten Algorithmen zur Berechnung von paarweisen Alignments war der vo
 
 \section{Dynamische Programmierung}
 
-Die dynamische Programmierung ist eine Technik zum algorithmischen Lösen von Optimierungsproblemen. Dazu wird ein größeres Problem unter Zuhilfenahme der Lösungen von sich überschneidenden Teilproblemen gelöst, wobei die zuvor berechneten Lösungen in einer Tabelle gespeichert werden. Durch die Wiederverwendung der bereits gelösten Teilprobleme lässt sich auf diese Weise die oft exponentielle Laufzeit eines naiven Algorithmus auf polynomielle Laufzeit verringern. Dabei muss man beachten, ob es für den jeweiligen Kontext angemessen ist den höheren Speicherbedarf aufgrund der zu speichernden Werte für die verbesserte Laufzeit in Kauf zu nehmen. Oft wird die dynamische Programmierung mit dem \emph{Divide-and-Conquer}-Prinzip verwechselt. Beide Paradigmen darauf basieren ein Problem in kleinere Teilprobleme zu zerlegen. Der Hauptunterschied zwischen ihnen ist, dass das Problem bei \emph{Divide-and-Conquer} in disjunkte statt in sich überlappende Teilprobleme zerlegt wird \cite[S.359]{clrs09}. Denken wir beispielsweise an Mergesort zurück: ein Feld wird sortiert, indem immer größer werdende disjunkte Teilfelder miteinander verschmolzen werden.
+Die dynamische Programmierung ist eine Technik zum algorithmischen Lösen von Optimierungsproblemen. Dazu wird ein größeres Problem unter Zuhilfenahme der Lösungen von sich überschneidenden Teilproblemen gelöst, wobei die zuvor berechneten Lösungen in einer Tabelle gespeichert werden. Durch die Wiederverwendung der bereits gelösten Teilprobleme lässt sich auf diese Weise die oft exponentielle Laufzeit eines naiven Algorithmus auf polynomielle Laufzeit verringern. Dabei muss man beachten, ob es für den jeweiligen Kontext angemessen ist den höheren Speicherbedarf aufgrund der zu speichernden Werte für die verbesserte Laufzeit in Kauf zu nehmen. Oft wird die dynamische Programmierung mit dem \emph{Divide-and-Conquer}-Prinzip verwechselt. Beide Paradigmen darauf basieren ein Problem in kleinere Teilprobleme zu zerlegen. Der Hauptunterschied zwischen ihnen ist, dass das Problem bei Divide-and-Conquer in disjunkte statt in sich überlappende Teilprobleme zerlegt wird \cite[S.359]{clrs09}. Denken wir beispielsweise an Mergesort zurück: ein Feld wird sortiert, indem immer größer werdende disjunkte Teilfelder miteinander verschmolzen werden.
 
 In der Regel wird bei der dynamischen Programmierung zunächst eine Rekursionsgleichung aufgestellt, mit deren Hilfe sich das Problem beschreiben lässt. Im Gegensatz zur verwandten Technik der \emph{Memoisation} wird diese Rekursionsgleichung jedoch nicht direkt und \emph{top-down} umgesetzt. Stattdessen werden \emph{bottom-up} zunächst die Basisfälle berechnet und darauf aufbauend immer größere Teilprobleme gelöst. Die Berechnung erfolgt dabei aber nichtsdestoweniger der Rekursionsformel entsprechend. Aufgrund der direkten Umsetzung der Rekursionsgleichung sind die Korrektheitsbeweise der Algorithmen der dynamischen Programmierung oft sehr einfach und aus der Korrektheit der Formel folgt meistens automatisch die des ganzen Algorithmus.
 
@@ -29,14 +29,14 @@ Unser Ziel ist es jetzt aus allen möglichen Alignments von $S_1$ und $S_2$ das 
 	\end{equation*}
 \end{definition}
 
-Der Score ist für ein Alignment beim Algorithmus von Needleman-Wunsch also als die Summe aller \emph{Ähnlichkeitswerte} $\alpha$ von einander zugewiesenen Symbolen der beiden Sequenzen definiert, von denen die Gap Penalties aller eingefügten Lücken abgezogen werden. Das Ziel ist jetzt, eine Rekursionsgleichung aufzustellen mit deren Hilfe man den Score maximieren kann. Der maximale Score eines Alignments gibt uns ein Maß für die Ähnlichkeit zweier Sequenzen an: je höher er ist, desto mehr gleiche oder ähnliche Symbole wurden einander zugewiesen und desto weniger Lücken mussten wir in die Sequenzen einfügen.
+Der Score ist für ein Alignment beim Algorithmus von Needleman-Wunsch also als die Summe aller Ähnlichkeitswerte $\alpha$ von einander zugewiesenen Symbolen der beiden Sequenzen definiert, von denen die Gap Penalties aller eingefügten Lücken abgezogen werden. Das Ziel ist jetzt, eine Rekursionsgleichung aufzustellen mit deren Hilfe man den Score maximieren kann. Der maximale Score eines Alignments gibt uns ein Maß für die Ähnlichkeit zweier Sequenzen an: je höher er ist, desto mehr gleiche oder ähnliche Symbole wurden einander zugewiesen und desto weniger Lücken mussten wir in die Sequenzen einfügen.
 
 \begin{beispiel}
 	Betrachten wir als kleines Beispiel zwei Alignments des Worts \enquote{Original} in richtiger und fehlerhafter Schreibweise. Hierbei wählen wir $\alpha_{i,j} = 1$ für $i \neq j$ und $\alpha_{i,i} = 0$, sowie $\delta = 2$ als Gap Penalty.
 	
 	\footnotesize
 	\begin{center}
-		\begin{tikzcd}
+		\begin{tikzcd}[show background rectangle]
 		O \arrow[d, no head] & R \arrow[d, no head] & G \arrow[d, no head] & I \arrow[d, no head] & N \arrow[d, no head] & A \arrow[d, no head] & L \arrow[d, no head] & - \\
 		O & R & I & G & I & N & A & L
 		\end{tikzcd}
@@ -47,7 +47,7 @@ Der Score ist für ein Alignment beim Algorithmus von Needleman-Wunsch also als 
 	
 	\footnotesize
 	\begin{center}
-		\begin{tikzcd}
+		\begin{tikzcd}[show background rectangle]
 		O \arrow[d, no head] & R \arrow[d, no head] & - & G \arrow[d, no head] & I \arrow[d, no head] & N \arrow[d, no head] & A \arrow[d, no head] & L \arrow[d, no head] \\
 		O & R & I & G & I & N & A & L
 		\end{tikzcd}
@@ -98,7 +98,7 @@ $OPT$ lässt sich dann maximieren, indem das Maximum der drei möglichen Fälle 
 	\end{equation*}
 \end{korollar}
 
-Diese Rekursionsformel können wir direkt in einem Algorithmus münden lassen. Wie man sieht, ist der Algorithmus \ref{alg:opt_nw} anders als die Rekursionsgleichung nicht \emph{top-down}, sondern \emph{bottom-up} formuliert. Alle möglichen Einträge in der Matrix $O[1,\dots,n][1,\dots,m]$ werden unter Verwendung der zuvor berechneten Teilprobleme berechnet und gespeichert. 
+Diese Rekursionsformel können wir direkt in einem Algorithmus münden lassen. Wie man sieht, ist der Algorithmus \ref{alg:opt_nw} anders als die Rekursionsgleichung nicht top-down, sondern bottom-up formuliert. Alle möglichen Einträge in der Matrix $O[1,\dots,n][1,\dots,m]$ werden unter Verwendung der zuvor berechneten Teilprobleme berechnet und gespeichert. 
 
 \begin{algorithm}
 	\caption{Algorithmus für die Berechnung des maximalen Scores zweier Sequenzen $S_1$ und $S_2$ unter Verwendung von Ähnlichkeitswerten $\alpha$ und Gap Penalty $\delta$}
@@ -142,27 +142,25 @@ Nach der Berechnung aller Einträge aus $O[][]$ haben wir lediglich den Wert ein
 	Wie zuvor gezeigt kann in der selben Zeit- und Speicherkomplexität der Score eines optimalen Alignments berechnet werden. Mit einem einfachen Backtrackingprozess kann man jetzt feststellen, welche Zuweisungen Teil eines dazugehörigen Alignments sind. Dafür betrachten wir wie oben beschrieben für den Tabelleneintrag $O[i][j]$ die Einträge  $O[i-1][j-1]$, $O[i-1][j]$ und $O[i,j-1]$. Man stellt fest, dass in jedem Schritt mindestens einer der beiden Indizes gesenkt wird. Das bedeutet, dass nach höchstens $\oh(n+m)$ Schritten alle Zuweisungen oder Lücken bestimmt wurden. Jeder einzelne Schritt ist in konstanter Zeit möglich, weil jeweils lediglich drei Tabelleneinträge betrachtet werden müssen. 
 \end{beweis}
 
-Dan Hirschberg hat einen Algorithmus entwickelt, der den Algorithmus von Needleman und Wunsch mit Hilfe eines \emph{Divide-and-Conquer}-Ansatzes mit $\oh(n+m)$ Speicherplatz umsetzt \cite{h75}. Diese Verbesserung kann bei langen Sequenzen einen großen Unterschied in der Laufzeit machen, weil es aufgrund des geringeren Speicherverbrauchs zu weniger aufwändigen Seitenfehlern bei der Speicherverwaltung des Betriebssystems kommt. Auf diesen Algorithmus gehen wir hier nicht weiter ein, aber im kommenden Kapitel wird ein ähnlicher Algorithmus zum speicherplatzeffizienten Berechnen von segmentbasierten paarweisen Alignments vorgestellt.
+Dan Hirschberg hat einen Algorithmus entwickelt, der den Algorithmus von Needleman und Wunsch mit Hilfe eines Divide-and-Conquer-Ansatzes mit $\oh(n+m)$ Speicherplatz umsetzt \cite{h75}. Diese Verbesserung kann bei langen Sequenzen einen großen Unterschied in der Laufzeit machen, weil es aufgrund des geringeren Speicherverbrauchs zu weniger aufwändigen Seitenfehlern bei der Speicherverwaltung des Betriebssystems kommt. Auf diesen Algorithmus gehen wir hier nicht weiter ein, aber im kommenden Kapitel wird ein ähnlicher Algorithmus zum speicherplatzeffizienten Berechnen von segmentbasierten paarweisen Alignments vorgestellt.
 
 \section{Komplexität}
 
-Als nächstes widmen wir uns der Komplexität des \emph{Multiple-Sequence-Alignment}-Problems. Diese werden wir nicht formal beweisen, aber anhand des gerade kennengelernten Needleman-Wunsch-Algorithmus anschaulich motivieren. Man kann die Modellierung nach Needleman-Wunsch auch als Graphen interpretieren, bei dem der Algorithmus einen längsten Pfad durch diesen Graphen findet (s. \ref{abb:nw-graph}). Der Graph ist dabei ein tabellenartiger planarer Graph, bei dem alle Knoten mit den dreien nach rechts und unten verbunden sind, falls es diese gibt. Auf den diagonalen Kanten stehen dabei die Gewichte für das Alignieren zweier Symbole der Sequenzen und auf den waage- und senkrechten $-\delta$ für das Einfügen einer Lücke.
+Als nächstes widmen wir uns der Komplexität des Multiple-Sequence-Alignment-Problems. Diese werden wir nicht formal beweisen, aber anhand des gerade kennengelernten Needleman-Wunsch-Algorithmus anschaulich motivieren. Man kann die Modellierung nach Needleman-Wunsch auch als Graphen interpretieren, bei dem der Algorithmus einen längsten Pfad durch diesen Graphen findet (s. \ref{abb:nw-graph}). Der Graph ist dabei ein tabellenartiger planarer Graph, bei dem alle Knoten mit den dreien nach rechts und unten verbunden sind, falls es diese gibt. Auf den diagonalen Kanten stehen dabei die Gewichte für das Alignieren zweier Symbole der Sequenzen und auf den waage- und senkrechten $-\delta$ für das Einfügen einer Lücke.
 
 \footnotesize
 \begin{figure}
 \centering
-\begin{framed}
-	\begin{tikzcd}[/tikz/commutative diagrams/sep=large]
+	\begin{tikzcd}[/tikz/commutative diagrams/sep=large, show background rectangle]
 	O[0,0] \arrow[r] \arrow[d] \arrow[rd] & ... \arrow[d] \arrow[rd] & ... \arrow[d] \arrow[r] & O[0,m] \arrow[d] \\
 	... \arrow[r] \arrow[rd] & O[i-1,j-1] \arrow{rd}[near start, sloped]{\alpha_{S_1[i-1],S_2[j-1]}} \arrow{d}{-\delta} \arrow{r}{-\delta} & O[i-1,j] \arrow[r] \arrow[rd] \arrow{d}{-\delta} & ... \\
 	... \arrow[d] \arrow[r] \arrow[rd] & O[i,j-1] \arrow[d] \arrow[rd] \arrow{r}{-\delta} & O[i,j] \arrow[d] \arrow[rd] \arrow[r] & ... \arrow[d] \\
 	O[n,0] \arrow[r] & ... & ... \arrow[r] & O[n,m]
 	\end{tikzcd}
-\end{framed}
 \caption{Darstellung des Needleman-Wunsch-Prozesses als Graph.}\label{abb:nw-graph}
 \end{figure}
 \normalsize
 
-Grundsätzlich lässt sich damit das Vorgehen des Algorithmus von Needleman-Wunsch zum Alignieren einer Menge $S = \{S_1,\dots,S_n\}$ von Sequenzen erweitern. Dazu wird jedoch eine $n$-dimensionale Matrix mit $l_1\cdot \dots \cdot l_n$ Einträgen benötigt, wobei $l_i$ die Länge der Sequenz $S_i$ ist, beziehungsweise einen Graphen mit derselben Anzahl an Knoten. Für $l_{max} \coloneqq \max\{l_1,\dots,l_n\}$, müssen $\oh((l_{max})^n)$ Einträge der Matrix berechnet werden. Durch die höhere Anzahl an Sequenzen steigen auch die Kosten für die Berechnung eines einzelnen Eintrags. Betrachten wir beispielsweise die Berechnung eines Eintrages der Tabelle für drei Sequenzen. In diesem Schritt ist es möglich, in keine der Sequenzen eine Lücke einzufügen und alle drei Symbole miteinander zu alignieren (eine Möglichkeit), in eine der Sequenzen eine Lücke einzufügen (drei Möglichkeiten) oder in zwei der Sequenzen eine Lücke einzufügen (drei Möglichkeiten). In alle Sequenzen eine Lücke einzufügen ergibt in diesem Kontext keinen Sinn, aber man erkennt trotzdem, dass die Anzahl an Möglichkeiten in jedem Schritt in der Größe der Potenzmenge von $S$, also $\oh(2^n)$ liegt. Somit folgt eine Laufzeit von $\oh(2^n\cdot (l_{max})^n)$ für die Berechnung eines optimalen multiplen Alignments mit dem Algorithmus von Needleman-Wunsch. Wang und Jiang haben formal bewiesen, dass es nicht möglich ist, unter angemessenen Einschränkungen ein multiples Alignment in deterministisch polynomieller Zeit zu berechnen \cite{wj94}. Das \emph{Multipe-Sequence-Alignment}-Problem ist somit \emph{NP-schwer} mit der Komplexität $\oh(n^l)$.
+Grundsätzlich lässt sich damit das Vorgehen des Algorithmus von Needleman-Wunsch zum Alignieren einer Menge $S = \{S_1,\dots,S_n\}$ von Sequenzen erweitern. Dazu wird jedoch eine $n$-dimensionale Matrix mit $l_1\cdot \dots \cdot l_n$ Einträgen benötigt, wobei $l_i$ die Länge der Sequenz $S_i$ ist, beziehungsweise einen Graphen mit derselben Anzahl an Knoten. Für $l_{max} \coloneqq \max\{l_1,\dots,l_n\}$, müssen $\oh((l_{max})^n)$ Einträge der Matrix berechnet werden. Durch die höhere Anzahl an Sequenzen steigen auch die Kosten für die Berechnung eines einzelnen Eintrags. Betrachten wir beispielsweise die Berechnung eines Eintrages der Tabelle für drei Sequenzen. In diesem Schritt ist es möglich, in keine der Sequenzen eine Lücke einzufügen und alle drei Symbole miteinander zu alignieren (eine Möglichkeit), in eine der Sequenzen eine Lücke einzufügen (drei Möglichkeiten) oder in zwei der Sequenzen eine Lücke einzufügen (drei Möglichkeiten). In alle Sequenzen eine Lücke einzufügen ergibt in diesem Kontext keinen Sinn, aber man erkennt trotzdem, dass die Anzahl an Möglichkeiten in jedem Schritt in der Größe der Potenzmenge von $S$, also $\oh(2^n)$ liegt. Somit folgt eine Laufzeit von $\oh(2^n\cdot (l_{max})^n)$ für die Berechnung eines optimalen multiplen Alignments mit dem Algorithmus von Needleman-Wunsch. Wang und Jiang haben formal bewiesen, dass es nicht möglich ist, unter angemessenen Einschränkungen ein multiples Alignment in deterministisch polynomieller Zeit zu berechnen \cite{wj94}. Das Multipe-Sequence-Alignment-Problem ist somit \emph{NP-schwer} mit der Komplexität $\oh(n^l)$.
 
 Aufgrund dieser Erkenntnis ist es in der Praxis im Allgemeinen nicht möglich, mathematisch exakte multiple Alignments zu berechnen. Wenn man bedenkt, dass es für manche Sequenzanalysen nötig ist, hunderte Sequenzen, die oft mehr als tausend Zeichen lang sind, miteinander zu vergleichen, ist es mit der oben genannten Laufzeit illusorisch, das Verfahren von Needleman und Wunsch anzuwenden. Stattdessen sind wir dazu gezwungen, Heuristiken zu entwickeln, die in angemessener Zeit eine möglichst gute Annäherung an das perfekte Ergebnis liefern. Mit dem DIALIGN-Verfahren von Morgenstern et al. \cite{mdw96} und der graphtheoretischen Erweiterung von Corel et al. \cite{cpm10} werden wir in den folgenden Kapiteln zwei leistungsstarke Heuristiken kennenlernen und analysieren.

@@ -28,16 +28,6 @@
 \newblock {In: }\emph{Computational Biology: First International Conference on
   Biology, Informatics, and Mathematics}, 2000, S. 1--11
 
-\bibitem[Bel57]{b57}
-\textsc{Bellman}, R.:
-\newblock \emph{{Dynamic Programming}}.
-\newblock Princeton University Press, 1957
-
-\bibitem[Bel84]{b84}
-\textsc{Bellman}, R.:
-\newblock \emph{{Eye of the Hurricane}}.
-\newblock World Scientific Publishing, 1984
-
 \bibitem[CHHE79]{chhe79}
 \textsc{Cunningham}, B. ; \textsc{Hemperly}, J. ; \textsc{Hopp}, T.  ;
   \textsc{Edelman}, G.:
@@ -98,15 +88,6 @@
 \newblock first.
 \newblock Pearson, 2005
 
-\bibitem[Kus04]{k04}
-\textsc{Kushner}, H.:
-\newblock \emph{{Acceptance Speech anlässlich der Verleihung des Richard E.
-  Bellman Control Heritage Awards}}.
-\newblock
-  \url{http://a2c2.org/awards/richard-e-bellman-control-heritage-award/2004-00-00t000000/harold-j-kushner},
-  2004. --
-\newblock Accessed: 2018-05-18
-
 \bibitem[MAHD98]{mahd98}
 \textsc{Morgenstern}, B. ; \textsc{Atchley}, W. ; \textsc{Hahn}, K.  ;
   \textsc{Dress}, A.:
@@ -160,11 +141,17 @@
 \newblock {Selecting the Right Similarity Matrix}.
 \newblock {In: }\emph{Curr Protoc Bioinformatics} 43:3.5 (2013), S. 1--9
 
-\bibitem[SKM08]{DIALIGNTX}
+\bibitem[SKM08a]{DIALIGNTX}
 \textsc{Subramanian}, A. ; \textsc{Kaufman}, M.  ; \textsc{Morgenstern}, B.:
 \newblock \emph{{DIALIGN TX} download}.
 \newblock \url{http://dialign-tx.gobics.de/download}, 2008. --
 \newblock Accessed: 2018-03-31
+
+\bibitem[SKM08b]{skm08}
+\textsc{Subramanian}, A. ; \textsc{Kaufman}, M.  ; \textsc{Morgenstern}, B.:
+\newblock {DIALIGN TX: greedy and progressive approaches for segment-based
+  multiple sequence alignment}.
+\newblock {In: }\emph{Algorithms for Molecular Biology} 3:6 (2008)
 
 \bibitem[SNKM04]{snkm04}
 \textsc{Schmollinger}, M. ; \textsc{Nieselt}, K. ; \textsc{Kaufmann}, M.  ;
