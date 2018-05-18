@@ -672,13 +672,15 @@ Gibt es hingegen keine Stelle in $S_i$, die bereits $s$ zugewiesen wurde, dann u
 Man kann also sagen, dass \emph{Transitivitätsgrenzen} und Konsistenzgrenzen äquivalent sind, denn wenn man das aktuelle Alignment kennt, kann man aus dem einen das jeweils andere bestimmen. Daraus folgt auch, dass man mit beiden darstellen kann, ob zwei Stellen miteinander alignierbar sind oder nicht. \improvement{Beispiel hinzufügen?}
 
 \scriptsize
-\begin{wrapfigure}{r}{7cm}
+\begin{wrapfigure}{r}{8cm}
+\begin{framed}\raggedleft
 	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
 	& s_1 \arrow[r] & s_2 \arrow[r] & s_3 \arrow[r] & s_4 &  \\
 	s'_1 \arrow[r] & s'_2 \arrow[r] & s_3' \arrow[r] & s_4' \arrow[r] & s_5' \arrow[r] & s_6' \\
 	s_1'' \arrow[r] & s_2'' \arrow[r] & s_3'' \arrow[r] & s_4'' \arrow[r] & s_5'' & 
 	\end{tikzcd}
 	\caption{Graph dreier Sequenzen mit den durch sie induzierten Pfaden}
+\end{framed}
 \end{wrapfigure}
 \normalsize
 
@@ -704,7 +706,8 @@ Sei im Folgenden eine Menge $\mathcal{P} = \{P_1, \dots, P_k\}$ von Pfaden auf u
 Für einen Knoten $x$ sei $P(x)$ das Tupel, das in jedem Eintrag $P(x)[i]$ für $1\leq i \leq k$ die Anzahl an Vorgängern von $x$ im Pfad $P_i$ angibt. In anderen Worten ist $P(x)[i]$ die maximale Position eines Vorgängers in $P_i$. Analog definieren wir $S(x)$, wobei  $S(x)[i]$ der minimale Nachfolger von $x$ in $S_i$ ist. Wie man sich denken kann, entsprechen $S(x)$ und $P(x)$ genau unseren \emph{Transitivitätsgrenzen} aus dem Kontext von Alignments und wir verwenden diese Begriffe synonym. Das werden wir später auch noch beweisen. Gibt es Vorgänger oder Nachfolger nicht, setzen wir diese Werte auf 0 beziehungsweise die Länge des Pfads, um den es geht, addiert mit eins.
 
 \scriptsize
-\begin{wrapfigure}{r}{6cm}
+\begin{wrapfigure}{r}{7cm}
+\begin{framed}\centering
 	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
 	{} \arrow[rrr] &  &  & y \arrow[r] & \dots \arrow[r] & u \arrow[r] & {} \\
 	{} \arrow[rr] &  & x \arrow[rrrr] \arrow[ru, red] &  &  &  & {} \\
@@ -713,6 +716,7 @@ Für einen Knoten $x$ sei $P(x)$ das Tupel, das in jedem Eintrag $P(x)[i]$ für 
 	\end{tikzcd}
 	\caption{Füge $(x,y)$ ein.}
 	\label{abb:kante_eing}
+\end{framed}
 \end{wrapfigure}
 \normalsize
 
