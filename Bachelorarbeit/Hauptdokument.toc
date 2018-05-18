@@ -14,7 +14,7 @@
 \contentsline {section}{\numberline {3.3}Paarweise Alignments mit dynamischer Programmierung}{17}{section.3.3}
 \contentsline {subsection}{\numberline {3.3.1}Speichereffiziente Berechnung der paarweisen Alignments}{19}{subsection.3.3.1}
 \contentsline {subsection}{\numberline {3.3.2}Laufzeit}{22}{subsection.3.3.2}
-\contentsline {subsection}{\numberline {3.3.3}Beispiel zur Berechnung paarweiser Alignments}{22}{subsection.3.3.3}
+\contentsline {subsection}{\numberline {3.3.3}Beispiel zur Berechnung paarweiser Alignments}{23}{subsection.3.3.3}
 \contentsline {section}{\numberline {3.4}\IeC {\"U}berlappgewichte}{25}{section.3.4}
 \contentsline {subsection}{\numberline {3.4.1}Umsetzung im Programm und Laufzeit}{26}{subsection.3.4.1}
 \contentsline {subsection}{\numberline {3.4.2}Beispiel \IeC {\"U}berlappgewichte}{27}{subsection.3.4.2}
@@ -69,4 +69,4 @@
 \contentsline {chapter}{\numberline {5}Programmierung}{71}{chapter.5}
 \contentsline {chapter}{\numberline {6}Fazit}{73}{chapter.6}
 \contentsline {section}{\numberline {6.1}Zusammenfassung}{73}{section.6.1}
-\contentsline {section}{\numberline {6.2}Future Works}{74}{section.6.2}
+\contentsline {section}{\numberline {6.2}Weiterf\IeC {\"u}hren Arbeiten}{74}{section.6.2}

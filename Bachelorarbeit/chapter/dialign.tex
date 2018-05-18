@@ -90,7 +90,7 @@ Alle Symbole, die Teil einer Zuweisungsspalte sind, also einer Äquivalenzklasse
 
 Da DIALIGN ein segmentbasiertes Alignmentverfahren ist, brauchen wir noch eine Bezeichnung für eine paarweise, lückenlose Zuweisung von direkt aufeinanderfolgenden Elementen zweier Sequenzen.
 
-\begin{definition}[Fragment]
+\begin{definition}[Fragment\cite{mdw96}]
 	Gegeben seien zwei Sequenzen $S_1$ und $S_2$ und ein Alignment $\mathcal{A}$ auf diesen Sequenzen. Dann definieren wir das Fragment mit Länge $l$, das an den Stellen $i$ in $S_1$ und $j$ in $S_2$ endet mit $1 \leq i \leq l(S_1), 1 \leq j \leq l(S_2)$ und $i - l \geq 0 \leq j - l$, als $f_{i,j,l}$, wenn $S_1[i-k] \, \mathcal{A} \, S_2[j-k]$ für alle $0 \leq k \leq l - 1$ gilt. 
 \end{definition}
 
@@ -183,7 +183,7 @@ Wie bei dynamischer Programmierung üblich, stellen wir zunächst eine Rekursion
 	\end{cases}
 \end{equation}
 
-\begin{satz}
+\begin{satz}[{\cite{m02}}]
 	Mit der obigen Rekursionsgleichung \eqref{eq:dp_score2} lässt sich ein optimales paarweises Alignment zweier Sequenzen mit Längen $L_1$ und $L_2$ in $\oh(L^3)$ Zeit und $\oh(L^2)$ Speicherplatz berechnen für $L = \max(L_1, L_2)$. Außerdem gilt für die Menge der möglichen Fragmente $F{:} |F| \in \oh(L^3)$.
 \end{satz}
 	
@@ -197,7 +197,7 @@ Um nicht nur den Score eines perfekten paarweisen Alignments berechnen zu könne
 	W(f) \coloneqq \max \left\{ \sum_{k=0}^{M} w^*(f_k) : f_1 \ll \dots \ll f_M=f \right\}
 \end{equation}
 
-\begin{definition}[Vorgänger]
+\begin{definition}[Vorgänger\cite{m02}]
 	Sei $f_1 \ll \dots \ll f_M$ eine Kette von Fragmenten, die das Maximum der vorherigen Gleichung erreicht. Dann bezeichnen wir $P(f) = f_{M-1}$ als den \emph{Vorgänger} von $f$. Außerdem sei $Pr[i,j]$ das letzte Fragment einer optimalen Kette aus \eqref{eq:praefixgewicht1}, die spätestens in $(i,j)$ endet. 
 \end{definition}
 
@@ -245,7 +245,7 @@ Wenn es keinen solchen Nachfolger mehr gibt, dann wurde die Menge von aufeinande
 
 \subsection{Speichereffiziente Berechnung der paarweisen Alignments}
 
-In diesem Abschnitt beschäftigen wir uns mit einer sehr speichereffizienten und schnellen Umsetzung des soeben gesehenen Ansatzes. 
+In diesem Abschnitt beschäftigen wir uns mit einer sehr speichereffizienten und schnellen Umsetzung des soeben gesehenen Ansatzes. Speichereffizienz ist wichtig, weil die zu alignierenden Sequenzen sehr lang werden können. Die Verringerung des benötigten Speichers erlaubt die volle Ausnutzung von kleinem, aber schnellem Speicher in der Speicherhierarchie und die Vermeidung von kostenintensiven Seitenfehlern.
 
 Zunächst beschränken wir die maximale Länge eines Fragments $l_{\max}$ auf eine kleine, feste Zahl, beispielsweise 40. Je nach gewünschter Genauigkeit und benötigter Geschwindigkeit kann man diesen Wert vergrößern oder verkleinern. Auch wenn diese Einschränkung den maximal zu erreichenden Score senkt und wir daher keine perfekten Alignments mehr berechnen, hat $l_{\max}$ in der Praxis kaum einen Einfluss auf die Güte der Ergebnisse. Das liegt daran, dass wir im Fall von geringen Ähnlichkeiten zwischen Sequenzen nur selten Fragmente mit Längen haben, die $l_{\max}$ überschreiten und im Fall von sehr ähnlichen Sequenzen können wir lange Fragmente auch in mehrere kleinere in der Größenordnung unserer Begrenzung aufteilen. Wir werden zeigen, dass mit dieser Einschränkung ein paarweises Alignment in $\oh(L^2)$ Zeit und $\oh(L+N_{\max})$ Speicherplatz berechnet werden kann, wobei $N_{\max}$ die Anzahl an gleichzeitig gespeicherten Fragmenten ist, die durch $|F|$ begrenzt wird \cite{m02}.
 
@@ -307,24 +307,25 @@ Guckt man sich Zeile \algref{alg:speichereffizient}{algl:praefix} genauer an, st
 
 Widmen wir uns nun $N_{\max}$, der Anzahl an Fragmenten, die maximal gleichzeitig gespeichert werden. Diese Anzahl wird gleich für die Berechnung des Speicherbedarfs benötigt. Die Anzahl an gesicherten Fragmenten, die wir noch nicht für $Sc[i,j]$ betrachtet haben, beträgt $l_{\max} \cdot L_1 \in \oh(L)$, weil wir für jede der nächsten $l_{\max}$ Spalten und dort jede der $L_1$-vielen Zeilen das Fragment speichern, das $W(f)$ für alle dort endenden maximiert. Zusätzlich wird die Reihe von Vorgängern für jeden aktuellen Tabelleneintrag der Spalte gesichert, indem wir in $Pr[i,j]$ einen Verweis auf das letzte Fragment einer optimalen Kette für die Teilsequenzen bis zu den Stellen $i$ und $j$ in den beiden Sequenzen speichern (Zeile \algref{alg:speichereff}). Dieses wiederum speichert einen Pointer auf seinen eigenen Vorgänger und so weiter. Im schlimmsten Fall befinden wir uns in der letzten Spalte der Tabelle und die in den Einträgen endenden optimalen Ketten sind alle unabhängig voneinander. Dann kann es sein, dass diese jeweils aus $\oh(L_2)$ nah aufeinanderfolgenden Fragmenten der Länge $\oh(1)$ bestehen. In diesem Fall ist $N_{\max} \in \oh(L^2)$, genau wie der insgesamt benötigte Speicherplatz. In der Praxis kann man aber erwarten, dass $N_{\max}$ deutlich kleiner ist. 
 
-\cite{m02} hat sein Verfahren mit verschiedenen Sequenzen getestet. Dabei hat er festgestellt, dass $N_{\max}$ für unabhängige zufällig erstellte Sequenzen im Vergleich zur Größe $L$ zu vernachlässigen ist. Und selbst wenn sehr ähnliche Sequenzen miteinander aligniert wurden, befand sich $N_{\max}$ in der Größenordnung von $L \cdot l_{\max}$. So gesehen bietet dieser Ansatz einen großen Vorteil gegenüber der naiven Umsetzung der Rekursionsformel für paarweise Alignments.
+\cite{m02} hat sein Verfahren mit verschiedenen Sequenzen getestet. Dabei hat er festgestellt, dass $N_{\max}$ für unabhängige zufällig erstellte Sequenzen im Vergleich zur Größe $L$ zu vernachlässigen ist. Selbst wenn sehr ähnliche Sequenzen miteinander aligniert wurden, befand sich $N_{\max}$ in der Größenordnung von $L \cdot l_{\max}$. So gesehen bietet dieser Ansatz einen großen Vorteil gegenüber der naiven Umsetzung der Rekursionsformel für paarweise Alignments.
 
 \subsection{Laufzeit}
 
-\begin{satz}
-	Ein paarweises optimales Alignment zwischen zwei Sequenzen $S_1$ und $S_2$ mit Längen $L_1$ und $L_2$, gegeben eine maximale Fragmentlänge $l_{\max}$, lässt sich in $\oh(L^2)$ Zeit berechnen für $L = \max\{L_1, L_2\}$.
+\begin{satz}[\cite{m02}]
+	Ein paarweises optimales Alignment zwischen zwei Sequenzen $S_1$ und $S_2$ mit Längen $L_1$ und $L_2$, gegeben eine maximale Fragmentlänge $l_{\max} \in \oh(1)$, lässt sich in $\oh(L^2)$ Zeit berechnen für $L = \max\{L_1, L_2\}$.
 \end{satz}
 
 \begin{beweis}
-	Das Allokieren des Speicherplatzes für die vier Tabellenspalten (je zwei für $Sc[i,j]$ und $Pr[i,j]$) und das initialisieren der ersten Spalten benötigt $\oh(L)$ Zeit. Das Berechnen von Vorgängern und Präfixgewichten, sowie das Speichern in $F_{j'}$, der in $(i,j)$ startenden Fragmente benötigt jeweils $\oh(1)$ Zeit, da ihre Länge durch $l_{\max}$ beschränkt ist. $Sc[i,j]$ und $Pr[i,j]$ lassen sich auch in konstanter Zeit berechnen, da wir nur das Maximum von drei Werten bestimmen müssen. Sollte nicht das Fragment gewählt werden, welches das Präfixgewicht aller in $(i,j)$ endenden Fragmente maximiert, löschen wir diesen einzelnen Eintrag in $\oh(1)$ Zeit. Dies wird für jeden möglichen der $L_1 \cdot L_2 \in \oh(L^2)$ Tabelleneinträge berechnet, was auch die Laufzeit der geschachtelten for-Schleifen ist.
-	Der Backtrackingprozess zur Berechnung des optimalen Alignments ist in $\oh(L)$ Zeit möglich, da wir lediglich der Pointerkette von Vorgänger zu Vorgänger folgen müssen, bis wir am Anfang der Sequenzen angelangt sind.
-	Es folgt die behauptete Laufzeit von $\oh(L^2)$.
+	Das Allozieren des Speicherplatzes für die vier Tabellenspalten (je zwei für $Sc[i,j]$ und $Pr[i,j]$) und das Initialisieren der ersten Spalten benötigt $\oh(L)$ Zeit. Das Berechnen der Vorgänger und Präfixgewichte sowie das Speichern in $F_{j'}$ der in $(i,j)$ startenden Fragmente benötigt pro Tabelleneintrag $\oh(1)$ Zeit, da ihre Länge durch $l_{\max}$ beschränkt ist. $Sc[i,j]$ und $Pr[i,j]$ lassen sich auch jeweils in konstanter Zeit berechnen, da wir nur das Maximum von drei Werten bestimmen müssen. Sollte nicht das Fragment gewählt werden, welches das Präfixgewicht aller in $(i,j)$ endenden Fragmente maximiert, löschen wir diesen einzelnen Eintrag in $\oh(1)$ Zeit. Dies wird für jeden möglichen der $L_1 \cdot L_2 \in \oh(L^2)$ Tabelleneinträge berechnet, was auch die Laufzeit der geschachtelten for-Schleifen ist.
+	
+	Der Backtrackingprozess zur Berechnung des optimalen Alignments ist in $\oh(L)$ Zeit möglich, da wir lediglich der Kette von Verweisen auf den jeweiligen Vorgänger folgen müssen, bis wir am Anfang der Sequenzen angelangt sind. Weil die Länge jedes Fragments in $\oh(1)$ ist, kann es somit bis zu $\oh(L)$ Fragmente im Alignment geben. Es folgt die behauptete Laufzeit von $\oh(L^2)$.
 \end{beweis}
 
-Da wir Alignments zwischen allen ${n}\choose{2}$ $\in \oh(n^2)$-vielen Paaren mit jeweils $\oh(L^2)$ Laufzeit berechnen müssen, kommen wir für die paarweisen Alignments insgesamt auf eine Laufzeit von $\oh(n^2\cdot L^2)$
+Da wir Alignments zwischen allen ${n}\choose{2}$ $\in \oh(n^2)$-vielen Paaren mit jeweils $\oh(L^2)$ Laufzeit berechnen müssen, erhalten wir für die paarweisen Alignments insgesamt eine Laufzeit von $\oh(n^2\cdot L^2)$.
 
 \subsection{Beispiel zur Berechnung paarweiser Alignments} 
-Um das Verfahren, das diese Bachelorarbeit behandelt, genauer zu verstehen, widmen wir uns jetzt einem Beispiel mit vier DNA-Sequenzen. Zu diesen werden wir im Lauf der Kapitel immer wieder zurückkehren und an ihnen die verschiedenen Schritte unseres Algorithmus der Reihe nach durchführen.
+Um das DIALIGN-Verfahren, das diese Bachelorarbeit behandelt, genauer zu verstehen, widmen wir uns jetzt einem Beispiel mit vier DNA-Sequenzen. Zu diesen werden wir im Lauf der Kapitel immer wieder zurückkehren und an ihnen die verschiedenen Schritte von DIALIGN und dem graphtheoretischen Ansatz von Corel et al. der Reihe nach durchführen.
+
 \ttfamily
 \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
 	\item ADGTCTCA
@@ -336,9 +337,10 @@ Um das Verfahren, das diese Bachelorarbeit behandelt, genauer zu verstehen, widm
 Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises Alignment zwischen den ersten beiden Sequenzen. Dazu nehmen wir eine Substitutionsmatrix mit $+3$ für Übereinstimmungen und $-1$ für Abweichungen. Der Korrekturterm $K = \ln(L_i) + \ln(L_j)$ aus unserer Gewichtsfunktion $w^*$ beträgt für alle Sequenzpaare gerundet 4. \improvement{Habt ihr eine Idee wie man dieses monströse Beispiel halbwegs schön vermitteln kann? Ich habe erstmal alles hier so reingeklatscht, das kann ich nachher auch noch (teilweise) in den Anhang auslagern.}
 
 \scriptsize
-\begin{tabular}{r|cc|cc|l}
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c}{\texttt{\textcolor{red}{G}TCADCTCA}} \\
+\begin{tabular}{|r|cc|cc|l|}
+	\hline 
+	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
+	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{\textcolor{red}{G}TCADCTCA}} \\
 	\hline \hline
 	\diagbox{i}{j} & 0 & 1 & 0 & 1 & Hier beginnende Fragmente und Kommentare\\
 	\hline
@@ -350,12 +352,14 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	5 & " & " &  "  &  "  & \\
 	6 & " & " &  "  &  "  & \\
 	7 & " & " &  "  &  "  & \\
-	8 & " & " &  "  &  "  & 
+	8 & " & " &  "  &  "  & \\
+	\hline
 \end{tabular}
 
-\begin{tabular}{r|cc|cc|l}
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c}{\texttt{G\textcolor{red}{T}CADCTCA}} \\
+\begin{tabular}{|r|cc|cc|l|}
+	\hline
+	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
+	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{G\textcolor{red}{T}CADCTCA}} \\
 	\hline \hline
 	\diagbox{i}{j} & 1 & 2 & 1 & 2 & Hier beginnende Fragmente und Kommentare\\
 	\hline
@@ -367,29 +371,33 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	5 & " & " &  "  &  "  & \\
 	6 & " & " &  "  &  "  & $F_4[8]=\{f_{4,8,3},W(f=5,P(f)=\text{NIL})\}$\\
 	7 & " & " &  "  &  "  & \\
-	8 & " & " &  "  &  "  & 
+	8 & " & " &  "  &  "  & \\
+	\hline
 \end{tabular}
 
-\begin{tabular}{r|cc|cc|l}
-& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c}{\texttt{ADGTCTCA}}\\
-& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c}{\texttt{GT\textcolor{red}{C}ADCTCA}} \\
-\hline \hline
-\diagbox{i}{j} & 2 & 3 & 2 & 3 & Hier beginnende Fragmente und Kommentare \\
+\begin{tabular}{|r|cc|cc|l|}
+	\hline
+	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
+	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GT\textcolor{red}{C}ADCTCA}} \\
+	\hline \hline
+	\diagbox{i}{j} & 2 & 3 & 2 & 3 & Hier beginnende Fragmente und Kommentare \\
+	\hline
+	0 & 0 & 0 & NIL & NIL & \\
+	1 & " & " &  "  &  "  & \\
+	2 & " & " &  "  &  "  & \\
+	3 & " & " &  "  &  "  & \\
+	4 & 2 & 2 &  $f_{4,2,2}$  &  $f_{4,2,2}$  & \\
+	5 & " & \textcolor{red}{5} &  "  &  \textcolor{red}{$f_{5,3,3}$}  & \\
+	6 & " & " &  "  &  "  & \\
+	7 & " & " &  "  &  "  & $F_4[8]$ wird nicht aktualisiert\\
+	8 & " & " &  "  &  "  & \\
 \hline
-0 & 0 & 0 & NIL & NIL & \\
-1 & " & " &  "  &  "  & \\
-2 & " & " &  "  &  "  & \\
-3 & " & " &  "  &  "  & \\
-4 & 2 & 2 &  $f_{4,2,2}$  &  $f_{4,2,2}$  & \\
-5 & " & \textcolor{red}{5} &  "  &  \textcolor{red}{$f_{5,3,3}$}  & \\
-6 & " & " &  "  &  "  & \\
-7 & " & " &  "  &  "  & $F_4[8]$ wird nicht aktualisiert\\
-8 & " & " &  "  &  "  & 
 \end{tabular}
 
-\begin{tabular}{r|cc|cc|l}
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c}{\texttt{GTC\textcolor{red}{A}DCTCA}} \\
+\begin{tabular}{|r|cc|cc|l|}
+	\hline
+	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
+	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GTC\textcolor{red}{A}DCTCA}} \\
 	\hline \hline
 	\diagbox{i}{j} & 3 & 4 & 3 & 4 & Hier beginnende Fragmente und Kommentare \\
 	\hline
@@ -403,12 +411,14 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	5 & 5 & 5 &  $f_{5,3,3}$  &  $f_{5,3,3}$  & \\
 	6 & " & " &  "  &  "  & \\
 	7 & " & " &  "  &  "  & \\
-	8 & " & " &  "  &  "  & $f_{5,3,3}$ statt $f_{8,4,3}$, wähle vorderes Fragment bei Gleichstand; lösche $f_{8,4,3}$ aus $F_4[8]$
+	8 & " & " &  "  &  "  & $f_{5,3,3}$ statt $f_{8,4,3}$, wähle vorderes Fragment bei Gleichstand; lösche $f_{8,4,3}$ aus $F_4[8]$ \\
+	\hline
 \end{tabular}
 
-\begin{tabular}{r|cc|cc|l}
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c}{\texttt{GTCA\textcolor{red}{D}CTCA}} \\
+\begin{tabular}{|r|cc|cc|l|}
+	\hline
+	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
+	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GTCA\textcolor{red}{D}CTCA}} \\
 	\hline \hline
 	\diagbox{i}{j} & 4 & 5 & 4 & 5 & Hier beginnende Fragmente und Kommentare \\
 	\hline
@@ -420,12 +430,14 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	5 & 5 & 5 &  $f_{5,3,3}$  &  $f_{5,3,3}$  & bevorzuge $(i,j-1)$ gegenüber $(i-1,j)$\\
 	6 & " & " &  "  &  "  & \\
 	7 & " & " &  "  &  "  & \\
-	8 & " & " &  "  &  "  & 
+	8 & " & " &  "  &  "  & \\
+	\hline
 \end{tabular}
 
-\begin{tabular}{r|cc|cc|l}
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c}{\texttt{GTCAD\textcolor{red}{C}TCA}} \\
+\begin{tabular}{|r|cc|cc|l|}
+	\hline
+	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
+	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GTCAD\textcolor{red}{C}TCA}} \\
 	\hline \hline
 	\diagbox{i}{j} & 5 & 6 & 5 & 6 & Hier beginnende Fragmente und Kommentare \\
 	\hline
@@ -439,12 +451,14 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	  &   &   &     &     & $F_9[8]=\{f_{9,8,4},W(f)=10,P(f)=f_{4,2,2}\}$ \\
 	6 & " & " &  "  &  "  & \\
 	7 & " & " &  "  &  "  & \\
-	8 & " & " &  "  &  "  & 
+	8 & " & " &  "  &  "  & \\
+	\hline
 \end{tabular}
 
-\begin{tabular}{r|cc|cc|l}
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c}{\texttt{GTCADC\textcolor{red}{T}CA}} \\
+\begin{tabular}{|r|cc|cc|l|}
+	\hline
+	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
+	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GTCADC\textcolor{red}{T}CA}} \\
 	\hline \hline
 	\diagbox{i}{j} & 6 & 7 & 6 & 7 & Hier beginnende Fragmente und Kommentare \\
 	\hline
@@ -456,12 +470,14 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	5 & 5 & 5 &  $f_{5,3,3}$  &  $f_{5,3,3}$  & $F_8[7]$ und $F_9[8]$ nicht aktualisiert; Score erreicht, aber nicht übertroffen\\
 	6 & " & " &  "  &  "  & \\
 	7 & " & " &  "  &  "  & \\
-	8 & " & " &  "  &  "  & 
+	8 & " & " &  "  &  "  & \\
+	\hline
 \end{tabular}
 
-\begin{tabular}{r|cc|cc|l}
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c}{\texttt{GTCADCT\textcolor{red}{C}A}} \\
+\begin{tabular}{|r|cc|cc|l|}
+	\hline
+	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
+	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GTCADCT\textcolor{red}{C}A}} \\
 	\hline \hline
 	\diagbox{i}{j} & 7 & 8 & 7 & 8 & Hier beginnende Fragmente und Kommentare \\
 	\hline
@@ -473,12 +489,14 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	5 & 5 & \textcolor{red}{7} &  $f_{5,3,3}$  &  \textcolor{red}{$f_{5,8,5}$}  & $F_8[7]$ und $F_9[8]$ nicht aktualisiert; Score zwar erreicht, aber nicht übertroffen\\
 	6 & " & " &  "  &  "  & \\
 	7 & " & " &  "  &  "  & lösche $F_8[7]$, $F_9[8]$ wird nicht aktualisiert \\
-	8 & " & " &  "  &  "  & 
+	8 & " & " &  "  &  "  &  \\
+	\hline
 \end{tabular}
  
-\begin{tabular}{r|cc|cc|l}
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c}{\texttt{GTCADCTC\textcolor{red}{A}}} \\
+\begin{tabular}{|r|cc|cc|l|}
+	\hline
+	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
+	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GTCADCTC\textcolor{red}{A}}} \\
 	\hline \hline
 	\diagbox{i}{j} & 8 & 9 & 8 & 9 & Hier beginnende Fragmente und Kommentare \\
 	\hline
@@ -490,7 +508,8 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	5 & 7 & 7 &  $f_{5,8,5}$  &  $f_{5,8,5}$  & \\
 	6 & " & " &  "  &  "  & \\
 	7 & " & " &  "  &  "  & \\
-	8 & " & \textcolor{red}{10} &  "  &  \textcolor{red}{$f_{9,8,4}$} & 
+	8 & " & \textcolor{red}{10} &  "  &  \textcolor{red}{$f_{9,8,4}$} & \\
+	\hline
 \end{tabular}
 
 \normalsize	
@@ -506,17 +525,19 @@ Das paarweise Alignment zwischen \texttt{ADGTCTCA} und \texttt{GTCADCTCA} sieht 
 Hierbei wurden alignierte Stellen großgeschrieben und als Zuweisungsspalten genau übereinander gereiht. Dies sind die Ergebnisse der anderen Alignments:
 \vspace{8pt}
 
-\begin{tabular}{r|c|c||r|c|c}
+\begin{tabular}{|r|c|c||r|c|c|}
+	\hline
 	Sequenzen & Alignments & Score & Sequenzen & Alignments & Score\\
 	\hline
 	1 & \texttt{adgTCTCA---} & \multirow{2}{*}{10} & 1 & \texttt{aDGTC---TCa} & \multirow{2}{*}{7}\\
-	3 & \texttt{---TATCAdgg} & & 4 & \texttt{-DGTCadaTC-} \\
+	3 & \texttt{---TATCAdgg} & & 4 & \texttt{-DGTCadaTC-} & \\
 	\hline
 	2 & \texttt{-gTCADctca}  & \multirow{2}{*}{8} & 2 & \texttt{-GTCADCTCa} & \multirow{2}{*}{16}\\
 	3 & \texttt{taTCADgg--}  & &4 & \texttt{dGTCADATC-} & \\
 	\hline
-	3 & \texttt{taTCADgg-}   & \multirow{2}{*}{8} & \multicolumn{3}{c}{}     \\
-	4 & \texttt{dgTCADatc}   &                    & \multicolumn{3}{c}{} 
+	3 & \texttt{taTCADgg-}   & \multirow{2}{*}{8} & \multicolumn{3}{c|}{}     \\
+	4 & \texttt{dgTCADatc}   &                    & \multicolumn{3}{c|}{} 	 \\
+	\hline
 \end{tabular}
 
 \section{Überlappgewichte}\label{sec:ueberlapp}
