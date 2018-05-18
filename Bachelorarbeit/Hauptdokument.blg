@@ -18,43 +18,43 @@ Database file #1: Quellen.bib
 Warning--empty pages in d06
 You've used 30 entries,
             4793 wiz_defined-function locations,
-            1077 strings with 10517 characters,
-and the built_in function-call counts, 17491 in all, are:
-= -- 1724
-> -- 585
-< -- 325
-+ -- 427
-- -- 202
-* -- 1252
-:= -- 3053
-add.period$ -- 35
+            1078 strings with 10661 characters,
+and the built_in function-call counts, 17368 in all, are:
+= -- 1720
+> -- 574
+< -- 322
++ -- 420
+- -- 198
+* -- 1243
+:= -- 3029
+add.period$ -- 34
 call.type$ -- 30
-change.case$ -- 160
+change.case$ -- 159
 chr.to.int$ -- 30
 cite$ -- 31
-duplicate$ -- 564
-empty$ -- 1343
-format.name$ -- 380
-if$ -- 3551
+duplicate$ -- 560
+empty$ -- 1328
+format.name$ -- 375
+if$ -- 3528
 int.to.chr$ -- 1
 int.to.str$ -- 0
 missing$ -- 123
 newline$ -- 167
 num.names$ -- 90
-pop$ -- 218
+pop$ -- 215
 preamble$ -- 1
-purify$ -- 220
+purify$ -- 219
 quote$ -- 0
-skip$ -- 861
+skip$ -- 854
 stack$ -- 0
-substring$ -- 1002
-swap$ -- 139
+substring$ -- 999
+swap$ -- 138
 text.length$ -- 103
-text.prefix$ -- 9
+text.prefix$ -- 10
 top$ -- 0
-type$ -- 282
+type$ -- 286
 warning$ -- 1
-while$ -- 170
+while$ -- 168
 width$ -- 33
 write$ -- 379
 (There was 1 warning)

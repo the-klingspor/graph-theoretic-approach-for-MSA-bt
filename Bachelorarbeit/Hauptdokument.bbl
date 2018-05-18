@@ -98,6 +98,15 @@
 \newblock first.
 \newblock Pearson, 2005
 
+\bibitem[Kus04]{k04}
+\textsc{Kushner}, H.:
+\newblock \emph{{Acceptance Speech anlässlich der Verleihung des Richard E.
+  Bellman Control Heritage Awards}}.
+\newblock
+  \url{http://a2c2.org/awards/richard-e-bellman-control-heritage-award/2004-00-00t000000/harold-j-kushner},
+  2004. --
+\newblock Accessed: 2018-05-18
+
 \bibitem[MAHD98]{mahd98}
 \textsc{Morgenstern}, B. ; \textsc{Atchley}, W. ; \textsc{Hahn}, K.  ;
   \textsc{Dress}, A.:
@@ -150,12 +159,6 @@
 \textsc{Pearson}, W.:
 \newblock {Selecting the Right Similarity Matrix}.
 \newblock {In: }\emph{Curr Protoc Bioinformatics} 43:3.5 (2013), S. 1--9
-
-\bibitem[RN09]{rn09}
-\textsc{Russell}, S. ; \textsc{Norvig}, P.:
-\newblock \emph{{Artificial Intelligence: A Modern Approach}}.
-\newblock 3rd.
-\newblock Prentice Hall, 2009
 
 \bibitem[SKM08]{DIALIGNTX}
 \textsc{Subramanian}, A. ; \textsc{Kaufman}, M.  ; \textsc{Morgenstern}, B.:
