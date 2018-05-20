@@ -31,7 +31,7 @@ DIALIGN	kann genau wie Needleman-Wunsch im Sinne der jeweiligen Zielfunktion mat
 
 Unter \emph{Konsistenz} können wir uns zunächst informell vorstellen, dass es bei einer Zuweisung weder zu Überkreuzungen kommt, noch dazu, dass ein Symbol einer Sequenz gleichzeitig mehreren einer anderen zugewiesen wird.
 
-\section{Theoretische Grundlagen}
+\section{Theoretische Grundlagen}\label{sec:theo}
 
 Um multiple Sequenzalignments genauer zu verstehen und die dazu nötigen Algorithmen analysieren zu können, brauchen wir einige Definitionen. Diese sind \cite{mdw96}, \cite{am00} und \cite{cpm10} entnommen. Sei dazu im Folgenden eine $n$-stellige Menge von Sequenzen $S$ über einem endlichen Alphabet gegeben. Wir bezeichnen die Länge der $i$-ten Sequenz als $L_i$.
 
@@ -136,9 +136,7 @@ Nun wollen wir Substitutionsmatrizen und die Theorie dahinter genauer betrachten
 
 Der Korrekturterm $\lambda$ wird benutzt, um die Werte auf ganze Zahlen zu runden, die weniger anfällig für Rundungsfehler und andere Ungenauigkeiten in der Computerarithmetik sind. Diese Vorgehensweise wird, da man den Logarithmus einer Wahrscheinlichkeit berechnet, als \emph{log-odd}-Verfahren bezeichnet. Der Eintrag $M_{i,j}$ gibt ein Maß für die Wahrscheinlichkeit an, dass das betrachtete Paar in einem Alignment aus genau diesen beiden Aminosäuren auftritt. Die Wahrscheinlichkeit für eine längere Folge aufeinanderfolgender Paare wird mit der Summe der Einträge berechnet. Das funktioniert aufgrund der Rechenregeln des Logarithmus: $\log(p_1 \cdot p_2) = \log(p_1) + \log(p_2)$. Für die Berechnung der ursprünglichen Wahrscheinlichkeiten reicht es die Summe der Ähnlichkeitswerte zu exponenzieren. 
 
-\cite{hh92} haben mehrere Substitutionsmatrizen entwickelt. Die Zahl hinter jeder BLOSUM gibt die Ähnlichkeit der zur Berechnung der Matrix verwendeten Proteinsequenzen an. Für die BLOSUM62 wurden beispielsweise nur Blöcke benutzt, bei denen es eine Ähnlichkeit von höchstens 62\% gab. Im Allgemeinen wird dazu geraten, BLOSUMs mit geringen Suffixen wie beispielsweise BLOSUM45 zum Alignieren von entfernt verwandten, mit großen wie BLOSUM80 für eng verwandte und BLOSUM62 für durchschnittlich eng verwandte Sequenzen zu benutzen.
-
-BLOSUM62\improvement{BLOSUM62 IM ANHANG???}
+\cite{hh92} haben mehrere Substitutionsmatrizen entwickelt. Die Zahl hinter jeder BLOSUM gibt die Ähnlichkeit der zur Berechnung der Matrix verwendeten Proteinsequenzen an. Für die BLOSUM62 wurden beispielsweise nur Blöcke benutzt, bei denen es eine Ähnlichkeit von höchstens 62\% gab. Im Allgemeinen wird dazu geraten, BLOSUMs mit geringen Suffixen wie beispielsweise BLOSUM45 zum Alignieren von entfernt verwandten, mit großen wie BLOSUM80 für eng verwandte und BLOSUM62 für durchschnittlich eng verwandte Sequenzen zu benutzen. Im Anhang\ref{anh:BLOSUM62} befindet sich die BLOSUM62 von Henikoff und Henikoff aus der Originalveröffentlichung.
 
 Bei DNA wird meistens nur eine zwischen Treffern und Nichttreffern unterschieden. Als Substitutionsmatrix entspräche dies der Einheitsmatrix. Dies hat aber den Nachteil, dass alle Fragmente positive Gewichte haben und damit potentiell für unser Alignment in Betracht kommen. Besser sind positive Werte für ähnliche und negative für sehr unähnliche Abschnitte, weil sich so der Rechenaufwand verringern lässt. Außerdem kann man mit Matrizen, die dem Einsatzgebiet angepasst sind, oft bessere Ergebnisse erzielen. Nach Pearson sind die Ähnlichkeiten zwischen zu vergleichenden DNA-Sequenzen deutlich größer, als bei Proteinen\cite{p13}. Sie betragen zwischen homologen menschlichen DNA-Abschnitten etwa 99,9\% und bei proteinkodierenden Regionen zwischen Mensch und Maus immer noch 80\%, während Ähnlichkeiten von unter 50\%, anders als bei Proteinen, quasi nicht mehr zu entdecken sind. Untersuchungen haben ergeben, dass die Substitutionsmatrix mit (+1/-3) für Treffer und Nichttreffer bei Sequenzen mit 99\% Übereinstimmung die besten Alignments liefern. Diese Matrix bestraft Punktmutationen sehr stark, weil es in einem Fragment dreimal so viele Treffer wie Nichttreffer geben muss, für eine positives Gewicht. Bei 90\% Übereinstimmung liefert die (+2/-3)-Matrix die besten Ergebnisse und bei 70\% die (+5/-4)-Matrix.
 
@@ -224,7 +222,7 @@ Damit können wir jetzt Rekursionsgleichung \eqref{eq:dp_score2} mit unseren neu
 	\end{cases}	
 \end{equation}
 
-Analog zu den Fällen von $W(f)$ können wir jetzt auch $Pr[i,j]$ setzen. Das letzte Fragment einer optimalen Kette bis $(i,j)$ ist das selbe wie bei $(i-1,j)$ beziehungsweise $(i,j-1)$, wenn diese in keinem dieser beiden Stellenpaare endet. Endet sie hingegen in $(i,j)$, dann ist das gesuchte Fragment das, welches das Präfixgewicht aller in $(i,j)$ endenden Fragmente maximiert.
+Analog zu den Fällen von $Sc[i,j]$ können wir jetzt auch $Pr[i,j]$ setzen. Das letzte Fragment einer optimalen Kette bis $(i,j)$ ist das selbe wie bei $(i-1,j)$ beziehungsweise $(i,j-1)$, wenn diese in keinem dieser beiden Stellenpaare endet. Endet sie hingegen in $(i,j)$, dann ist das gesuchte Fragment das, welches das Präfixgewicht aller in $(i,j)$ endenden Fragmente maximiert.
 
 \begin{equation}\label{eq:vorgaenger2}
 	Pr[i,j] =
@@ -243,7 +241,7 @@ Hier gilt $\hat{f} = \operatorname{argmax}\{W(f) : f\: \text{endet in}\: (i,j) \
 
 Wenn es keinen solchen Nachfolger mehr gibt, dann wurde die Menge von aufeinanderfolgenden Fragmenten gefunden, die den Score maximiert und somit ein gutes paarweises Alignment liefert.
 
-\subsection{Speichereffiziente Berechnung der paarweisen Alignments}
+\subsection{Speichereffiziente Berechnung der paarweisen Alignments}\label{subsec:psa}
 
 In diesem Abschnitt beschäftigen wir uns mit einer sehr speichereffizienten und schnellen Umsetzung des soeben gesehenen Ansatzes. Speichereffizienz ist wichtig, weil die zu alignierenden Sequenzen sehr lang werden können. Die Verringerung des benötigten Speichers erlaubt die volle Ausnutzung von kleinem, aber schnellem Speicher in der Speicherhierarchie und die Vermeidung von kostenintensiven Seitenfehlern.
 
@@ -305,7 +303,7 @@ Da wir wissen, dass nur Fragmente mit positiven Gewichten Teil unseres Alignment
 
 Guckt man sich Zeile \algref{alg:speichereffizient}{algl:praefix} genauer an, stellt man fest, dass man gar nicht alle Fragmente kennen muss, die in $(i,j)$ enden. Es reicht das zu kennen, welches das Präfixgewicht $W(f)$ aller dort endenden Ketten maximiert. Anstatt alle dieser Fragmente in $F_j$ zu speichern reicht es zu überprüfen, ob der dritte Fall von Zeile \algref{alg:speichereffizient}{algl:praefix} eintritt und erst dann in Zeile \algref{alg:speichereffizient}{algl:fragmentliste} zu sichern. Das bedeutet, dass wir keine ganze Liste von Fragmenten für jede Stelle unserer Tabelle speichern müssen, sondern nur ein einziges.
 
-Widmen wir uns nun $N_{\max}$, der Anzahl an Fragmenten, die maximal gleichzeitig gespeichert werden. Diese Anzahl wird gleich für die Berechnung des Speicherbedarfs benötigt. Die Anzahl an gesicherten Fragmenten, die wir noch nicht für $Sc[i,j]$ betrachtet haben, beträgt $l_{\max} \cdot L_1 \in \oh(L)$, weil wir für jede der nächsten $l_{\max}$ Spalten und dort jede der $L_1$-vielen Zeilen das Fragment speichern, das $W(f)$ für alle dort endenden maximiert. Zusätzlich wird die Reihe von Vorgängern für jeden aktuellen Tabelleneintrag der Spalte gesichert, indem wir in $Pr[i,j]$ einen Verweis auf das letzte Fragment einer optimalen Kette für die Teilsequenzen bis zu den Stellen $i$ und $j$ in den beiden Sequenzen speichern (Zeile \algref{alg:speichereff}). Dieses wiederum speichert einen Pointer auf seinen eigenen Vorgänger und so weiter. Im schlimmsten Fall befinden wir uns in der letzten Spalte der Tabelle und die in den Einträgen endenden optimalen Ketten sind alle unabhängig voneinander. Dann kann es sein, dass diese jeweils aus $\oh(L_2)$ nah aufeinanderfolgenden Fragmenten der Länge $\oh(1)$ bestehen. In diesem Fall ist $N_{\max} \in \oh(L^2)$, genau wie der insgesamt benötigte Speicherplatz. In der Praxis kann man aber erwarten, dass $N_{\max}$ deutlich kleiner ist. 
+Widmen wir uns nun $N_{\max}$, der Anzahl an Fragmenten, die maximal gleichzeitig gespeichert werden. Diese Anzahl wird gleich für die Berechnung des Speicherbedarfs benötigt. Die Anzahl an gesicherten Fragmenten, die wir noch nicht für $Sc[i,j]$ betrachtet haben, beträgt $l_{\max} \cdot L_1 \in \oh(L)$, weil wir für jede der nächsten $l_{\max}$ Spalten und dort jede der $L_1$-vielen Zeilen das Fragment speichern, das $W(f)$ für alle dort endenden maximiert. Zusätzlich wird die Reihe von Vorgängern für jeden aktuellen Tabelleneintrag der Spalte gesichert, indem wir in $Pr[i,j]$ einen Verweis auf das letzte Fragment einer optimalen Kette für die Teilsequenzen bis zu den Stellen $i$ und $j$ in den beiden Sequenzen speichern (Zeile \algref{algl:speichereff}). Dieses wiederum speichert einen Pointer auf seinen eigenen Vorgänger und so weiter. Im schlimmsten Fall befinden wir uns in der letzten Spalte der Tabelle und die in den Einträgen endenden optimalen Ketten sind alle unabhängig voneinander. Dann kann es sein, dass diese jeweils aus $\oh(L_2)$ nah aufeinanderfolgenden Fragmenten der Länge $\oh(1)$ bestehen. In diesem Fall ist $N_{\max} \in \oh(L^2)$, genau wie der insgesamt benötigte Speicherplatz. In der Praxis kann man aber erwarten, dass $N_{\max}$ deutlich kleiner ist. 
 
 \cite{m02} hat sein Verfahren mit verschiedenen Sequenzen getestet. Dabei hat er festgestellt, dass $N_{\max}$ für unabhängige zufällig erstellte Sequenzen im Vergleich zur Größe $L$ zu vernachlässigen ist. Selbst wenn sehr ähnliche Sequenzen miteinander aligniert wurden, befand sich $N_{\max}$ in der Größenordnung von $L \cdot l_{\max}$. So gesehen bietet dieser Ansatz einen großen Vorteil gegenüber der naiven Umsetzung der Rekursionsformel für paarweise Alignments.
 
@@ -318,7 +316,7 @@ Widmen wir uns nun $N_{\max}$, der Anzahl an Fragmenten, die maximal gleichzeiti
 \begin{beweis}
 	Das Allozieren des Speicherplatzes für die vier Tabellenspalten (je zwei für $Sc[i,j]$ und $Pr[i,j]$) und das Initialisieren der ersten Spalten benötigt $\oh(L)$ Zeit. Das Berechnen der Vorgänger und Präfixgewichte sowie das Speichern in $F_{j'}$ der in $(i,j)$ startenden Fragmente benötigt pro Tabelleneintrag $\oh(1)$ Zeit, da ihre Länge durch $l_{\max}$ beschränkt ist. $Sc[i,j]$ und $Pr[i,j]$ lassen sich auch jeweils in konstanter Zeit berechnen, da wir nur das Maximum von drei Werten bestimmen müssen. Sollte nicht das Fragment gewählt werden, welches das Präfixgewicht aller in $(i,j)$ endenden Fragmente maximiert, löschen wir diesen einzelnen Eintrag in $\oh(1)$ Zeit. Dies wird für jeden möglichen der $L_1 \cdot L_2 \in \oh(L^2)$ Tabelleneinträge berechnet, was auch die Laufzeit der geschachtelten for-Schleifen ist.
 	
-	Der Backtrackingprozess zur Berechnung des optimalen Alignments ist in $\oh(L)$ Zeit möglich, da wir lediglich der Kette von Verweisen auf den jeweiligen Vorgänger folgen müssen, bis wir am Anfang der Sequenzen angelangt sind. Weil die Länge jedes Fragments in $\oh(1)$ ist, kann es somit bis zu $\oh(L)$ Fragmente im Alignment geben. Es folgt die behauptete Laufzeit von $\oh(L^2)$.
+	Der Backtrackingprozess zur Berechnung des optimalen Alignments ist in $\oh(L)$ Zeit möglich, da wir lediglich der Kette von Verweisen auf den jeweiligen Vorgänger folgen müssen, bis wir am Anfang der Sequenzen angelangt sind. Weil die Länge jedes Fragments in $\oh(1)$ ist, kann es somit bis zu $\oh(L)$ Fragmente im Alignment geben. Bei den Verweisen auf die Vorgänger kann es zu keinen Zyklen kommen, weil der Vorgänger auf jeden Fall endet, bevor das gerade betrachtete Element beginnt. Somit folgt die behauptete Laufzeit von $\oh(L^2)$.
 \end{beweis}
 
 Da wir Alignments zwischen allen ${n}\choose{2}$ $\in \oh(n^2)$-vielen Paaren mit jeweils $\oh(L^2)$ Laufzeit berechnen müssen, erhalten wir für die paarweisen Alignments insgesamt eine Laufzeit von $\oh(n^2\cdot L^2)$.
@@ -334,27 +332,9 @@ Um das DIALIGN-Verfahren, das diese Bachelorarbeit behandelt, genauer zu versteh
 	\item DGTCADATC
 \end{enumerate}
 \normalfont
-Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises Alignment zwischen den ersten beiden Sequenzen. Dazu nehmen wir eine Substitutionsmatrix mit $+3$ für Übereinstimmungen und $-1$ für Abweichungen. Der Korrekturterm $K = \ln(L_i) + \ln(L_j)$ aus unserer Gewichtsfunktion $w^*$ beträgt für alle Sequenzpaare gerundet 4. \improvement{Habt ihr eine Idee wie man dieses monströse Beispiel halbwegs schön vermitteln kann? Ich habe erstmal alles hier so reingeklatscht, das kann ich nachher auch noch (teilweise) in den Anhang auslagern.}
+Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises Alignment zwischen den ersten beiden Sequenzen. Dazu nehmen wir eine Substitutionsmatrix mit $+3$ für Übereinstimmungen und $-1$ für Abweichungen. Der Korrekturterm $K = \ln(L_i) + \ln(L_j)$ aus unserer Gewichtsfunktion $w^*$ beträgt für alle Sequenzpaare gerundet 4. Um die Übersichtlichkeit zu wahren, werden hier nur ein Zwischenschritt und das Endergebnis vorgestellt. Das komplette Beispiel befindet sich in Anhang \ref{anh:beispiel_psa}.
 
-\scriptsize
-\begin{tabular}{|r|cc|cc|l|}
-	\hline 
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{\textcolor{red}{G}TCADCTCA}} \\
-	\hline \hline
-	\diagbox{i}{j} & 0 & 1 & 0 & 1 & Hier beginnende Fragmente und Kommentare\\
-	\hline
-	0 & 0 & 0 & NIL & NIL & \\
-	1 & " & " &  "  &  "  & \\
-	2 & " & " &  "  &  "  & $F_2[4]=\{f_{4,2,2},W(f)=2,P(f)=\text{NIL}\}$\\
-	3 & " & " &  "  &  "  & $F_3[5]=\{f_{5,3,3},W(f)=5,P(f)=\text{NIL}\}$\\
-	4 & " & " &  "  &  "  & \\
-	5 & " & " &  "  &  "  & \\
-	6 & " & " &  "  &  "  & \\
-	7 & " & " &  "  &  "  & \\
-	8 & " & " &  "  &  "  & \\
-	\hline
-\end{tabular}
+Für jedes Symbol der zweiten Sequenz wird der Reihe nach jedes Symbol der ersten Sequenz betrachtet. Dabei werden zunächst Fragmente für später im Feld $F_{j'}[i']$ gespeichert, die an der aktuellen Stelle $(i,j)$ starten. Um Speicherplatz zu sparen, wird ihr Präfixgewicht mit dem des aktuell gespeicherten Element verglichen und falls es höher ist, stattdessen gesichert (Schleife beginnend bei Zeile \ref{algl:fragmentgewichte}). Danach wird der Score $Sc[i][j]$ gesetzt, indem das Fragment betrachtet wird, das an in $(i,j)$ endet und das maximale Präfixgewicht hat. Ist dieses höher, als der Score, wenn man das letzte Element einer der beiden Teilsequenzen ignoriert ($Sc[i-1,j]$ oder $Sc[i,j-1]$), dann wird dieses Fragment gespeichert. Ist das nicht der Fall, dann wird es verworfen und stattdessen der maximale benachbarte Tabelleneintrag übernommen (Zeile \ref{algl:praefix}). Betrachten wir die Tabelle für $j=2$:
 
 \begin{tabular}{|r|cc|cc|l|}
 	\hline
@@ -367,7 +347,7 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	1 & " & " &  "  &  "  & \\
 	2 & " & " &  "  &  "  & \\
 	3 & " & " &  "  &  "  & \\
-	4 & " & \textcolor{red}{2} &  "  & \textcolor{red}{$f_{4,2,2}$} & $F_3[5]$ wird nicht aktualisiert, da akt. Fragment größeres Präfixgewicht hat\\
+	4 & " & \textcolor{red}{2} &  "  & \textcolor{red}{$f_{4,2,2}$} & $F_3[5]$ wird nicht aktualisiert. \\
 	5 & " & " &  "  &  "  & \\
 	6 & " & " &  "  &  "  & $F_4[8]=\{f_{4,8,3},W(f=5,P(f)=\text{NIL})\}$\\
 	7 & " & " &  "  &  "  & \\
@@ -375,125 +355,11 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	\hline
 \end{tabular}
 
-\begin{tabular}{|r|cc|cc|l|}
-	\hline
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GT\textcolor{red}{C}ADCTCA}} \\
-	\hline \hline
-	\diagbox{i}{j} & 2 & 3 & 2 & 3 & Hier beginnende Fragmente und Kommentare \\
-	\hline
-	0 & 0 & 0 & NIL & NIL & \\
-	1 & " & " &  "  &  "  & \\
-	2 & " & " &  "  &  "  & \\
-	3 & " & " &  "  &  "  & \\
-	4 & 2 & 2 &  $f_{4,2,2}$  &  $f_{4,2,2}$  & \\
-	5 & " & \textcolor{red}{5} &  "  &  \textcolor{red}{$f_{5,3,3}$}  & \\
-	6 & " & " &  "  &  "  & \\
-	7 & " & " &  "  &  "  & $F_4[8]$ wird nicht aktualisiert\\
-	8 & " & " &  "  &  "  & \\
-\hline
-\end{tabular}
+Das gerade betrachtete Symbol ist das \texttt{T} an zweiter Stelle der zweiten Sequenz. Für $i=4$ wird $F_3[5]$ nicht aktualisiert. In $(4,2)$ startet zwar das Fragment ${\texttt{TC}}\choose{\texttt{TC}}$ mit Gewicht 2, aber an der Stelle ist bereits das Fragment ${\texttt{GCT}}\choose{\texttt{GTC}}$ mit höherem Präfixgewicht gesichert. Stattdessen wird aber in $F_4[8]$ das Fragment $f_{4,8,3}$ ${\texttt{TCA}}\choose{\texttt{TCA}}$ vorgemerkt. Dieses hat ein Präfixgewicht von 5 aufgrund von drei Übereinstimmungen und keiner Abweichung. Weil es kein Fragment mit positivem Gewicht gab, das vor $(6,2)$, dem Startpunkt von $f_{4,8,3}$, endete, wird kein Vorgänger gesetzt. 
+		
+Nachdem alle in Fragmente betrachtet wurden, die in der zweiten Spalte starten, werden die Einträge der Scores und Vorgänger aktualisiert. Aktuell sind diese noch leer. An der Stelle $(4,2)$ endet das Fragment  ${\texttt{GT}}\choose{\texttt{GT}}$ mit Präfixgewicht 2. Diesen Score speichern wir und übernehmen ihn auch für die unteren Tabelleneinträge der zweiten Spalte, weil kein dort endendes Fragment mit höherem Präfixgewicht gefunden wurde.
 
-\begin{tabular}{|r|cc|cc|l|}
-	\hline
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GTC\textcolor{red}{A}DCTCA}} \\
-	\hline \hline
-	\diagbox{i}{j} & 3 & 4 & 3 & 4 & Hier beginnende Fragmente und Kommentare \\
-	\hline
-	\multirow{3}{*}{0} & \multirow{3}{*}{0} & \multirow{3}{*}{0} & \multirow{3}{*}{NIL} & \multirow{3}{*}{NIL} & $F_5[2]=\{f_{2,5,2},W(f)=2,P(f)=\text{NIL}\}$,\\ 
-	  &   &   &     &     & $F_7[4]=\{f_{4,7,4},W(f)=4,P(f)=\text{NIL}\}$,\\
-	  &   &   &     &     & $F_8[5]=\{f_{5,8,5},W(f)=7,P(f)=\text{NIL}\}$ \\
-	1 & " & " &  "  &  "  & \\
-	2 & " & " &  "  &  "  & \\
-	3 & " & " &  "  &  "  & \\
-	4 & 2 & 2 &  $f_{4,2,2}$  &  $f_{4,2,2}$  & \\
-	5 & 5 & 5 &  $f_{5,3,3}$  &  $f_{5,3,3}$  & \\
-	6 & " & " &  "  &  "  & \\
-	7 & " & " &  "  &  "  & \\
-	8 & " & " &  "  &  "  & $f_{5,3,3}$ statt $f_{8,4,3}$, wähle vorderes Fragment bei Gleichstand; lösche $f_{8,4,3}$ aus $F_4[8]$ \\
-	\hline
-\end{tabular}
-
-\begin{tabular}{|r|cc|cc|l|}
-	\hline
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GTCA\textcolor{red}{D}CTCA}} \\
-	\hline \hline
-	\diagbox{i}{j} & 4 & 5 & 4 & 5 & Hier beginnende Fragmente und Kommentare \\
-	\hline
-	0 & 0 & 0 & NIL & NIL & \\
-	1 & " & " &  "  &  "  & $F_7[4]$ und $F_8[5]$ werden nicht aktualisiert\\
-	2 & " & \textcolor{red}{2} &  "  & \textcolor{red}{$f_{2,5,2}$} & \\
-	3 & " & " &  "  &  "  & \\
-	4 & 2 & " &  $f_{4,2,2}$  &  $f_{4,2,2}$  & \\
-	5 & 5 & 5 &  $f_{5,3,3}$  &  $f_{5,3,3}$  & bevorzuge $(i,j-1)$ gegenüber $(i-1,j)$\\
-	6 & " & " &  "  &  "  & \\
-	7 & " & " &  "  &  "  & \\
-	8 & " & " &  "  &  "  & \\
-	\hline
-\end{tabular}
-
-\begin{tabular}{|r|cc|cc|l|}
-	\hline
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GTCAD\textcolor{red}{C}TCA}} \\
-	\hline \hline
-	\diagbox{i}{j} & 5 & 6 & 5 & 6 & Hier beginnende Fragmente und Kommentare \\
-	\hline
-	0 & 0 & 0 & NIL & NIL & \\
-	1 & " & " &  "  &  "  & \\
-	2 & 2 & 2 &  $f_{2,5,2}$  &  $f_{2,5,2}$  & \\
-	3 & " & " &  "  &  "  & \\
-	4 & " & " &  $f_{4,2,2}$  &  $f_{4,2,2}$  & \\
-	\multirow{3}{*}{5} & \multirow{3}{*}{5} & \multirow{3}{*}{5} &  \multirow{3}{*}{$f_{5,3,3}$}  & \multirow{3}{*}{$f_{5,3,3}$}  & $F_7[6]=\{f_{6,7,2},W(f)=4,P(f)=f_{4,2,2}\}$, \\
-	  &   &   &     &     & $F_8[7]=\{f_{7,8,3},W(f)=7,P(f)=f_{4,2,2}\}$ \\
-	  &   &   &     &     & $F_9[8]=\{f_{9,8,4},W(f)=10,P(f)=f_{4,2,2}\}$ \\
-	6 & " & " &  "  &  "  & \\
-	7 & " & " &  "  &  "  & \\
-	8 & " & " &  "  &  "  & \\
-	\hline
-\end{tabular}
-
-\begin{tabular}{|r|cc|cc|l|}
-	\hline
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GTCADC\textcolor{red}{T}CA}} \\
-	\hline \hline
-	\diagbox{i}{j} & 6 & 7 & 6 & 7 & Hier beginnende Fragmente und Kommentare \\
-	\hline
-	0 & 0 & 0 & NIL & NIL & \\
-	1 & " & " &  "  &  "  & \\
-	2 & 2 & 2 &  $f_{2,5,2}$  &  $f_{2,5,2}$  & \\
-	3 & " & " &  "  &  "  & \\
-	4 & 2 & \textcolor{red}{4} &  $f_{4,2,2}$  &  \textcolor{red}{$f_{4,7,4}$} & \\
-	5 & 5 & 5 &  $f_{5,3,3}$  &  $f_{5,3,3}$  & $F_8[7]$ und $F_9[8]$ nicht aktualisiert; Score erreicht, aber nicht übertroffen\\
-	6 & " & " &  "  &  "  & \\
-	7 & " & " &  "  &  "  & \\
-	8 & " & " &  "  &  "  & \\
-	\hline
-\end{tabular}
-
-\begin{tabular}{|r|cc|cc|l|}
-	\hline
-	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
-	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GTCADCT\textcolor{red}{C}A}} \\
-	\hline \hline
-	\diagbox{i}{j} & 7 & 8 & 7 & 8 & Hier beginnende Fragmente und Kommentare \\
-	\hline
-	0 & 0 & 0 & NIL & NIL & \\
-	1 & " & " &  "  &  "  & \\
-	2 & 2 & 2 &  $f_{2,5,2}$  &  $f_{2,5,2}$  & \\
-	3 & " & " &  "  &  "  & \\
-	4 & 4 & 4 &  $f_{4,7,4}$  &  $f_{4,7,4}$  & \\
-	5 & 5 & \textcolor{red}{7} &  $f_{5,3,3}$  &  \textcolor{red}{$f_{5,8,5}$}  & $F_8[7]$ und $F_9[8]$ nicht aktualisiert; Score zwar erreicht, aber nicht übertroffen\\
-	6 & " & " &  "  &  "  & \\
-	7 & " & " &  "  &  "  & lösche $F_8[7]$, $F_9[8]$ wird nicht aktualisiert \\
-	8 & " & " &  "  &  "  &  \\
-	\hline
-\end{tabular}
- 
-\begin{tabular}{|r|cc|cc|l|}
+\addvbuffer[8pt]{\begin{tabular}{|r|cc|cc|l|}
 	\hline
 	& \multicolumn{2}{c|}{\multirow{2}{*}{$Sc[i,j]$}} & \multicolumn{2}{c|}{\multirow{2}{*}{$Pr[i,j]$}} & \multicolumn{1}{c|}{\texttt{ADGTCTCA}}\\
 	& \multicolumn{2}{c|}{} & \multicolumn{2}{c|}{} & \multicolumn{1}{c|}{\texttt{GTCADCTC\textcolor{red}{A}}} \\
@@ -510,10 +376,11 @@ Als erstes berechnen wir nach dem oben beschriebenen Algorithmus ein paarweises 
 	7 & " & " &  "  &  "  & \\
 	8 & " & \textcolor{red}{10} &  "  &  \textcolor{red}{$f_{9,8,4}$} & \\
 	\hline
-\end{tabular}
-
+\end{tabular}}
 \normalsize	
-\vspace{8pt}
+
+Für $(i,j) = (8,9)$ wird ein neues Fragment mit höchstem Präfixgewicht gefunden. Das zuvor gespeichert Fragment ${\texttt{ADGTC}}\choose{\texttt{ADCTC}}$ mit Gewicht 7 und ohne Vorgänger wird somit durch das Fragment ${\texttt{CTCA}}\choose{\texttt{CTCA}}$ mit Vorgänger ${\texttt{GT}}\choose{\texttt{GT}}$ ersetzt.
+
 
 $f_0 = f_{\max} = Pr[8,9] = f_{9,8,4}$, $f_1 = P(f_0) = f_{4,2,2}$ und zuletzt $f_2 = P(f_1) = \text{NIL}$.
 Das paarweise Alignment zwischen \texttt{ADGTCTCA} und \texttt{GTCADCTCA} sieht also wie folgt aus: \\
@@ -522,10 +389,10 @@ Das paarweise Alignment zwischen \texttt{ADGTCTCA} und \texttt{GTCADCTCA} sieht 
 	\texttt{adGT---CTCA} \\
 	\texttt{--GTcadCTCA} 
 \end{center}
-Hierbei wurden alignierte Stellen großgeschrieben und als Zuweisungsspalten genau übereinander gereiht. Dies sind die Ergebnisse der anderen Alignments:
+Hierbei wurden alignierte Stellen großgeschrieben und als Zuweisungsspalten genau übereinander gereiht. Der Score des Alignments beträgt 10, weil es zunächst ein kurzes Fragment mit zwei Übereinstimmungen gibt (Gewicht: $2\cdot 3+0\cdot(-1)-4 = 2$) und dann ein längeres mit vier Übereinstimmungen (Gewicht: $4\cdot3+0\cdot(-1)-4 = 8$). Dies sind die Ergebnisse aller paarweisen Alignments:
 \vspace{8pt}
 
-\begin{tabular}{|r|c|c||r|c|c|}
+\addvbuffer[5pt]{\begin{tabular}{|r|c|c||r|c|c|}
 	\hline
 	Sequenzen & Alignments & Score & Sequenzen & Alignments & Score\\
 	\hline
@@ -535,21 +402,21 @@ Hierbei wurden alignierte Stellen großgeschrieben und als Zuweisungsspalten gen
 	2 & \texttt{-gTCADctca}  & \multirow{2}{*}{8} & 2 & \texttt{-GTCADCTCa} & \multirow{2}{*}{16}\\
 	3 & \texttt{taTCADgg--}  & &4 & \texttt{dGTCADATC-} & \\
 	\hline
-	3 & \texttt{taTCADgg-}   & \multirow{2}{*}{8} & \multicolumn{3}{c|}{}     \\
-	4 & \texttt{dgTCADatc}   &                    & \multicolumn{3}{c|}{} 	 \\
+	3 & \texttt{taTCADgg-}   & \multirow{2}{*}{8} & 1 & \texttt{adGT---CTCA}   & \multirow{2}{*}{10}  \\
+	4 & \texttt{dgTCADatc}   &                    & 2 & \texttt{--GTcadCTCA} & \\
 	\hline
-\end{tabular}
+\end{tabular}}
 
 \section{Überlappgewichte}\label{sec:ueberlapp}
 
-Beim multiplen Sequenzalignment werden normalerweise DNA- oder Proteinsequenzen miteinander verglichen bei denen man davon ausgeht, dass sie einen gemeinsamen evolutionären Ursprung haben. Gibt es diesen, dann sind fast ausnahmslos auch gemeinsame Motive erhalten geblieben, die in vielen oder sogar allen Sequenzen vorkommen. Für ein biologisch korrektes Alignment ist es notwendig diese zu finden und über möglichst viele Sequenzen hinweg einander zuzuweisen. Hat man erstmal diese verwandten Abschnitte gefunden und miteinander aligniert, werden in der Regel auch die Zuweisungen zwischen diesen sogenannten Ankerpunkten besser \cite{mpps06}.
+Beim multiplen Sequenzalignment werden normalerweise DNA- oder Proteinsequenzen miteinander verglichen, bei denen man davon ausgeht, dass sie einen gemeinsamen evolutionären Ursprung haben. Gibt es diesen, dann sind fast ausnahmslos auch gemeinsame Motive erhalten geblieben, die in vielen oder sogar allen Sequenzen vorkommen. Für ein biologisch korrektes Alignment ist es notwendig, diese zu finden und über möglichst viele Sequenzen hinweg einander zuzuweisen. Wurden diese verwandten Abschnitte bereits gefunden und miteinander aligniert, werden in der Regel auch die Zuweisungen zwischen diesen sogenannten Ankerpunkten besser \cite{mpps06}.
 
-Es ist jedoch nicht immer leicht diese Motive zu finden, weil es sein kann, dass sie im Vergleich zu zufälligen Übereinstimmungen klein sind. Dann bekommen diese nur geringe Gewichte durch unsere Gewichtsfunktion und wenn wir am Ende von DIALIGN	durch gieriges Auswählen der Fragmente das multiple Alignment bestimmen, kann es sein, dass sie nicht berücksichtigt werden, weil andere höher gewichteten Zuweisungen zu ihnen inkonsistent sind. 
+Es ist jedoch nicht immer leicht diese Motive zu finden, weil sie im Vergleich zu zufälligen Übereinstimmungen klein sein können. In dem Fall bekommen sie nur geringe Gewichte durch unsere Gewichtsfunktion und wenn wir am Ende von DIALIGN durch gieriges Auswählen der Fragmente das multiple Alignment bestimmen, kann es sein, dass sie nicht berücksichtigt werden, weil andere höher gewichtete Zuweisungen zu ihnen inkonsistent sind. Gierig bedeutet in diesem Fall, dass einmal gewählte Fragmente nicht mehr aus diesem entfernt werden können.
 
-Um dieses Problem zu verhindern und Motive zu bevorzugen, die in möglichst vielen Sequenzen vorkommen, führen wir das Konzept der sogenannten \emph{Überlappgewichte} ein \cite{mdw96}. Betrachten wir dazu drei verschiedene Sequenzen $S_1$, $S_2$ und $S_3$ und zwei Fragmente $f^{1,2}$ und $f^{2,3}$ zwischen diesen. Dann kann es sein, dass die beiden Fragmente eine Überlappung in $S_2$ haben. In diesem Fall ist an dem Alignment ein drittes implizites Fragment $f^{1,3}$ zwischen $S_1$ und $S_3$ beteiligt, das auf ein gemeinsames Motiv zwischen allen drei Sequenzen hindeutet. Daher ist es angemessen die ursprünglichen Fragmente stärker zu gewichten, indem wir zu ihnen das Gewicht der Überlappung addieren.
+Um dieses Problem zu verhindern und Motive zu bevorzugen, die in möglichst vielen Sequenzen vorkommen, führen wir das Konzept der sogenannten \emph{Überlappgewichte} ein \cite{mdw96}. Betrachten wir dazu drei verschiedene Sequenzen $S_1$, $S_2$ und $S_3$ und zwei Fragmente $f^{1,2}$ und $f^{2,3}$ zwischen diesen. Es mag sein, dass die beiden Fragmente eine Überlappung in $S_2$ haben. In diesem Fall ist an dem Alignment ein drittes implizites Fragment $f^{1,3}$ zwischen $S_1$ und $S_3$ beteiligt, das auf ein gemeinsames Motiv zwischen allen drei Sequenzen hindeutet. Daher ist es angemessen die ursprünglichen Fragmente stärker zu gewichten, indem wir zu ihnen das Gewicht der Überlappung addieren.
 
 \begin{equation}
-	\tilde{w}(f^{1,2},f^{2,3}) \coloneqq w(f^{1,3})
+	\tilde{w}\left(f^{1,2},f^{2,3}\right) \coloneqq w\left(f^{1,3}\right)
 \end{equation}
 
 Das Überlappgewicht eines Fragments mit sich selbst und zwischen zwei Fragmenten, die sich nicht überschneiden, definieren wir als 0.
@@ -562,75 +429,96 @@ Analog definieren wir das Überlappgewicht eines einzelnen Fragments als sein Ge
 
 Benutzt man Überlappgewichte, muss jedoch die Zusammensetzung der Sequenzen stärker beachtet werden. Liegt nämlich eine große Subfamilie von sehr ähnlichen Sequenzen vor, dann werden alle Fragmente zwischen einer Sequenz innerhalb und einer Sequenz außerhalb dieser Familie durch hohe Überlappgewichte gegenüber denen bevorzugt, die zwischen zwei Sequenzen berechnet wurden, die nicht aus der Sequenzfamilie stammen. \cite{vs93} stellen Methoden vor, die solchen Problemen vorbeugen. 
   
-\subsection{Umsetzung im Programm und Laufzeit}
+\subsection{Verbesserte Berechnung und Laufzeit}
 
-Bei DIALIGN	werden naiv alle Fragmente der paarweisen Alignments miteinander verglichen und auf Überschneidungen untersucht. Da es in den $\oh(n^2)$ Alignments zwischen $n$ Sequenzen jeweils bis zu $\oh(L)$ Fragmente gibt, kommt man so auf eine Gesamtlaufzeit von $\oh(n^4\cdot L^2)$ \cite{m99}.
+Das Berechnen der Überlappgewichte geschieht bei DIALIGN durch einen naiven Vergleich aller Fragmente der paarweisen Alignments miteinander, bei dem sie auf Überschneidungen untersucht werden. Da es in den $\oh(n^2)$ Alignments zwischen $n$ Sequenzen jeweils bis zu $\oh(L)$ Fragmente gibt, kommt man so auf eine Gesamtlaufzeit von $\oh(n^4\cdot L^2)$ \cite{m99}.
 
-Untersucht man das Problem jedoch genauer, stellt man fest, dass man für ein Fragment $f^{k,l}$ gar nicht alle Fragmente auf Überlappungen überprüfen muss, sondern nur die, an denen eine der beiden Sequenzen $S_k$ oder $S_l$ unseres Fragments beteiligt ist. Außerdem müssen wir nicht jedes Fragment eines anderen paarweisen Alignments betrachten, sondern wir können in sortierten Fragmentketten durch die Start- und Endpunkte sehr genau abschätzen welche für Überlappungen in Frage kommen.
+Bei einer genaueren Betrachtung des Problems hat sich herausgestellt, dass für ein Fragment $f^{k,l}$ gar nicht alle Fragmente auf Überlappungen überprüft werden müssen, sondern nur die, an denen eine der beiden Sequenzen $S_k$ oder $S_l$ unseres Fragments beteiligt ist. Außerdem müssen wir nicht jedes Fragment eines anderen paarweisen Alignments betrachten, sondern können in sortierten Fragmentketten durch die Start- und Endpunkte sehr genau abschätzen, welche für Überlappungen in Frage kommen. Dazu benutzen wir den folgenden Satz:
 
-\begin{satz}
-	Für eine Menge $S$ von n Sequenzen und eine Menge $F$ von paarweisen Fragmenten zwischen diesen Sequenzen, lassen sich in $\oh(n^3\cdot L)$ Zeit die Überlappgewichte berechnen.
+\begin{satz}\label{satz:ueberlapp}
+	Für eine Menge $S$ von $n$ Sequenzen und eine Menge $F$ von paarweisen Fragmenten zwischen diesen Sequenzen lassen sich in $\oh(n^3\cdot L)$ Zeit die Überlappgewichte berechnen.
 \end{satz}
 
+% save original \intextsep
+\newlength{\oldintextsep}
+\setlength{\oldintextsep}{\intextsep}
 
-\begin{wraptable}{r}{6cm}
-	\begin{tabular}{r|cccc}
+\setlength\intextsep{0pt}
+
+\begin{wraptable}{l}{6cm}\label{tab:ueberlapp}
+	\centering
+	\begin{tabular}{|r|cccc|}
+		\hline
 		2 & $A_{2,1}$ & & & \\
 		3 & $A_{3,1}$ & $A_{3,2}$ & & \\
 		$\vdots$ & $\vdots$ & $\vdots$ & $\ddots$ & \\
 		n & $A_{n,1}$ & $A_{n,2}$ & $\dots$ & $A_{n,n-1}$ \\
 		\hline
-		\diagbox[dir=NE]{i}{j} & 1 & 2 & $\dots$ & n-1
+		\diagbox[dir=NE]{i}{j} & 1 & 2 & $\dots$ & n-1 \\
+		\hline
 	\end{tabular}
-	\caption{Jeder Tabelleneintrag $A_{i,j}$ enthält Liste von Fragmenten}
+	\caption{\unskip}
+	Jeder Tabelleneintrag $A_{i,j}$ enthält Liste von Fragmenten
 \end{wraptable}
 
+\setlength{\intextsep}{\oldintextsep}
+
 \begin{beweis}
-	Zwischen den n Sequenzen gibt es ${{n}\choose{2}} \in \oh(n^2)$ paarweise Alignments. Wir gehen davon aus, dass der vorherige Schritt unseres Verfahrens diese in einer Tabelle $A$ gespeichert hat, wobei $A_{i,j}$ die Fragmente des paarweisen Alignments zwischen $S_i$ und $S_j$ in einer sortierten Liste enthält. Das können wie o.B.d.A. annehmen, weil der Algorithmus diese ohnehin in sortierter Reihenfolge berechnet.
+	Zwischen den $n$ Sequenzen gibt es ${{n}\choose{2}} \in \oh(n^2)$ paarweise Alignments. Wir können o.B.d.A annehmen, dass diese in einer Tabelle $A$ vorliegen, wobei $A_{i,j}$ die Fragmente des paarweisen Alignments zwischen $S_i$ und $S_j$ in einer sortierten Liste enthält. Das liegt daran, dass der soeben gesehen Algorithmus \ref{alg:speichereffizient} die Fragmente mit seinem Backtrackingprozess sortiert ausgibt. 
 	
 	Betrachten wir ein Alignment zwischen den Sequenzen $S_i$ und $S_k$. Dann müssen wir für die Überlappgewichte nur die Einträge $A_{i,k}$ und $A_{l,j}$ mit $1 \leq k,l \leq n$ betrachten, denn es sind nur die Alignments relevant, bei denen eine der Sequenzen übereinstimmt. In einer vollständigen Tabelle sind das alle Listen, die in der selben Spalte oder Zeile stehen, also $\oh(n)$ viele.
 	
-	Seien $A_{i,k}$ und $A_{k,j}$ zwei Alignments von denen wir die Überlappgewichte berechnen wollen. Dazu müssen wir die Überlappung zwischen allen Fragmenten in $S_k$ bestimmen. Dies können wir in linearer Zeit machen, indem wir parallel über die beiden sortierten Listen traversieren und anhand der Start- und Endpunkte in $S_k$ die impliziten Fragmente zwischen $S_i$ und $S_j$ bestimmen, sowie die Gewichte der Fragmente aktualisieren. Dafür benötigen wir nur $\oh(L)$ Zeit, weil wir einmalig jedes Element der beiden Listen betrachten, es bis zu $\oh(L)$ Fragmente pro Alignment gibt und jedes von diesen in der Länge durch $l_{\max} \in \oh(1)$ beschränkt ist.
+	Seien $A_{i,k}$ und $A_{k,j}$ zwei Alignments, von denen wir die Überlappgewichte berechnen wollen. Dazu müssen wir die Überlappung zwischen allen Fragmenten in $S_k$ bestimmen. Dies können wir in linearer Zeit machen, indem wir parallel über die beiden sortierten Listen traversieren und anhand der Start- und Endpunkte in $S_k$ die impliziten Fragmente zwischen $S_i$ und $S_j$ bestimmen sowie die Gewichte der Fragmente aktualisieren. Dafür benötigen wir nur $\oh(L)$ Zeit, weil wir einmalig jedes Element der beiden Listen betrachten, es bis zu $\oh(L)$ Fragmente pro Alignment gibt und jedes von diesen in der Länge durch $l_{\max} \in \oh(1)$ beschränkt ist.
 	Insgesamt haben wir also $\oh(n^2)$ paarweise Alignments für die mit jeweils $\oh(n)$ anderen Alignments Überlappgewichte berechnet werden müssen, was jeweils $\oh(L)$ Zeit kostet. Es folgt die Gesamtlaufzeit von $\oh(n^3\cdot L)$.
 \end{beweis}
 
-Genau genommen brauchen wir keine quadratische Tabelle, weil der Eintrag $A_{i,j}$ aus Symmetriegründen identisch zu $A_{j,i}$ ist. Auch die Diagonale können wir uns sparen, denn das alignieren einer Sequenz mit sich selbst ist unnötig. Des Weiteren kann man sich beim obigen Algorithmus noch die Hälfte des Aufwands sparen, denn die Überlappgewicht zwischen $A_{i,k}$ und $A_{k,j}$ müssen wir nicht doppelt berechnen, sondern können sie gleich zu den Gewichten in beiden Alignments addieren. Obgleich das nichts an der asymptotischen Laufzeit ändert, macht es in der Praxis einen Unterschied. 
+Genau genommen brauchen wir keine quadratische Tabelle, weil der Eintrag $A_{i,j}$ aus Symmetriegründen identisch zu $A_{j,i}$ ist. Auch die Diagonale können wir uns sparen, denn das Alignieren einer Sequenz mit sich selbst ist unnötig. Des Weiteren kann beim Algorithmus aus dem Beweis von Satz \ref{satz:ueberlapp} die Hälfte des Aufwands eingespart werden, denn die Überlappgewicht zwischen $A_{i,k}$ und $A_{k,j}$ müssen nicht doppelt berechnen werden, sondern können gleich zu den Gewichten in beiden Alignments addiert werden. Obgleich das nichts an der asymptotischen Laufzeit ändert, macht es in der Praxis einen Unterschied. 
 
 \subsection{Beispiel Überlappgewichte}
 
-Widmen wir uns den Überlappgewichten an unserem Beispiel und betrachten dazu das Alignment zwischen den Sequenzen $S_1$ und $S_3$. Um das Gewicht zu aktualisieren, müssen wir alle Alignments auf Überlappungen überprüfen, in denen eine der beiden Sequenzen vorkommt. 
+Widmen wir uns der Berechnung von Überlappgewichten nach Satz \ref{satz:ueberlapp} in unserem Beispiel und betrachten dazu das Alignment zwischen den Sequenzen $S_1$ und $S_3$. Um das Gewicht zu aktualisieren, müssen wir alle Alignments auf Überlappungen überprüfen, in denen eine der beiden Sequenzen vorkommt. 
 
-\begin{wraptable}{r}{6cm}
-	\begin{tabular}{r|ccc}
+%\setlength\intextsep{2pt}
+\begin{wraptable}{r}{6cm}\label{tab:ueberlapp_bsp}
+	\centering
+	\begin{tabular}{|r|ccc|}
+		\hline
 		2 & \cellcolor{red} $A_{2,1}$ & & \\
 		3 & \cellcolor{yellow} $A_{3,1}$ & \cellcolor{red} $A_{3,2}$ & \\
 		4 & \cellcolor{red} $A_{4,1}$ & $A_{4,2}$ & \cellcolor{red} $A_{4,3}$ \\
 		\hline
 		\diagbox[dir=NE]{i}{j} & 1 & 2 & 3 \\
+		\hline
 	\end{tabular}
-	\caption{Auf Überlappungen zu überprüfende Alignments}
+	\caption{\unskip}
+	Auf Überlappungen zu überprüfende Alignments
 \end{wraptable}
 
-Da unsere Tabelle nicht vollständig ist, reicht es nicht die Einträge der selben Spalte und Zeile zu überprüfen, weil diese unter Umständen nicht vollständig ist. Stattdessen müssen wir alle Einträge in der ersten und dritten Spalte oder Zeile betrachten. Dann gehen wir alle Fragmente der Reihe nach durch und gucken anhand der Start- und Endpunkte in der gemeinsamen Sequenz, ob es Überschneidungen gibt. Falls ja, bestimmen wir diese und addieren das Gewicht zu dem unseres Fragments.
+%\setlength{\intextsep}{\oldintextsep}
 
-Zur Erinnerung hier nochmal der bisherige Stand mit den paarweisen Alignments:
+Da unsere Tabelle \ref{tab:ueberlapp_bsp} nicht vollständig ist, reicht es nicht, die Einträge derselben Spalte und Zeile zu überprüfen, weil diese unter Umständen nicht vollständig ist. Stattdessen müssen wir alle Einträge in der ersten und dritten Spalte oder Zeile betrachten. Dann gehen wir alle Fragmente der Reihe nach durch und entscheiden anhand der Start- und Endpunkte in der gemeinsamen Sequenz, ob es Überschneidungen gibt. Falls ja, bestimmen wir diese und addieren das Gewicht zu dem unseres Fragments.
 
-\begin{tabular}{r|c|c||r|c|c}
+Rufen wir uns den bisherigen Stand der Scores der paarweisen Alignments in Erinnerung:
+
+\addvbuffer[8pt]{\begin{tabular}{|r|c|c||r|c|c|}
+	\hline
 	Sequenzen & Alignments & Score & Sequenzen & Alignments & Score\\
 	\hline
 	1 & \texttt{adgTCTCA---} & \multirow{2}{*}{10} & 1 & \texttt{aDGTC---TCa} & \multirow{2}{*}{7}\\
-	3 & \texttt{---TATCAdgg} & & 4 & \texttt{-DGTCadaTC-} \\
+	3 & \texttt{---TATCAdgg} & & 4 & \texttt{-DGTCadaTC-} & \\
 	\hline
 	2 & \texttt{-gTCADctca}  & \multirow{2}{*}{8} & 2 & \texttt{-GTCADCTCa} & \multirow{2}{*}{16}\\
 	3 & \texttt{taTCADgg--}  & &4 & \texttt{dGTCADATC-} & \\
 	\hline
-	3 & \texttt{taTCADgg-}   & \multirow{2}{*}{8} & 1 & \texttt{adGT---CTCA}     \\
-	4 & \texttt{dgTCADatc}   &                    & 2 & \texttt{--GTcadCTCA} 
-\end{tabular}
+	3 & \texttt{taTCADgg-}   & \multirow{2}{*}{8} & 1 & \texttt{adGT---CTCA}   & \multirow{2}{*}{10}  \\
+	4 & \texttt{dgTCADatc}   &                    & 2 & \texttt{--GTcadCTCA} & \\
+	\hline
+\end{tabular}}
 
-Wie wir sehen enthält das von uns betrachtete Alignment nur das eine Fragment $f_{8,5,5}$ mit drei Übereinstimmungen und einer Abweichung. Als erstes überprüfen wir die Überlappung mit $A_{2,1}$. Beide haben den gemeinsamen Abschnitt \texttt{CTCA} in $S_1$, woraus sich das neue Fragment ${\texttt{CTCA}}\choose{\texttt{ATCA}}$ zwischen $S_2$ und $S_3$ ergibt. Dieses hat drei Übereinstimmungen, eine Abweichung und somit ein Gewicht von 8. In der Folge addieren wir diese Zahl zum Gewicht von $f_{8,5,5}^{1,3}$ und zu dem von $f_{8,9,4}^{1,2}$. Wenn wir diese Anweisungen auch mit und zwischen allen anderen Alignments durchführen, kommen wir zu den folgenden Überlappgewichten:
+Wie wir sehen, enthält das von uns betrachtete Alignment nur das eine Fragment $f_{8,5,5}$ mit drei Übereinstimmungen und einer Abweichung. Als erstes überprüfen wir die Überlappung mit $A_{2,1}$. Beide haben den gemeinsamen Abschnitt \texttt{CTCA} in $S_1$, woraus sich das neue Fragment ${\texttt{CTCA}}\choose{\texttt{ATCA}}$ zwischen $S_2$ und $S_3$ ergibt. Dieses hat drei Übereinstimmungen, eine Abweichung und somit ein Gewicht von 8. In der Folge addieren wir diese Zahl zum Gewicht von $f_{8,5,5}^{1,3}$ und zu dem von $f_{8,9,4}^{1,2}$. Wenn wir diese Berechnungen auch mit und zwischen allen anderen Alignments durchführen, kommen wir zu den folgenden Überlappgewichten:
 
-\begin{tabular}{r|c|c||r|c|c||r|c|c}
+\addvbuffer[8pt]{\begin{tabular}{|r|c|c||r|c|c||r|c|c|}
+	\hline
 	Seq. & Frag. & Ü-Gew. & Seq. & Frag. & Ü-Gew. & Seq. & Frag. & Ü-Gew.\\
 	\hline
 	2 & \texttt{GTCADCTC} & \multirow{2}{*}{69} & 1 & \texttt{TCTCA} & \multirow{2}{*}{41} & 1 & \texttt{GT} &\multirow{2}{*}{20} \\
@@ -639,70 +527,71 @@ Wie wir sehen enthält das von uns betrachtete Alignment nur das eine Fragment $
 	4 & \texttt{TCAD} &                     & 2 & \texttt{CTCA} &                          & 4 & \texttt{TC} & \\
 	2 & \texttt{TCAD} & \multirow{2}{*}{44} & 1 & \texttt{DGTC} & \multirow{2}{*}{31} &    &   & \\
     3 & \texttt{TCAD} &                     & 4 & \texttt{DGTC} &                     &    &   & \\
-\end{tabular}
+    \hline
+\end{tabular}}
 
-Da wir im nächsten Schritt die Fragmente für unser multiples Alignment basierend auf ihren Gewichten gierig auswählen, wurden die Abschnitte bereits sortiert. Ein Algorithmus wird als gierig bezeichnet, wenn er eine Entscheidung lokal optimal trifft und danach nicht wieder ändert. In unserem Fall bedeutet das, dass die Fragmente mit höheren Gewichten früher gewählt werden und wir sie selbst dann nicht wieder aus unserem multiplen Alignment entfernen, wenn sie durch Inkonsistenzen verhindern, dass andere, zusammen möglicherweise bessere Fragment gewählt werden können. Durch diese radikale Vorgehensweise haben gierige Algorithmen oft gute Laufzeiten, liefern aber nicht immer die bestmöglichen Ergebnisse. Zu bekannten Vertretern dieses Paradigmas gehören beispielsweise der Algorithmus von Dijkstra zur Bestimmung der kürzesten Pfade aus einem einzelnen Knoten oder die Algorithmen von Prim und Kruskal zur Bestimmung von minimalen Spannbäumen.
+Da wir im nächsten Schritt die Fragmente für unser multiples Alignment basierend auf ihren Gewichten gierig auswählen, wurden die Abschnitte bereits sortiert. Ein Algorithmus wird als gierig bezeichnet, wenn er eine Entscheidung lokal optimal trifft und danach nicht wieder ändert. In unserem Fall bedeutet das, dass die Fragmente mit höheren Gewichten früher gewählt werden und selbst dann nicht wieder aus unserem multiplen Alignment entfernt werden, wenn sie durch Inkonsistenzen verhindern, dass andere, zusammen möglicherweise bessere Fragmente gewählt werden können. Durch diese radikale Vorgehensweise haben gierige Algorithmen oft gute Laufzeiten, liefern aber nicht immer die bestmöglichen Ergebnisse.
 
 \section{Konsistenz}
 
-Die nach ihrem Gewicht sortierten Fragmente möchten wir der Reihe nach in unser multiples Alignment einfügen, vorausgesetzt, das gerade gewählte ist nicht inkonsistent zu den zuvor integrierten. Wenn wir uns an den Abschnitt über die theoretischen Grundlagen erinnern, dann hatten wir formal definiert, dass eine Relation $\mathcal{R}$ genau dann ein Alignment ist, wenn \enquote{$\preceq_{\mathcal{R}}=(\preceq \cup\: \mathcal{R})_t$ die natürliche Ordnung auf jeder Sequenz erhält, also $x \preceq_{\mathcal{R}} y \implies x \preceq y$ für alle $x,y \in S_i \forall 1\leq i \leq n$ gilt.}
+Die nach ihrem Gewicht sortierten Fragmente möchten wir der Reihe nach in unser multiples Alignment einfügen, vorausgesetzt, das gerade gewählte ist nicht inkonsistent zu den zuvor integrierten. Wenn wir uns an den Abschnitt über die theoretischen Grundlagen \ref{sec:theo} erinnern, dann hatten wir formal definiert, dass eine Relation $\mathcal{R}$ genau dann ein Alignment ist, wenn $\preceq_{\mathcal{R}}=(\preceq \cup\: \mathcal{R})_t$ die natürliche Ordnung auf jeder Sequenz erhält, also $x \preceq_{\mathcal{R}} y \implies x \preceq y$ für alle $x,y \in S_i \forall 1\leq i \leq n$ gilt.
 
-Mengentheoretisch können wir uns unser vorgehen so vorstellen, dass wir eine Menge von Fragmenten $f_1, \cdot f_k$ haben, die wir der Reihe nach in unser wachsendes multiples Alignment hinzufügen wollen, vorausgesetzt sie sind konsistent zueinander. Die hinzugefügten Fragmente bilden dabei für $i = 2, \dots, k$ eine monoton wachsende Menge $A_1 \subset \dots \subset A_k$:
+Mengentheoretisch können wir uns unser Vorgehen so vorstellen, dass wir eine Menge von Fragmenten $f_1,\dots, f_k$ haben, die wir der Reihe nach in unser wachsendes multiples Alignment hinzufügen wollen, vorausgesetzt sie sind konsistent zueinander. Die hinzugefügten Fragmente bilden dabei für $i = 2, \dots, k$ eine aufsteigende Kette von Mengen $A_1 \subset \dots \subset A_k$:
 
 \begin{equation}
 \begin{split}
 	\mathcal{A}_1 &= f_1 \\
 	\mathcal{A}_i &= 
 		\begin{cases}
-			(\mathcal{A}_{i-1} \cup f_i) & \text{falls $f_i$ konsistent ist zu $A_{i-1}$} \\
-			A_{i-1} & \text{sonst} 
+			(\mathcal{A}_{i-1} \cup f_i), & \text{falls $f_i$ konsistent ist zu $A_{i-1}$} \\
+			A_{i-1}, & \text{sonst} 
 		\end{cases}
 \end{split}
 \end{equation} 
 
-Das finale Alignment $\mathcal{A}$ ist dann genau das resultierende größte Alignment $\mathcal{A}_k$. Die Frage, die man sich natürlich jetzt stellt, lautet: \enquote{Wie kann ich bestimmen, ob ein Fragment konsistent zu einem Alignment ist?} Und noch besser: \enquote{Wie kann ich das effizient bestimmen?}
+Das finale Alignment $\mathcal{A}$ ist dann genau das resultierende größte Alignment $\mathcal{A}_k$. Ziel ist es jetzt eine Möglichkeit zu finden, möglichst effizient zu bestimmen, ob ein Fragment konsistent zum bisherigen Alignment ist. Wir führen dazu zunächst folgende Definition ein:
 
-\begin{definition}[Konsistenzgrenze]
-	Gegeben seien ein Alignment $\mathcal{A}$ auf einer Menge von Sequenzen $S$ mit Stellenraum $\mathcal{S}$. Dann existiert für eine Stelle $s \in \mathcal{S}$ und eine Sequenz $S_i \in S$ eine kleinste und größte Stelle in $S_i$, die mit $s$ alignierbar ist, ohne zu Inkonsistenzen zu führen.
+\begin{definition}[Konsistenzgrenze\cite{am00}]
+	Gegeben seien ein Alignment $\mathcal{A}$ auf einer Menge von Sequenzen $S$ mit Stellenraum $\mathcal{S}$. Dann existieren für eine Stelle $s \in \mathcal{S}$ und eine Sequenz $S_i \in S$ eine kleinste und größte Stelle in $S_i$, die mit $s$ alignierbar ist, ohne zu Inkonsistenzen zu führen.
 	\begin{equation}
 	\begin{split}
 	\underline{b}_\mathcal{A}(s,i) &= \min(p: (s,[i,p])\: \text{ist konsistent zu} \mathcal{A}) \\
 	\overline{b}_\mathcal{A}(s,i) &= \max(p: (s,[i,p])\: \text{ist konsistent zu} \mathcal{A})
 	\end{split} 
 	\end{equation}
-	Diese beiden Stellen nennen wir die Konsistenzgrenzen von $s$ in $S_i$. 
+	Diese beiden Stellen nennen wir die \emph{Konsistenzgrenzen} von $s$ in $S_i$. 
 \end{definition}
 
-In der ersten Version von DIALIGN wurden diese Konsistenzgrenzen für alle Stellen gespeichert und jedes Mal aktualisiert, wenn eine neue Sequenz zum multiplen Alignment hinzugefügt wurde \cite{mdw96}. Das bedeutete benötigten Speicherplatz in der Größenordnung $\theta(n^2\cdot L)$, denn für jede Stelle aus jeder Sequenz ($\theta(n\cdot L)$ viele) mussten die Konsistenzgrenzen für jede der n Sequenzen gespeichert werden. Noch schlechter ist die Laufzeit bei diesem naiven Ansatz, denn im schlimmsten Fall gibt es $\oh(n^2\cdot L)$ Fragmente, die der Reihe nach zum Alignment hinzugefügt werden, für die jeweils alle $\theta(n\cdot L)$ Konsistenzgrenzen überprüft und gegebenenfalls angepasst werden müssen. Es folgt eine Laufzeit von $\oh(n^4\cdot L^2)$, die auch die Gesamtlaufzeit des DIALIGN-Verfahrens dominiert hat \cite{m99}. 
+In der ersten Version von DIALIGN wurden diese Konsistenzgrenzen für alle Stellen gespeichert und jedes Mal aktualisiert, wenn eine neue Sequenz zum multiplen Alignment hinzugefügt wurde \cite{mdw96}. Das verursachte Speicherplatzbedarf in der Größenordnung $\Theta(n^2\cdot L)$, denn für jede Stelle aus jeder Sequenz ($\Theta(n\cdot L)$ viele) mussten die Konsistenzgrenzen für jede der $n$ Sequenzen gespeichert werden. Noch schlechter ist die Laufzeit bei diesem naiven Ansatz, denn im schlimmsten Fall gibt es $\oh(n^2\cdot L)$ Fragmente, die der Reihe nach zum Alignment hinzugefügt werden, für die jeweils alle $\theta(n\cdot L)$ Konsistenzgrenzen überprüft und gegebenenfalls angepasst werden müssen. Es folgt eine Laufzeit von $\oh(n^4\cdot L^2)$, die auch die Gesamtlaufzeit des DIALIGN-Verfahrens dominiert hat \cite{m99}. 
 
-Weil die Laufzeit im Vergleich zu anderen Verfahren, wie beispielsweise Clustal W, sehr schlecht war, entschied man sich den von \cite{a97} veröffentlichten und in der GABIOS-LIB (\enquote{Greedy Alignment of BIOlogical Sequences LIBrary}) implementierten besseren Ansatz auch in DIALIGN	einzubauen. Wie wir im Folgenden sehen werden, ist es möglich das Problem der Konsistenzgrenzen durch den Erhalt der transitiven Hülle eines Graphen abzubilden. Dadurch kann man die Fragmente deutlich effizienter der Reihe nach in unser multiples Alignment einfügen, wodurch sich die praktische Laufzeit in etwa um den Faktor zehn verbessern ließ \cite{am00}. 
+Weil die Laufzeit im Vergleich zu anderen Alignmentverfahren, wie beispielsweise Clustal W, sehr schlecht war, entschied man sich den von \cite{a97} veröffentlichten und in der GABIOS-LIB (Greedy Alignment of BIOlogical Sequences LIBrary) implementierten besseren Ansatz auch in DIALIGN	einzubauen. Wie wir im Folgenden sehen werden, ist es möglich das Problem der Konsistenzgrenzen durch den Erhalt der transitiven Hülle eines Graphen abzubilden. Dadurch kann man die Fragmente deutlich effizienter der Reihe nach in unser multiples Alignment einfügen, wodurch sich die praktische Laufzeit in etwa um den Faktor zehn verbessern lässt \cite{am00}. 
 
-\begin{definition}[Transitivitätsgrenzen]
-	Die sogenannten \emph{Transitivitätsgrenzen} erlauben es uns die Konsistenzgrenzen als graphtheoretisches Problem zu verstehen. Wir definieren zu unserer Stelle $s$ die \emph{Vorgängergrenze} $Pred_{\mathcal{A}}(s,i)$ als die Stelle $y$ aus der Sequenz $S_i$, die von allen Stellen mit $y \preceq_{\mathcal{A}} s$ am weitesten rechts steht. Analog wird die \emph{Nachfolgergrenze} $Succ_{\mathcal{A}}(s,i)$ als am weitesten links stehende Stelle mit $s \preceq_{\mathcal{A}} y$ festgelegt.
+\begin{definition}[Transitivitätsgrenzen\cite{am00}]
+	Die sogenannten \emph{Transitivitätsgrenzen} erlauben es uns die Konsistenzgrenzen als graphtheoretisches Problem zu verstehen. Wir definieren zu unserer Stelle $s$ die \emph{Vorgängergrenze} $\operatorname{Pred}_{\mathcal{A}}(s,i)$ als die Stelle $y$ aus der Sequenz $S_i$, die von allen Stellen mit $y \preceq_{\mathcal{A}} s$ am weitesten rechts steht. Analog wird die \emph{Nachfolgergrenze} $\operatorname{Succ}_{\mathcal{A}}(s,i)$ als am weitesten links stehende Stelle mit $s \preceq_{\mathcal{A}} y$ festgelegt.
 	\begin{equation}
 	\begin{split}
-		Pred_{\mathcal{A}}(s,i) &= \max(p: [i,p] \preceq_{\mathcal{A}} s) \\
-		Succ_{\mathcal{A}}(s,i) &= \min(p: s \preceq_{\mathcal{A}} [i,p])
+		\operatorname{\operatorname{Pred}}_{\mathcal{A}}(s,i) &= \max(p: [i,p] \preceq_{\mathcal{A}} s) \\
+		\operatorname{\operatorname{Succ}}_{\mathcal{A}}(s,i) &= \min(p: s \preceq_{\mathcal{A}} [i,p])
 	\end{split}
 	\end{equation}
 \end{definition}
 
-Zwischen Transitivitäts- und Konsistenzgrenzen herrscht ein direkter Zusammenhang. Ist unsere Stelle $s$ bereits mit einer anderen aus der Sequenz $S_i$ aligniert, dann gibt es zwischen allen vier Grenzen keinen Unterschied.
+Zwischen Transitivitäts- und Konsistenzgrenzen herrscht ein direkter Zusammenhang. Ist eine Stelle $s \in \mathcal{S}$ bereits mit einer anderen Stelle aus der Sequenz $S_i \in S$ aligniert, dann gibt es zwischen allen vier Grenzen keinen Unterschied und es gilt:
 
 \begin{equation}
-	Pred_{\mathcal{A}}(s,i) = Succ_{\mathcal{A}}(s,i) = \underline{b}_\mathcal{A}(s,i) = \overline{b}_\mathcal{A}(s,i) = p
+	\operatorname{\operatorname{Pred}}_{\mathcal{A}}(s,i) = \operatorname{\operatorname{Succ}}_{\mathcal{A}}(s,i) = \underline{b}_\mathcal{A}(s,i) = \overline{b}_\mathcal{A}(s,i) = p
 \end{equation}
 
-Gibt es hingegen keine Stelle in $S_i$, die bereits $s$ zugewiesen wurde, dann unterscheiden sich $Pred_{\mathcal{A}}(s,i)$ und $\underline{b}_\mathcal{A}(s,i)$, sowie $Succ_{\mathcal{A}}(s,i)$ und $\overline{b}_\mathcal{A}(s,i)$ jeweils nur um genau eine Position.
+Gibt es hingegen keine Stelle in $S_i$, die bereits $s$ zugewiesen wurde, dann unterscheiden sich $\operatorname{\operatorname{Pred}}_{\mathcal{A}}(s,i)$ und $\underline{b}_\mathcal{A}(s,i)$, sowie $\operatorname{Succ}_{\mathcal{A}}(s,i)$ und $\overline{b}_\mathcal{A}(s,i)$ jeweils nur um genau eine Position.
 
 \begin{equation}
 \begin{split}
-	Pred_{\mathcal{A}}(s,i) &= \underline{b}_\mathcal{A}(s,i) - 1\\
-	Succ_{\mathcal{A}}(s,i) &= \overline{b}_\mathcal{A}(s,i) + 1
+	\operatorname{Pred}_{\mathcal{A}}(s,i) &= \underline{b}_\mathcal{A}(s,i) - 1\\
+	\operatorname{Succ}_{\mathcal{A}}(s,i) &= \overline{b}_\mathcal{A}(s,i) + 1
 \end{split}
 \end{equation}
 
-Man kann also sagen, dass Transitivitätsgrenzen und Konsistenzgrenzen äquivalent sind, denn wenn man das aktuelle Alignment kennt, kann man aus dem einen das jeweils andere bestimmen. Daraus folgt auch, dass man mit beiden darstellen kann, ob zwei Stellen miteinander alignierbar sind oder nicht. \improvement{Beispiel hinzufügen?}
+Man kann also sagen, dass Transitivitätsgrenzen und Konsistenzgrenzen äquivalent sind, denn wenn man das aktuelle Alignment kennt, kann man aus dem einen das jeweils andere bestimmen. Daraus folgt auch, dass man mit beiden darstellen kann, ob zwei Stellen miteinander alignierbar sind oder nicht. \improvement{Beispiel aus Paper ersetzen für Äq. Trans-und Konsgrenzen}
 
 \scriptsize
 \begin{wrapfigure}{r}{8cm}
@@ -712,32 +601,33 @@ Man kann also sagen, dass Transitivitätsgrenzen und Konsistenzgrenzen äquivale
 	s'_1 \arrow[r] & s'_2 \arrow[r] & s_3' \arrow[r] & s_4' \arrow[r] & s_5' \arrow[r] & s_6' \\
 	s_1'' \arrow[r] & s_2'' \arrow[r] & s_3'' \arrow[r] & s_4'' \arrow[r] & s_5'' & 
 	\end{tikzcd}
-	\caption{Graph dreier Sequenzen mit den durch sie induzierten Pfaden}
+	\caption{Graph dreier Sequenzen mit den durch sie induzierten Pfaden}\label{abb:SSDP}
 \end{framed}
 \end{wrapfigure}
 \normalsize
 
-In den nächsten beiden Abschnitten zeige ich eine Technik mit der man in konstanter Zeit entscheiden kann, ob zwei Stellen miteinander alignierbar sind und einen inkrementellen Algorithmus, der es uns in angemessener Zeit erlaubt ein Alignment zwischen zwei Stellen in unser multiples Alignment hinzuzufügen.
-
-Das wird erreicht, indem wir unseren Stellenraum $\mathcal{S}$ als gerichteten Graph auffassen, in dem die einzelnen Stellen Knoten entsprechen und jede Sequenz einen Pfad durch den Graphen darstellt. Jedes mal, wenn eine Zuweisung zwischen zwei Stellen ausgewählt wird, fügen wir eine neue Kante zu unserem Graphen hinzu. Ziel ist es in jedem Schritt unseres Verfahrens die transitive Hülle des Graphen zu kennen, denn mit ihr lässt sich entscheiden, ob das Fragment, das wir gerade wählen wollen, konsistent zum bisherigen Alignment ist oder nicht.
+In den nächsten beiden Abschnitten wird eine Technik vorgestellt, mit der man in konstanter Zeit entscheiden kann, ob zwei Stellen miteinander alignierbar sind, sowie einen inkrementellen Algorithmus, der es uns in angemessener Zeit erlaubt, ein Alignment zwischen zwei Stellen in unser multiples Alignment hinzuzufügen. Das wird erreicht, indem wir unseren Stellenraum $\mathcal{S}$ als gerichteten Graph auffassen, in dem die einzelnen Stellen Knoten entsprechen und jede Sequenz einen Pfad durch den Graphen darstellt. Jedes Mal, wenn eine Zuweisung zwischen zwei Stellen ausgewählt wird, fügen wir eine neue Kante zu unserem Graphen hinzu. Ziel ist es in jedem Schritt unseres Verfahrens die transitive Hülle des Graphen zu kennen, denn mit ihr lässt sich entscheiden, ob das Fragment, das wir gerade wählen wollen, konsistent zum bisherigen Alignment ist oder nicht. Als erstes wird der Algorithmus auf allgemeinen Graphen vorgestellt, bevor wir zeigen, wir wie ihn im Kontext des Multiple-Sequence-Alignment-Problems anwenden können.
 
 \subsection{Berechnung der transitiven Hülle eines gerichteten Graphen}
 
-Sei $G=(V,E)$ ein gerichteter Graph mit einer Menge Knoten $V$ und einer Menge an Kanten $E$ zwischen diesen Knoten. Unter einem Pfad $P$ auf $G$ verstehen wir ein k-Tupel von Knoten $(v_1, \dots, v_k)$, sodass $(v_i, v_{i+1}) \in E \forall 1 \leq i \leq k-1$, also eine Folge von Knoten, die alle direkt durch Kanten miteinander verbunden sind. Dabei nennen wir den Index eines Knotens innerhalb dieses Tupels seine Position ($pos(x)$ für $x \in P$).
+Sei $G=(V,E)$ ein gerichteter Graph mit einer Menge Knoten $V$ und einer Menge an Kanten $E$ zwischen diesen Knoten. Unter einem Pfad $P$ auf $G$ verstehen wir ein $k$-Tupel von Knoten $(v_1, \dots, v_k)$, sodass $(v_i, v_{i+1}) \in E$ für alle $1 \leq i \leq k-1$, also eine Folge von Knoten, die alle direkt durch Kanten miteinander verbunden sind. Dabei nennen wir den Index eines Knotens innerhalb dieses Tupels seine Position ($\operatorname{pos}(x)$ für $x \in P$).
 
-Die transitive Hülle eines Graphen $G$ ist der Graph $G^*$, in dem es eine Kante $(u,v) \in E^*$ gibt, falls es in $G$ einen Pfad von $u$ nach $v$ gibt. Sollte es $(u,v) \in E^*$ geben, dann nennen wir $u$ den Vorgänger von $v$ und $v$ den Nachfolger von $u$. Diese Vorgänger und Nachfolger sind nicht mit den gleichnamigen Definitionen aus dem Abschnitt über die paarweisen Alignments zu verwechseln. Ich habe mich hier an den Begriffen der Quellen orientiert, die den selben Begriff an verschiedenen Stellen verwenden. Da die beiden Bedeutungen des Begriffs aber nur in zueinander disjunkten und klar getrennten Themengebieten vorkommen, hoffe ich hier nicht allzu viel Verwirrung zu stiften. 
+Die transitive Hülle eines Graphen $G = (V,E)$ ist der Graph $G^*=(V,E^*)$, in dem es eine Kante $(u,v) \in E^*$ gibt, falls es in $G$ einen Pfad von $u$ nach $v$ gibt. Für jedes $(u,v) \in E^*$ heißt $u$ \emph{Vorgänger} von $v$ und $v$ \emph{Nachfolger} von $u$. Diese Vorgänger und Nachfolger sind nicht mit den gleichnamigen Definitionen aus dem Abschnitt \ref{subsec:psa} über die paarweisen Alignments zu verwechseln. Zunächst definieren wir einige Variablen für den Kontext dieses Abschnitts: die Anzahl der Knoten $|V| = \nu$, die der Kanten $|E| = \mu$, die der Kanten in der transitiven Hülle $|E^*| = \mu^*$ und die Anzahl Kanten $\mu_0$, die sich vor dem Hinzufügen von neuen Verbindungen in unserem Graphen befinden. Zuletzt benötigen wir noch $\mu_p$ für die Anzahl der Kanten über die ein Pfad $P$ traversiert.
 
-Zunächst definieren wir ein paar Variablen für den Kontext dieses Abschnitts: Die Anzahl der Knoten $|V| = \nu$, die der Kanten $|E| = \mu$, die der Kanten in der transitiven Hülle $|E^*| = \mu^*$ und die Anzahl Kanten $\mu_0$, die sich vor dem Hinzufügen von neuen Verbindungen in unserem Graphen befinden. Zuletzt brauchen wir noch $\mu_p$ für die Anzahl der Kanten, über die ein Pfad $P$ traversiert.
+\begin{definition}[Spanning Set of Disjoint Paths (SSDP) \cite{a97}]
+Sei im Folgenden eine $\mathcal{P} = \{P_1, \dots, P_k\}$ von Pfaden auf einem Graphen $G=(V,E)$ gegeben, für die gilt, dass jeder Knoten aus $V$ in genau einem der Pfade vorkommt. Eine solche Menge nennen wir SSDP (\emph{Spanning Set of Disjoint Paths}), also eine Menge von disjunkten Pfaden, die den ganzen Graphen aufspannen. 
+\end{definition}
 
-Sei im Folgenden eine Menge $\mathcal{P} = \{P_1, \dots, P_k\}$ von Pfaden auf unserem ursprünglichen Graphen gegeben, für die gilt, dass jeder Knoten aus $V$ in genau einem der Pfade vorkommt. Eine solche Menge nennen wir SSDP (\emph{Spanning Set of Disjoint Paths}), also eine Menge von disjunkten Pfaden, die den ganzen Graphen aufspannen. Man kann sich vorstellen, dass man auf unserem Graphen sehr leicht einen solche Menge aufstellen kann, indem man jede einzelne dieser Sequenzen mit ihren Kanten als Pfad dieser Menge auffasst. 
+In dem Kontext des Multiple-Sequence-Alignment-Problems lässt sich ein solches SSDP leicht konstruieren, indem für jede Sequenz ein Pfad konstruiert wird, bei dem jedes Symbol mit dem direkten Nachfolger der gleichen Sequenz über eine Kante verbunden ist. Ein Beispiel für drei Sequenzen ist in Abbildung \ref{abb:SSDP} zu sehen.
 
-\begin{satz}
+\begin{satz}[{\cite{a97}}]
 	\label{satz:ssdp}
-	Es sei ein SSDP mit $k$ disjunkten Pfaden gegeben. Dann lässt sich die transitive Hülle $G^*$ unseres Graphen in $\oh(k^2\cdot(\mu - \mu_0) + \nu \cdot \min\{\nu, (\mu - \mu_p)\})$ Zeit und mit $\oh(k\cdot \nu)$ Speicherplatz erhalten, nachdem Kanten zu ihm hinzugefügt wurden \cite{a97}.
+	Es sei ein SSDP mit $k$ disjunkten Pfaden gegeben. Dann lässt sich die transitive Hülle $G^*$ unseres Graphen in $\oh(k^2\cdot(\mu - \mu_0) + \nu \cdot \min\{\nu, (\mu - \mu_p)\})$ Zeit und mit $\oh(k\cdot \nu)$ Speicherplatz erhalten, nachdem Kanten zu ihm hinzugefügt wurden.
 \end{satz}
 
-Für einen Knoten $x$ sei $P(x)$ das Tupel, das in jedem Eintrag $P(x)[i]$ für $1\leq i \leq k$ die Anzahl an Vorgängern von $x$ im Pfad $P_i$ angibt. In anderen Worten ist $P(x)[i]$ die maximale Position eines Vorgängers in $P_i$. Analog definieren wir $S(x)$, wobei  $S(x)[i]$ der minimale Nachfolger von $x$ in $S_i$ ist. Wie man sich denken kann, entsprechen $S(x)$ und $P(x)$ genau unseren Transitivitätsgrenzen aus dem Kontext von Alignments und wir verwenden diese Begriffe synonym. Das werden wir später auch noch beweisen. Gibt es Vorgänger oder Nachfolger nicht, setzen wir diese Werte auf 0 beziehungsweise die Länge des Pfads, um den es geht, addiert mit eins.
+Bevor wir diesen Satz beweisen können, brauchen wir einige Vorüberlegungen. Für einen Knoten $x$ sei $P(x)$ das Tupel, das in jedem Eintrag $P(x)[i]$ für $1\leq i \leq k$ die Anzahl an Vorgängern von $x$ im Pfad $P_i$ angibt. In anderen Worten ist $P(x)[i]$ die maximale Position eines Vorgängers in $P_i$. Analog definieren wir $S(x)$, wobei  $S(x)[i]$ der minimale Nachfolger von $x$ in $S_i$ ist. In Abschnitt \ref{subsec:trans_hull} werden wir zeigen, dass $S(x)$ und $P(x)$ genau den Transitivitätsgrenzen aus dem Kontext von Alignments entsprechen und wir verwenden diese Begriffe synonym. Gibt es keine Vorgänger oder Nachfolger, setzen wir diese Werte auf 0 beziehungsweise auf $|P_i|+1|$ im Fall des Pfads $P_i$.
 
+\setlength{\intextsep}{0pt}
 \scriptsize
 \begin{wrapfigure}{r}{7cm}
 \begin{framed}\centering
@@ -752,35 +642,34 @@ Für einen Knoten $x$ sei $P(x)$ das Tupel, das in jedem Eintrag $P(x)[i]$ für 
 \end{framed}
 \end{wrapfigure}
 \normalsize
+\setlength{\intextsep}{\oldintextsep}
 
-Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $pos(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $pos(y) \geq S(x)[j]$. Wie man sieht ist es also möglich die transitive Hülle auf $\oh(k \cdot \nu)$ Speicherplatz zu sichern, wenn man ein SSDP mit k Pfaden hat. Das kann signifikant weniger sein, als die $\oh(\nu^2)$ Kanten, die man im naiven Ansatz speichern muss.
+Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $\operatorname{pos}(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $\operatorname{pos}(y) \geq S(x)[j]$. Wie man sieht, ist es also möglich die transitive Hülle auf $\oh(k \cdot \nu)$ Speicherplatz zu sichern, wenn ein SSDP mit $k$ Pfaden vorliegt. Das kann signifikant weniger sein als die $\oh(\nu^2)$ Kanten, die im naiven Ansatz gespeichert werden müssen.
 
 \improvement{Beispiel S(x) und P(x)}
 
-Als nächstes führen wir eine Funktion ein, die die Transitivitätsgrenzen nach dem Hinzufügen einer einzelnen Kante aktualisiert. Wollen wir unseren Graphen um mehr als eine Kante ergänzen, fügen wir sie der Reihe nach hinzu und rufen jedes Mal inkrementell die Funktion auf. Das ist beispielsweise der Fall, wenn wir ein längeres Fragment zu unserem Alignment hinzufügen. Im Folgenden seien die transitive Hülle und die Transitivitätsgrenzen unseres ursprünglichen Graphen gegeben. Sei außerdem $(x,y)$ die Kante, die wir ergänzen.
-
-Nun wählen wir einen beliebigen, aber festen Knoten $u \in V$, dessen Transitivitätsgrenzen wir aktualisieren. $P(u)$ und $S(u)$ bezeichnen dabei die Grenzen vor und $P(u)'$ und $S(u)'$ die Grenzen nach dem Hinzufügen. Als erstes kann man sich überlegen, dass die Vorgängergrenzen immer nur wachsen kann, während die Nachfolgergrenze höchstens sinkt. Des Weiteren kann sich durch eine Kante von $x$ nach $y$ nur die Vorgängergrenzen von $u$ in einer Sequenz verändern, wenn $u$ ein Nachfolger von $y$ war und die Nachfolgergrenze, wenn es ein Vorgänger von $x$ war. Im ersten Fall, wählt man dann das Maximum der beiden möglichen Werte aus und in letzterem das Minimum.  
+Als nächstes führen wir eine Funktion \textrm{EdgeAddition} ein, die die Transitivitätsgrenzen nach dem Hinzufügen einer einzelnen Kante aktualisiert. Wollen wir unseren Graphen um mehr als eine Kante ergänzen, fügen wir sie der Reihe nach hinzu und rufen sukzessive die Funktion auf. Das ist beispielsweise der Fall, wenn wir ein längeres Fragment zu unserem Alignment hinzufügen. Im Folgenden seien die transitive Hülle und die Transitivitätsgrenzen unseres ursprünglichen Graphen gegeben. Sei außerdem $(x,y)$ die Kante, die wir ergänzen. Nun wählen wir einen beliebigen Knoten $u \in V$, dessen Transitivitätsgrenzen wir aktualisieren. $P(u)$ und $S(u)$ bezeichnen dabei die Grenzen vor und $P'(u)$ und $'S(u)$ die Grenzen nach dem Hinzufügen. Als erstes kann man sich überlegen, dass die Vorgängergrenzen ausschließlich wachsen können, während die Nachfolgergrenzen höchstens kleiner werden. Des Weiteren kann sich durch eine Kante von $x$ nach $y$ nur die Vorgängergrenzen von $u$ in einer Sequenz verändern, wenn $u$ ein Nachfolger von $y$ war und die Nachfolgergrenze, wenn $u$ ein Vorgänger von $x$ war. Im ersten Fall wählt wird das Maximum der beiden möglichen Werte ausgewählt und im letzteren das Minimum.  
 
 Mit diesen zwei Formeln können wir für ein $u \in P_i$ und jeden Pfad $P_j$ die neuen Transitivitätsgrenzen von $u$ bestimmen:
 
 \begin{equation}
 	P'(u)[j] = \begin{cases}
-			\max\{P(u)[j], P(x)[j]\}, & \text{falls $u$ Nachfolger von y war} \\
+			\max\{P(u)[j], P(x)[j]\}, & \text{falls $u$ Nachfolger von $y$ war} \\
 			P(u)[j], & \text{sonst}
 		\end{cases}
 \end{equation} 
 
 \begin{equation}
 	S'(u)[j] = \begin{cases}
-			\min\{S(u)[j], S(y)[j]\}, & \text{falls $u$ Vorgänger von x war} \\
+			\min\{S(u)[j], S(y)[j]\}, & \text{falls $u$ Vorgänger von $x$ war} \\
 			S(u)[j], & \text{sonst}
 		\end{cases}
 \end{equation}
 
-Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die transitive Hülle nicht verändert und dass wir die Transitivitätsgrenzen dementsprechend nicht anpassen müssen. Die obigen Beobachtungen können wir jetzt direkt in einen Algorithmus \textrm{EdgeAddition} münden lassen, indem wir über alle Paarkombinationen von Pfaden iterieren und dabei für jeden in Frage kommenden Knoten im jeweiligen Pfad die obigen Formeln anwenden. Wir wählen dabei die Knoten für die Nachfolgergrenze in absteigender und die für die Vorgängergrenze in aufsteigender Reihenfolge. Weil wir wissen, dass die Nachfolgergrenze immer nur sinken kann und wir die in Frage kommenden Knoten sortiert betrachten, wissen wir, dass der aktuelle Schleifendurchlauf abgebrochen werden kann, wenn die Nachfolgergrenze kleiner oder genauso groß ist, wie die von $y$. In diesem Fall würde sie eh nicht mehr aktualisiert werden und wir können uns die Berechnung sparen. Für die Vorgängergrenzen gehen wir analog vor. Jetzt haben wir alles Rüstzeug zusammen, um Satz \ref{satz:ssdp} zu beweisen.
+Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die transitive Hülle nicht verändert und dass wir die Transitivitätsgrenzen dementsprechend nicht anpassen müssen. Die obigen Beobachtungen können wir jetzt direkt in den Algorithmus \ref{alg:edgeaddition} \textrm{EdgeAddition} münden lassen, indem wir über alle Paarkombinationen von Pfaden iterieren und dabei für jeden in Frage kommenden Knoten im jeweiligen Pfad die obigen Formeln anwenden. Wir wählen dabei die Knoten für die Nachfolgergrenze in absteigender und die für die Vorgängergrenze in aufsteigender Reihenfolge. Weil wir wissen, dass die Nachfolgergrenze immer nur sinken kann und wir die in Frage kommenden Knoten sortiert betrachten, folgt, dass der aktuelle Schleifendurchlauf abgebrochen werden kann, wenn die Nachfolgergrenze kleiner oder genauso groß ist wie die von $y$. In diesem Fall würde sie nicht mehr aktualisiert werden und wir können uns die Berechnung sparen. Für die Vorgängergrenzen gehen wir analog vor. Jetzt haben sind wir in der Lage Satz \ref{satz:ssdp} zu beweisen.
 
 \begin{algorithm}
-	\caption{EdgeAddition}
+	\caption{Algorithmus EdgeAddition, der die transitive Hülle eines Graphen mit SSDP nach dem Hinzufügen einer Kante aktualisiert.}
 	\label{alg:edgeaddition}
 	\begin{algorithmic}[1]
 		\Require Gerichteter Graph $G$ mit SSDP $P_1, \dots, P_k$
@@ -790,7 +679,7 @@ Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die
 					\NFor{Pfad $P_j$}
 						\NFor{$u$ in $P_i$ startend von $P(x)[i]$ in absteigender Reihenfolge}
 							\If{$S(u)[j] > S(y)[j]$} \label{alg:succ_if}
-								\State{$S(u)[j]	\gets S(y)[j]$}\Comment{\small{aktualisiere Nachfolgergrenze}}
+								\State{$S(u)[j]	\gets S(y)[j]$}\Comment{\small{aktualisiere Nachfolgergrenze}}\label{algl:succ}
 							\Else
 								\State{breche den aktuellen Schleifendurchlauf für $u$ ab}						
 							\EndIf
@@ -798,7 +687,7 @@ Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die
 					\NFor{Pfad $P_j$}
 						\NFor{$u$ in $P_i$ startend von $S(y)[i]$ in aufsteigender Reihenfolge}
 							\If{$P(u)[j] < P(x)[j]$} \label{alg:pred_if}
-								\State{$P(u)[j]	\gets P(x)[j]$}\Comment{\small{aktualisiere Vorgängergrenze}}
+								\State{$P(u)[j]	\gets P(x)[j]$}\Comment{\small{aktualisiere Vorgängergrenze}}\label{algl:pred}
 							\Else
 								\State{breche den aktuellen Schleifendurchlauf für $u$ ab}						
 							\EndIf
@@ -809,43 +698,44 @@ Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die
 %\caption{Algorithmus zum Aktualisieren der transitiven Hülle, nachdem eine Kante $(x,y)$ zum Graphen hinzugefügt wurde}
 
 \begin{beweis}
-	Im schlimmsten Fall werden die ineinander verschachtelten Schleifen je $\oh(k^2 \cdot (\mu - \mu_0))$-mal durchlaufen. Das ergibt sich aus der Kombination aller $\oh(k^2)$ Paare von Pfaden und dadurch, dass es sein kann, dass nur für die ursprünglichen Kanten $\mu_0$ im Graphen und die sie verbindenden Knoten die if-Bedingungen \ref{alg:succ_if} und \ref{alg:pred_if} nicht erfüllt sind. \unsure{Ist das wirklich der Grund? Denk nochmal drüber nach.}
+	Im schlimmsten Fall werden die ineinander verschachtelten Schleifen je $\oh(k^2 \cdot (\mu - \mu_0))$-mal durchlaufen. Das ergibt sich aus der Kombination aller $\oh(k^2)$ Paare von Pfaden und, dass nur für die ursprünglichen Kanten $\mu_0$ im Graphen und die sie verbindenden Knoten die if-Bedingungen in Zeile \ref{alg:succ_if} und \ref{alg:pred_if} nicht erfüllt sein könnten.
 	
-	Wenn wir darüber nachdenken wie oft es wirklich zu einer Aktualisierung der Transitivitätsgrenzen kommen kann, stellen wir fest, dass diese je nach Graph möglicherweise viel geringer ist, als oben abgeschätzt. Um Redundanz zu vermeiden betrachten wir hier nur die Vorgängergrenzen. Für Nachfolgergrenzen gilt aus Symmetriegründen aber genau das selbe. Die einzige Situation, in der ein Knoten $v \in V$ die Vorgängergrenzen eines anderen Knotens $u$ verändern kann, ist wenn $v$ ein Vorgänger von $x$, aber kein Vorgänger von $u$ ist, bevor die Kante $(x,y)$ hinzugefügt wird (vgl. \ref{abb:kante_eing}). Gleichzeitig muss gelten, dass $u$ ein Nachfolger von $y$ ist. Das liegt daran, dass die Pfade $\mathcal{P}$ disjunkt sind. Also folgt, dass die Vorgängergrenzen von $u$ höchstens $\nu$-mal angepasst werden und es insgesamt nicht mehr als $\nu^2$ Anpassungen gibt. 
+	Bei genauerer Betrachtung wie oft es wirklich zu einer Aktualisierung der Transitivitätsgrenzen kommen kann, stellen wir fest, dass diese je nach Graph möglicherweise viel geringer ist als oben abgeschätzt. Um Redundanz zu vermeiden, betrachten wir hier nur die Vorgängergrenzen. Für Nachfolgergrenzen gilt aus Symmetriegründen genau das selbe. Die einzige Situation, in der ein Knoten $v \in V$ die Vorgängergrenzen eines anderen Knotens $u$ verändern kann, ist, wenn $v$ ein Vorgänger von $x$, aber kein Vorgänger von $u$ ist, bevor die Kante $(x,y)$ hinzugefügt wird (vgl. beispielsweise Abbildung \ref{abb:kante_eing}). Gleichzeitig muss $u$ ein Nachfolger von $y$ sein, da die Pfade $\mathcal{P}$ disjunkt sind. Also folgt, dass die Vorgängergrenzen von $u$ höchstens $\nu$-mal angepasst werden und es insgesamt nicht mehr als $\nu^2$ Anpassungen gibt. 
 
-	Sei $(w,v)$ eine Kante unseres Graphen, die auf keinem unserer Pfade aus dem SSDP liegt. Diese Kante kann die Vorgängergrenze von $u$ in der Methode \textrm{EdgeAddition} nur dann verändern, wenn $v$ ein Vorgänger von $x$ ist, aber kein Vorgänger von $u$, bevor die Kante $(x,y)$ addiert wird. Nach dieser Aktualisierung kann die Kante $(w,v)$ die Transitivitätsgrenzen von $u$ nie wieder anpassen. Das bedeutet, dass dies für einen Knoten $u$ höchstens so oft passieren, wie es Kanten gibt, die in keinem Pfad des SSDP liegen. Das sind genau $\oh(\mu - \mu_p)$ und es folgt, dass es insgesamt höchstens $\nu \cdot (\mu - \mu_p)$ solcher Aktualisierungen geben kann.
+	Sei $(w,v)$ eine Kante unseres Graphen, die auf keinem unserer Pfade aus dem SSDP liegt. Diese Kante kann die Vorgängergrenze von $u$ in der Methode \textrm{EdgeAddition} nur dann verändern, wenn $v$ ein Vorgänger von $x$ ist, aber kein Vorgänger von $u$, bevor die Kante $(x,y)$ hinzugefügt wird. Nach dieser Aktualisierung kann die Kante $(w,v)$ die Transitivitätsgrenzen von $u$ nie wieder anpassen. Das bedeutet, dass dies für einen Knoten $u$ höchstens so oft passiert, wie es Kanten gibt, die in keinem Pfad des SSDP liegen. Das sind genau $\oh(\mu - \mu_p)$ und es folgt, dass insgesamt höchstens $\nu \cdot (\mu - \mu_p)$ solcher Aktualisierungen vorgenommen werden.
 	
 	Da sowohl die Anzahl dieser Knoten, als auch der Kanten im Graph die Anzahl der Aktualisierungen beschränken, kann es nicht zu mehr Aktualisierungen als dem Minimum dieser beiden Werte kommen, also $\oh(\nu \cdot \min\{\nu, \mu - \mu_p\})$. Fasst man alles zusammen, so folgt die behauptete Laufzeit von $\oh(k^2 \cdot (\mu - \mu_0) + \nu \cdot \min\{\nu, \mu - \mu_p\})$.
 \end{beweis}
 
-\subsection{Konsistenzgrenzen durch Berechnung der transitiven Hülle}
+\subsection{Konsistenzgrenzen durch Berechnung der transitiven Hülle}\label{subsec:trans_hull}
 
-Jetzt möchten wir den allgemeinen graphtheoretischen Ansatz auf unser multiples Alignment anwenden. 
+Jetzt möchten wir den allgemeinen graphtheoretischen Ansatz auf unser multiples Alignment anwenden. Zunächst übertragen wir unsere Sequenzen $S = \{S_1, \dots, S_n\}$ auf einen Graphen $G=(V,E)$ mit SSDP. Hierbei ist jede Stelle aus $\mathcal{S}$ ein Knoten. Zwischen zwei Knoten $u$ und $v$ gibt es genau dann eine Kante $(u,v) \in E$, wenn die dazugehörigen Stellen aus der selben Sequenz kommen und direkt aufeinanderfolgen. Dadurch ergibt sich automatisch unser SSDP mit $n$ Pfaden, denn jede Sequenz liefert genau einen solchen und da jeder Knoten mit genau einer Sequenz assoziiert ist, spannen diese Pfade auch den ganzen Graphen. Den Pfad einer Sequenz $S_i$ bezeichnen wir als $P_i$. Jedes Mal, wenn wir in unserem Alignment von $S$ zwei Stellen $(i,p)$ und $(j,q)$ miteinander alignieren, fügen wir je eine Kante in beide Richtungen zwischen den dazugehörigen Knoten im Graphen ein.
 	
-\begin{definition}[Alignmentgraph]
-	Zunächst übertragen wir daher unsere Sequenzen $S = \{S_1, \dots, S_n\}$ auf einen Graphen mit SSDP. Hierbei ist jede Stelle aus $\mathcal{S}$ ein Knoten und zwischen zwei Knoten $u$ und $v$ gibt es genau dann eine Kante $(u,v) \in E$, wenn die dazugehörigen Stellen aus der selben Sequenz kommen und direkt aufeinanderfolgen. Dadurch ergibt sich automatisch unser SSDP mit n Pfaden, denn jede Sequenz liefert genau einen solchen und da jeder Knoten mit genau einer Sequenz assoziiert ist, spannen diese Pfade auch den ganzen Graphen. Den Pfad einer Sequenz $S_i$ bezeichnen wir als $P_i$.
-	Jedes Mal, wenn wir in unserem Alignment von $S$ zwei Stellen $(i,p)$ und $(j,q)$ miteinander alignieren, fügen wir je eine Kante in beide Richtungen zwischen den dazugehörigen Knoten im Graphen ein.
+\begin{definition}[Alignmentgraph\cite{a97}]
+	Den soeben definierten Graphen bezeichnen wir als \emph{Alignmentgraphen}.
 \end{definition}
 
-Gibt es zwischen $u$ und $v$ Pfade in beiden Richtungen ($(u,v)$ und $(v,u) \in E^*$), dann symbolisieren wir dies durch $u \rightleftharpoons^{*} v$. Wir sagen dann, dass $u$ und $v$ miteinander koinzidieren. 
+Gibt es zwischen $u$ und $v$ Pfade in beiden Richtungen ($(u,v)$ und $(v,u) \in E^*$), dann symbolisieren wir dies durch $u \rightleftharpoons^{*} v$. Wir sagen dann, dass $u$ und $v$ miteinander \emph{koinzidieren}. 
 
-Wie bereits angedeutet ist es bei einem Alignment möglich Lücken so in die Sequenzen einzufügen, dass genau die einander zugewiesenen Symbole übereinander stehen. Diese Tupel von Stellen nennen wir Zuweisungsspalten und zu ihnen zählen wir nur die miteinander alignierten Symbole. Andere, nicht mit den gerade betrachteten Stellen alignierte Symbole, gehören nicht zur Zuweisungsspalte, selbst wenn sie in der selben Spalte der Sequenzen stehen, nachdem man Lücken eingefügt hat.\improvement{Beispiel} Eine Menge von miteinander koinzidierenden Knoten nennen wir einen Anker, wenn es keine weiteren Knoten gibt, die mit Knoten aus dieser Menge koinzidieren.
+Wie bereits angedeutet ist es bei einem Alignment möglich Lücken so in die Sequenzen einzufügen, dass genau die einander zugewiesenen Symbole übereinander stehen. Diese Tupel von Stellen nennen wir \emph{Zuweisungsspalten} und zu ihnen zählen wir nur die miteinander alignierten Symbole. Andere, nicht mit den gerade betrachteten Stellen alignierte Symbole, gehören nicht zur Zuweisungsspalte, selbst wenn sie in der selben Spalte der Sequenzen stehen, nachdem man Lücken eingefügt hat.\improvement{Beispiel} Eine Menge von miteinander koinzidierenden Knoten nennen wir einen \emph{Anker}, wenn es keine weiteren Knoten gibt, die mit Knoten aus dieser Menge koinzidieren.
 
-Wir nennen einen Alignmentgraphen mit seinem SSDP $(G,P)$ auf einer Menge von Sequenzen $S$ genau dann \emph{regulär}, wenn die Relation auf der er beruht ein Alignment ist. Das heißt, wenn die Zuweisungen keine Inkonsistenzen enthalten.
+\begin{definition}[Regularität\cite{a97}]
+	Wir nennen einen Alignmentgraphen mit seinem SSDP $(G,P)$ auf einer Menge von Sequenzen $S$ genau dann \emph{regulär}, wenn die zugrundeliegende Relation ein Alignment ist. 
+\end{definition}
 
-\begin{lemma}
+\begin{lemma}[{\cite{a97}}]
 	Sei $G$ ein Alignmentgraph und $P$ das ihm zugewiesene SSDP. $(G,P)$ ist genau dann regulär, wenn jeder dazugehörige Anker höchstens einen Knoten aus jedem Pfad von $P$ hat. In diesem Fall entspricht ein Anker genau einer Zuweisungsspalte.
 \end{lemma}
 
 \begin{beweis}
-	\bewhin Angenommen jeder Anker unseres Alignmentgraphen $G$ enthält höchstens einen Knoten aus jedem Pfad in $P$. Betrachten wir jetzt die Halbordnung $\preceq^{*}$, bei der für zwei Anker $a$ und $b$ $a \preceq^{*} b$ genau dann gilt, wenn zwischen zwei Knoten $u \in a$ und $v \in b$ ein Pfad in $G$ existiert. Da keiner der Anker von $G$ zwei oder mehr verschiedene Knoten vom selben Pfad aus $P$ enthält und da auf ihnen unsere Halbordnung $\preceq^{*}$ existiert, können wir anhand dieser die Anker immer in Zuweisungsspalten übereinander schreiben und haben somit ein Alignment. $\preceq^{*}$ entspricht dabei genau der topologischen Sortierung auf $G$. Da auf $(G,P)$ ein Alignment existiert, ist es regulär.
+	\bewhin Angenommen, jeder Anker unseres Alignmentgraphen $G$ enthält höchstens einen Knoten aus jedem Pfad in $P$. Betrachten wir jetzt die Halbordnung $\preceq^{*}$, bei der für zwei Anker $a$ und $b$ $\:a \preceq^{*} b$ genau dann gilt, wenn zwischen zwei Knoten $u \in a$ und $v \in b$ ein Pfad in $G$ existiert. Da keiner der Anker von $G$ zwei oder mehr verschiedene Knoten vom selben Pfad aus $P$ enthält und da auf ihnen unsere Halbordnung $\preceq^{*}$ existiert, können wir anhand dieser die Anker immer in Zuweisungsspalten übereinander schreiben und erhalten somit ein Alignment. $\preceq^{*}$ entspricht dabei genau der topologischen Sortierung auf $G$. Da auf $(G,P)$ ein Alignment existiert, ist es regulär.
 	
-	\bewrueck Sei $G$ regulär. Dann ist die zugehörige Relation zwischen Knoten per Definition ein Alignment und für dieses können wir, wie wir wissen, die Zuweisungen in Zuweisungsspalten untereinander schreiben. Da dies möglich ist, sind alle Anker Zuweisungsspalten und keiner enthält zwei oder mehr Knoten aus der selben Sequenz.
+	\bewrueck Sei $G$ regulär. Dann ist die zugehörige Relation zwischen Knoten per Definition ein Alignment und für dieses können wir die Zuweisungen in Zuweisungsspalten untereinander schreiben. Somit sind alle Anker Zuweisungsspalten und keiner enthält zwei oder mehr Knoten aus derselben Sequenz.
 \end{beweis}
 
-Für den Rest des Abschnitts nehmen wir an, dass unser Alignmentgraph $G$ mit SSDP regulär ist. Ziel ist es jetzt zu überprüfen, ob er auch regulär bleibt, nachdem man eine Zuweisung zwischen zwei Stellen $s$ und $s$ und die korrespondierenden Kanten in $G$ hinzugefügt hat. Falls ja, dann nennen wir $s$ und $t$ alignierbar, einen Begriff, den wir zuvor bereits informell genutzt haben.
+Für den Rest des Abschnitts nehmen wir an, dass unser Alignmentgraph $G$ mit SSDP regulär ist. Ziel ist es jetzt zu überprüfen, ob er auch regulär bleibt, nachdem eine Zuweisung zwischen zwei Stellen $s$ und $t$ und die korrespondierenden Kanten in $G$ hinzugefügt wurde. Falls ja, dann nennen wir $s$ und $t$ \emph{alignierbar}, einen Begriff, den wir zuvor bereits informell genutzt haben.
 
-\begin{lemma}
+\begin{lemma}[{\cite{a97}}]
 	Zwei Stellen $s$ und $t$ mit den korrespondierenden Knoten $u$ und $v$ sind genau dann alignierbar, wenn eine der folgenden zwei Bedingungen eintritt:
 	
 	(1) Es existiert kein Pfad zwischen $u$ und $v$, das heißt $(u,v),(v,u) \notin E^{*}$,
@@ -856,55 +746,60 @@ Für den Rest des Abschnitts nehmen wir an, dass unser Alignmentgraph $G$ mit SS
 \begin{beweis}
 	Sei $G'$ der Graph nach dem Hinzufügen der Kanten $(u,v)$ und $(v,u)$. Wir müssen zeigen, dass $(G',P)$ genau dann regulär ist, wenn eine der beiden obigen Bedingungen eintritt.
 	
-	\bewhin (1) Angenommen es existiert kein Pfad zwischen $u$ und $v$ und seien $a_1$ und $a_2$ die dazugehörigen Anker der beiden Knoten. Es sei $a = a_1 \cup a_2$ der neue Anker von $G'$ nach dem Hinzufügen von $(u,v)$. Dann kann $a$ nicht mehrere Knoten vom selben Pfad aus $P$ enthalten, weil es sonst bereits einen Pfad von $u$ nach $v$ oder andersrum gegeben hätte und die Vorbedingung verletzt gewesen wäre. Das liegt daran, dass es zwischen diesen Knoten vom selben Pfad ja eine Kante gegeben haben müsste über die dann auch eine einseitige Verbindung zwischen $u$ und $v$ bestünde. Weil alle anderen Anker von $G$ nicht verändert werden, folgt, dass $G'$ regulär ist.
+	\bewhin (1) Angenommen, es existiert kein Pfad zwischen $u$ und $v$ und seien $a_1$ und $a_2$ die dazugehörigen Anker der beiden Knoten. Es sei $a = a_1 \cup a_2$ der neue Anker von $G'$ nach dem Hinzufügen von $(u,v)$. Dann kann $a$ nicht mehrere Knoten vom selben Pfad aus $P$ enthalten, weil es sonst bereits einen Pfad von $u$ nach $v$ oder von $v$ nach $u$ gegeben hätte und die Vorbedingung verletzt gewesen wäre. Das liegt daran, dass es zwischen diesen Knoten vom selben Pfad eine Kante gegeben haben müsste, über die dann auch eine einseitige Verbindung zwischen $u$ und $v$ bestünde. Weil alle anderen Anker von $G$ nicht verändert werden, folgt, dass $G'$ regulär ist.
 	
 	(2) Es gelte $u \rightleftharpoons^{*} v$ für $G$. Dann sind die Anker von $G'$ die selben wie von $G$, denn $u$ und $v$ haben bereits zuvor koinzidiert. Also ist auch $G'$ regulär, da $G$ es war.
 	
-	\bewrueck Die Rückrichtung des Beweises führen wir per Kontrapositionsbeweis. Es sei also nur eine einseitige Verbindung zwischen $u$ und $v$ gegeben. O.B.d.A. nehmen wir an, dass $(u,v) \in E^{*}$ und $(v,u) \notin E^{*}$. Da $G$ ein Alignmentgraph ist, gibt es zwangsläufig zwei Knoten $x$ und $y$, die auf dem selben Pfad $P_i$ aus $P$ liegen und über die der Pfad von $u$ nach $v$ läuft. Gäbe es keinen solchen Knoten, dann wäre die Vorbedingung nicht erfüllt, weil nur Kanten auf den Pfaden $P$ keine antiparallele Kante haben. Nach dem Hinzufügen der Kante $(u,v)$ mit dem resultierenden Alignmentgraphen $G'$ gäbe es dann einen Pfad von $y$ nach $x$, denn $(y,v), (v,u), (u,x) \in E^{*}$. Daraus folgt dann $x \rightleftharpoons^{*} y$, also eine Koinzidenz zwischen $x$ und $y$ vom selben Pfad $P_i$, wodurch die Regularität von $G'$ verletzt ist.
+	\bewrueck Die Rückrichtung des Beweises führen wir per Kontrapositionsbeweis. Es sei also nur eine einseitige Verbindung zwischen $u$ und $v$ gegeben. O.B.d.A. nehmen wir an, dass $(u,v) \in E^{*}$ und $(v,u) \notin E^{*}$. Da $G$ ein Alignmentgraph ist, gibt es zwangsläufig zwei Knoten $x$ und $y$, die auf dem selben Pfad $P_i$ aus $\mathcal{P}$ liegen und über die der Pfad von $u$ nach $v$ läuft. Gäbe es keinen solchen Knoten, dann wäre die Vorbedingung nicht erfüllt, weil nur Kanten auf den Pfaden $\mathcal{P}$ keine antiparallele Kante haben. Nach dem Hinzufügen der Kante $(u,v)$ mit dem resultierenden Alignmentgraphen $G'$ gäbe es dann einen Pfad von $y$ nach $x$, denn $(y,v), (v,u), (u,x) \in E^{*}$. Daraus folgt dann $x \rightleftharpoons^{*} y$, also eine Koinzidenz zwischen $x$ und $y$ vom selben Pfad $P_i$, wodurch die Regularität von $G'$ verletzt ist.
 \end{beweis}
 
-Sei ein Symbol $s$ aus der Sequenz $S_i$ mit korrespondierendem Knoten $v$ aus dem Alignmentgraphen gegeben. Dann sind genau die Symbole einer zweiten Sequenz $S_j$ mit $s$ alignierbar, die zwischen $P(v)[j] + 1$ und $S(v)[j] - 1$ liegen. Das liegt an einer Beobachtung, die wir bereits zu Beginn dieses Unterabschnitts gemacht haben: \enquote{Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $pos(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $pos(y) \geq S(x)[j]$.} Haben wir jetzt einen Knoten $u$ auf $P_j$ mit $P(v)[j] +1 \leq u \leq S(v)[j] - 1$, dann gilt $u \rightleftharpoons^{*} v$ und die beiden korrespondierenden Symbole sind miteinander alignierbar nach dem letzten Lemma. Diese Überprüfung ist in $\oh(1)$ Zeit möglich. Wie bereits angedeutet entsprechen die Transitivitätsgrenzen aus dem Kontext der Graphen genau denen auf unseren Sequenzen, denn der größte Vorgänger von $u$ auf dem Graphen $P_i$ $P(u)[i]$ ist wie wir gezeigt haben auch gleichzeitig auch der am weitesten rechts stehende Knoten $v$, für den in unserem Alignment $v \preceq_{\mathcal{A}} u$ gilt. Es folgt $P(u)[i] = Pred_{\mathcal{A}}(u,i)$ und für die Nachfolgergrenzen gilt das selbe.
+Sei ein Symbol $s$ aus der Sequenz $S_i$ mit korrespondierendem Knoten $v$ aus dem Alignmentgraphen gegeben. Dann sind genau die Symbole einer zweiten Sequenz $S_j$ mit $s$ alignierbar, die zwischen $P(v)[j] + 1$ und $S(v)[j] - 1$ liegen. Das liegt an einer Beobachtung, die wir bereits zu Beginn dieses Unterabschnitts gemacht haben: \enquote{Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $\operatorname{pos}(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $\operatorname{pos}(y) \geq S(x)[j]$.} Haben wir jetzt einen Knoten $u$ auf $P_j$ mit $P(v)[j] +1 \leq u \leq S(v)[j] - 1$, dann gilt $u \rightleftharpoons^{*} v$ und die beiden korrespondierenden Symbole sind nach dem letzten Lemma miteinander alignierbar. Diese Überprüfung ist in $\oh(1)$ Zeit möglich. Wie bereits angedeutet, entsprechen die Transitivitätsgrenzen aus dem Kontext der Graphen genau denen auf unseren Sequenzen, denn der größte Vorgänger $P(u)[i]$ von Knoten $u\in V$ auf dem Pfad $P_i$  ist, wie wir gezeigt haben, gleichzeitig auch der am weitesten rechts stehende Knoten $v$, für den in unserem Alignment $v \preceq_{\mathcal{A}} u$ gilt. Es folgt $P(u)[i] = \operatorname{Pred}_{\mathcal{A}}(u,i)$ und für die Nachfolgergrenzen gilt Analoges.
 
 \begin{korollar}
-	Für eine Menge an Sequenzen $S = \{S_1, \dots, S_n\}$ und zugehörigem Alignmentgraphen mit SSDP $(G,P)$ kann die transitive Hülle von $G$ in $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit und mit $\oh(n^2\cdot L)$ Speicherplatz erhalten werden, wenn $L$ die maximale Länge aller Sequenzen ist.
+	Für eine Menge an Sequenzen $S = \{S_1, \dots, S_n\}$ und zugehörigen Alignmentgraphen mit SSDP $(G,P)$ kann die transitive Hülle von $G$ in $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit und mit $\oh(n^2\cdot L)$ Speicherplatz erhalten werden, wobei $L$ die maximale Länge aller Sequenzen ist.
 \end{korollar}
 
 \begin{beweis}
-	Da $(G,P)$ regulär ist, enthält jeder Anker höchstens einen Pfad aus $P$. Die Anzahl der Kanten pro Anker ist also beschränkt durch die Anzahl an möglichen Paaren zwischen den Sequenzen mal zwei, denn für zwei alignierte Symbole werden zwischen den dazugehörigen Knoten auch zwei Kanten hinzugefügt. Von diesen $n\cdot (n-1)$ Kanten können aber nur $2\cdot (n-1)$-viele für Aktualisierungen im Algorithmus \textrm{EdgeAddition} sorgen. Das liegt daran, dass jeder Knoten nur mit $(n-1)$ neuen Knoten verbunden werden kann. Alle weiteren Kanten ändern die transitive Hülle des Alignmentgraphen nicht und werden direkt in Zeile \ref{alg:edgeaddition}\ref{alg:pathIf} abgefangen.
+	Da $(G,P)$ regulär ist, enthält jeder Anker höchstens einen Pfad aus $P$. Die Anzahl der Kanten pro Anker ist also beschränkt durch das Doppelte der Anzahl an möglichen Paaren zwischen den Sequenzen, denn für zwei alignierte Symbole werden zwischen den dazugehörigen Knoten auch zwei Kanten hinzugefügt. Von diesen $n\cdot (n-1)$ Kanten können aber nur $2\cdot (n-1)$-viele für Aktualisierungen im Algorithmus \textrm{EdgeAddition} sorgen. Das liegt daran, dass jeder Knoten nur mit $(n-1)$ neuen Knoten verbunden werden kann. Alle weiteren Kanten ändern die transitive Hülle des Alignmentgraphen nicht und werden direkt in Zeile \ref{alg:pathIf} von Algorithmus \ref{alg:edgeaddition} abgefangen.
 	
-	Die maximale Anzahl an möglichen Kanten wird erreicht, wenn man $\oh(L)$ Anker hat, die sich über möglichst viele Sequenzen spannen. Es ist zwar möglich, dass man deutlich mehr Anker hat (bis zu $\oh(n\cdot L)$), aber das ginge mit einer Reduzierung der zu überprüfenden Kanten einher. Im schlimmsten Fall kommt es also zu $\oh(n\cdot L)$ rechenintensiven Aufrufen von \textrm{EdgeAddition}. Erinnern wir uns an die Laufzeit von \textrm{EdgeAddition} auf unserem Graphen: $\oh(n^2 \cdot (\mu - \mu_0) + \nu \cdot \min\{\nu, \mu - \mu_p\})$, mit $\mu - \mu_0$ der Anzahl an hinzugefügten Verbindungen, $\nu$ der Anzahl an Stellen aller Sequenzen und $\mu - \mu_p$ der Anzahl an Kanten zwischen allen Knoten, die nicht zur gerade betrachteten Sequenz gehören. $\mu - \mu_p$ liegt im schlimmsten Fall über $\nu$, sodass dieses als Minimum im entsprechenden Term ausgewählt wird. Es gelten $\mu - \mu_0 \in \oh(n\cdot L)$ und $\nu \in \oh(n\cdot L)$. Die Laufzeit von \textrm{EdgeAddition} aller Kanten im rechenintensiven Fall liegt also in $\oh(n^3\cdot L + n^2\cdot L^2)$. Die anderen Kanten, die nicht in Zeile \ref{alg:edgeaddition}\ref{alg:pathIf} abgefangen werden, sind nur $\oh(n^2\cdot L)$-viele und da ihre Bearbeitung nur konstante Zeit kostet, beträgt die Laufzeit auch insgesamt $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit.
+	Die maximale Anzahl an möglichen Kanten wird erreicht, wenn $\oh(L)$ Anker vorliegen, die jeweils Symbole aus möglichst vielen Sequenzen enthalten. Es ist gibt zwar Alignments mit deutlich mehr Ankern (bis zu $\oh(n\cdot L)$), aber das ginge mit einer Reduzierung der zu überprüfenden Kanten einher. Im schlimmsten Fall kommt es also zu $\oh(n\cdot L)$ rechenintensiven Aufrufen von \textrm{EdgeAddition}. Erinnern wir uns an die Laufzeit von \textrm{EdgeAddition} auf unserem Graphen: $\oh(n^2 \cdot (\mu - \mu_0) + \nu \cdot \min\{\nu, \mu - \mu_p\})$, mit $\mu - \mu_0$ der Anzahl an hinzugefügten Verbindungen, $\nu$ der Anzahl an Stellen aller Sequenzen und $\mu - \mu_p$ der Anzahl an Kanten zwischen allen Knoten, die nicht zur gerade betrachteten Sequenz gehören. $\mu - \mu_p$ liegt im schlimmsten Fall über $\nu$, sodass dieses als Minimum im entsprechenden Term ausgewählt wird. Es gelten $\mu - \mu_0 \in \oh(n\cdot L)$ und $\nu \in \oh(n\cdot L)$. Die Laufzeit von \textrm{EdgeAddition} aller Kanten im rechenintensiven Fall liegt also in $\oh(n^3\cdot L + n^2\cdot L^2)$. Die anderen Kanten, die nicht in Zeile \ref{alg:edgeaddition}\ref{alg:pathIf} abgefangen werden, sind nur $\oh(n^2\cdot L)$-viele und da ihre Bearbeitung nur konstante Zeit kostet, beträgt die Laufzeit auch insgesamt $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit.
 	
-	Während des Algorithmus müssen wir stets unseren Alignmentgraphen vorhalten. Dieser enthält für jede Stelle einen Knoten, also $\oh(n\cdot L)$-viele und $\oh(n\cdot L)$ Kanten für unsere Pfade für jede Sequenz, sowie im Worst-Case für $\oh(L)$ Anker die jeweils bis zu $n^2$ Verbindungen zwischen den Symbolen dieser Zuweisungsspalte. Der benötigte Speicherplatz beträgt somit $\oh(n^2\cdot L)$.  
+	Während des Algorithmus müssen wir stets unseren Alignmentgraphen vorhalten. Dieser enthält für jede Stelle einen Knoten, also $\oh(n\cdot L)$-viele, und jeweils $\oh(n\cdot L)$ Kanten für den Pfad über jede Sequenz. Im Worst-Case kommen dazu jeweils bis zu $\oh(n^2)$ Verbindungen zwischen den Symbolen dieser Zuweisungsspalte für die $\oh(L)$ Anker. Der benötigte Speicherplatz beträgt somit $\oh(n^2\cdot L)$.  
 \end{beweis}
 
-Die Schlussfolgerung des letzten Satzes ist, dass es möglich ist die Transitivitäts- und somit Konsistenzgrenzen für ein ganzes multiples Alignment in $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit und mit $\oh(n^2\cdot L)$ Speicherplatz zu berechnen. 
+Die Schlussfolgerung des letzten Satzes ist, dass die Berechnung der Transitivitäts- und somit Konsistenzgrenzen für ein ganzes multiples Alignment in $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit und mit $\oh(n^2\cdot L)$ Speicherplatz möglich ist. 
 
-Durch ein paar geschickte Tricks ist es \cite{am00} gelungen die Laufzeit und den Speicherplatz für die DIALIGN-Implementierung mit GABIOS-LIB weiter zu verbessern. Wenn zwei Stellen aus $\mathcal{S}$ miteinander aligniert sind, dann folgt daraus automatisch, dass ihre Transitivitätsgrenzen identisch sind. Das nutzen wir aus, indem wir nicht die Grenzen für jede Stelle speichern und aktualisieren, sondern stattdessen für ganze Äquivalenzklassen $[x]_{\mathcal{A}}$ unseres Alignments.
+\subsection{Zusätzliche Einsparungen an Speicherplatz}
 
-Die zweite Verbesserung zielt auf verwaiste Stellen ab, das heißt solche, die mit keiner anderen aligniert sind. Sei $x = (i,p)$ ein solcher Waise aus der Sequenz $S_i$ an der Stelle $p$. Dann stimmen die Nachfolgergrenzen von $x$ genau mit denen der am weitesten links stehenden Stelle $y = (i,p')$ überein mit $p < p'$, sodass $y$ kein Waise ist. \improvement{Sobald Beispiele für Transitivitätsgrenzen gegeben sind, hier darauf verweisen}
-Jetzt genügt es ein Feld mit Werten $\text{nextClass}[x] = p'$ für alle Waisen unserer Sequenzen zu speichern. Dadurch ist es uns möglich die Transitivitätsgrenzen $Succ_{\mathcal{A}}(x,j)$ dieser Stellen in konstanter Zeit zu aktualisieren, wenn eine neue Zuweisung zwischen unseren Sequenzen und somit eine neue Kante in unserem Alignmentgraphen hinzugefügt wird. Möglicherweise kann man dieses Array auch durch eine Baum- oder andere Datenstruktur ersetzen, die es uns ermöglicht Einträge zu löschen, nachdem die entsprechenden Stellen keine Waisen mehr sind. Das verhindert, dass beim Alignieren von sehr ähnlichen Sequenzen viel Speicher durch Arrays belegt sind, deren Einträge nie wieder benötigt werden. Dieser Ansatz könnte insbesondere deshalb gut funktionieren, weil Stellen innerhalb eines Intervalls zwischen zwei Nichtwaisen die gleichen Vorgänger und Nachfolger haben. Man kann jetzt einen AVL- oder B-Baum pro Sequenz nehmen über der Ordnung der Startpunkte aller Intervalle. Jedes Knotenelement speichert dann zusätzlich seinen Endpunkt, sowie Vorgänger und Nachfolger. Wird ein neues Fragment ins Alignment eingefügt, wird das Intervall höchstens in zwei neue aufgeteilt, was die Löschung eines und das Hinzufügen zwei neuer Knoten zur Folge hätte. Asymptotisch wäre die Laufzeit vermutlich schlechter, aber durch den mitunter deutlich verringerten Speicherplatz in der Praxis letztendlich besser. Das weiterzuführen ginge aber zu weit und soll nicht Teil dieser Bachelorarbeit sein.
+Durch ein paar geschickte Beobachtungen ist es Abdedda\"im und Morgenstern gelungen, die Laufzeit und den Speicherplatz für die DIALIGN-Implementierung mit GABIOS-LIB weiter zu verbessern\cite{am00}. Diese werden im Folgenden kurz vorgestellt. Wenn zwei Stellen aus $\mathcal{S}$ miteinander aligniert sind, dann folgt daraus automatisch, dass ihre Transitivitätsgrenzen identisch sind. Das nutzen wir aus, indem wir nicht die Grenzen für jede Stelle speichern und aktualisieren, sondern stattdessen für ganze Äquivalenzklassen $[x]_{\mathcal{A}}$ unseres Alignments.
+
+Die zweite Verbesserung zielt auf verwaiste Stellen ab, das heißt solche, die mit keiner anderen aligniert sind. Sei $x = (i,p)$ ein solcher Waise aus der Sequenz $S_i$ an der Stelle $p$. Dann stimmen die Nachfolgergrenzen von $x$ genau mit denen der am weitesten links stehenden Stelle $y = (i,p')$ mit $p < p'$ überein, sodass $y$ kein Waise ist.
+Jetzt genügt es, ein Feld mit Werten \textrm{nextClass}$[x] = p'$ für alle Waisen unserer Sequenzen zu speichern. Dadurch ist es uns möglich, die Transitivitätsgrenzen $\operatorname{Succ}_{\mathcal{A}}(x,j)$ dieser Stellen in konstanter Zeit zu aktualisieren, wenn eine neue Zuweisung zwischen unseren Sequenzen und somit eine neue Kante in unserem Alignmentgraphen hinzugefügt wird. 
+
+Möglicherweise lässt sich dieses Array auch durch eine Baum- oder andere Datenstruktur ersetzen, die es uns ermöglicht Einträge zu löschen, nachdem die entsprechenden Stellen keine Waisen mehr sind. Das verhindert, dass beim Alignieren von sehr ähnlichen Sequenzen viel Speicher durch Arrays belegt ist, deren Einträge nie wieder benötigt werden. Dieser Ansatz könnte insbesondere deshalb gut funktionieren, weil Stellen innerhalb eines Intervalls zwischen zwei Nichtwaisen die gleichen Vorgänger und Nachfolger haben. Eine Möglichkeit wäre es, einen AVL- oder B-Baum pro Sequenz über der Ordnung der Startpunkte aller Intervalle zu konstruieren. Jedes Knotenelement speichert dann zusätzlich seinen Endpunkt, sowie Vorgänger und Nachfolger. Wird ein neues Fragment ins Alignment eingefügt, wird das Intervall höchstens in zwei neue aufgeteilt, was die Löschung eines und das Hinzufügen zwei neuer Knoten zur Folge hätte. Asymptotisch wäre die Laufzeit vermutlich schlechter, aber durch den mitunter deutlich verringerten Speicherplatz in der Praxis letztendlich besser. Das weiterzuführen ginge aber zu weit und soll hier nicht betrachtet werden.
 
 \subsection{Einbindung in DIALIGN}
 
-Auch wenn dieses Thema in \cite{am00} nicht behandelt wird, möchte ich kurz darauf eingehen was notwendig ist, um den obigen Ansatz zur Überprüfung von Konsistenz im konkreten Fall von DIALIGN anzuwenden. 
+Auch wenn dieses Thema in \cite{am00} nicht behandelt wird, möchte ich kurz darauf eingehen was für den obigen Ansatz zur Überprüfung von Konsistenz im konkreten nötig ist. 
 
-DIALIGN ist ein segmentbasiertes Verfahren für multiples Sequenzalignment. Unser Algorithmus \textrm{EdgeAddition} addiert aber immer nur eine einzelne Kante, die eine symbolweise Zuweisung darstellt, zu unserem Alignmentgraphen. Um sicherzustellen, dass ein ganzes Fragment, das wir zu unserem Alignment hinzufügen wollen, zu den bisher gewählten Zuweisungen konsistent ist, betrachten wir dieses auf der Ebene einfacher Paare von Stellen. Zunächst überprüfen wir für alle Stellenpaare nacheinander, ob diese alignierbar sind. Falls ja, können wir sie der Reihe nach zum Alignment mit \textrm{EdgeAddition} hinzufügen und falls nicht, würde das Fragment für Inkonsistenzen sorgen und wir fügen nichts hinzu. Die Überprüfung kann einmalig für alle Paare am Anfang durchgeführt werden, weil jedes Paar definitiv zu einem eigenen Anker gehört und die Alignierbarkeit nicht durch andere Paare desselben Fragments eingeschränkt wird.
+DIALIGN ist ein segmentbasiertes Verfahren für multiples Sequenzalignment. Unser Algorithmus \ref{algo:edge_addition} \textrm{EdgeAddition} ist lediglich in der Lage eine einzelne Kante, die eine symbolweise Zuweisung darstellt, zu unserem Alignmentgraphen hinzuzufügen. Um sicherzustellen, dass ein ganzes Fragment, zu den bisher gewählten Zuweisungen konsistent ist, betrachten wir dieses auf der Ebene einfacher Paare von Stellen. Zunächst überprüfen wir für alle Stellenpaare nacheinander, ob diese alignierbar sind. Falls ja, können wir sie der Reihe nach zum Alignment mit \textrm{EdgeAddition} hinzufügen und falls nicht, würde das Fragment für Inkonsistenzen sorgen und wir fügen nichts hinzu. Die Überprüfung kann einmalig für alle Paare am Anfang durchgeführt werden, weil jedes Paar definitiv zu einem eigenen Anker gehört und die Alignierbarkeit nicht durch andere Paare desselben Fragments eingeschränkt wird.
 
-Es mag sein, dass man für die \enquote{inneren} Stellen der Fragmente effizientere Wege finden kann, um diese zum Alignment hinzuzufügen als \textrm{EdgeAddition}. In diesem Fall wäre der Algorithmus nur für die beiden Randpaare unseres Fragments nötig.
+Es mag sein, dass man für die \enquote{inneren} Stellen der Fragmente effizientere Wege  als \textrm{EdgeAddition} finden kann, um diese zum Alignment hinzuzufügen. In diesem Fall wäre der Algorithmus nur für die beiden Randpaare unseres Fragments nötig.
 
 \subsection{Evaluation von DIALIGN mit der GABIOS-LIB}
 
-Nachdem die GABIOS-LIB in DIALIGN 2.1 integriert wurde, haben Abdedda\"im und Morgenstern die neue Version auf verschiedenen simulierten und echten Datensätzen getestet und mit der vorherigen verglichen \cite{am00}. Die Datensätze umfassten dabei bis zu 200 Sequenzen mit Durchschnittslängen von 100, 63,3 und 119,3 je nach Satz. 
+Nachdem die GABIOS-LIB in DIALIGN 2.1 integriert wurde, haben Abdedda\"im und Morgenstern die neue Version auf verschiedenen simulierten und echten Datensätzen getestet und mit der vorherigen Version verglichen \cite{am00}. Die Datensätze umfassten dabei bis zu 200 Sequenzen mit Durchschnittslängen von 100, 63,3 und 119,3 je nach Satz. 
 
 Es hat sich herausgestellt, dass die Laufzeit der alten Version sich proportional zu $n^4$ verhielt, während die von DIALIGN 2.1 sogar besser als $n^3$ war. Wie nicht anders zu erwarten, wurde der Unterschied bei steigender Anzahl der Sequenzen $n$ tendenziell größer. Die Laufzeit verbesserte sich im besten Fall um den Faktor 120 und im Durchschnitt etwa um den Faktor 10. Insbesondere die höhere Geschwindigkeit bei großen Alignments mit mehr Sequenzen ist erfreulich, da diese ohnehin komplexer zu berechnen sind.
 
-Ein weiterer Vorteil ist der verringerte Speicherverbrauch im Verhältnis zur alten Version 2.0. Zwar beträgt der Speicherverbrauch der neuen Implementierung im schlimmsten Fall nach wie vor $\oh(n^2\cdot L)$, was zuvor der echte benötigte Speicher war. In der Praxis sank er aber um einen konstanten Faktor abhängig von der Ähnlichkeit der alignierten Sequenzen (Ausnahme: randomisierte Sequenzen). Die Anzahl $n$ hatte hierbei keinen signifikanten Einfluss auf den Grad der Verbesserung. Dieser lag bei den nichtrandomisierten Datensätzen etwa zwischen fünf und zehn.
+Ein weiterer Vorteil ist der verringerte Speicherverbrauch im Verhältnis zur alten Version 2.0. Zwar beträgt der Speicherverbrauch der neuen Implementierung im schlimmsten Fall nach wie vor $\oh(n^2\cdot L)$, was zuvor der echte benötigte Speicher war. In der Praxis sank er aber um einen konstanten Faktor abhängig von der Ähnlichkeit der alignierten Sequenzen (ausgenommen randomisierte Sequenzen). Die Anzahl $n$ hatte hierbei keinen signifikanten Einfluss auf den Grad der Verbesserung. Dieser lag bei den nichtrandomisierten Datensätzen etwa zwischen fünf und zehn.
 
-\subsection{Beispiel Konsistenzgrenzen}
+\subsection{Beispiel zu Konsistenzgrenzen}
 
-Für die Konsistenzgrenzen brauchen wir in jedem Schritt unseren Alignmentgraphen, alle Äquivalenzklassen unseres Alignments, deren Vorgänger- und Nachfolgergrenzen und die Felder \textrm{nextClass} und \textrm{prevClass} für alle  Waisen. Der Übersichtlichkeit halber gebe ich nicht die ganzen Felder an, sondern nur die Werte ungleich \enquote{NIL}. Zur Erinnerung hier nochmal der aktuelle Zwischenstand mit unseren Fragmenten sortiert nach Überlappgewichten.
+Für die Konsistenzgrenzen brauchen wir in jedem Schritt unseren Alignmentgraphen, alle Äquivalenzklassen unseres Alignments, deren Vorgänger- und Nachfolgergrenzen und die Felder \textrm{nextClass} und \textrm{prevClass} für alle  Waisen. Der Übersichtlichkeit halber wurden nicht die ganzen Felder angegeben, sondern nur die Werte ungleich \enquote{NIL}. Zur Erinnerung hier nochmal der aktuelle Zwischenstand mit unseren Fragmenten sortiert nach Überlappgewichten.
 
-\begin{tabular}{r|c|c||r|c|c||r|c|c}
+\begin{tabular}{|r|c|c||r|c|c||r|c|c|}
+	\hline
 	Seq. & Frag. & Ü-Gew. & Seq. & Frag. & Ü-Gew. & Seq. & Frag. & Ü-Gew.\\
 	\hline
 	2 & \texttt{GTCADCTC} & \multirow{2}{*}{69} & 1 & \texttt{TCTCA} & \multirow{2}{*}{41} & 1 & \texttt{GT} &\multirow{2}{*}{20} \\
@@ -913,13 +808,14 @@ Für die Konsistenzgrenzen brauchen wir in jedem Schritt unseren Alignmentgraphe
 	4 & \texttt{TCAD} &                     & 2 & \texttt{CTCA} &                          & 4 & \texttt{TC} & \\
 	2 & \texttt{TCAD} & \multirow{2}{*}{44} & 1 & \texttt{DGTC} & \multirow{2}{*}{31} &    &   & \\
 	3 & \texttt{TCAD} &                     & 4 & \texttt{DGTC} &                     &    &   & \\
+	\hline
 \end{tabular}
 
 Diese werden wir jetzt der Reihe nach in unseren Alignmentgraphen einfügen, wenn die Konsistenz dadurch erhalten bleibt.
 
 \subsubsection{Ursprungszustand}
 
-Vor dem ersten Schritt enthält der Alignmentgraph genau unsere Stellen $\mathcal{S}$ mit den Pfaden $\mathcal{P}$, die der natürlichen Ordnung auf den jeweiligen Sequenzen entsprechen. Weil es noch keine Nichtwaisen gibt, können wir auch die Felder \textrm{nextClass} und \textrm{prevClass} zunächst ignorieren, da es keine Stellen gibt auf die diese verweisen können.
+Vor dem ersten Schritt enthält der Alignmentgraph genau unsere Stellen $\mathcal{S}$ mit den Pfaden $\mathcal{P}$, die der natürlichen Ordnung auf den jeweiligen Sequenzen entsprechen. Weil es noch keine Nichtwaisen gibt, können wir die Felder \textrm{nextClass} und \textrm{prevClass} zunächst ignorieren, da es keine Stellen gibt, auf die diese verweisen können.
 
 \begin{center}
 \begin{tikzpicture}[
@@ -1130,12 +1026,14 @@ Zu Beginn haben wir das Fragment ${\texttt{GTCADCTC}}\choose{\texttt{GTCADATC}}$
 Um zu verdeutlichen, dass durch doppelte Kanten verbundene Knoten im Sinne unseres Alignments äquivalent sind, wurden diese Verbindungen mit Äquivalenzpfeilen dargestellt.
 
 \small
-\begin{tabular}{r||c|c|c|c}
+\begin{tabular}{|r||c|c|c|c|}
+	\hline
 	Bezeichner 	& $[(2,1)]_{\mathcal{A}}$ & $[(2,2)]_{\mathcal{A}}$ & $[(2,3)]_{\mathcal{A}}$ & $[(2,4)]_{\mathcal{A}}$\\
-	Äqu.klasse  & $\{(2,1),(4,2)\}$	      & $\{(2,2),(4,3)\}$       & $\{(2,3),(4,4)\}$       & $\{(2,4),(4,5)\}$        \\
+	Äq.klasse  & $\{(2,1),(4,2)\}$	      & $\{(2,2),(4,3)\}$       & $\{(2,3),(4,4)\}$       & $\{(2,4),(4,5)\}$        \\
 	\hline
 	            & $[(2,5)]_{\mathcal{A}}$ & $[(2,6)]_{\mathcal{A}}$ & $[(2,7)]_{\mathcal{A}}$ & $[(2,8)]_{\mathcal{A}}$\\
-	            & $\{(2,5),(4,6)\}$       & $\{(2,6),(4,7)\}$       & $\{(2,7),(4,8)\}$       & $\{(2,8),(4,9)\}$  
+	            & $\{(2,5),(4,6)\}$       & $\{(2,6),(4,7)\}$       & $\{(2,7),(4,8)\}$       & $\{(2,8),(4,9)\}$  \\
+	\hline
 \end{tabular}
 \normalsize
 
@@ -1144,8 +1042,9 @@ Bei den Waisen werden nur die Stellen beeinflusst, die in den Sequenzen liegen, 
 \vspace{5pt}
 
 \small
-\begin{tabular}{r|cccc|cccc||r|c|r|c}
-	 & \multicolumn{4}{c|}{$Pred((i,p),j)$} & \multicolumn{4}{c||}{$Succ((i,p),j)$} & \multicolumn{2}{c|}{\textrm{prevClass}} & \multicolumn{2}{c}{\textrm{nextClass}} \\ \hline
+\begin{tabular}{|r|cccc|cccc||r|c|r|c|}
+	\hline
+	 & \multicolumn{4}{c|}{$\operatorname{Pred}((i,p),j)$} & \multicolumn{4}{c||}{$\operatorname{Succ}((i,p),j)$} & \multicolumn{2}{c|}{\textrm{prevClass}} & \multicolumn{2}{c}{\textrm{nextClass}} \\ \hline
 	\diagbox[dir=NW]{$(i,p)$}{$j$} & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 & $(i,p)$ & $P((i,p))$ & $(i,p)$ & $S((i,p))$ \\ \hline
 	$[(2,1)]_{\mathcal{A}}$ & 0 & 1 & 0 & 2 & 9 & 1 & 9 & 2 & $(2,9)$ & 8 & $(4,1)$ & 1 \\
 	$[(2,2)]_{\mathcal{A}}$ & 0 & 2 & 0 & 3 & 9 & 2 & 9 & 3 & & & & \\
@@ -1154,7 +1053,8 @@ Bei den Waisen werden nur die Stellen beeinflusst, die in den Sequenzen liegen, 
 	$[(2,5)]_{\mathcal{A}}$ & 0 & 5 & 0 & 6 & 9 & 5 & 9 & 6 & & & & \\
 	$[(2,6)]_{\mathcal{A}}$ & 0 & 6 & 0 & 7 & 9 & 6 & 9 & 7 & & & & \\
 	$[(2,7)]_{\mathcal{A}}$ & 0 & 7 & 0 & 8 & 9 & 7 & 9 & 8 & & & & \\
-	$[(2,8)]_{\mathcal{A}}$ & 0 & 8 & 0 & 9 & 9 & 8 & 9 & 9 & & & & 
+	$[(2,8)]_{\mathcal{A}}$ & 0 & 8 & 0 & 9 & 9 & 8 & 9 & 9 & & & & \\
+	\hline
 \end{tabular}
 \normalsize
 \vspace{5pt}
@@ -1282,12 +1182,14 @@ Als nächstes fügen wir das Fragment ${\texttt{TCAD}}\choose{\texttt{TCAD}}$ au
 \end{center}
 .
 \small
-\begin{tabular}{r||c|c|c|c}
+\begin{tabular}{|r||c|c|c|c|}
+	\hline
 	Bezeichner 	& $[(2,1)]_{\mathcal{A}}$ & $[(2,2)]_{\mathcal{A}}$ & $[(2,3)]_{\mathcal{A}}$ & $[(2,4)]_{\mathcal{A}}$\\
-	Äqu.klasse  & $\{(2,1),(4,2)\}$	      & $\{(2,2),(3,3),(4,3)\}$       & $\{(2,3),(3,4),(4,4)\}$       & $\{(2,4),(3,5),(4,5)\}$        \\
+	Äq.klasse  & $\{(2,1),(4,2)\}$	      & $\{(2,2),(3,3),(4,3)\}$       & $\{(2,3),(3,4),(4,4)\}$       & $\{(2,4),(3,5),(4,5)\}$        \\
 	\hline
 	& $[(2,5)]_{\mathcal{A}}$ & $[(2,6)]_{\mathcal{A}}$ & $[(2,7)]_{\mathcal{A}}$ & $[(2,8)]_{\mathcal{A}}$\\
-	& $\{(2,5),(3,6),(4,6)\}$       & $\{(2,6),(4,7)\}$       & $\{(2,7),(4,8)\}$       & $\{(2,8),(4,9)\}$  
+	& $\{(2,5),(3,6),(4,6)\}$       & $\{(2,6),(4,7)\}$       & $\{(2,7),(4,8)\}$       & $\{(2,8),(4,9)\}$ \\
+	\hline
 \end{tabular}
 \normalsize
 \vspace{5pt}
@@ -1296,8 +1198,9 @@ Zu aktualisieren sind die Transitivitätsgrenzen für die dritte Sequenz und die
 
 \vspace{5pt}
 \small
-\begin{tabular}{r|cccc|cccc||r|c|r|c}
-	& \multicolumn{4}{c|}{$Pred((i,p),j)$} & \multicolumn{4}{c||}{$Succ((i,p),j)$} & \multicolumn{2}{c|}{\textrm{prevClass}} & \multicolumn{2}{c}{\textrm{nextClass}} \\ \hline
+\begin{tabular}{|r|cccc|cccc||r|c|r|c|}
+	\hline
+	& \multicolumn{4}{c|}{$\operatorname{Pred}((i,p),j)$} & \multicolumn{4}{c||}{$\operatorname{Succ}((i,p),j)$} & \multicolumn{2}{c|}{\textrm{prevClass}} & \multicolumn{2}{c}{\textrm{nextClass}} \\ \hline
 	\diagbox[dir=NW]{$(i,p)$}{$j$} & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 & $(i,p)$ & $P((i,p))$ & $(i,p)$ & $S((i,p))$ \\ \hline
 	$[(2,1)]_{\mathcal{A}}$ & 0 & 1 & 0 & 2 & 9 & 1 & 3 & 2 & $(2,9)$ & 8 & $(4,1)$ & 1 \\
 	$[(2,2)]_{\mathcal{A}}$ & 0 & 2 & 3 & 3 & 9 & 2 & 3 & 3 & $(3,7)$ & 6 & $(3,1)$ & 3 \\
@@ -1306,7 +1209,8 @@ Zu aktualisieren sind die Transitivitätsgrenzen für die dritte Sequenz und die
 	$[(2,5)]_{\mathcal{A}}$ & 0 & 5 & 6 & 6 & 9 & 5 & 6 & 6 & & & & \\
 	$[(2,6)]_{\mathcal{A}}$ & 0 & 6 & 6 & 7 & 9 & 6 & 9 & 7 & & & & \\
 	$[(2,7)]_{\mathcal{A}}$ & 0 & 7 & 6 & 8 & 9 & 7 & 9 & 8 & & & & \\
-	$[(2,8)]_{\mathcal{A}}$ & 0 & 8 & 6 & 9 & 9 & 8 & 9 & 9 & & & &
+	$[(2,8)]_{\mathcal{A}}$ & 0 & 8 & 6 & 9 & 9 & 8 & 9 & 9 & & & & \\
+	\hline
 \end{tabular}
 \normalsize
 
@@ -1575,9 +1479,10 @@ Nun fügen wir das Fragment ${\texttt{TCTCA}}\choose{\texttt{TATCA}}$ aus der er
 \end{center}
 .
 \small
-\begin{tabular}{r||c|c|c}
+\begin{tabular}{|r||c|c|c|}
+	\hline
 	Bezeichner 	& $[(2,1)]_{\mathcal{A}}$ & $[(2,2)]_{\mathcal{A}}$ & $[(2,3)]_{\mathcal{A}}$ \\
-	Äqu.klasse  & $\{(2,1),(4,2)\}$	      & $\{(2,2),(3,3),(4,3),(1,6)\}$       & $\{(2,3),(3,4),(4,4),(1,7)\}$ \\
+	Äq.klasse  & $\{(2,1),(4,2)\}$	      & $\{(2,2),(3,3),(4,3),(1,6)\}$       & $\{(2,3),(3,4),(4,4),(1,7)\}$ \\
 	\hline
 	& $[(2,4)]_{\mathcal{A}}$ & $[(2,5)]_{\mathcal{A}}$ & $[(2,6)]_{\mathcal{A}}$ \\
 	& $\{(2,4),(3,5),(4,5),(1,8)\}$ & $\{(2,5),(3,6),(4,6)\}$       & $\{(2,6),(4,7)\}$ \\
@@ -1587,13 +1492,14 @@ Nun fügen wir das Fragment ${\texttt{TCTCA}}\choose{\texttt{TATCA}}$ aus der er
 	\hline
 	& $[(1,4)]_{\mathcal{A}}$ & & \\
 	& $\{(1,4),(3,1)\}$ & & \\
-	
+	\hline
 \end{tabular}
 
 \vspace{5pt}
 
-\begin{tabular}{r|cccc|cccc||r|c|r|c}
-	& \multicolumn{4}{c|}{$Pred((i,p),j)$} & \multicolumn{4}{c||}{$Succ((i,p),j)$} & \multicolumn{2}{c|}{\textrm{prevClass}} & \multicolumn{2}{c}{\textrm{nextClass}} \\ \hline
+\begin{tabular}{|r|cccc|cccc||r|c|r|c|}
+	\hline
+	& \multicolumn{4}{c|}{$\operatorname{Pred}((i,p),j)$} & \multicolumn{4}{c||}{$\operatorname{Succ}((i,p),j)$} & \multicolumn{2}{c|}{\textrm{prevClass}} & \multicolumn{2}{c}{\textrm{nextClass}} \\ \hline
 	\diagbox[dir=NW]{$(i,p)$}{$j$} & 1 & 2 & 3 & 4 & 1 & 2 & 3 & 4 & $(i,p)$ & $P((i,p))$ & $(i,p)$ & $S((i,p))$ \\ \hline
 	$[(2,1)]_{\mathcal{A}}$ & 0 & 1 & 0 & 2 & 6 & 1 & 3 & 2 & $(2,9)$ & 8 & $(4,1)$ & 1 \\
 	$[(2,2)]_{\mathcal{A}}$ & 6 & 2 & 3 & 3 & 6 & 2 & 3 & 3 & $(3,7)$ & 6 & $(3,1)$ & 3 \\
@@ -1604,21 +1510,22 @@ Nun fügen wir das Fragment ${\texttt{TCTCA}}\choose{\texttt{TATCA}}$ aus der er
 	$[(2,7)]_{\mathcal{A}}$ & 0 & 7 & 6 & 8 & 9 & 7 & 9 & 8 & & & & \\
 	$[(2,8)]_{\mathcal{A}}$ & 0 & 8 & 6 & 9 & 9 & 8 & 9 & 9 & & & & \\
 	$[(1,4)]_{\mathcal{A}}$ & 4 & 0 & 1 & 0 & 4 & 2 & 1 & 3 & & & & \\
-	$[(1,5)]_{\mathcal{A}}$ & 5 & 0 & 2 & 0 & 5 & 2 & 2 & 4 & & & & 
+	$[(1,5)]_{\mathcal{A}}$ & 5 & 0 & 2 & 0 & 5 & 2 & 2 & 4 & & & & \\
+	\hline
 \end{tabular}
 \normalsize
 
 \subsubsection{Weitere Fragmente}
 
-Die restlichen Fragmente unserer paarweisen Alignments sind leider nicht konsistent zu unserem bisherigen multiplen Alignment. Betrachtet man ${\texttt{GT}}\choose{\texttt{Gt}}$ zwischen $S_1$ und $S_2$, das als drittnächstes an der Reihe ist, stellt man fest, dass die jeweiligen Stellen nicht alignierbar sind. Für $(1,2) =$ (\texttt{G}) ist das Alignieren noch möglich, denn $\textrm{NextClass}((1,3)) = 4$ und $Succ((1,4),2) - 1 = 1$. Für $(1,3) =$ (\texttt{T}) gilt das nicht mehr, denn $Succ((1,4),2) - 1 = 1 < 2$. Für die anderen drei übrigen Fragmente gilt analoges.
+Die restlichen Fragmente unserer paarweisen Alignments sind leider nicht konsistent zu unserem bisherigen multiplen Alignment. Betrachtet man ${\texttt{GT}}\choose{\texttt{GT}}$ zwischen $S_1$ und $S_2$, das als drittnächstes an der Reihe ist, stellt man fest, dass die jeweiligen Stellen nicht alignierbar sind. Für $(1,2) =$ (\texttt{G}) ist das Alignieren vorerst möglich, denn $\textrm{NextClass}((1,3)) = 4$ und $\operatorname{Succ}((1,4),2) - 1 = 1$. Für $(1,3) =$ (\texttt{T}) gilt das nicht mehr, denn $\operatorname{Succ}((1,4),2) - 1 = 1 < 2$. Für die anderen drei übrigen Fragmente gilt Analoges.
 
 \section{Abschluss des Verfahrens}
 
-Nach diesem ersten Durchlauf unseres Ansatzes sind wir jedoch noch nicht fertig. Es kann beispielsweise sein, dass wir ein wichtiges Motiv haben, dass in mehreren Sequenzen vorkommt und somit Teil unseres multiplen Alignments sein sollte. Bei zwei Sequenzen war es jedoch nicht im paarweisen Alignment enthalten, weil stattdessen ein zufälliges, aber größeres Fragment ausgewählt wurde. Wenn wir Glück haben, findet dieses aber nicht den Weg in unser multiples Alignment, weil es im Vergleich zu anderen Fragmenten mit denen es inkonsistent war ein geringeres Gewicht hat. Deshalb führen wir zwischen allen Teilsequenzen, die durch unsere Ankerpunkte vorgegeben sind, unser DIALIGN-Verfahren nochmal durch und wiederholen dies, bis es keine neuen Fragmente mit positivem Gewicht mehr gibt \cite{mdw96}. In der Praxis stellt man fest, dass es in der Regel zu höchstens drei Iterationen kommt \cite{m99}. Wir können daher annehmen, dass die Anzahl an Durchläufen unseres Verfahrens konstant ist und für die Laufzeit nicht weiter in Betracht gezogen werden muss.
+Nach diesem ersten Durchlauf unseres Ansatzes sind wir jedoch noch nicht fertig. Es kann beispielsweise sein, dass wir ein wichtiges Motiv haben, dass in mehreren Sequenzen vorkommt und somit Teil unseres multiplen Alignments sein sollte. Bei zwei Sequenzen war es jedoch nicht im paarweisen Alignment enthalten, weil stattdessen ein zufälliges, aber größeres Fragment ausgewählt wurde. Wenn wir Glück haben, findet dieses aber nicht den Weg in unser multiples Alignment, weil es im Vergleich zu anderen Fragmenten, mit denen es inkonsistent war, ein geringeres Gewicht hat. Deshalb führen wir zwischen allen Teilsequenzen, die durch unsere Ankerpunkte vorgegeben sind, unser DIALIGN-Verfahren erneut durch und wiederholen dies, bis es keine neuen Fragmente mit positivem Gewicht mehr gibt \cite{mdw96}. In der Praxis stellt man fest, dass es üblicherweise zu höchstens drei Iterationen kommt \cite{m99}. Wir können daher annehmen, dass die Anzahl an Durchläufen unseres Verfahrens konstant ist und für die Laufzeit nicht weiter in Betracht gezogen werden muss.
 
 Denken wir an unser Beispiel zurück, dann stellen wir fest, dass das Fragment $f_{3,2,2} = $$ {\texttt{DG}}\choose{\texttt{DG}}$ aus der ersten und vierten Sequenz das positive Gewicht 2 hat. Es kann also unter Aktualisierung unseres Alignmentgraphen in unser multiples Alignment aufgenommen werden. Weitere geeignete Fragmente der Teilsequenzen gibt es nicht. Bei der nächsten Iteration stellt man demnach fest, dass kein neues Fragment ein positives Gewicht hat und wir können das Alignieren abbrechen.
 
-Als abschließenden Schritt müssen wir noch unsere Ausgabe vorbereiten. Das Ziel ist dabei alignierte Symbole als Groß- und Waisen als Kleinbuchstaben darzustellen. Zudem sollen die Zuweisungsspalten genau übereinander stehen, wofür unter Umständen das Einfügen  von Leerzeichen in die Ausgabesequenzen nötig ist. Hierfür sortieren wir alle Fragmente für jede Sequenz nach Startpunkten und traversieren diese, sowie die Sequenzen selbst, der Reihe nach durch, wobei wir bei Bedarf Lücken einfügen. Da die Länge jeder Sequenz in $\oh(1)$ ist, ist dies in $\oh(n^2\cdot L)$ möglich \cite{m99}. \improvement{Alignmentgraphen für das Einfügen von Lücken benutzen?}
+Als abschließenden Schritt müssen wir die Ausgabe des Alignments vorbereiten. Dabei werden alignierte Symbole als Groß- und Waisen als Kleinbuchstaben dargestellt. Zudem sollen die Zuweisungsspalten genau übereinander stehen, wofür unter Umständen das Einfügen  von Leerzeichen in die Ausgabesequenzen nötig ist. Hierfür sortieren wir alle Fragmente für jede Sequenz nach Startpunkten und traversieren diese, sowie die Sequenzen selbst, der Reihe nach durch. Bei Bedarf werden Lücken eingefügt. Da die Länge jeder Sequenz in $\oh(1)$ ist, ist dies in $\oh(n^2\cdot L)$ möglich \cite{m99}.
 
 Das finale Alignment unserer vier Beispielsequenzen mit DIALIGN 2.2 und einer $+3/-1$"=Substitutionsmatrix sieht dann so aus:
 \ttfamily
@@ -1632,6 +1539,8 @@ Das finale Alignment unserer vier Beispielsequenzen mit DIALIGN 2.2 und einer $+
 
 \subsection{Gesamtkomplexität}
 
+Weil wir jetzt das komplette DIALIGN-Verfahren kennen, können wir abschließend die Laufzeit aller Teilschritte zusammenfassen und die Gesamtkomplexität bestimmen.
+
 \begin{korollar}
 	Mit DIALIGN	lässt sich ein multiples Sequenzalignment in $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit und mit $\oh(N_{\max} + n^2\cdot L)$ Speicherplatz berechnen.
 \end{korollar}
@@ -1641,13 +1550,9 @@ Das finale Alignment unserer vier Beispielsequenzen mit DIALIGN 2.2 und einer $+
 	
 	Mit unserem speichereffizienten Algorithmus lässt sich jedes paarweise Alignment in $\oh(L^2)$ Zeit und mit $\oh(N_{\max}) \in \oh(L^2)$ Speicherplatz berechnen \cite{m02}. Da es $\oh(n^2)$ paarweise Alignments gibt, folgt hierfür die Laufzeit in $\oh(n^2\cdot L^2)$. Die Werte für unsere Fragmente speichern wir sortiert in einer $\oh(n^2)$ großen Tabelle, wobei jeder Eintrag auf die Liste von Fragmenten eines paarweisen Alignments verweist. Da jedes von diesen bis zu $\oh(L)$ Segmente enthält, folgt der Speicherverbrauch von $\oh(n^2\cdot L)$ zu diesem Zeitpunkt.
 	
-	Mit Hilfe unserer Tabelle und dem parallelen traversieren sortierter Listen können wir in-place und in $\oh(n^3\cdot L)$ Zeit unsere Überlappgewichte berechnen. Mein Verbesserung dieses Schrittes ist an dieser Stelle wichtig, weil sonst der naive Ansatz mit Laufzeit $\oh(n^4\cdot L^2)$ die Gesamtkomplexität dominiert hätte.
+	Mit Hilfe der Tabelle von sortierten Fragmenten und dem parallelen Traversieren über diese können wir in-place und in $\oh(n^3\cdot L)$ Zeit unsere Überlappgewichte berechnen. Diese Verbesserung von mir ist wichtig, weil sonst der naive Ansatz mit Laufzeit $\oh(n^4\cdot L^2)$ die Gesamtkomplexität dominiert hätte\cite{m99}. Bevor wir die Fragmente gierig in unser multiples Alignment einfügen können, müssen wir sie alle auf Basis ihrer Überlappgewichte sortieren. Mit einem effizienten Algorithmus wie beispielsweise Heapsort ist dies in $\oh(n^2\cdot L\cdot \log(n^2\cdot L))$ Rechenschritten möglich. 
 	
-	Bevor wir die Fragmente gierig in unser multiples Alignment einfügen können, müssen wir sie alle auf Basis ihrer Überlappgewichte sortieren. Mit einem effizienten Algorithmus wie beispielsweise Heapsort ist dies in $\oh(n^2\cdot L\cdot \log(n^2\cdot L))$ Rechenschritten möglich. 
-	
-	Im vorletzten Schritt von DIALIGN konstruieren wir unseren Alignmentgraphen und benutzen ihn, um die Transitivitäts- und somit die Konsistenzgrenzen zu berechnen. Er enthält $\oh(n\cdot L)$ Knoten mit bis zu $\oh(n^2\cdot L)$ Kanten und wie in Satz \ref{satz:ssdp} bewiesen kostet das Aktualisieren der Transitivitätsgrenzen $\oh(n^3\cdot L + n^2\cdot L^2)$ Rechenschritte. 
-	
-	Das vorbereiten der Ausgabe ist wie gerade erwähnt in $\oh(n^2\cdot L)$ Zeit möglich.
+	Im vorletzten Schritt von DIALIGN konstruieren wir unseren Alignmentgraphen und benutzen ihn, um die Transitivitäts- und somit die Konsistenzgrenzen zu berechnen. Er enthält $\oh(n\cdot L)$ Knoten mit bis zu $\oh(n^2\cdot L)$ Kanten und, wie in Satz \ref{satz:ssdp} bewiesen, kostet das Aktualisieren der Transitivitätsgrenzen $\oh(n^3\cdot L + n^2\cdot L^2)$ Rechenschritte. Das Vorbereiten der Ausgabe ist wie gerade erwähnt in $\oh(n^2\cdot L)$ Zeit möglich.
 	
 	Somit dominieren die Konsistenzgrenzen die Laufzeit und je nach $N_{\max}$ in unseren paarweisen Alignments auch den Speicherverbrauch. Es folgt die behauptete Laufzeit von $\oh(n^3\cdot L + n^2\cdot L^2)$ Rechenschritten und der benötigte Speicherplatz von $\oh(N_{\max} + n^2\cdot L)$. 
 \end{beweis}

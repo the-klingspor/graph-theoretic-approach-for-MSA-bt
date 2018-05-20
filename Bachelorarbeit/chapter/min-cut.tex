@@ -251,7 +251,8 @@ Wie man sieht, sind die Zusammenhangskomponenten unseres Inzidenzgraphen genau d
 
 Auch hier werden wir wieder unser Beispiel aus dem letzten Kapitel benutzen. Erinnern wir uns zunächst an die Fragmente der paarweisen Alignments. Die Überlappgewichte brauchen wir für diesen Schritt des Algorithmus nicht, weil wir versuchen mit Hilfe von minimalen Schnitten ein ähnliches aber besseres Ergebnis zu erreichen.
 
-\begin{tabular}{r|c|c||r|c|c||r|c|c}
+\begin{tabular}{|r|c|c||r|c|c||r|c|c|}
+	\hline
 	Seq. & Frag. & Ü-Gew. & Seq. & Frag. & Ü-Gew. & Seq. & Frag. & Ü-Gew.\\
 	\hline
 	2 & \texttt{GTCADCTC} & \multirow{2}{*}{16} & 1 & \texttt{TCTCA} & \multirow{2}{*}{7} & 1 & \texttt{GT} &\multirow{2}{*}{2} \\
@@ -260,6 +261,7 @@ Auch hier werden wir wieder unser Beispiel aus dem letzten Kapitel benutzen. Eri
 	4 & \texttt{TCAD} &                     & 2 & \texttt{CTCA} &                          & 4 & \texttt{TC} & \\
 	2 & \texttt{TCAD} & \multirow{2}{*}{8} & 1 & \texttt{DGTC} & \multirow{2}{*}{8} &    &   & \\
 	3 & \texttt{TCAD} &                     & 4 & \texttt{DGTC} &                     &    &   & \\
+	\hline
 \end{tabular}
 
 Diese Fragmente überführen wir direkt in einen Inzidenzgraphen bei denen die Stellen als Knoten und die Verbindungen in gemeinsamen Fragmenten als Kanten übertragen werden. Um die Übersichtlichkeit halbwegs zu wahren, wurden die Kanten jeder Zusammenhangskomponente jeweils in einer Farbe markiert.

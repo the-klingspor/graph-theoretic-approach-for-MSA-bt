@@ -87,6 +87,7 @@
 \usepackage{multirow}
 \usepackage{enumitem}
 \usepackage{diagbox}
+\usepackage{verbatimbox}
 \usepackage{tabto}
 % ===========================================================
 
@@ -283,6 +284,14 @@ qed=\qedsymbol]%
 %\bibliographystyle{german}
 \bibliographystyle{alphadin}
 \bibliography{Quellen}
+
+\appendix % Anhang
+
+\include{chapter/anhang_BLOSUM}
+
+\include{chapter/anhang_beispiel_paarweis}
+
+\listof{algorithm}{Algorithmenverzeichnis}
 
 % Eidesstattliche Erklärung
 \include{chapter/EidesstattlicheErklaerung}
