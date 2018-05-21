@@ -443,10 +443,9 @@ Bei einer genaueren Betrachtung des Problems hat sich herausgestellt, dass für 
 \newlength{\oldintextsep}
 \setlength{\oldintextsep}{\intextsep}
 
-\setlength\intextsep{0pt}
+%\setlength\intextsep{0pt}
 
 \begin{wraptable}{l}{6cm}\label{tab:ueberlapp}
-	\centering
 	\begin{tabular}{|r|cccc|}
 		\hline
 		2 & $A_{2,1}$ & & & \\
@@ -458,10 +457,10 @@ Bei einer genaueren Betrachtung des Problems hat sich herausgestellt, dass für 
 		\hline
 	\end{tabular}
 	\caption{\unskip}
-	Jeder Tabelleneintrag $A_{i,j}$ enthält Liste von Fragmenten
+	Jeder Tabelleneintrag $A_{i,j}$ enthält Liste von Fragmenten.
 \end{wraptable}
 
-\setlength{\intextsep}{\oldintextsep}
+%\setlength{\intextsep}{\oldintextsep}
 
 \begin{beweis}
 	Zwischen den $n$ Sequenzen gibt es ${{n}\choose{2}} \in \oh(n^2)$ paarweise Alignments. Wir können o.B.d.A annehmen, dass diese in einer Tabelle $A$ vorliegen, wobei $A_{i,j}$ die Fragmente des paarweisen Alignments zwischen $S_i$ und $S_j$ in einer sortierten Liste enthält. Das liegt daran, dass der soeben gesehen Algorithmus \ref{alg:speichereffizient} die Fragmente mit seinem Backtrackingprozess sortiert ausgibt. 
@@ -478,9 +477,8 @@ Genau genommen brauchen wir keine quadratische Tabelle, weil der Eintrag $A_{i,j
 
 Widmen wir uns der Berechnung von Überlappgewichten nach Satz \ref{satz:ueberlapp} in unserem Beispiel und betrachten dazu das Alignment zwischen den Sequenzen $S_1$ und $S_3$. Um das Gewicht zu aktualisieren, müssen wir alle Alignments auf Überlappungen überprüfen, in denen eine der beiden Sequenzen vorkommt. 
 
-%\setlength\intextsep{2pt}
-\begin{wraptable}{r}{6cm}
-	\centering
+%\setlength\intextsep{0pt}
+\begin{wraptable}{l}{5cm}
 	\begin{tabular}{|r|ccc|}
 		\hline
 		2 & \cellcolor{red} $A_{2,1}$ & & \\
@@ -496,9 +494,7 @@ Widmen wir uns der Berechnung von Überlappgewichten nach Satz \ref{satz:ueberla
 
 %\setlength{\intextsep}{\oldintextsep}
 
-Da unsere Tabelle \ref{tab:ueberlapp_bsp} nicht vollständig ist, reicht es nicht, die Einträge derselben Spalte und Zeile zu überprüfen, weil diese unter Umständen nicht vollständig ist. Stattdessen müssen wir alle Einträge in der ersten und dritten Spalte oder Zeile betrachten. Dann gehen wir alle Fragmente der Reihe nach durch und entscheiden anhand der Start- und Endpunkte in der gemeinsamen Sequenz, ob es Überschneidungen gibt. Falls ja, bestimmen wir diese und addieren das Gewicht zu dem unseres Fragments.
-
-Rufen wir uns den bisherigen Stand der Scores der paarweisen Alignments in Erinnerung:
+Da unsere Tabelle \ref{tab:ueberlapp_bsp} nicht vollständig ist, reicht es nicht, die Einträge derselben Spalte und Zeile zu überprüfen, weil diese unter Umständen nicht vollständig ist. Stattdessen müssen wir alle Einträge in der ersten und dritten Spalte oder Zeile betrachten. Dann gehen wir alle Fragmente der Reihe nach durch und entscheiden anhand der Start- und Endpunkte in der gemeinsamen Sequenz, ob es Überschneidungen gibt. Falls ja, bestimmen wir diese und addieren das Gewicht zu dem unseres Fragments. Rufen wir uns den bisherigen Stand der Scores der paarweisen Alignments in Erinnerung:
 
 \addvbuffer[8pt]{\begin{tabular}{|r|c|c||r|c|c|}
 	\hline
@@ -566,6 +562,12 @@ In der ersten Version von DIALIGN wurden diese Konsistenzgrenzen für alle Stell
 
 Weil die Laufzeit im Vergleich zu anderen Alignmentverfahren, wie beispielsweise Clustal W, sehr schlecht war, entschied man sich den von \cite{a97} veröffentlichten und in der GABIOS-LIB (Greedy Alignment of BIOlogical Sequences LIBrary) implementierten besseren Ansatz auch in DIALIGN	einzubauen. Wie wir im Folgenden sehen werden, ist es möglich das Problem der Konsistenzgrenzen durch den Erhalt der transitiven Hülle eines Graphen abzubilden. Dadurch kann man die Fragmente deutlich effizienter der Reihe nach in unser multiples Alignment einfügen, wodurch sich die praktische Laufzeit in etwa um den Faktor zehn verbessern lässt \cite{am00}. 
 
+\begin{figure}[H]
+	\centering
+	\includegraphics[]{chapter/trans_grenzen.png}
+	\caption{Die Transitivitätsgrenzen des Knotens $e_5$ in einem Graphen mit SSDP bei dem jede Zeile einem der Pfade entspricht\cite{a97}.}\label{abb:trans_grenzen}
+\end{figure}
+
 \begin{definition}[Transitivitätsgrenzen\cite{am00}]
 	Die sogenannten \emph{Transitivitätsgrenzen} erlauben es uns die Konsistenzgrenzen als graphtheoretisches Problem zu verstehen. Wir definieren zu unserer Stelle $s$ die \emph{Vorgängergrenze} $\operatorname{Pred}_{\mathcal{A}}(s,i)$ als die Stelle $y$ aus der Sequenz $S_i$, die von allen Stellen mit $y \preceq_{\mathcal{A}} s$ am weitesten rechts steht. Analog wird die \emph{Nachfolgergrenze} $\operatorname{Succ}_{\mathcal{A}}(s,i)$ als am weitesten links stehende Stelle mit $s \preceq_{\mathcal{A}} y$ festgelegt.
 	\begin{equation}
@@ -576,7 +578,7 @@ Weil die Laufzeit im Vergleich zu anderen Alignmentverfahren, wie beispielsweise
 	\end{equation}
 \end{definition}
 
-Zwischen Transitivitäts- und Konsistenzgrenzen herrscht ein direkter Zusammenhang. Ist eine Stelle $s \in \mathcal{S}$ bereits mit einer anderen Stelle aus der Sequenz $S_i \in S$ aligniert, dann gibt es zwischen allen vier Grenzen keinen Unterschied und es gilt:
+Abbildung \ref{abb:trans_grenzen} zeigt ein Beispiel für die Transitivitätsgrenzen eines Knotens in einem Graphen. Wie man sieht, entsprechen diese genau der Position des Knotens in dem Pfad zu dem er selbst gehört. Für den dritten Pfad zeigt die Vorgängergrenze tatsächlich vor das erste Element, weil es kein Element $[3,p]$ mit $[3,p] \preceq_{\mathcal{A}} e_5$ gibt. Zwischen Transitivitäts- und Konsistenzgrenzen herrscht ein direkter Zusammenhang. Ist eine Stelle $s \in \mathcal{S}$ bereits mit einer anderen Stelle aus der Sequenz $S_i \in S$ aligniert, dann gibt es zwischen allen vier Grenzen keinen Unterschied und es gilt:
 
 \begin{equation}
 	\operatorname{\operatorname{Pred}}_{\mathcal{A}}(s,i) = \operatorname{\operatorname{Succ}}_{\mathcal{A}}(s,i) = \underline{b}_\mathcal{A}(s,i) = \overline{b}_\mathcal{A}(s,i) = p
@@ -591,22 +593,22 @@ Gibt es hingegen keine Stelle in $S_i$, die bereits $s$ zugewiesen wurde, dann u
 \end{split}
 \end{equation}
 
-Man kann also sagen, dass Transitivitätsgrenzen und Konsistenzgrenzen äquivalent sind, denn wenn man das aktuelle Alignment kennt, kann man aus dem einen das jeweils andere bestimmen. Daraus folgt auch, dass man mit beiden darstellen kann, ob zwei Stellen miteinander alignierbar sind oder nicht. \improvement{Beispiel aus Paper ersetzen für Äq. Trans-und Konsgrenzen}
-
-\scriptsize
-\begin{wrapfigure}{r}{8cm}
-\begin{framed}\raggedleft
-	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
-	& s_1 \arrow[r] & s_2 \arrow[r] & s_3 \arrow[r] & s_4 &  \\
-	s'_1 \arrow[r] & s'_2 \arrow[r] & s_3' \arrow[r] & s_4' \arrow[r] & s_5' \arrow[r] & s_6' \\
-	s_1'' \arrow[r] & s_2'' \arrow[r] & s_3'' \arrow[r] & s_4'' \arrow[r] & s_5'' & 
-	\end{tikzcd}
-	\caption{Graph dreier Sequenzen mit den durch sie induzierten Pfaden}\label{abb:SSDP}
-\end{framed}
+%\setlength{\intextsep}{0pt}
+\begin{wrapfigure}{r}{7cm}
+	\centering
+		\scriptsize
+		\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize, show background rectangle]
+		& s_1 \arrow[r] & s_2 \arrow[r] & s_3 \arrow[r] & s_4 &  \\
+		s'_1 \arrow[r] & s'_2 \arrow[r] & s_3' \arrow[r] & s_4' \arrow[r] & s_5' \arrow[r] & s_6' \\
+		s_1'' \arrow[r] & s_2'' \arrow[r] & s_3'' \arrow[r] & s_4'' \arrow[r] & s_5'' & 
+		\end{tikzcd}
+		\normalsize
+		\caption{SSDP über drei Sequenzen.}
+		\label{abb:SSDP}
 \end{wrapfigure}
-\normalsize
+%\setlength{\intextsep}{\oldintextsep}
 
-In den nächsten beiden Abschnitten wird eine Technik vorgestellt, mit der man in konstanter Zeit entscheiden kann, ob zwei Stellen miteinander alignierbar sind, sowie einen inkrementellen Algorithmus, der es uns in angemessener Zeit erlaubt, ein Alignment zwischen zwei Stellen in unser multiples Alignment hinzuzufügen. Das wird erreicht, indem wir unseren Stellenraum $\mathcal{S}$ als gerichteten Graph auffassen, in dem die einzelnen Stellen Knoten entsprechen und jede Sequenz einen Pfad durch den Graphen darstellt. Jedes Mal, wenn eine Zuweisung zwischen zwei Stellen ausgewählt wird, fügen wir eine neue Kante zu unserem Graphen hinzu. Ziel ist es in jedem Schritt unseres Verfahrens die transitive Hülle des Graphen zu kennen, denn mit ihr lässt sich entscheiden, ob das Fragment, das wir gerade wählen wollen, konsistent zum bisherigen Alignment ist oder nicht. Als erstes wird der Algorithmus auf allgemeinen Graphen vorgestellt, bevor wir zeigen, wir wie ihn im Kontext des Multiple-Sequence-Alignment-Problems anwenden können.
+Man kann also sagen, dass Transitivitätsgrenzen und Konsistenzgrenzen äquivalent sind, denn wenn das aktuelle Alignment bekannt ist, kann mit dem einen das jeweils andere bestimmt werden. Daraus folgt auch, dass man mit beiden darstellen kann, ob zwei Stellen miteinander alignierbar sind oder nicht. In den nächsten beiden Abschnitten wird eine Technik vorgestellt, mit der man in konstanter Zeit entscheiden kann, ob zwei Stellen miteinander alignierbar sind, sowie einen inkrementellen Algorithmus, der es uns in angemessener Zeit erlaubt, ein Alignment zwischen zwei Stellen in unser multiples Alignment hinzuzufügen. Das wird erreicht, indem wir unseren Stellenraum $\mathcal{S}$ als gerichteten Graph auffassen, in dem die einzelnen Stellen Knoten entsprechen und jede Sequenz einen Pfad durch den Graphen darstellt. Jedes Mal, wenn eine Zuweisung zwischen zwei Stellen ausgewählt wird, fügen wir eine neue Kante zu unserem Graphen hinzu. Ziel ist es in jedem Schritt unseres Verfahrens die transitive Hülle des Graphen zu kennen, denn mit ihr lässt sich entscheiden, ob das Fragment, das wir gerade wählen wollen, konsistent zum bisherigen Alignment ist oder nicht. Als erstes wird der Algorithmus auf allgemeinen Graphen vorgestellt, bevor wir zeigen, wir wie ihn im Kontext des Multiple-Sequence-Alignment-Problems anwenden können.
 
 \subsection{Berechnung der transitiven Hülle eines gerichteten Graphen}
 
@@ -625,28 +627,22 @@ In dem Kontext des Multiple-Sequence-Alignment-Problems lässt sich ein solches 
 	Es sei ein SSDP mit $k$ disjunkten Pfaden gegeben. Dann lässt sich die transitive Hülle $G^*$ unseres Graphen in $\oh(k^2\cdot(\mu - \mu_0) + \nu \cdot \min\{\nu, (\mu - \mu_p)\})$ Zeit und mit $\oh(k\cdot \nu)$ Speicherplatz erhalten, nachdem Kanten zu ihm hinzugefügt wurden.
 \end{satz}
 
-Bevor wir diesen Satz beweisen können, brauchen wir einige Vorüberlegungen. Für einen Knoten $x$ sei $P(x)$ das Tupel, das in jedem Eintrag $P(x)[i]$ für $1\leq i \leq k$ die Anzahl an Vorgängern von $x$ im Pfad $P_i$ angibt. In anderen Worten ist $P(x)[i]$ die maximale Position eines Vorgängers in $P_i$. Analog definieren wir $S(x)$, wobei  $S(x)[i]$ der minimale Nachfolger von $x$ in $S_i$ ist. In Abschnitt \ref{subsec:trans_hull} werden wir zeigen, dass $S(x)$ und $P(x)$ genau den Transitivitätsgrenzen aus dem Kontext von Alignments entsprechen und wir verwenden diese Begriffe synonym. Gibt es keine Vorgänger oder Nachfolger, setzen wir diese Werte auf 0 beziehungsweise auf $|P_i|+1|$ im Fall des Pfads $P_i$.
+Bevor wir diesen Satz beweisen können, brauchen wir einige Vorüberlegungen. Für einen Knoten $x$ sei $P(x)$ das Tupel, das in jedem Eintrag $P(x)[i]$ für $1\leq i \leq k$ die Anzahl an Vorgängern von $x$ im Pfad $P_i$ angibt. In anderen Worten ist $P(x)[i]$ die maximale Position eines Vorgängers in $P_i$. Analog definieren wir $S(x)$, wobei  $S(x)[i]$ der minimale Nachfolger von $x$ in $S_i$ ist. In Abschnitt \ref{subsec:trans_hull} werden wir zeigen, dass $S(x)$ und $P(x)$ genau den Transitivitätsgrenzen aus dem Kontext von Alignments entsprechen und wir verwenden diese Begriffe synonym. Gibt es keine Vorgänger oder Nachfolger, setzen wir diese Werte auf 0 beziehungsweise auf $|P_i|+1|$ im Fall des Pfads $P_i$. Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $\operatorname{pos}(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $\operatorname{pos}(y) \geq S(x)[j]$. Wie man sieht, ist es also möglich die transitive Hülle auf $\oh(k \cdot \nu)$ Speicherplatz zu sichern, wenn ein SSDP mit $k$ Pfaden vorliegt. Das kann signifikant weniger sein als die $\oh(\nu^2)$ Kanten, die im naiven Ansatz gespeichert werden müssen.
 
-\setlength{\intextsep}{0pt}
-\scriptsize
 \begin{wrapfigure}{r}{7cm}
-\begin{framed}\centering
-	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize]
+	\centering
+	\scriptsize
+	\begin{tikzcd}[/tikz/commutative diagrams/sep=scriptsize, show background rectangle]
 	{} \arrow[rrr] &  &  & y \arrow[r] & \dots \arrow[r] & u \arrow[r] & {} \\
 	{} \arrow[rr] &  & x \arrow[rrrr] \arrow[ru, red] &  &  &  & {} \\
 	{} \arrow[r] & v \arrow[ru] \arrow[rrrrr] &  &  &  &  & {} \\
 	{} \arrow[r] & w \arrow[u] \arrow[rrrrr] &  &  &  &  & {}
 	\end{tikzcd}
+	\normalsize
 	\caption{Füge $(x,y)$ ein.}
 	\label{abb:kante_eing}
-\end{framed}
 \end{wrapfigure}
-\normalsize
 \setlength{\intextsep}{\oldintextsep}
-
-Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $\operatorname{pos}(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $\operatorname{pos}(y) \geq S(x)[j]$. Wie man sieht, ist es also möglich die transitive Hülle auf $\oh(k \cdot \nu)$ Speicherplatz zu sichern, wenn ein SSDP mit $k$ Pfaden vorliegt. Das kann signifikant weniger sein als die $\oh(\nu^2)$ Kanten, die im naiven Ansatz gespeichert werden müssen.
-
-\improvement{Beispiel S(x) und P(x)}
 
 Als nächstes führen wir eine Funktion \textrm{EdgeAddition} ein, die die Transitivitätsgrenzen nach dem Hinzufügen einer einzelnen Kante aktualisiert. Wollen wir unseren Graphen um mehr als eine Kante ergänzen, fügen wir sie der Reihe nach hinzu und rufen sukzessive die Funktion auf. Das ist beispielsweise der Fall, wenn wir ein längeres Fragment zu unserem Alignment hinzufügen. Im Folgenden seien die transitive Hülle und die Transitivitätsgrenzen unseres ursprünglichen Graphen gegeben. Sei außerdem $(x,y)$ die Kante, die wir ergänzen. Nun wählen wir einen beliebigen Knoten $u \in V$, dessen Transitivitätsgrenzen wir aktualisieren. $P(u)$ und $S(u)$ bezeichnen dabei die Grenzen vor und $P'(u)$ und $'S(u)$ die Grenzen nach dem Hinzufügen. Als erstes kann man sich überlegen, dass die Vorgängergrenzen ausschließlich wachsen können, während die Nachfolgergrenzen höchstens kleiner werden. Des Weiteren kann sich durch eine Kante von $x$ nach $y$ nur die Vorgängergrenzen von $u$ in einer Sequenz verändern, wenn $u$ ein Nachfolger von $y$ war und die Nachfolgergrenze, wenn $u$ ein Vorgänger von $x$ war. Im ersten Fall wählt wird das Maximum der beiden möglichen Werte ausgewählt und im letzteren das Minimum.  
 
@@ -717,7 +713,7 @@ Jetzt möchten wir den allgemeinen graphtheoretischen Ansatz auf unser multiples
 
 Gibt es zwischen $u$ und $v$ Pfade in beiden Richtungen ($(u,v)$ und $(v,u) \in E^*$), dann symbolisieren wir dies durch $u \rightleftharpoons^{*} v$. Wir sagen dann, dass $u$ und $v$ miteinander \emph{koinzidieren}. 
 
-Wie bereits angedeutet ist es bei einem Alignment möglich Lücken so in die Sequenzen einzufügen, dass genau die einander zugewiesenen Symbole übereinander stehen. Diese Tupel von Stellen nennen wir \emph{Zuweisungsspalten} und zu ihnen zählen wir nur die miteinander alignierten Symbole. Andere, nicht mit den gerade betrachteten Stellen alignierte Symbole, gehören nicht zur Zuweisungsspalte, selbst wenn sie in der selben Spalte der Sequenzen stehen, nachdem man Lücken eingefügt hat.\improvement{Beispiel} Eine Menge von miteinander koinzidierenden Knoten nennen wir einen \emph{Anker}, wenn es keine weiteren Knoten gibt, die mit Knoten aus dieser Menge koinzidieren.
+Wie bereits angedeutet ist es bei einem Alignment möglich Lücken so in die Sequenzen einzufügen, dass genau die einander zugewiesenen Symbole übereinander stehen. Diese Tupel von Stellen nennen wir \emph{Zuweisungsspalten} und zu ihnen zählen wir nur die miteinander alignierten Symbole. Andere, nicht mit den gerade betrachteten Stellen alignierte Symbole, gehören nicht zur Zuweisungsspalte, selbst wenn sie in der selben Spalte der Sequenzen stehen, nachdem man Lücken eingefügt hat. Eine Menge von miteinander koinzidierenden Knoten nennen wir einen \emph{Anker}, wenn es keine weiteren Knoten gibt, die mit Knoten aus dieser Menge koinzidieren.
 
 \begin{definition}[Regularität\cite{a97}]
 	Wir nennen einen Alignmentgraphen mit seinem SSDP $(G,P)$ auf einer Menge von Sequenzen $S$ genau dann \emph{regulär}, wenn die zugrundeliegende Relation ein Alignment ist. 
@@ -769,7 +765,7 @@ Sei ein Symbol $s$ aus der Sequenz $S_i$ mit korrespondierendem Knoten $v$ aus d
 
 Die Schlussfolgerung des letzten Satzes ist, dass die Berechnung der Transitivitäts- und somit Konsistenzgrenzen für ein ganzes multiples Alignment in $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit und mit $\oh(n^2\cdot L)$ Speicherplatz möglich ist. 
 
-\subsection{Zusätzliche Einsparungen an Speicherplatz}
+\subsection{Zusätzliche Einsparungen an Speicherplatz}\label{subsec:einsparungen}
 
 Durch ein paar geschickte Beobachtungen ist es Abdedda\"im und Morgenstern gelungen, die Laufzeit und den Speicherplatz für die DIALIGN-Implementierung mit GABIOS-LIB weiter zu verbessern\cite{am00}. Diese werden im Folgenden kurz vorgestellt. Wenn zwei Stellen aus $\mathcal{S}$ miteinander aligniert sind, dann folgt daraus automatisch, dass ihre Transitivitätsgrenzen identisch sind. Das nutzen wir aus, indem wir nicht die Grenzen für jede Stelle speichern und aktualisieren, sondern stattdessen für ganze Äquivalenzklassen $[x]_{\mathcal{A}}$ unseres Alignments.
 

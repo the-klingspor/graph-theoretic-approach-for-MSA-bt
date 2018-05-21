@@ -109,10 +109,10 @@ Diese Rekursionsformel können wir direkt in einem Algorithmus münden lassen. W
 		\State {$m \gets |S_2|$}
 		\State Lege Array $O[0,\dots,n][0,\dots,m]$ an.
 		\For {$i = 0 \textbf{ to } n$} \Comment {Fülle $S_2$ mit Lücken}
-		\State {$O[i][0] \gets i\cdot \delta$}
+		\State {$O[i][0] \gets -i\cdot \delta$}
 		\EndFor
 		\For {$j = 0 \textbf{ to } m$} \Comment {Fülle $S_1$ mit Lücken}
-		\State {$O[0][j] \gets j\cdot \delta$}
+		\State {$O[0][j] \gets -j\cdot \delta$}
 		\EndFor
 		\For {$i = 0 \textbf{ to } n$}
 		\For {$j = 0 \textbf{ to } m$}
@@ -124,7 +124,25 @@ Diese Rekursionsformel können wir direkt in einem Algorithmus münden lassen. W
 	\end{algorithmic}
 \end{algorithm}
 
-Nach der Berechnung aller Einträge aus $O[][]$ haben wir lediglich den Wert einer optimalen Lösung bestimmt, aber noch nicht diese optimale Lösung selbst. Das geschieht durch einen einfachen Backtrackingprozess, bei dem wir mit $O[n][m]$ starten. Für $O[i][j]$ müssen wir dann nur die Einträge $O[i-1][j-1]$, $O[i-1][j]$ und $O[i,j-1]$ betrachten, um festzustellen, ob $(i,j) \in \mathcal{R}$ oder in welche der beiden Sequenzen in diesem Schritt eine Lücke eingefügt wurde. Ist $O[i][j] - \alpha_{S_1[i-1],S_2[j-1]} = O[i-1][j-1]$, dann wird $(i-1,j-1)$ zum Alignment hinzugefügt. Stimmt hingegen $O[i][j] - \delta = O[i-1,j]$, dann wurde an dieser Stelle eine Lücke in $S_1$ eingefügt. Der Fall einer Lücke in $S_2$ funktioniert analog. Wie man sieht ist es auch möglich, dass zwei oder alle drei dieser Fälle eintreten. In diesem Fall gibt es mehr als ein mögliches perfektes paarweises Alignment. \improvement{ORIGINAL-Beispiel}
+Nach der Berechnung aller Einträge aus $O[][]$ haben wir lediglich den Wert einer optimalen Lösung bestimmt, aber noch nicht diese optimale Lösung selbst. Das geschieht durch einen einfachen Backtrackingprozess, bei dem wir mit $O[n][m]$ starten. Für $O[i][j]$ müssen wir dann nur die Einträge $O[i-1][j-1]$, $O[i-1][j]$ und $O[i,j-1]$ betrachten, um festzustellen, ob $(i,j) \in \mathcal{R}$ oder in welche der beiden Sequenzen in diesem Schritt eine Lücke eingefügt wurde. Ist $O[i][j] - \alpha_{S_1[i-1],S_2[j-1]} = O[i-1][j-1]$, dann wird $(i-1,j-1)$ zum Alignment hinzugefügt. Stimmt hingegen $O[i][j] - \delta = O[i-1,j]$, dann wurde an dieser Stelle eine Lücke in $S_1$ eingefügt. Der Fall einer Lücke in $S_2$ funktioniert analog. Wie man sieht ist es auch möglich, dass zwei oder alle drei dieser Fälle eintreten. In diesem Fall gibt es mehr als ein mögliches perfektes paarweises Alignment. In Abbildung \ref{bsp:nw} befindet sich ein Beispiel für den Needleman-Wunsch-Algorithmus.
+
+\begin{table}
+	\centering
+	\begin{tabular}{|c|c|c|c|c|c|c|c|c|c|}
+		\hline
+		& & O & R & I & G & I & N & A & L \\ \hline
+		& \cellcolor{red} 0 & -2 & -4 & -6 & -8 & -10 & -12 & -14 & -16 \\
+		O & -2 & \cellcolor{red} 1 & -1 & -3 & -5 & -7 & -9 & -11 & -13 \\
+		R & -4 & -1 & \cellcolor{red} 2 & \cellcolor{red} 0 & -2 & -4 & -6 & -8 & -10 \\
+		G & -6 & -3 & 0 & 2 & \cellcolor{red} 1 & -1 & -3 & -5 & -7 \\
+		I & -8 & -5 & -2 & 1 & 2 & \cellcolor{red} 2 & 0 & -2 & -4 \\
+		N & -10 & -7 & -4 & -1 & 1 & 2 & \cellcolor{red} 3 & 1 & -1 \\
+		A & -12 & -9 & -6 & -3 & -1 & 1 & 2 & \cellcolor{red} 4 & 2 \\
+		L & -14 & -11 & -8 & -5 & -3 & -1 & 1 & 2 & \cellcolor{red} 5 \\		
+		\hline
+	\end{tabular}
+	\caption{Needleman-Wunsch-Prozess für die Wörter \enquote{Orginal} und \enquote{Original} für $+1$ bei Übereinstimmungen, $0$ bei Abweichungen und Gap Penalty $\delta = 2$. Der Weg des Backtrackingprozesses wurde rot markiert.}\label{bsp:nw}
+\end{table}
 
 \begin{lemma}
 	Für zwei Sequenzen $S_1$ und $S_2$ kann der Score eines optimalen Alignments $\mathcal{R}$ in $\oh(n\cdot m)$ Zeit und mit $\oh(n\cdot m)$ Speicherplatz berechnet werden.

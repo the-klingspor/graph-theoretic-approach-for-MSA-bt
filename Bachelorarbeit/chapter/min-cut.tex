@@ -285,7 +285,7 @@ Diese Fragmente überführen wir direkt in den Inzidenzgraphen \ref{bsp:inzidenz
 		minimum size=15pt,
 		font=\tiny},
 	myarrow/.style={-Stealth},
-	node distance=0.6cm and 1.1cm
+	node distance=0.6cm and 0.9cm
 	]
 	% erste Sequenz
 	\node[mycircle] (c11) {A};
@@ -404,7 +404,14 @@ Sei $C$ eine Zusammenhangskomponente von $G_{\mathcal{F}}$, die mehrdeutig ist, 
 
 Das können wir beispielsweise erreichen, indem wir uns an den Ähnlichkeitswerten unserer Substitutionsmatrix orientieren. Weil Flussnetzwerke nicht-negative Kapazitäten erwarten, müssen die Werte gegebenenfalls modifiziert werden, indem wir den betragsmäßig größten Eintrag der Matrix zu allen Einträgen addieren. Das bedeutet, dass bei unserer $(+3/-1)$-Substitutionsmatrix aus dem Beispiel zwischen übereinstimmenden Symbolen eine Kapazität von 6 und zwischen nicht übereinstimmendes eine von 2 benutzt wird. Leider war es aufgrund der begrenzten Zeit und des hohen Aufwands nicht möglich das ganze Verfahren zu implementieren. Eine Evaluierung mit echten Alignments fehlt also. Weil der Ansatz mit den nicht-einheitlichen Kapazitäten aber vielversprechend erscheint, wurde er in den weiteren Beispielen verwendet.
 
-Als nächstes benutzen wir einen Algorithmus zur Bestimmung des maximalen Flusses. Wie mit dem Max-Flow-Min-Cut-Satz gezeigt, bestimmen wir durch die Bestimmung des maximalen Flusses auch gleichzeitig einen minimalen Schnitt. Das ist die \enquote{schmalste} Verbindungsstelle zwischen der Quelle und der Senke und wir hoffen durch Löschen der dazugehörigen Kanten die Mehrdeutigkeit aufzulösen und die dichtbesetzten Untergraphen zu erhalten. Im Original wird der Algorithmus von Edmonds-Karp benutzt, während wir stattdessen einen Push-Relabel-Algorithmus mit Laufzeit $\oh(|V|^2\cdot \sqrt{|E|})$ für die Komplexität betrachten und in unserer Implementierung verwendet hätten. Nachdem der minimale Schnitt bestimmt wurde, löschen wir alle Kanten zwischen den Mengen $A$ und $B$. Auf diese Art und Weise wird unsere Zusammenhangskomponente $C$ in zwei neue Zusammenhangskomponenten $A$ und $B$ aufgeteilt. Dieses Verfahren wiederholen wir solange, bis es keine mehrdeutigen Äquivalenzklassen mehr gibt.  \improvement{Graphik aus CPM10 mit Zusammenhangskomponenten einfügen.}
+\begin{wrapfigure}{l}{6cm}
+	\centering
+	\includegraphics[scale=0.5]{chapter/connected_components.png}
+	\caption{\unskip}
+	Zwei Zusammenhangskomponenten des Inzidenzgraphen der Datensätze BB12001 (links) und BB50005 (rechts) \cite{cpm10}. Wie man sieht, bestehen diese aus dichten Subgraphen, die nur durch wenige Kanten verbunden sind. Ziel des Algorithmus \ref{alg:amb_res} ist es genau diese Kanten zu entfernen.
+\end{wrapfigure}
+
+Als nächstes benutzen wir einen Algorithmus zur Bestimmung des maximalen Flusses. Wie mit dem Max-Flow-Min-Cut-Satz gezeigt, bestimmen wir durch die Bestimmung des maximalen Flusses auch gleichzeitig einen minimalen Schnitt. Das ist die \enquote{schmalste} Verbindungsstelle zwischen der Quelle und der Senke und wir hoffen durch Löschen der dazugehörigen Kanten die Mehrdeutigkeit aufzulösen und die dichtbesetzten Untergraphen zu erhalten. Im Original wird der Algorithmus von Edmonds-Karp benutzt, während wir stattdessen einen Push-Relabel-Algorithmus mit Laufzeit $\oh(|V|^2\cdot \sqrt{|E|})$ für die Komplexität betrachten und in unserer Implementierung verwendet hätten. Nachdem der minimale Schnitt bestimmt wurde, löschen wir alle Kanten zwischen den Mengen $A$ und $B$. Auf diese Art und Weise wird unsere Zusammenhangskomponente $C$ in zwei neue Zusammenhangskomponenten $A$ und $B$ aufgeteilt. Dieses Verfahren wiederholen wir solange, bis es keine mehrdeutigen Äquivalenzklassen mehr gibt. 
 
 
 \begin{breakablealgorithm}
@@ -1199,7 +1206,7 @@ Bevor wir im nächsten Abschnitt genauer kennenlernen, wie man einen längsten P
 	
 	\end{tikzpicture}
 \end{center}
-\caption{Der auf Sequenz eingeschränkt und um die transitive Hülle erweiterte DAG $G_{S_1}$.}\label{bsp:dag_s1}
+\caption{Der auf Sequenz 1 eingeschränkte und um die transitive Hülle erweiterte DAG $G_{S_1}$.}\label{bsp:dag_s1}
 \end{figure}
 
 Im Graphen $G_{S_1}$ gibt es eine Kante vom grünen Knoten $(1,5)$ zum blauen $(1,6)$, obwohl diese direkte Kante in $G^{*}$ gelöscht wurde. Das liegt an der Verbindung $(2,3) \rightarrow (2,4) \rightarrow (2,5) \rightarrow (2,7)$ und $(1,5) \preceq_{S_1} (1,6)$. Die Kante $(1,8) \rightarrow (1,6)$ gibt es aber nicht, obwohl diese in der transitiven Hülle verbunden sind. Das liegt an $(1,8) \npreceq_{S_i} (1,6)$. Der hellblaue Knoten enthält keine Stelle aus $S_1$ und ist daher nicht Teil von $V_{S_1}$.
@@ -1263,7 +1270,9 @@ Jetzt kennen wir die Länge des längsten Pfades, müssen aber noch die Knoten, 
 
 Im nächsten Kapitel wird die Implementierung dieses Algorithmus beispielhaft für das ganze Verfahren beschrieben. Da dort auch ein konkretes Beispiel behandelt wird, wird an dieser Stelle darauf verzichtet.
 
-\subsubsection{Laufzeit für die Berechnung eines längsten Pfads}
+\subsubsection{Korrektheit und Laufzeit des Algorithmus für die Berechnung eines längsten Pfads}
+
+\improvement{Korrektheit per Schleifeninvariante beweisen.}
 
 Im Allgemeinen hat dieser Algorithmus eine Laufzeit von $\oh(|V| + |E|)$. Die topologische Sortierung benötigt $\Theta(|V| + |E|)$ Rechenschritte. Für die Berechnung der Distanzwerte müssen in jedem der $\oh(|V|)$ Knoten das Maximum der Knoten über eingehende Kanten berechnet werden. Jede Kante wird nur einmalig betrachtet und somit ist die Summe der Kosten aller Maximumsoperationen in $\oh(|E|)$. Der Backtrackingprozess ist in linearer Zeit in der Größe der Anzahl der Knoten möglich.
 
@@ -1347,7 +1356,7 @@ Nachdem das ganze Verfahren gezeigt wurde, können wir seine Gesamtlaufzeit zusa
 
 Die Heuristik zum Entfernen von Kanten kann bei einigen Sequenzen zu größeren Problemen führen. Diese Heuristik funktionierte so, dass sie eine Grenze $k$ für das minimale Kantengewicht sukzessive erhöhte und alle Kanten unter $k$ entfernte, bis die Menge an Kanten ohne Zyklus war. 
 
-In den meisten Fällen ist das kein Problem, weil man davon ausgeht, dass die wichtigen Motive, die wir finden wollen, in der gleichen Reihenfolge innerhalb der Eingabesequenzen liegen. Problematisch sind hingegen Sequenzfamilien, bei denen zwei oder mehr größere Abschnitte in ihrer Reihenfolge vertauscht wurden und einige Sequenzen diese in der einen, die anderen aber in den der umgekehrten Reihenfolge haben. \improvement{Grafik einfügen.}
+In den meisten Fällen ist das kein Problem, weil man davon ausgeht, dass die wichtigen Motive, die wir finden wollen, in der gleichen Reihenfolge innerhalb der Eingabesequenzen liegen. Problematisch sind hingegen Sequenzfamilien, bei denen zwei oder mehr größere Abschnitte in ihrer Reihenfolge vertauscht wurden und einige Sequenzen diese in der einen, die anderen aber in den der umgekehrten Reihenfolge haben.
 
 Sind die vertauschten Abschnitte lang genug, dann werden sie Teil der paarweisen Alignments. Weil es sich bei ihnen um Überkreuzungen handelt, entfernt der Min-Cut-Ansatz sie im Allgemeinen auch nicht. Kommen diese Permutationen in genug Sequenzen vor, dann ist das Ergebnis ein Sukzessionsgraph mit einem Zyklus, der Kanten mit sehr hohen Kantengewichten enthält. Um diese Zyklen aufzulösen, wird dann auch eine sehr hohe Grenze $k^{*}$ benötigt. Im schlimmsten Fall werden so alle Kanten im Graph gelöscht, in jedem Fall aber sehr viele, die nichts mit dem eigentlichen Zyklus zu tun haben, weil der Schritt global Kanten löscht. Somit gehen viele wichtige oder alle Verbindungen in unserem Alignment verloren. Optimal wäre es, wenn die überkreuzten Stellen nicht aligniert werden, der Rest hingegen normal.
 
@@ -1357,7 +1366,7 @@ Mit einer verbesserten Heuristik zum Entfernen von Kanten aus dem Sukzessionsgra
 
 \subsection{Evaluierung}
 
-\cite{cpm10} haben ihre Implementierung des Verfahrens einer Vielzahl an Tests unterzogen, um sie mit einer breiten Auswahl an etablierten Verfahren zu vergleichen. Die Ergebnisse wurden dabei auf drei Referenzdatenbanken getestet, die jeweils eine Menge von alignierten Sequenzfamilien zur Verfügung stellen für die eine biologisch korrekte Zuweisung bekannt ist. Zum Test auf globale verwandten Sequenzen wurde die Referenzdatenbank BAliBASE benutzt \cite{tpp99}. Diese enthält Alignments von Proteinsequenzen, die auf der ganzen Länge der Sequenzen Ähnlichkeiten haben. Lokal verwandte Sequenzen haben hingegen nur an einzelnen Stellen Ähnlichkeiten und zwischen diesen verwandten Segmenten sind nicht in Beziehung zueinander stehende Symbole. Für diese Art von Sequenzen wurden Tests auf den Datenbanken IRMBASE (Proteine) und DIRMBASE (DNA) durchgeführt.
+Corel et al. haben ihre Implementierung des Verfahrens einer Vielzahl an Tests unterzogen, um sie mit einer breiten Auswahl an etablierten Verfahren zu vergleichen\cite{cpm10}. Die Ergebnisse wurden dabei auf drei Referenzdatenbanken getestet, die jeweils eine Menge von alignierten Sequenzfamilien zur Verfügung stellen für die eine biologisch korrekte Zuweisung bekannt ist. Zum Test auf globale verwandten Sequenzen wurde die Referenzdatenbank BAliBASE benutzt \cite{tpp99}. Diese enthält Alignments von Proteinsequenzen, die auf der ganzen Länge der Sequenzen Ähnlichkeiten haben. Lokal verwandte Sequenzen haben hingegen nur an einzelnen Stellen Ähnlichkeiten und zwischen diesen verwandten Segmenten sind nicht in Beziehung zueinander stehende Symbole. Für diese Art von Sequenzen wurden Tests auf den Datenbanken IRMBASE (Proteine) und DIRMBASE (DNA) durchgeführt.
 
 Für mehrere Sequenzfamilien dieser Datenbanken wurden dann mit dem Min-Cut-Ansatz und durch andere Alignmentprogramme, wie DIALIGN 2.2 und DIALIGN TX (neueste, aber nicht unmittelbare Weiterentwicklung von DIALIGN), T-COFFEE, MAFFT, Alignments berechnet und miteinander verglichen. Für die Vergleiche dienten wieder der \emph{sum-of-pairs-Score} (SP) und der \emph{(total-)column-Score} (TC), die die Anzahl an korrekten Paaren beziehungsweise komplett korrekten Spalten im Vergleich zum Referenzalignment angeben.
 
@@ -1380,3 +1389,5 @@ Um festzustellen, wie ihr Ansatz numerisch abschneidet, haben \cite{cpm10} die S
 Leider gehen die Autoren nicht darauf ein, wie für die Alignments des Min-Cut-Ansatzes nachträglich die numerischen Scores berechnet wurden. Durch die Berechnung der minimalen Schnitt und den Algorithmus von Pitschi werden mitunter auch einzelne Stelle aus den Zuweisungen gelöscht, sodass die Ergebnisse nicht immer längere, zusammenhängende Fragmente sind. Interpretiert man einfach ohne Lücke aufeinanderfolgenden, einander zugewiesene Stelle als Fragmente, dann erscheint es logisch, dass die Scores geringer sind. Das liegt an der Gewichtsfunktion von DIALIGN, die bei jedem Fragment einen Korrekturterm $K$ abzieht, der von der Länge der Sequenzen abhängt. Viele kurze Fragmente, wie sie beim Min-Cut-Algorithmus auftreten, haben im Allgemeinen immer ein geringeres Gesamtgewicht als weniger kurze mit der selben Gesamtlänge. Im Kontext dieser Erkenntnis stimme ich mit der Schlussfolgerung von Corel also nicht uneingeschränkt überein, solange nicht klar ist wie die Scores genau berechnet wurden.
 
 \subsection{Zusammenfassung des Min-Cut-Ansatzes}
+
+\improvement{Zusammenfassung umformulieren. Hier mehr technische Details aus dem Fazit und im Fazit dafür allgemeinere Aussagen. Evt. mal bei Florian reingucken für gute Formulierungen.}

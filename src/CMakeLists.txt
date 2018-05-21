@@ -20,9 +20,6 @@ set (TARGET_SRC
 find_package(Boost)
 if (NOT ${Boost_FOUND})
     message(STATUS "Boost not found. Using own...")
-    #TODO: bcp fÃ¼r boost graph, evtl auf System testen
-    # wo definitv kein boost drauf ist, damit der das nicht irgendwie
-    # trotzdem findet
     set(BOOST_ROOT "${CMAKE_SOURCE_DIR}/boost-graph")
 endif()
 

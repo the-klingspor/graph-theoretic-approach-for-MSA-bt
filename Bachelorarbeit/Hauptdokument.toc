@@ -22,19 +22,19 @@
 \contentsline {subsection}{\numberline {3.5.1}Berechnung der transitiven H\IeC {\"u}lle eines gerichteten Graphen}{30}{subsection.3.5.1}
 \contentsline {subsection}{\numberline {3.5.2}Konsistenzgrenzen durch Berechnung der transitiven H\IeC {\"u}lle}{33}{subsection.3.5.2}
 \contentsline {subsection}{\numberline {3.5.3}Zus\IeC {\"a}tzliche Einsparungen an Speicherplatz}{36}{subsection.3.5.3}
-\contentsline {subsection}{\numberline {3.5.4}Einbindung in DIALIGN}{36}{subsection.3.5.4}
+\contentsline {subsection}{\numberline {3.5.4}Einbindung in DIALIGN}{37}{subsection.3.5.4}
 \contentsline {subsection}{\numberline {3.5.5}Evaluation von DIALIGN mit der GABIOS-LIB}{37}{subsection.3.5.5}
 \contentsline {subsection}{\numberline {3.5.6}Beispiel zu Konsistenzgrenzen}{37}{subsection.3.5.6}
-\contentsline {subsubsection}{\nonumberline Ursprungszustand}{37}{section*.11}
-\contentsline {subsubsection}{\nonumberline Erstes Fragment}{38}{section*.12}
-\contentsline {subsubsection}{\nonumberline Zweites Fragment}{39}{section*.13}
-\contentsline {subsubsection}{\nonumberline Drittes Fragment}{39}{section*.14}
-\contentsline {subsubsection}{\nonumberline Viertes Fragment}{40}{section*.15}
-\contentsline {subsubsection}{\nonumberline Weitere Fragmente}{40}{section*.16}
-\contentsline {section}{\numberline {3.6}Abschluss des Verfahrens}{40}{section.3.6}
-\contentsline {subsection}{\numberline {3.6.1}Gesamtkomplexit\IeC {\"a}t}{41}{subsection.3.6.1}
-\contentsline {section}{\numberline {3.7}Evaluierung, Zusammenfassung und Schw\IeC {\"a}chen des Ansatzes}{42}{section.3.7}
-\contentsline {subsection}{\numberline {3.7.1}Evaluierung}{42}{subsection.3.7.1}
+\contentsline {subsubsection}{\nonumberline Ursprungszustand}{38}{section*.9}
+\contentsline {subsubsection}{\nonumberline Erstes Fragment}{38}{section*.10}
+\contentsline {subsubsection}{\nonumberline Zweites Fragment}{39}{section*.11}
+\contentsline {subsubsection}{\nonumberline Drittes Fragment}{40}{section*.12}
+\contentsline {subsubsection}{\nonumberline Viertes Fragment}{40}{section*.13}
+\contentsline {subsubsection}{\nonumberline Weitere Fragmente}{41}{section*.14}
+\contentsline {section}{\numberline {3.6}Abschluss des Verfahrens}{41}{section.3.6}
+\contentsline {subsection}{\numberline {3.6.1}Gesamtkomplexit\IeC {\"a}t}{42}{subsection.3.6.1}
+\contentsline {section}{\numberline {3.7}Evaluierung, Zusammenfassung und Schw\IeC {\"a}chen des Ansatzes}{43}{section.3.7}
+\contentsline {subsection}{\numberline {3.7.1}Evaluierung}{43}{subsection.3.7.1}
 \contentsline {subsection}{\numberline {3.7.2}Zusammenfassung}{43}{subsection.3.7.2}
 \contentsline {subsection}{\numberline {3.7.3}Schw\IeC {\"a}chen von DIALIGN}{44}{subsection.3.7.3}
 \contentsline {chapter}{\numberline {4}Ein Min-Cut-Ansatz f\IeC {\"u}r das Konsistenzproblem}{47}{chapter.4}
@@ -46,30 +46,32 @@
 \contentsline {subsection}{\numberline {4.2.1}Konstruieren des Inzidenzgraphen}{52}{subsection.4.2.1}
 \contentsline {subsection}{\numberline {4.2.2}Beispiel Inzidenzgraph}{53}{subsection.4.2.2}
 \contentsline {subsection}{\numberline {4.2.3}Aufl\IeC {\"o}sen von Mehrdeutigkeiten}{54}{subsection.4.2.3}
-\contentsline {subsection}{\numberline {4.2.4}Beispiel von \textrm {ResolveAmbiguities}}{55}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.4}Beispiel von \textrm {ResolveAmbiguities}}{56}{subsection.4.2.4}
 \contentsline {subsection}{\numberline {4.2.5}Komplexit\IeC {\"a}t}{57}{subsection.4.2.5}
 \contentsline {section}{\numberline {4.3}Sukzessionsgraphen und der Algorithmus von Pitschi}{58}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Aufbau des Sukzessionsgraphen}{58}{subsection.4.3.1}
-\contentsline {subsection}{\numberline {4.3.2}Der Algorithmus von Pitschi}{59}{subsection.4.3.2}
-\contentsline {subsubsection}{\nonumberline Entfernen der Kanten}{60}{section*.23}
-\contentsline {subsubsection}{\nonumberline Beispiel zum Entfernen von Kanten}{60}{section*.24}
-\contentsline {subsubsection}{\nonumberline Entfernen von Stellen}{60}{section*.26}
-\contentsline {subsubsection}{\nonumberline Beispiel zum Entfernen von Stellen mit dem Algorithmus von Pitschi}{61}{section*.27}
-\contentsline {subsection}{\numberline {4.3.3}Algorithmus zur Bestimmung eines l\IeC {\"a}ngsten Pfads}{62}{subsection.4.3.3}
-\contentsline {subsubsection}{\nonumberline Laufzeit}{64}{section*.29}
-\contentsline {subsection}{\numberline {4.3.4}Verankerungen}{64}{subsection.4.3.4}
-\contentsline {subsection}{\numberline {4.3.5}Komplexit\IeC {\"a}t}{65}{subsection.4.3.5}
+\contentsline {subsection}{\numberline {4.3.2}Der Algorithmus von Pitschi}{60}{subsection.4.3.2}
+\contentsline {subsubsection}{\nonumberline Entfernen der Kanten}{60}{section*.21}
+\contentsline {subsubsection}{\nonumberline Beispiel zum Entfernen von Kanten}{60}{section*.22}
+\contentsline {subsubsection}{\nonumberline Entfernen von Stellen}{60}{section*.24}
+\contentsline {subsubsection}{\nonumberline Beispiel zum Entfernen von Stellen mit dem Algorithmus von Pitschi}{62}{section*.25}
+\contentsline {subsection}{\numberline {4.3.3}Algorithmus zur Bestimmung eines l\IeC {\"a}ngsten Pfads}{63}{subsection.4.3.3}
+\contentsline {subsubsection}{\nonumberline Korrektheit und Laufzeit des Algorithmus f\IeC {\"u}r die Berechnung eines l\IeC {\"a}ngsten Pfads}{64}{section*.27}
+\contentsline {subsection}{\numberline {4.3.4}Verankerungen}{65}{subsection.4.3.4}
+\contentsline {subsection}{\numberline {4.3.5}Komplexit\IeC {\"a}t des Algorithmus von Pitschi}{65}{subsection.4.3.5}
 \contentsline {section}{\numberline {4.4}Abschluss und Zusammenfassung}{66}{section.4.4}
-\contentsline {subsection}{\numberline {4.4.1}Beispiel}{66}{subsection.4.4.1}
-\contentsline {subsection}{\numberline {4.4.2}Gesamtkomplexit\IeC {\"a}t}{67}{subsection.4.4.2}
-\contentsline {subsection}{\numberline {4.4.3}Probleme bei der Heuristik zum Entfernen von Kanten}{67}{subsection.4.4.3}
-\contentsline {subsection}{\numberline {4.4.4}Evaluierung}{68}{subsection.4.4.4}
-\contentsline {subsubsection}{\nonumberline Lokale Alignments auf IRMBASE2 und DIRMBASE1}{68}{section*.31}
-\contentsline {subsubsection}{\nonumberline BALiBASE3}{69}{section*.32}
-\contentsline {subsubsection}{\nonumberline Betrachtung der Scores im Vergleich}{69}{section*.33}
+\contentsline {subsection}{\numberline {4.4.1}Beispiel}{67}{subsection.4.4.1}
+\contentsline {subsection}{\numberline {4.4.2}Gesamtkomplexit\IeC {\"a}t des Min-Cut-Ansatzes}{67}{subsection.4.4.2}
+\contentsline {subsection}{\numberline {4.4.3}Probleme bei der Heuristik zum Entfernen von Kanten}{68}{subsection.4.4.3}
+\contentsline {subsection}{\numberline {4.4.4}Evaluierung}{69}{subsection.4.4.4}
+\contentsline {subsubsection}{\nonumberline Lokale Alignments auf IRMBASE2 und DIRMBASE1}{69}{section*.30}
+\contentsline {subsubsection}{\nonumberline BALiBASE3}{69}{section*.31}
+\contentsline {subsubsection}{\nonumberline Betrachtung der Scores im Vergleich}{70}{section*.32}
+\contentsline {subsection}{\numberline {4.4.5}Zusammenfassung des Min-Cut-Ansatzes}{70}{subsection.4.4.5}
 \contentsline {chapter}{\numberline {5}Programmierung}{71}{chapter.5}
-\contentsline {chapter}{\numberline {6}Fazit}{73}{chapter.6}
-\contentsline {section}{\numberline {6.1}Zusammenfassung}{73}{section.6.1}
-\contentsline {section}{\numberline {6.2}Weiterf\IeC {\"u}hren Arbeiten}{74}{section.6.2}
-\contentsline {chapter}{\numberline {A}BLOSUM62}{81}{appendix.A}
-\contentsline {chapter}{\numberline {B}Beispiel der speichereffizienten Berechnung eines paarweisen Alignments}{83}{appendix.B}
+\contentsline {subsection}{\numberline {5.0.1}Beispiel zu \mintinline {c++}{longestPath}}{74}{subsection.5.0.1}
+\contentsline {chapter}{\numberline {6}Fazit}{77}{chapter.6}
+\contentsline {section}{\numberline {6.1}Zusammenfassung}{77}{section.6.1}
+\contentsline {section}{\numberline {6.2}Weiterf\IeC {\"u}hren Arbeiten}{78}{section.6.2}
+\contentsline {chapter}{\numberline {A}BLOSUM62}{85}{appendix.A}
+\contentsline {chapter}{\numberline {B}Beispiel der speichereffizienten Berechnung eines paarweisen Alignments}{87}{appendix.B}

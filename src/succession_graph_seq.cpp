@@ -3,6 +3,7 @@
 //
 
 #include "succession_graph_seq.h"
+#include <iostream>
 
 SuccessionGraphSeq::SuccessionGraphSeq(unsigned int seq, Graph& data, vertex_t startVertex, vertex_t endVertex)
         : sequence(seq),

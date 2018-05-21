@@ -24,9 +24,13 @@
 \bibitem[AM00]{am00}
 \textsc{Abdedda\"{i}m}, S. ; \textsc{Morgenstern}, B.:
 \newblock {Speeding up the DIALIGN multiple alignment program by using the
-  `Greedy Alignment of BIOlogical Sequences LIBrary' (GABIOS-LIB}.
+  `Greedy Alignment of BIOlogical Sequences LIBrary' (GABIOS-LIB)}.
 \newblock {In: }\emph{Computational Biology: First International Conference on
   Biology, Informatics, and Mathematics}, 2000, S. 1--11
+
+\bibitem[Cat17]{Catch}
+\emph{Catch2}.
+\newblock \url{https://github.com/catchorg/Catch2}, 2017
 
 \bibitem[CHHE79]{chhe79}
 \textsc{Cunningham}, B. ; \textsc{Hemperly}, J. ; \textsc{Hopp}, T.  ;
@@ -55,6 +59,12 @@
 \newblock {In: }\emph{Theoretical Computer Science. Lecture Notes in Computer
   Science} Bd. 3895.
 \newblock Springer-Verlag, 2006
+
+\bibitem[Edd95]{e95}
+\textsc{Eddy}, S.:
+\newblock {Multiple alignment using hidden Markov models}.
+\newblock {In: }\emph{Proc. Int. Conf. Intell. Syst. Mol. Biol. 1995}, 1995, S.
+  114--120
 
 \bibitem[ELS93]{els93}
 \textsc{Eades}, P. ; \textsc{Lin}, X.  ; \textsc{Smyth}, W.:
@@ -158,6 +168,17 @@
   multiple sequence alignment}.
 \newblock {In: }\emph{Algorithms for Molecular Biology} 3:6 (2008)
 
+\bibitem[SLL00]{boost_graph}
+\textsc{Siek}, J. ; \textsc{Lee}, L.  ; \textsc{Lumsdaine}, A.:
+\newblock \emph{Boost Graph Library}.
+\newblock \url{http://www.boost.org/libs/graph/}, 2000
+
+\bibitem[SM10]{sm10}
+\textsc{Sutton}, C. ; \textsc{McCallum}, A.:
+\newblock \emph{{An Introduction to Conditional Random Fields}}.
+\newblock \url{https://arxiv.org/abs/1011.4088}, 2010. --
+\newblock Besucht: 2018-05-21
+
 \bibitem[SNKM04]{snkm04}
 \textsc{Schmollinger}, M. ; \textsc{Nieselt}, K. ; \textsc{Kaufmann}, M.  ;
   \textsc{Morgenstern}, B.:
@@ -172,6 +193,12 @@
   \url{http://www.summarization.com/~radev/767w10/papers/Week12/msa/msa.pdf},
   2010. --
 \newblock Besucht: 2018-05-07
+
+\bibitem[TPP99]{tpp99}
+\textsc{Thompson}, J. ; \textsc{Plewniak}, F.  ; \textsc{Poch}, O.:
+\newblock {BAliBASE: a benchmark alignment database for the evaluation of
+  multiple alignment programs}.
+\newblock {In: }\emph{Bioinformatics} 15:1 (1999)
 
 \bibitem[VS93]{vs93}
 \textsc{Vingron}, M. ; \textsc{Sibbald}, P.:

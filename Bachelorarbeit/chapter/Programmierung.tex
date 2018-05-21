@@ -1,4 +1,198 @@
 \chapter{Programmierung}
 \label{ch:Programmierung}
 
--Bestimmung des längsten Pfads mit Boost und C++
+Beispielhaft für das komplette Min-Cut-Verfahren wurde der Algorithmus zur Berechnung eines längsten Pfades aus dem Algorithmus von Pitschi implementiert. Dabei wurden die Programmiersprache C++ und die \emph{Boost Graph Library} verwendet \cite{boost_graph}. C++ ist aufgrund der guten Laufzeiten die kanonische Wahl beim komplexen Berechnen von multiplen Alignments und die Boost Graph Library stellt eine Vielzahl an effizienten Graphdatenstrukturen und darauf arbeitende Algorithmen zur Verfügung. Für alle Methoden wurden mit dem Framework Catch2 Unit-Tests geschrieben\cite{Catch}.
+
+Um dem eigentlichen Algorithmus etwas Kontext zu geben, wurden die drei Klassen \mintinline{c++}{Site}, \mintinline{c++}{SuccessionNode} und \mintinline{c++}{SuccessionGraphSeq} implementiert. Die Klasse \mintinline{c++}{Site} modelliert Stellen aus dem Stellenraum $\mathcal{S}$ einer Menge von Sequenzen. Objekte der Klasse können mit \mintinline{c++}{<=} auf der Halbordnung des Stellenraums verglichen werden. Der Übersichtlichkeit halber wurden die Doxygenkommentare aus der Implementierung gekürzt.
+
+\begin{minted}[linenos=true]{c++}
+class Site{
+private:
+unsigned int sequence; // the sequence this site belongs to
+unsigned int position; // the position of this site in its sequence
+
+public:
+Site(unsigned int seq, unsigned int pos);
+
+unsigned int getSequence() const;
+unsigned int getPosition() const;
+
+// Operator to compare two sites for equality. Checks if sequence and position are the same.
+bool operator==(const Site& rhs) const;
+
+// Operator to decide if the current site is smaller than or equal to the one it is compared to.
+bool operator <=(const Site& rhs) const;
+};
+\end{minted}
+
+Die Klasse \mintinline{c++}{SuccessionNode} modelliert Knoten aus dem Sukzessionsgraphen. Intern wurde auf eine \mintinline{c++}{std::unordered_map} zur Speicherung der Stellen zurückgegriffen, bei dem die Sequenznummer den Schlüssel einer Stelle angibt, weil jeder Knoten höchstens eine Stelle pro Sequenz enthalten darf. Objekte dieser Klasse mit einer Menge von Stellen werden beim Algorithmus von Pitschi zwar erstellt, es werden aber niemals neue Knoten hinzugefügt. Deshalb gibt es zwar Funktionen zum Entfernen von Stellen, wie man sie nach der Berechnung der längsten Pfade braucht, nicht jedoch zum Hinzufügen neuer \mintinline{c++}{Site}-Objekte.
+
+\begin{minted}[linenos=true]{c++}
+class SuccessionNode{
+private:
+std::unordered_map<unsigned int, Site> sites; // internal representation of the set of sites of this node
+
+public:
+// Default constructor with empty set of sites.
+SuccessionNode();
+
+// Constructor that builds a new succession node for a set of sites.
+SuccessionNode(const std::unordered_map<unsigned int, Site>& sites);
+
+// Compares this SuccessionNode with a second one for equality.
+bool operator==(const SuccessionNode& rhs) const;
+
+// Deletes a site from sites, if it is part of the node.
+void deleteSite(const Site& site);
+
+// Deletes the site that belong to the given sequence number.
+void deleteSiteOfSeq(unsigned int sequence);
+
+std::unordered_map<unsigned int, Site> getSites() const;
+};
+\end{minted}
+
+Die wichtigste Klasse ist \mintinline{c++}{SuccessionGraphSeq}, die den erweiterten Sukzessionsgraphen $G_{S_i}$ beschränkt auf eine Sequenz $S_i$ angibt. Die Objekte dieser Klasse speichern die dazugehörige Sequenznummer, den Graphen über die \mintinline{c++}{SuccessionNode}-Objekte und jeweils einen ausgewiesenen Start- und Endknoten im Graphen. Die einzige nicht-triviale Methode dieser Klasse ist \mintinline{c++}{longestPath()}, die den längsten Pfad durch den Graphen berechnet und in einer Doppelwarteschlange von Knoten ausgibt.
+
+\begin{minted}[linenos=true]{c++}
+// Define a bidirectional type of graph where every vertex holds a SuccessionNode object
+typedef boost::adjacency_list<boost::vecS, boost::vecS, boost::directedS, VertexProperty> Graph;
+
+// Define a shorter name for the type of vertices
+typedef Graph::vertex_descriptor vertex_t;
+
+class SuccessionGraphSeq{
+private:
+unsigned int sequence;  // number of the sequence this graph belongs to
+Graph& data;            // the actual data of the succession graph restricted on this 
+						// sequence; it is a directed, unweighted graph fulfilling the 
+						// above requirements
+vertex_t vStart;        // artificial start vector of the succession graph
+vertex_t vEnd;          // artificial end vector of the succession graph
+public:
+SuccessionGraphSeq(unsigned int seq, Graph& data, vertex_t startVertex, vertex_t endVertex);
+
+SuccessionGraphSeq(SuccessionGraphSeq& rhs) = delete;                    // prevent copy constructor to be called
+SuccessionGraphSeq& operator=(const SuccessionGraphSeq& rhs) = delete;   // prevent assignments
+
+vertex_t getStartVertex() const;
+
+vertex_t getEndVertex() const;
+
+// Computes the longest path.
+std::deque<SuccessionNode> longestPath() const;
+};
+\end{minted}
+
+In einer vollständigen Implementierung des Verfahrens würden die \mintinline{c++}{SuccessionGraphSeq}-Objekte lediglich einmalig erstellt und nach der Berechnung des längsten Pfades wieder gelöscht werden. Deshalb ist das Objekt, das den Graphen konstruiert, für den ordnungsgemäßen Zustand verantwortlich und es wird für \mintinline{c++}{longestPath()} davon ausgegangen, dass der Zustand des Objekts valide ist. Die Bedingungen, die eingehalten werden müssen, sind:
+
+\begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
+	\item Die Knoten \mintinline{c++}{vStart} und \mintinline{c++}{vEnd} müssen tatsächlich Knoten des Graphen \mintinline{c++}{data} sein.
+	\item Alle Knoten müssen auf einem Pfad von \mintinline{c++}{vStart} nach \mintinline{c++}{vEnd} liegen.
+	\item Jeder Knoten enthält höchstens eine Stelle pro Sequenz.
+	\item Jede Kante erhält die natürliche Ordnung der Sequenz des Graphen.
+	\item Der Graph muss azyklisch, also ein DAG, sein.
+\end{enumerate}
+
+Der Algorithmus für die Berechnung eines längsten Pfades berechnet bestimmt zunächst mit einer Bibliotheksfunktion eine topologische Sortierung der Knoten. Anschließend wird der Reihe nach für jeden Knoten geguckt, ob über ihn ein längerer Pfad vom Startknoten zu einem benachbarten Knoten verläuft. Ist das der Fall, dann werden die \mintinline{c++}{distance} des Nachbarn und sein \mintinline{c++}{predecessor} aktualisiert. 
+
+Wurden diese Werte für jeden Knoten bestimmt, dann beginnt der Backtrackingprozess für die Ausgabe. Wir starten mit \mintinline{c++}{vEnd}, weil dieser auf jeden Fall der letzte Knoten des längsten Pfades ist. Danach fügen wir der Reihe nach den Vorgänger vorne zur Ausgabe hinzu, bis \mintinline{c++}{vStart}, der erste Knoten des längsten Pfades, erreicht wurde.
+
+\begin{minted}[linenos=true]{c++}
+std::deque<SuccessionNode> SuccessionGraphSeq::longestPath() const{
+	// compute the topological order and store it in a deque
+	// no need to check if the graph is a DAG, this had to be ensured by the object that build this object
+	std::deque<vertex_t> topologicalOrder;
+	boost::topological_sort(data, std::front_inserter(topologicalOrder));
+
+	// declare and initialize the maps for storing the distances and predecessors
+	std::unordered_map<vertex_t, vertex_t> predecessors;
+	std::unordered_map<vertex_t, unsigned int> distances;
+
+	for(const auto& vertex : topologicalOrder){
+		predecessors.emplace(vertex, 0);
+		distances.emplace(vertex, 0);
+	}
+
+	// compute for every vertex the predecessor and distance according to the topological order
+	typedef boost::graph_traits <Graph>::adjacency_iterator adjacency_iterator;
+	
+	for(const auto& vertex : topologicalOrder){
+		unsigned int currentDistance = distances.at(vertex);
+		// retrieve edges of current vertex
+		std::pair<adjacency_iterator, adjacency_iterator> neighbors = boost::adjacent_vertices(vertex, data);
+	
+		while(neighbors.first != neighbors.second){
+			vertex_t currentNeighbor = *neighbors.first;
+			if (currentDistance + 1 > distances.at(currentNeighbor)){ // longer path to neighbor found -> edit entries
+				distances.erase(currentNeighbor);
+				distances.emplace(currentNeighbor, currentDistance + 1);
+				predecessors.erase(currentNeighbor);
+				predecessors.emplace(currentNeighbor, vertex);
+			}
+			neighbors.first++;
+		}
+	}
+	
+	// start with the last vertex v_end, which has to be part of the longest path, and add it to the output variable
+	std::deque<SuccessionNode> longestPath;
+	vertex_t longestPathVertex = vEnd;
+	
+	// as long as the current vertex is valid, add its SuccessionNode to the output and set the current vertex to its
+	// predecessor
+	while (longestPathVertex != vStart){
+		longestPath.emplace_front(data[longestPathVertex].vertex);
+		longestPathVertex = predecessors.at(longestPathVertex);
+	}
+	longestPath.emplace_front(data[vStart].vertex);
+	
+	// return the deque containing the vertices on a longest path from v_start to v_end
+	return longestPath;
+}
+\end{minted}
+
+\subsection{Beispiel zu \mintinline{c++}{longestPath}}
+
+In der Main-Methode erstellen wir den Graphen $G_{S_1}$ aus Beispiel \ref{bsp:dag_s1} und berechnen seinen längsten Pfad. Leider ist das Erstellen des Graphen sehr umfangreich, weshalb dieser Prozess hier nicht dargestellt wurde.
+
+Die berechnete topologische Sortierung ist \enquote{$v_{\mathrm{start}}$, $(1,2)$. $(1,3)$, $(1,4)$, $(1,5)$, $(1,6)$, $(1,7)$, $(1,8)$, $v_{\mathrm{end}}$}. Jede Stelle aus der relevanten Sequenz $S_1$ steht dabei stellvertretend für den ganzen Knoten.  Danach wir pro bearbeitetem Knoten aus der topologischen Sortierung für jeden Knoten den aktuell längsten Pfad vom Startknoten aus und den Vorgänger auf diesem Pfad.
+
+\begin{center}
+\begin{tabular}{|c|ccccccccc|}
+	\hline 
+	 \multicolumn{10}{|c|}{\mintinline{c++}{distance}} \\ \hline
+	Aktueller Knoten & $v_{\mathrm{start}}$ & $(1,2)$ & $(1,3)$ & $(1,4)$ & $(1,5)$ & $(1,6)$ & $(1,7)$ & $(1,8)$ & $v_{\mathrm{end}}$ \\ \hline
+	$v_{\mathrm{start}}$ & 0 & 1 & 1 & 1 & 1 & 1 & 1 & 1 & 1 \\
+	$(1,2)$ & 0 & 1 & 2 & 2 & 2 & 2 & 2 & 2 & 2 \\
+	$(1,3)$ & 0 & 1 & 2 & 3 & 3 & 3 & 3 & 3 & 3 \\
+	$(1,4)$ & 0 & 1 & 2 & 3 & 4 & 4 & 4 & 4 & 4 \\
+	$(1,5)$ & 0 & 1 & 2 & 3 & 4 & 5 & 5 & 5 & 5 \\
+	$(1,6)$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 5 & 6 \\
+	$(1,7)$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 5 & 7 \\
+	$(1,8)$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 5 & 7 \\
+	$v_{\mathrm{end}}$ & 0 & 1 & 2 & 3 & 4 & 5 & 6 & 5 & 7 \\
+	\hline
+\end{tabular} 
+\end{center}
+
+\noindent Die dazugehörige Tabelle der Vorgänger nach jedem Schleifendurchlauf:
+
+\begin{center}
+	\begin{tabular}{|c|ccccccccc|}
+		\hline 
+		\multicolumn{10}{|c|}{\mintinline{c++}{predecessor}} \\ \hline
+		Aktueller Knoten & $v_{\mathrm{start}}$ & $(1,2)$ & $(1,3)$ & $(1,4)$ & $(1,5)$ & $(1,6)$ & $(1,7)$ & $(1,8)$ & $v_{\mathrm{end}}$ \\ \hline
+		$v_{\mathrm{start}}$ & NIL & $v_{\mathrm{start}}$ &  $v_{\mathrm{start}}$ &  $v_{\mathrm{start}}$ &  $v_{\mathrm{start}}$ &  $v_{\mathrm{start}}$ &  $v_{\mathrm{start}}$ &  $v_{\mathrm{start}}$ &  $v_{\mathrm{start}}$ \\
+		$(1,2)$ & NIL &  				$v_{\mathrm{start}}$ & $(1,2)$ & $(1,2)$ & $(1,2)$ & $(1,2)$ & $(1,2)$ & $(1,2)$ & $(1,2)$ \\
+		$(1,3)$ & NIL &  				$v_{\mathrm{start}}$ & $(1,2)$ & $(1,3)$ & $(1,3)$ & $(1,3)$ & $(1,3)$ & $(1,3)$ & $(1,3)$ \\
+		$(1,4)$ & NIL &  				$v_{\mathrm{start}}$ & $(1,2)$ & $(1,3)$ & $(1,4)$ & $(1,4)$ & $(1,4)$ & $(1,4)$ & $(1,4)$ \\
+		$(1,5)$ & NIL &  				$v_{\mathrm{start}}$ & $(1,2)$ & $(1,3)$ & $(1,4)$ & $(1,5)$ & $(1,5)$ & $(1,5)$ & $(1,5)$ \\
+		$(1,6)$ & NIL &  				$v_{\mathrm{start}}$ & $(1,2)$ & $(1,3)$ & $(1,4)$ & $(1,5)$ & $(1,6)$ & $(1,5)$ & $(1,6)$ \\
+		$(1,7)$ & NIL & 				$v_{\mathrm{start}}$ & $(1,2)$ & $(1,3)$ & $(1,4)$ & $(1,5)$ & $(1,6)$ & $(1,5)$ & $(1,7)$ \\
+		$(1,8)$ & NIL & 				$v_{\mathrm{start}}$ & $(1,2)$ & $(1,3)$ & $(1,4)$ & $(1,5)$ & $(1,6)$ & $(1,5)$ & $(1,7)$ \\
+		$v_{\mathrm{end}}$ & NIL &  	$v_{\mathrm{start}}$ & $(1,2)$ & $(1,3)$ & $(1,4)$ & $(1,5)$ & $(1,6)$ & $(1,5)$ & $(1,7)$ \\
+		\hline
+	\end{tabular} 
+\end{center}
+
+Wie man sieht liegt nur der Knoten $(1,8)$ nicht auf dem längsten Pfad, weil er der einzige Knoten neben dem Endknoten ist, der in der letzten Zeile nie als Vorgänger auftaucht. Aus der letzten Zeile der Vorgängertabelle lassen sich die Knoten auf einem längsten Pfad ablesen. Dieser beträgt \enquote{$v_{\mathrm{start}}$, $(1,2)$. $(1,3)$, $(1,4)$, $(1,5)$, $(1,6)$, $(1,7)$, $v_{\mathrm{end}}$}.
