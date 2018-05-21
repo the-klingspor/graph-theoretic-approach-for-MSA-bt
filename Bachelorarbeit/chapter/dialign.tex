@@ -309,7 +309,7 @@ Widmen wir uns nun $N_{\max}$, der Anzahl an Fragmenten, die maximal gleichzeiti
 
 \subsection{Laufzeit}
 
-\begin{satz}[\cite{m02}]
+\begin{satz}[\cite{m02}]\label{satz:pairwise}
 	Ein paarweises optimales Alignment zwischen zwei Sequenzen $S_1$ und $S_2$ mit Längen $L_1$ und $L_2$, gegeben eine maximale Fragmentlänge $l_{\max} \in \oh(1)$, lässt sich in $\oh(L^2)$ Zeit berechnen für $L = \max\{L_1, L_2\}$.
 \end{satz}
 
@@ -755,7 +755,7 @@ Für den Rest des Abschnitts nehmen wir an, dass unser Alignmentgraph $G$ mit SS
 
 Sei ein Symbol $s$ aus der Sequenz $S_i$ mit korrespondierendem Knoten $v$ aus dem Alignmentgraphen gegeben. Dann sind genau die Symbole einer zweiten Sequenz $S_j$ mit $s$ alignierbar, die zwischen $P(v)[j] + 1$ und $S(v)[j] - 1$ liegen. Das liegt an einer Beobachtung, die wir bereits zu Beginn dieses Unterabschnitts gemacht haben: \enquote{Für Elemente $x$ und $y$ auf zwei Pfaden $P_i$ und $P_j$ kann man sich leicht überlegen, dass aus $\operatorname{pos}(x) \leq P(y)[i]$ folgt, dass $(x,y)\in E^*$ gilt. Die gleiche Aussage folgt aus $\operatorname{pos}(y) \geq S(x)[j]$.} Haben wir jetzt einen Knoten $u$ auf $P_j$ mit $P(v)[j] +1 \leq u \leq S(v)[j] - 1$, dann gilt $u \rightleftharpoons^{*} v$ und die beiden korrespondierenden Symbole sind nach dem letzten Lemma miteinander alignierbar. Diese Überprüfung ist in $\oh(1)$ Zeit möglich. Wie bereits angedeutet, entsprechen die Transitivitätsgrenzen aus dem Kontext der Graphen genau denen auf unseren Sequenzen, denn der größte Vorgänger $P(u)[i]$ von Knoten $u\in V$ auf dem Pfad $P_i$  ist, wie wir gezeigt haben, gleichzeitig auch der am weitesten rechts stehende Knoten $v$, für den in unserem Alignment $v \preceq_{\mathcal{A}} u$ gilt. Es folgt $P(u)[i] = \operatorname{Pred}_{\mathcal{A}}(u,i)$ und für die Nachfolgergrenzen gilt Analoges.
 
-\begin{korollar}
+\begin{korollar}\label{korollar:trans_hull}
 	Für eine Menge an Sequenzen $S = \{S_1, \dots, S_n\}$ und zugehörigen Alignmentgraphen mit SSDP $(G,P)$ kann die transitive Hülle von $G$ in $\oh(n^3\cdot L + n^2\cdot L^2)$ Zeit und mit $\oh(n^2\cdot L)$ Speicherplatz erhalten werden, wobei $L$ die maximale Länge aller Sequenzen ist.
 \end{korollar}
 
@@ -1580,7 +1580,7 @@ DIALIGN aligniert nur die Segmente der Sequenzen miteinander, die auch wirklich 
 
 Erinnern wir uns zurück an die gängigsten Mutationen, die auf den von uns untersuchten Sequenzen vorkommen: Deletionen und Insertionen von ganzen Abschnitten oder Punktmutationen, bei denen einzelne Basen oder Aminosäuren durch andere ersetzt werden. Man stellt fest, dass jede dieser Situationen sich in DIALIGN wiederfindet. Punktmutationen zeigen sich durch Abweichungen einzelner Stellen in längeren Fragmenten und bei gelöschten oder eingefügten Segmenten teilt DIALIGN ein einzelnes längeres Fragment in zwei oder mehr kürzere aufgeteilt wird \cite{mfdw98}. Es ist außerdem anzunehmen, dass der segmentbasierte Ansatz von DIALIGN für die Benutzer angenehmer ist, als dass nicht in jedem Fall versucht wird die kompletten Sequenzen in ein Alignment einzufügen. Stattdessen können Abschnitte ohne Zuweisung bleiben, wenn wenn es keine Ähnlichkeiten zu anderen Bereichen gibt. Man stellt fest, dass es für einen Alignierer fast genauso wichtig ist, nichtverwandte Abschnitte nicht zuzuordnen, wie es wichtig ist, dies für verwandte zu tun, denn sonst muss der Forscher, der das Alignment später benutzt, erst mühsam von Hand feststellen, welche Abschnitte die gesuchten Motive sind \cite{m99}.
 
-\subsection{Schwächen von DIALIGN}
+\subsection{Schwächen von DIALIGN}\label{subsec:schwaechen}
 
 Es gibt im Allgemeinen zwei Gründe, warum automatisierte Alignmentverfahren wie beispielsweise DIALIGN biologisch unzureichende Ergebnisse liefern können: Entweder bildet die Gütefunktion, also in unserem Fall der Score unseres Alignments, die Wirklichkeit unzureichend ab und weist bedeutungslosen Abschnitten größere Werte zu, als anderen wichtigen Motiven, oder die Gütefunktion funktioniert grundsätzlich richtig, aber dafür werden beim Zusammensetzen des multiplen Alignments die falschen Fragmente ausgewählt. In diesem Fall liegt das Problem in unserer Heuristik, die die Fragmente gierig nach Gewicht und Konsistenz auswählt. 
 
