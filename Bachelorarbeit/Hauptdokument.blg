@@ -9,6 +9,8 @@ A level-1 auxiliary file: chapter/min-cut.aux
 A level-1 auxiliary file: chapter/Programmierung.aux
 A level-1 auxiliary file: chapter/Fazit.aux
 The style file: alphadin.bst
+A level-1 auxiliary file: chapter/anhang_BLOSUM.aux
+A level-1 auxiliary file: chapter/anhang_beispiel_paarweis.aux
 A level-1 auxiliary file: chapter/EidesstattlicheErklaerung.aux
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
@@ -17,45 +19,45 @@ Reallocated singl_function (elt_size=4) to 100 items from 50.
 Reallocated singl_function (elt_size=4) to 100 items from 50.
 Database file #1: Quellen.bib
 Warning--empty pages in d06
-You've used 28 entries,
+You've used 29 entries,
             4793 wiz_defined-function locations,
-            1068 strings with 10424 characters,
-and the built_in function-call counts, 16855 in all, are:
-= -- 1677
-> -- 575
-< -- 319
-+ -- 424
-- -- 201
-* -- 1227
-:= -- 2942
-add.period$ -- 32
-call.type$ -- 28
-change.case$ -- 153
-chr.to.int$ -- 27
-cite$ -- 29
-duplicate$ -- 531
-empty$ -- 1263
-format.name$ -- 373
-if$ -- 3410
+            1077 strings with 10586 characters,
+and the built_in function-call counts, 17446 in all, are:
+= -- 1736
+> -- 594
+< -- 328
++ -- 436
+- -- 207
+* -- 1270
+:= -- 3039
+add.period$ -- 33
+call.type$ -- 29
+change.case$ -- 158
+chr.to.int$ -- 28
+cite$ -- 30
+duplicate$ -- 550
+empty$ -- 1311
+format.name$ -- 384
+if$ -- 3535
 int.to.chr$ -- 2
 int.to.str$ -- 0
-missing$ -- 116
-newline$ -- 156
-num.names$ -- 84
-pop$ -- 203
+missing$ -- 122
+newline$ -- 161
+num.names$ -- 87
+pop$ -- 210
 preamble$ -- 1
-purify$ -- 209
+purify$ -- 216
 quote$ -- 0
-skip$ -- 827
+skip$ -- 857
 stack$ -- 0
-substring$ -- 975
-swap$ -- 137
-text.length$ -- 100
+substring$ -- 1014
+swap$ -- 142
+text.length$ -- 103
 text.prefix$ -- 7
 top$ -- 0
-type$ -- 274
+type$ -- 284
 warning$ -- 1
-while$ -- 165
-width$ -- 31
-write$ -- 356
+while$ -- 171
+width$ -- 32
+write$ -- 368
 (There was 1 warning)

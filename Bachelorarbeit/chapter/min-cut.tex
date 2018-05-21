@@ -1,31 +1,27 @@
 \chapter{Ein Min-Cut-Ansatz für das Konsistenzproblem}
 \label{ch:min-cut}
-Da es, wie im letzten Kapitel gezeigt, auf manchen Sequenzfamilien durch die gierige Heuristik von DIALIGN zu suboptimalen Scores und Alignments kommt, werden wir jetzt einen verbesserten graphtheoretischen Ansatz von \cite{cpm10} betrachten.
+Da es, wie im letzten Kapitel gezeigt, auf manchen Sequenzfamilien durch die gierige Heuristik von DIALIGN zu suboptimalen Scores und Alignments kommt, werden wir jetzt einen verbesserten graphtheoretischen Ansatz von Corel et al. betrachten\cite{cpm10}.
 
-Dazu benötigen wir zwei verschiedene Graphen: zum einen den \emph{Inzidenzgraphen}, bei dem alle Stellen Knoten sind und ihre Anker Zusammenhangskomponenten. Der zweite ist der \emph{Sukzessionsgraph}, der die Zusammenhangskomponenten unseres Inzidenzgraphen als Knoten und die natürliche Ordnung auf den Sequenzen als Kanten benutzt. Man kann sich vorstellen, dass genau dann eine Kante zwischen zwei  Diese beiden Datenstrukturen werden wir benutzen, um Inkonsistenzen aufzulösen. Wenn wir uns an die Definition von Konsistenz aus dem letzten Kapitel erinnern, dann stellen wir fest, dass es zwei Arten von ihr gibt: zum einen implizite, transitive Mehrfachzuweisungen bei denen einer Stelle einer Sequenz mehrere Stellen einer anderen Sequenz zugeordnet sind und zum anderen überkreuzte Zuweisungen.
+Dazu benötigen wir zwei verschiedene Graphen: zum einen den \emph{Inzidenzgraphen}, bei dem alle Stellen Knoten sind und ihre Anker Zusammenhangskomponenten. Zum anderen den \emph{Sukzessionsgraph}, der die Zusammenhangskomponenten unseres Inzidenzgraphen als Knoten und die natürliche Ordnung auf den Sequenzen als Kanten benutzt. Diese beiden Datenstrukturen werden wir benutzen, um Inkonsistenzen aufzulösen. Wenn wir uns an die Definition \ref{def:konsistenz} der Konsistenz aus dem letzten Kapitel erinnern, dann stellen wir fest, dass es zwei Arten von ihr gibt: zum einen implizite, transitive Mehrfachzuweisungen, bei denen einer Stelle einer Sequenz mehrere Stellen einer anderen Sequenz zugeordnet sind, und zum anderen überkreuzte Zuweisungen.
 
-Als Ausgangspunkt starten wir wieder mit unseren paarweisen Alignments aus DIALIGN. Überlappgewichte brauchen wir in unserem Fall nicht. Dann konstruieren wir mit Hilfe dieser Zuweisungen unseren Inzidenzgraphen und benutzen einen Algorithmus zur Berechnung des minimalen Schnitts (\enquote{min-cut}) auf den Zusammenhangskomponenten, um alle Inkonsistenzen aufgrund von transitiven Mehrfachzuweisungen aufzulösen. Die so entstehenden Zusammenhangskomponenten benutzen wir, um einen Sukzessionsgraphen aufzubauen. Dank eines Algorithmus von \cite{pdc10} können wir mit diesem Überkreuzungen aus unserer Relation löschen. Alle dieser Konzepte werden wir im Laufe dieses Kapitel formal definieren, genauer analysieren und die Korrektheit der Aussagen beweisen.
+Als Ausgangspunkt starten wir wieder mit unseren paarweisen Alignments aus DIALIGN. Überlappgewichte brauchen wir in diesem Fall nicht, weil Überschneidungen mehrerer Fragmente auf anderem Weg gefunden werden. Wir konstruieren mit Hilfe dieser Zuweisungen unseren Inzidenzgraphen und benutzen einen Algorithmus zur Berechnung des minimalen Schnitts (\enquote{min-cut}) auf den Zusammenhangskomponenten, um alle Inkonsistenzen aufgrund von transitiven Mehrfachzuweisungen aufzulösen. Die so entstehenden Zusammenhangskomponenten benutzen wir, um einen Sukzessionsgraphen aufzubauen. Dank eines Algorithmus von \cite{pdc10} können wir Überkreuzungen aus unserer Relation löschen. Alle dieser Konzepte werden wir im Laufe dieses Kapitel formal definieren, genauer analysieren und die Korrektheit der Aussagen beweisen.
  
 \section{Flussnetzwerke}
 
 \subsection{Einführung}
 
-Stell dir eine Produktionsstätte vor, wo ein bestimmtes Produkt hergestellt wird und eine Verwendungsstätte bei der das Produkt benötigt wird. Zwischen dem Ort der Produktion und dem Ort der Verwendung gibt es ein Schienennetz über das die Produkte geliefert werden können. Über jeden Abschnitt der Schienen kann aber nur eine bestimmte Anzahl an Waggons geleitet werden. So mag es weniger stark befestigte Strecken geben, wo nur kleinere oder leichtere Züge fahren können und andere gut ausgebaute mit mehreren Gleisen nebeneinander. Die Anzahl an Einheiten, die über einen Abschnitt geleitet werden können, nennt man Kapazität, während Produktionsstätte und Zielort Quelle und Senke heißen. Ziel ist es zu bestimmen wie viele Produktionseinheiten über dieses Netz von der Fabrik zum Verbraucher geliefert werden können.
+\emph{Flussnetzwerke} habe eine Vielzahl von realweltlichen Anwendungen. Man kann mit ihnen Straßen- oder Schienennetze modellieren. Auch chemische Produktionsstraßen mit vielen Rohren, die jeweils nur den Durchfluss einer bestimmten Menge erlauben, oder Stromnetze mit Kraftwerken und Endverbrauchern; zwischen denen es Stromleitungen gibt, die jeweils höchstens einen bestimmten Stromfluss erlauben, lassen sich durch sie darstellen \cite[S.708]{clrs09}. 
 
-Neben diesem Problem kann man mit Flussnetzwerken noch viele andere Anwendungen modellieren, zum Beispiel eine chemische Produktionsstraße mit vielen Rohren, die jeweils nur den Durchfluss einer bestimmten Menge erlauben. Oder Stromnetze mit Kraftwerken und Endverbrauchern zwischen denen es Stromleitungen gibt, die jeweils höchstens einen bestimmten Stromfluss erlauben. Für eine Hochspannungsleitung mag dieser sehr hoch und für die Leitungen, die direkt zu den Häusern gehen, sehr klein sein. Stromnetze bieten uns auch eine direkte Analogie, wie mit den Knotenpunkten zwischen den Verbindungen umzugehen ist. An jedem Knoten, außer der Quelle und Senke, wird genauso viel Fluss hinein- wie wieder hinausgeleitet. Es wird nichts gespeichert oder geht verloren. Dieses Konzept, das man Flusserhaltung nennt, funktioniert genau wie das erste \emph{Kirchhoffsche Gesetz} bei Strömen \cite[S.708]{clrs09}. 
+Zunächst betrachten wir Flussnetzwerke auf einer formalen Ebene, dann widmen wir uns kurz und skizziert einigen der wichtigsten Algorithmen zum Berechnen von maximalen Flüssen und zuletzt beweisen wir die Äquivalenz von diesen mit minimalen Schnitten. Diese brauchen wir später zum Auflösen von Inkonsistenzen im Inzidenzgraphen.
 
-Ursprünglich stammt das Konzept des Flussnetzwerkes aus dem Kalten Krieg und der militärischen Forschung. Es wurde das Schienennetzwerk des Sowjetunion in Osteuropa untersucht, um herauszufinden wie viel Material die UdSSR im Kriegsfall aus dem russischen Kerngebiet nach Mitteleuropa transportieren könnte und welche Strecken man zerstören müsste, um den Nachschub am schnellsten Abzuschneiden. Die Untersuchung bietet uns sogleich einen intuitiven Begriff des \emph{maximalen Flusses} und des \emph{minimalen Schnitts}. Der \emph{maximale Fluss} ist die maximale Anzahl an Einheiten, die von der Quelle zur Senke transportiert werden kann, während der \emph{minimale Schnitt} den \enquote{Bottleneck} des Netzwerkes darstellt, der den Fluss von der Quelle zur Senke minimiert. Wie wir später formal zeigen werden sind diese beiden Werte in einem Flussnetzwerk äquivalent.
-
-Zunächst betrachten wir Flussnetzwerke auf einer formalen Ebene, dann widmen wir uns kurz und skizziert einigen der wichtigsten Algorithmen zum berechnen von maximalen Flüssen und danach beweisen wir die Äquivalenz von diesen mit minimalen Schnitten. Diese minimalen Schnitte brauchen wir später zum Auflösen von Inkonsistenzen im Inzidenzgraphen.
-
-\begin{definition}[Flussnetzwerk]
-	Ein Flussnetzwerk ist ein gerichteter Graph $G = (V,E)$ bei dem jeder Kante $(u,v) \in E$ eine nicht-negative Kapazität $c(u,v) \geq 0$ zugeordnet ist und bei dem es zwei ausgezeichnete Knoten $s, t \in V$ gibt, die wir Quelle und Senke nennen.  
+\begin{definition}[Flussnetzwerk{\cite[S.709]{clrs09}}]
+	Ein Flussnetzwerk ist ein gerichteter Graph $G = (V,E)$ bei dem jeder Kante $(u,v) \in E$ eine nicht-negative Kapazität $c(u,v) \geq 0$ zugeordnet ist und zwei ausgezeichnete Knoten $s, t \in V$ existieren, die wir \emph{Quelle} und \emph{Senke} nennen.  
 \end{definition}
 
 Der Einfachheit halber nehmen wir im Folgenden an, dass jeder Knoten von $G$ auf einem Pfad von $s$ nach $t$ liegt. Sollte es doch solche Knoten geben, dann wären sie ohnehin nicht relevant, weil kein Fluss durch sie von der Quelle zur Senke geschickt werden kann.
 
-\begin{definition}[Fluss]
-	Sei $G = (V,E)$ mit Kapazitätsfunktion $c$ ein Flussnetzwerk. Dann ist definieren wir einen Fluss als eine Funktion $f: V \times V \rightarrow \mathbb{R}$, die die folgenden beiden Eigenschaften erfüllt:
+\begin{definition}[Fluss{\cite[S.709]{clrs09}}]
+	Sei $G = (V,E)$ mit Kapazitätsfunktion $c$ ein Flussnetzwerk. Dann definieren wir einen Fluss als eine Funktion $f: V \times V \rightarrow \mathbb{R}$, die die folgenden beiden Eigenschaften erfüllt:
 	\begin{itemize}[leftmargin=12em]
 		\item[\textbf{Kapazitätsbeschränkung:}] Für alle Knoten $u,v \in V$ gelte $0 \leq f(u,v) \leq c(u,v)$.
 		\item[\textbf{Flusserhaltung:}] Für alle Knoten $u \in V\setminus\{s,t\}$ gelte \\ 
@@ -34,10 +30,18 @@ Der Einfachheit halber nehmen wir im Folgenden an, dass jeder Knoten von $G$ auf
 	Für Knoten $u,v\in V$, die nicht durch eine Kante verbunden sind ($(u,v)\notin E$), setzen wir den Fluss auf 0: $f(u,v) = 0$.
 \end{definition}
 
-Ein Fluss ist also eine Zuordnung von Werten an die Kanten unseres Flussnetzwerkes, sodass keine Kapazität verletzt wird und in jeden Knoten soviel hinein wie hinaus fließt. Wir nennen auch den Wert $f(u,v)$ Fluss zwischen den beiden Knoten $u$ und $v$.
+Ein Fluss ist also eine Zuordnung von Werten an die Kanten unseres Flussnetzwerkes, sodass keine Kapazität überschritten wird und in jeden Knoten soviel hinein wie hinaus fließt. Wir nennen auch den die Zahl $f(u,v)$ Fluss zwischen den beiden Knoten $u$ und $v$.
 
+\begin{definition}[Wert eines Flusses{\cite[S.710]{clrs09}}]
+	Der Wert eines Flusses ist definiert als
+	\begin{equation}
+	|f| \coloneqq \sum_{v \in V}{f(s,v)} - \sum_{v \in V}{f(v,s)}.
+	\end{equation} 
+\end{definition}
 
-Hier ein Beispiel für ein einfaches Flussnetzwerk mit sechs Knoten:
+Der Wert eines Flusses ist also die Summe aller Flüsse aus der Quelle $s$, von der die Summe der Flüsse in die Quelle abgezogen wird. In den meisten Fällen geht es darum den Fluss mit dem höchstmöglichen Wert zu bestimmen. Diesen nennen wir \emph{maximalen Fluss}.
+
+\begin{figure}
 \begin{center}
 	\begin{tikzpicture}[
 	mycircle/.style={
@@ -76,18 +80,14 @@ Hier ein Beispiel für ein einfaches Flussnetzwerk mit sechs Knoten:
 	\draw [myarrow] (c4.250) -- node[sloped,font=\small,above,rotate=180] {10} (c2.110);
 	\end{tikzpicture}
 \end{center}
+\caption{Ein Beispiel für ein einfaches Flussnetzwerk mit sechs Knoten.}
+\end{figure}
 
-Viele Autoren setzen voraus, dass es keine Kanten in die Senke und keine aus der Quelle gibt. Diese Beschränkung ist zwar hilfreich fürs Verständnis, wird aber grundsätzlich nicht benötigt. Man kann sich leicht überlegen, dass selbst wenn es solche Kanten gibt, ihr Fluss 0 sein muss. Bei den Flussnetzwerken, die wir für unseren Algorithmus benutzen, wird es diese Kanten geben, weshalb wir auf die Beschränkung verzichten. 
+Viele Autoren setzen voraus, dass keine Kanten in die Senke und keine aus der Quelle führen. Diese Beschränkung ist zwar hilfreich hilfreich beim Verständnis von Flussnetzwerken, wird aber grundsätzlich nicht benötigt. Man kann sich leicht überlegen, dass solche Kanten den Fluss 0 besitzen müssen in einem maximalen Fluss. Bei den Flussnetzwerken, die wir für unseren Algorithmus benutzen, wird es diese Kanten geben, weshalb wir auf die Beschränkung verzichten. 
 
-\begin{definition}[Wert eines Flusses]
-	Der Wert eines Flusses ist definiert als
-	\begin{equation}
-		|f| = \sum_{v \in V}{f(s,v)} - \sum_{v \in V}{f(v,s)}.
-	\end{equation} 
-\end{definition}
+Eine andere Einschränkung, die man in vielen Definitionen sieht, ist der Verzicht auf antiparallele Kanten. Das heißt, dass es gleichzeitig Kanten $(u,v), (v,u) \in E$ gibt. Manche Implementierungen für Algorithmen, die den maximalen Fluss berechnen, sind so programmiert, dass sie vom Benutzer eine Menge von Gegenkanten mit Fluss 0 erwarten, die intern benötigt werden. Grundsätzlich sind antiparallele Kanten aber unproblematisch, weil man jeden Fluss mit positiven Werten auf antiparallelen Kanten in einen Fluss umwandeln kann, bei dem zwischen zwei Knoten höchstens eine Kante einen positiven Fluss hat. Sei beispielsweise $f(u,v) = x, f(v,u) = y$ mit $x \neq 0 \neq y$. Dann kann man einen Fluss mit dem selben Wert definieren, wenn man den Fluss auf den antiparallelen Kanten wie folgt definiert: $f(u,v) = x - \min\{x,y\}, f(v,u) = y - \min\{x,y\}$. Alternativ lässt sich jedes Flussnetzwerk mit antiparallelen Kanten auch in ein äquivalentes übertragen, das keine solchen Kanten enthält, wie man in Abbildung \ref{abb:no_antiparallel} sieht.
 
-Eine andere Einschränkung, die man in vielen Definitionen sieht, ist der Verzicht auf antiparallele Kanten. Das heißt, dass es gleichzeitig Kanten $(u,v), (v,u) \in E$ gibt. Manche Implementierungen für Algorithmen, die den maximalen Fluss berechnen, sind so programmiert, dass sie vom Benutzer eine Menge von Gegenkanten mit Fluss 0 erwarten, die intern benötigt werden. Grundsätzlich sind antiparallele Kanten aber unproblematisch, weil man jeden Fluss mit positiven Werten auf antiparallelen Kanten in einen Fluss umwandeln kann, bei dem zwischen zwei Knoten höchstens eine Kante einen positiven Fluss hat. Sei beispielsweise $f(u,v) = x, f(v,u) = y$ mit $x \not 0 \not y$. Dann kann man einen Fluss mit dem selben Wert definieren, wenn man den Fluss auf den antiparallelen Kanten wie folgt definiert: $f(u,v) = x - \min\{x,y\}, f(v,u) = y - \min\{x,y\}$. Alternativ lässt sich jedes Flussnetzwerk mit antiparallelen Kanten auch in ein äquivalentes übertragen, das keine solchen Kanten enthält.
-
+\begin{figure}
 \begin{center}
 \begin{tikzpicture}[
 	mycircle/.style={
@@ -121,22 +121,26 @@ Eine andere Einschränkung, die man in vielen Definitionen sieht, ist der Verzic
 	\draw [myarrow] (\i) -- node[sloped,font=\footnotesize,\p] {\txt} (\j);
 \end{tikzpicture}
 \end{center}
+\caption{Ausschnitt aus einem Flussnetzwerk, bei dem Knoten mit antiparallelen Kanten durch äquivalente Knoten ohne diese ersetzt wurden.}\label{abb:no_antiparallel}
+\end{figure}
 
 \subsection{Wichtige Algorithmen}
 
-Es gibt eine Vielzahl von Algorithmen zur Berechnung eines maximalen Flusses auf einem Flussnetzwerk. Die wichtigsten und bekanntesten Vertreter möchte ich kurz vorstellen. 
+Es gibt eine Vielzahl von Algorithmen zur Berechnung eines maximalen Flusses auf einem Flussnetzwerk. Die wichtigsten und bekanntesten Vertreter werden hier kurz vorgestellt. 
 
-Der erste Algorithmus, der speziell zum Berechnen des maximalen Flusses entwickelt wurde war der Algorithmus von Ford-Fulkerson \cite{gt14}. Dieser verwendete einen sogenannten \emph{Restwertgraphen}, der für jede Kante im ursprünglichen Flussnetzwerk eine Vorwärts- und eine Rückwärtskante enthält. Die Vorwärtskante hat als Kapazität die der Kante im ursprünglichen Graph minus den Fluss im Flussnetzwerk. Die der Rückwärtskante im Restwertgraphen ist genau die Kapazität des Flusses der zugehörigen Kante im Flussnetzwerk. Für einen Pfad von der Quelle zur Senke im Restwertgraph kann man den Fluss im Flussnetzwerk um die kleinste Kapazität auf diesem Pfad erhöhen, ohne die Kapazitätsbeschränkung zu verletzen. Diese Pfade nennt man \emph{augmentierend} und nach jeder Aktualisierung des Flusses, müssen auch die Kapazitäten im Restwertgraphen angepasst werden. Der Algorithmus von Ford-Fulkerson besucht solange augmentierende Pfade, bis es keine solchen mehr gibt. Ist das der Fall, dann kann der Fluss nicht mehr vergrößert werden und der maximale Fluss wurde berechnet. Der Algorithmus von Ford-Fulkerson hat für einen zusammenhängenden Graphen mit ganzzahligen Kapazitäten eine pseudopolynomielle Laufzeit von $\oh(|E|\cdot U)$, wobei $U$ die Summe der Kapazitäten der ausgehenden Kanten von der Quelle ist.
+Der erste Algorithmus, der speziell zum Berechnen des maximalen Flusses entwickelt wurde, war der Algorithmus von Ford-Fulkerson \cite{ff56}. Dieser verwendete einen sogenannten \emph{Restwertgraphen}, der für jede Kante im ursprünglichen Flussnetzwerk eine Vorwärts- und eine Rückwärtskante enthält. Die Vorwärtskante hat als Kapazität die der Kante im ursprünglichen Graph minus den Fluss im Flussnetzwerk. Die der Rückwärtskante im Restwertgraphen ist genau die Kapazität des Flusses der zugehörigen Kante im Flussnetzwerk. Für einen Pfad von der Quelle zur Senke im Restwertgraph kann man den Fluss im Flussnetzwerk um die kleinste Kapazität auf diesem Pfad erhöhen, ohne die Kapazitätsbeschränkung zu verletzen. Diese Pfade nennt man \emph{augmentierend} und nach jeder Aktualisierung des Flusses, müssen auch die Kapazitäten im Restwertgraphen angepasst werden. Der Algorithmus von Ford-Fulkerson besucht solange augmentierende Pfade, bis es keine solchen mehr gibt. Ist das der Fall, dann kann der Fluss nicht mehr vergrößert werden und der maximale Fluss wurde berechnet. Der Algorithmus von Ford-Fulkerson hat für einen zusammenhängenden Graphen mit ganzzahligen Kapazitäten eine pseudopolynomielle Laufzeit von $\oh(|E|\cdot U)$, wobei $U$ die Summe der Kapazitäten der ausgehenden Kanten von der Quelle ist.
 
-Oft wird Ford-Fulkerson eher als eine \enquote{Methode} statt als Algorithmus bezeichnet, weil die Reihenfolge, nach der augmentierende Pfade gewählt werden, nicht spezifiziert ist. In der Folge wurde der Algorithmus von Ford-Fulkerson an mehreren Stellen verbessert. Edmond-Karps benutzt eine Breitensuche, um den Pfad mit den wenigsten Knoten von der Quelle zur Senke zu finden. Dadurch lässt sich die Laufzeit auf $\oh(|V|\cdot |E|^2)$ verbessern \cite[S.727ff.]{clrs09}. Auch der Algorithmus von Dinic \footnote{Eigentlich entwickelt vom sowjetischen Forscher Yefim A. Dinitz. Die verbreitete Schreibweise beruht auf einem Übersetzungsfehler. Später wanderte Dinitz nach Israel aus \cite{d06}.} sucht nach kürzesten Pfaden im Restwertgraphen. Zusätzlich wird das Konzept von sogenannten \emph{blockierenden Flüssen} benutzt, bei denen jeder $s-t$-Pfad mindestens eine Kante enthält, deren Kapazität komplett ausgereizt ist. Der Algorithmus von Dinic benötigt nur $\oh(|V|^2\cdot |E|)$ Rechenschritte \cite{d06}.
+Oft wird Ford-Fulkerson eher als eine \enquote{Methode} statt als Algorithmus bezeichnet, weil die Reihenfolge, nach der augmentierende Pfade gewählt werden, nicht spezifiziert ist. In der Folge wurde der Algorithmus von Ford-Fulkerson an mehreren Stellen verbessert. Edmond-Karps benutzt eine Breitensuche, um den Pfad mit den wenigsten Knoten von der Quelle zur Senke zu finden. Dadurch lässt sich die Laufzeit auf $\oh(|V|\cdot |E|^2)$ verbessern \cite[S.727ff.]{clrs09}. Auch der Algorithmus von Dinic\footnote{Eigentlich entwickelt vom sowjetischen Forscher Yefim A. Dinitz. Die verbreitete Schreibweise beruht auf einem Übersetzungsfehler. Später wanderte Dinitz nach Israel aus \cite{d06}.} sucht nach kürzesten Pfaden im Restwertgraphen. Zusätzlich wird das Konzept von sogenannten \emph{blockierenden Flüssen} benutzt, bei denen jeder $s$-$t$-Pfad mindestens eine Kante enthält, deren Kapazität komplett ausgereizt ist. Der Algorithmus von Dinic benötigt nur $\oh(|V|^2\cdot |E|)$ Rechenschritte \cite{d06}.
 
-Die nächste Klasse von Algorithmen waren die sogenannten \emph{Push-Relabel-Algorithmen}. Diese benutzen bei ihren Schritten statt Flüssen nur sogenannten \emph{Präflüsse} bei denen zwar die Kapazitätsbeschränkung gilt, die Flusserhaltung aber nicht. Das heißt, dass jeder Knoten einen positiven \emph{Überfluss} haben kann, wenn mehr in ihn hinein als hinaus fließt. Jeder Knoten hat einen Index, der seine Höhe im Netz angibt, wobei Fluss immer nur von oben nach unten geleitet werden kann. Wie der Name schon sagt, sind die zwei Grundschritte bei allen Push-Relabel-Algorithmen die Methoden Push und Relabel. Bei Push verschieben wir den \emph{Überfluss} eines Knotens zu einem tiefer gelegenen Nachbarn. Bei Relabel wird hingegen die Höhe eines Knotens vergrößert, wenn er noch Überfluss hat, aber alle benachbarten Knoten einen größeren Index haben. Die Push- und Relabelmethoden werden solange angewendet, bis es keine Knoten mehr gibt auf die sie anwendbar sind \cite[S.736ff.]{clrs09}. Je nachdem wie der nächste zu bearbeitende Knoten ausgewählt wird, kann die Laufzeit stark variieren. Ein generischer Algorithmus, der die Knoten mehr oder minder zufällig auswählt, läuft in $\oh(|V|^2\cdot |E|)$. Mit einer FIFO-Warteschlange in dem jeder bearbeitete Knoten, der noch Überfluss hat, wieder ans Ende eingereiht wird, lässt sich die Laufzeit auf $\oh(|V|^3)$ verbessern \cite{gt88}. Der in der Praxis verbreitetste Ansatz benutzt die \emph{Highest-Label}-Regel, bei der alle Knoten in Töpfen nach ihrem Index eingeordnet sind und jeweils ein Knoten mit maximalem Index ausgewählt wird. Hier verbessert sich die Laufzeit auf $\oh(|V|^2\cdot \sqrt{|E|})$ Rechenschritte im schlimmsten Fall \cite{akmo97}.
+Die nächste Klasse von Algorithmen waren die sogenannten \emph{Push-Relabel-Algorithmen}. Diese benutzen bei ihren Schritten statt Flüssen nur sogenannte \emph{Präflüsse}, bei denen zwar die Kapazitätsbeschränkung gilt, die Flusserhaltung aber nicht. Das heißt, dass jeder Knoten einen positiven \emph{Überfluss} haben kann, wenn mehr in ihn hinein als hinaus fließt. Jeder Knoten hat einen Index, der seine Höhe im Netz angibt, wobei Fluss immer nur von oben nach unten geleitet werden kann. Wie der Name schon sagt, sind die zwei Grundschritte bei allen Push-Relabel-Algorithmen die Methoden Push und Relabel. Bei Push verschieben wir den \emph{Überfluss} eines Knotens zu einem tiefer gelegenen Nachbarn. Bei Relabel wird hingegen die Höhe eines Knotens vergrößert, wenn er noch Überfluss hat, aber alle benachbarten Knoten einen größeren Index haben. Die Push- und Relabelmethoden werden solange angewendet, bis es keine Knoten mehr gibt, auf die sie anwendbar sind \cite[S.736ff.]{clrs09}. Je nachdem, wie der nächste zu bearbeitende Knoten ausgewählt wird, kann die Laufzeit stark variieren. Ein generischer Algorithmus, der die Knoten mehr oder minder zufällig auswählt, benötigt $\oh(|V|^2\cdot |E|)$ Rechenschritte. Mit einer FIFO-Warteschlange, in die jeder bearbeitete Knoten, der noch Überfluss hat, wieder ans Ende eingereiht wird, lässt sich die Laufzeit auf $\oh(|V|^3)$ verbessern \cite{gt88}. Der in der Praxis verbreitetste Ansatz benutzt die \emph{Highest-Label}-Regel, bei der alle Knoten in Töpfen nach ihrem Index eingeordnet sind und jeweils ein Knoten mit maximalem Index ausgewählt wird. Hier verbessert sich die Laufzeit auf $\oh(|V|^2\cdot \sqrt{|E|})$ Rechenschritte im schlimmsten Fall \cite{akmo97}.
 
 Weiter verbessern ließ sich die asymptotische Laufzeit durch die Verwendung von \emph{dynamischen Bäumen}. Dynamische Bäume sind eine Datenstruktur, die die nicht-saturierten Teile von augmentierenden Pfaden speichern. Mit Operationen auf dieser Datenstruktur ist es möglich die Laufzeit zu senken. Beschränkt man beispielsweise die maximale Baumgröße und benutzt eine weitere Datenstruktur, dann lässt sich der maximale Fluss mit Hilfe von blockierenden Flüssen in $\oh(|V|\cdot |E|\cdot \log(|V|^2/|E|))$ berechnen \cite{gt14}. In der Praxis sind diese Algorithmen aber nicht von Relevanz, weil die verwendete Baumstruktur einen großen konstanten Vorfaktor benötigt. Einer der schnellsten bekannten Algorithmen ist der von Orlin. Er verwendet eine Kombination verschiedener Techniken in unterschiedlichen Situationen und kommt insgesamt auf eine Laufzeit von $\oh(|V|\cdot |E|)$ \cite{gt14}.
  
 \subsection{Schnitte und der \emph{Max-Flow-Min-Cut-Satz}}
 
-\begin{definition}[Schnitt]
+Nachdem wir jetzt wissen, wie maximale Flüsse berechnet werden, lernen wir ihren Zusammenhang mit minimalen Schnitten kennen. Diese benötigen wir zum Auflösen von Inkonsistenzen im Inzidenzgraphen.
+
+\begin{definition}[Schnitt{\cite[S.720]{clrs09}}]
 	Sei $G = (V,E)$ mit Senke und Quelle $s, t \in V$ und einer Kapazitätsfunktion $c$. Dann ist ein Schnitt von $G$ eine Partitionierung von $V$ in zwei Mengen $A$ und $B$, sodass $s \in A$ und $t \in B$ gelten.
 	
 	Die Kapazität $c_{A,B}$ dieses Schnitts ist definiert als die Summe der Kapazitäten aller Kanten von $A$ nach $B$:
@@ -181,7 +185,6 @@ Betrachten wir ein Beispiel für einen Schnitt auf einem Flussnetzwerk. Alle Kno
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
 		c1/c4/11/above,
 		c4/c5/12/above,
-		c5/c6/15/above,
 		c3/c5/7/below}
 	\draw [myarrow] (\i) -- node[sloped,font=\footnotesize,\p] {\txt} (\j);
 	
@@ -190,6 +193,7 @@ Betrachten wir ein Beispiel für einen Schnitt auf einem Flussnetzwerk. Alle Kno
 		c2/c3/11/below,
 		c3/c6/4/below,
 		c5/c2/4/below,
+		c5/c6/15/above,
 		c2.70/c4.290/1/below}
 	\draw [myarrow, dotted] (\i) -- node[sloped,font=\footnotesize,\p] {\txt} (\j);
 	
@@ -199,15 +203,15 @@ Betrachten wir ein Beispiel für einen Schnitt auf einem Flussnetzwerk. Alle Kno
 \end{center}
 \vspace{-8pt}
 
-Es gilt $A = \{s, v_1, v_3, v_4\}$ und $B = \{v_2, t\}$. Zur Kapazität des Schnitts tragen alle Kanten bei, die von Knoten aus $A$ zu solchen aus $B$ verlaufen. Die Kante $(v_3,v_2)$ also schon, die Kante $(v_2, v_4)$ aber nicht. Insgesamt beträgt die Kapazität des Schnitts $c(s,v_2) + c(v_1, v_2) + c(v_3,v_2) + c(v_3,t) + c(v_4,t) = 8 + 10 + 4 + 15 + 4 = 41$.  
+Es gilt $A = \{s, v_1, v_3, v_4\}$ und $B = \{v_2, t\}$. Zur Kapazität des Schnitts tragen alle Kanten bei, die von Knoten aus $A$ zu solchen aus $B$ verlaufen. Die Kapazität der Kante $(v_3,v_2)$ wird also gezählt, die der Kante $(v_2, v_4)$ aber nicht. Insgesamt beträgt die Kapazität des Schnitts $c(s,v_2) + c(v_1, v_2) + c(v_3,v_2) + c(v_3,t) + c(v_4,t) = 8 + 10 + 4 + 15 + 4 = 41$.  
 
-\begin{definition}[Minimaler Schnitt]
-	Als \emph{minimalen Schnitt} bezeichnet man den oder einen Schnitt mit minimaler Kapazität. Es kann mehrere solcher \emph{minimaler Schnitte} geben. 
+\begin{definition}[Minimaler Schnitt{\cite[S.721]{clrs09}}]
+	Als \emph{minimalen Schnitt} bezeichnet man einen Schnitt mit minimaler Kapazität. Es kann mehrere solcher \emph{minimalen Schnitte} geben. 
 \end{definition}
 
-Dem geneigten Leser mag die Asymmetrie zwischen Flüssen, die maximal sein können und Schnitten, die minimal sein können, aufgefallen sein. Den Zusammenhang der beiden Konzepte möchte ich im Folgenden kurz beschreiben. Dazu werden wir zwei formale Aussagen betrachten, die hier aber nicht bewiesen werden. Diese sind zwar für unseren Algorithmus von Bedeutung, aber für einen formalen Beweis bräuchten wir einen größeren theoretischen Hintergrund, der obgleich furchtbar spannend, hier den Rahmen sprengte und wenig zielführend wäre.
+Es fällt Asymmetrie zwischen Flüssen, die maximal sein können und Schnitten, die minimal sein können, auf. Der Zusammenhang der beiden Konzepte wird ich im Folgenden kurz beschrieben. Dazu werden wir zwei formale Aussagen betrachten, die hier aber nicht bewiesen werden. Diese sind zwar für unseren Algorithmus von Bedeutung, aber für einen formalen Beweis bräuchten wir einen größeren theoretischen Hintergrund, der obgleich furchtbar spannend, hier den Rahmen sprengte und wenig zielführend wäre.
 
-\begin{lemma}
+\begin{lemma}[{\cite[S.723]{clrs09}}]
 	Der Wert eines beliebigen Flusses über einem Flussnetzwerk ist beschränkt durch einen beliebigen Schnitt.
 \end{lemma}
 
@@ -215,15 +219,15 @@ Dem geneigten Leser mag die Asymmetrie zwischen Flüssen, die maximal sein könn
 	Siehe \cite[S.723]{clrs09}.
 \end{beweis}
 
-\begin{satz}[Max-Flow-Min-Cut-Satz]
-	Für ein Flussnetzwerk $G = (V,E)$ mit Senke und Quelle $s, t \in V$ entspricht die minimale Kapazität aller Schnitte auf $G$ dem maximalen Wert aller Flüsse von $s$ nach $t$. 
+\begin{satz}[Max-Flow-Min-Cut-Satz{\cite[S.723]{clrs09}}]
+	Für ein Flussnetzwerk $G = (V,E)$ mit Senke $s \in V$ und Quelle $t \in V$ entspricht die minimale Kapazität aller Schnitte auf $G$ dem maximalen Wert aller Flüsse von $s$ nach $t$. 
 \end{satz} 
 
 \begin{beweis}
-	Wenn wir an den Algorithmus von Ford-Fulkerson denken, dann erinnern wir uns, dass dieser solange augmentierende Pfade mit positiver Restwertkapazität von der Quelle zur Senke gesucht hat, bis es keinen solchen mehr gab. Sobald das der Fall war, hatte man den maximalen Fluss berechnet. Das bedeutet gleichzeitig, dass man den Bottleneck zwischen $s$ und $t$ gefunden hat. Genau dieser trennt die Knoten von $G$ in zwei Hälften und ist unser minimaler Schnitt. Für einen formalen Beweis neben dieser Skizze siehe auch hier \cite[S.723f.]{clrs09}.
+	Der kurz vorgestellte Algorithmus von Ford-Fulkerson sucht solange augmentierende Pfade mit positiver Restwertkapazität von der Quelle zur Senke, bis es keinen solchen mehr gibt. Sobald das der Fall ist, hatte man den maximalen Fluss berechnet. Das bedeutet gleichzeitig, dass man den Bottleneck zwischen $s$ und $t$ gefunden hat. Genau dieser trennt die Knoten von $G$ in zwei Hälften und ist unser minimaler Schnitt. Für einen formalen Beweis neben dieser Skizze siehe auch hier \cite[S.723f.]{clrs09}.
 \end{beweis} 
 
-Die Erkenntnis, die man aus diesem Satz zieht, ist, dass man Algorithmen zur Berechnung des maximalen Flusses benutzen kann, um den minimalen Schnitt eines Flussnetzwerkes zu bestimmen. Das werden wir im nächsten Abschnitt ausnutzen, um Inkonsistenzen zwischen unseren Sequenzen aufzulösen.
+Der Max-Flow-Min-Cut-Satz zeigt, dass Algorithmen zur Berechnung des maximalen Flusses benutzt werden können, um einen minimalen Schnitt eines Flussnetzwerkes zu bestimmen. Das werden wir im nächsten Abschnitt ausnutzen, um Inkonsistenzen zwischen unseren Sequenzen aufzulösen, indem wir durch minimale Schnitte die zu löschenden Kanten bestimmen.
 
 \section{Inzidenzgraphen und das Auflösen von Inkonsistenzen mit Hilfe von Flussnetzwerken}
 
@@ -231,25 +235,27 @@ Die Erkenntnis, die man aus diesem Satz zieht, ist, dass man Algorithmen zur Ber
 
 Wir starten wie bei DIALIGN	zunächst mit paarweisen Alignments. Unser Ziel ist es Übereinstimmungen zu finden, die in möglichst vielen Sequenzen gleichzeitig vorkommen. Das ist ein vielversprechender Ansatz, weil die gesuchten Motive oft in vielen sich überlappenden Fragmente vorkommen, während Überlappungen bei zufälligen Übereinstimmungen unwahrscheinlich sind. Dazu konstruieren wir einen sogenannten Inzidenzgraphen, der alle Stellen als Knoten enthält, die durch Kanten verbunden sind, falls es ein sie verbindendes Fragment gibt. Mit Hilfe eines Algorithmus zur Berechnung des maximalen Flusses bestimmen wir minimale Schnitte, bis nur noch dichte Zusammenhangskomponenten übrig bleiben, die jeweils höchstens einen Knoten aus jeder Sequenz enthalten \cite{cpm10}.
 
-\begin{definition}[Mehrdeutigkeit und partielle Zuweisungsspalten]
-	Es sei eine Menge an Sequenzen $S$ mit Stellenraum $\mathcal{S}$ gegeben. Eine Teilmenge $C \subset \mathcal{S}$ nennen wir \emph{mehrdeutig}, wenn es mindestens eine Sequenz $S_i$ gibt, sodass $C \cap S_i$ zwei oder mehr Stellen $(i,p), (i,p') \in \mathcal{S}$ enthält. In diesem Fall nennen wir auch $(i,p)$ und $(i,p')$ mehrdeutig. Analog nennen wir eine Äquivalenzrelation $\mathcal{R}$ mehrdeutig, wenn $\mathcal{R}$ eine mehrdeutige Äquivalenzklasse enthält.
+\begin{definition}[Mehrdeutigkeit und partielle Zuweisungsspalten\cite{cpm10}]
+	Es sei eine Menge an Sequenzen $S$ mit Stellenraum $\mathcal{S}$ gegeben. Eine Teilmenge $C \subset \mathcal{S}$ nennen wir \emph{mehrdeutig}, wenn es mindestens eine Sequenz $S_i$ gibt, sodass $C \cap S_i$ zwei oder mehr Stellen $(i,p), (i,p') \in \mathcal{S}$ enthält. In diesem Fall nennen wir auch $(i,p)$ und $(i,p')$ mehrdeutig. 
+	
+	Analog nennen wir eine Äquivalenzrelation $\mathcal{R}$ mehrdeutig, wenn $\mathcal{R}$ eine mehrdeutige Äquivalenzklasse enthält.
 	
 	Eine \emph{nicht-mehrdeutige} Teilmenge $C \subset \mathcal{S}$ bezeichnen wir als \emph{partielle Zuweisungsspalte}.
 \end{definition}
 
-Es lässt sich folgern, dass eine konsistente Äquivalenzrelation auch nicht mehrdeutig ist, während das Gegenteil im Allgemeinen nicht gilt. Das liegt daran, dass es überkreuzte Zuweisungen geben kann, die aber partielle Zuweisungsspalten sind. Nicht-mehrdeutige Äquivalenzrelationen bestehen nur aus partiellen Zuweisungsspalten.
+Es lässt sich folgern, dass eine konsistente Äquivalenzrelation auch nicht mehrdeutig ist. Aus fehlender Mehrdeutigkeit folgt aber im Allgemeinen keine Konsistenz. Das liegt daran, dass es überkreuzte Zuweisungen geben kann, die aber partielle Zuweisungsspalten sind. Nicht-mehrdeutige Äquivalenzrelationen bestehen nur aus partiellen Zuweisungsspalten.
 
 Im Folgenden sei eine Menge von Fragmenten $\mathcal{F} = \{f_1, \dots, f_k\}$ gegeben. Normalerweise werden dies die Fragmente unserer paarweisen Alignments sein, aber theoretisch kann man auch anders bestimmte benutzen. Wir wollen möglichst wenige Verbindungen aus der durch die Fragmente induzierte Relation $\mathcal{R}$ löschen, bis eine nicht-mehrdeutige Äquivalenzrelation $\mathcal{R'}$ bleibt.
 
-\begin{definition}[Inzidenzgraph]
+\begin{definition}[Inzidenzgraph\cite{cpm10}]
 	Es sei ein Stellenraum $\mathcal{S}$ mit einer Menge von Fragmenten $\mathcal{F}$ auf diesem gegeben. Dann bezeichnen wir den ungerichteten Graphen $G_{\mathcal{F}} = (\mathcal{S},E_{\mathcal{F}})$ als Inzidenzgraphen. In diesem Graph existiert genau dann eine Kante $(u,v) \in E_{\mathcal{F}}$, wenn die Stellen $u$ und $v$ in einem gemeinsamen Fragment $f_i \in \mathcal{F}$ vorkommen.
 \end{definition} 
 
-Wie man sieht, sind die Zusammenhangskomponenten unseres Inzidenzgraphen genau die Äquivalenzklassen der durch $\mathcal{F}$ induzierten Kanten. Weil diese nicht weiter nützlich sind, kann man Stellen, die nicht mit anderen verbunden sind, von vornherein ignorieren beziehungsweise sie löschen, wenn sie nach dem Entfernen von Kanten Grad 0 haben. So lässt sich etwas Speicherplatz sparen und die Ergebnisse dieses Algorithmus können direkt für den nächsten Schritt weiterverwendet werden. Um die Positionierung der Zusammenhangskomponenten im Inzidenzgraphen zu verdeutlichen, lassen wir sie in unseren graphischen Beispiele aber stehen.
+Wie man sieht, sind die Zusammenhangskomponenten unseres Inzidenzgraphen genau die Äquivalenzklassen der durch $\mathcal{F}$ induzierten Kanten. Weil diese nicht weiter nützlich sind, kann man Stellen, die nicht mit anderen verbunden sind, von vornherein ignorieren beziehungsweise löschen, wenn sie nach dem Entfernen von Kanten Grad 0 haben. So lässt sich etwas Speicherplatz sparen und die Ergebnisse dieses Algorithmus können direkt für den nächsten Schritt weiterverwendet werden. Um die Positionierung der Zusammenhangskomponenten im Inzidenzgraphen zu verdeutlichen, lassen wir sie in unseren graphischen Beispielen im nächsten Abschnitt aber stehen.
 
 \subsection{Beispiel Inzidenzgraph}
 
-Auch hier werden wir wieder unser Beispiel aus dem letzten Kapitel benutzen. Erinnern wir uns zunächst an die Fragmente der paarweisen Alignments. Die Überlappgewichte brauchen wir für diesen Schritt des Algorithmus nicht, weil wir versuchen mit Hilfe von minimalen Schnitten ein ähnliches aber besseres Ergebnis zu erreichen.
+Auch hier werden wir wieder unser Beispiel aus dem letzten Kapitel benutzen. Erinnern wir uns zunächst an die Fragmente der paarweisen Alignments. Die Überlappgewichte brauchen wir für diesen Schritt des Algorithmus nicht, weil wir versuchen, mit Hilfe von minimalen Schnitten ein ähnliches aber besseres Ergebnis zu erreichen.
 
 \begin{tabular}{|r|c|c||r|c|c||r|c|c|}
 	\hline
@@ -264,8 +270,9 @@ Auch hier werden wir wieder unser Beispiel aus dem letzten Kapitel benutzen. Eri
 	\hline
 \end{tabular}
 
-Diese Fragmente überführen wir direkt in einen Inzidenzgraphen bei denen die Stellen als Knoten und die Verbindungen in gemeinsamen Fragmenten als Kanten übertragen werden. Um die Übersichtlichkeit halbwegs zu wahren, wurden die Kanten jeder Zusammenhangskomponente jeweils in einer Farbe markiert.
+Diese Fragmente überführen wir direkt in den Inzidenzgraphen \ref{bsp:inzidenz}, bei dem die Stellen als Knoten und die Verbindungen in gemeinsamen Fragmenten als Kanten übertragen werden. Um die Übersichtlichkeit halbwegs zu wahren, wurden die Kanten jeder Zusammenhangskomponente jeweils in einer Farbe markiert.
 
+\begin{figure}
 \begin{center}
 	\begin{tikzpicture}[
 	mycircle/.style={
@@ -322,6 +329,11 @@ Diese Fragmente überführen wir direkt in einen Inzidenzgraphen bei denen die S
 	\node[mycircle,right=of c47] (c48) {T};
 	\node[mycircle,right=of c48] (c49) {C};
 		
+	% Sequenznummer:
+	\node[left=of c11] (c10) {$S_1$};
+	\node[left=of c21] (c20) {$S_2$};
+	\node[left=of c31] (c30) {$S_3$};
+	\node[left=of c41] (c40) {$S_4$};
 	
 	% Erste Zusammenhangskomponente
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
@@ -381,17 +393,21 @@ Diese Fragmente überführen wir direkt in einen Inzidenzgraphen bei denen die S
 	\draw [draw=magenta, thick] (\i) -- node[sloped,font=\tiny,\p] {\txt} (\j);
 	\end{tikzpicture}
 \end{center}
+\caption{Inzidenzgraph für die vier Beispielsequenzen.}\label{bsp:inzidenz}
+\end{figure}
 
-\subsection{Mehrdeutigkeiten Auflösen}
+\subsection{Auflösen von Mehrdeutigkeiten}
 
 Die Zusammenhangskomponenten unseres Inzidenzgraphen werden wir jetzt als Flussnetzwerke interpretieren, um mit Hilfe eines Algorithmus zur Berechnung eines minimalen Schnitts solange Kanten zu entfernen, bis alle Mehrdeutigkeiten aufgelöst sind.
 
-Sei $C$ eine Zusammenhangskomponente von $G_{\mathcal{F}}$, die mehrdeutig ist, also zwei Knoten $x,y$ aus der selben Sequenz enthält. Wir wählen die mehrdeutigen Knoten $x$ und $y$ als Quelle und Senke unseres Flussnetzwerks. Die ungerichteten Kanten des Inzidenzgraphen werden durch zwei antiparallele gerichtete Kanten ersetzt. \cite{cpm10} benutzen als Kapazitäten jeweils 1. Meiner Meinung nach wäre es hingegen sinnvoller die Kapazitäten so zu wählen, dass ähnliche Symbole seltener voneinander durch den minimalen Schnitt und das damit einhergehende Löschen von Kanten getrennt werden. Das können wir beispielsweise erreichen, indem wir uns an den Ähnlichkeitswerten unserer Substitutionsmatrix orientieren. Weil Flussnetzwerke nicht-negative Kapazitäten erwarten, müssen die Werte gegebenenfalls modifiziert werden, indem wir den betragsmäßig größten Eintrag der Matrix zu allen Einträgen addieren. Das bedeutet, dass bei unserer $(+3/-1)$-Substitutionsmatrix aus dem Beispiel zwischen übereinstimmenden Symbolen eine Kapazität von 6 und zwischen nicht übereinstimmendes eine von 2 benutzt wird. Leider war es aufgrund der begrenzten Zeit und des hohen Aufwands nicht möglich das ganze Verfahren zu implementieren. Eine Evaluierung mit echten Alignments fehlt also leider. Weil ich den Ansatz mit den nicht-unitären Kapazitäten als sehr sinnvoll erachte, habe ich ihn bei unseren Beispielen verwendet.
+Sei $C$ eine Zusammenhangskomponente von $G_{\mathcal{F}}$, die mehrdeutig ist, also zwei Knoten $x,y$ aus der selben Sequenz enthält. Wir wählen die mehrdeutigen Knoten $x$ und $y$ als Quelle und Senke unseres Flussnetzwerks. Die ungerichteten Kanten des Inzidenzgraphen werden durch zwei antiparallele gerichtete Kanten ersetzt. \cite{cpm10} benutzen als Kapazitäten jeweils 1. Meiner Meinung nach wäre es hingegen sinnvoller die Kapazitäten so zu wählen, dass ähnliche Symbole seltener voneinander durch den minimalen Schnitt und das damit einhergehende Löschen von Kanten getrennt werden. Wir wollen ja ein möglichst gutes Alignment erhalten und für dieses haben Verbindungen zwischen gleichen Symbolen einen höheren Wert, als solche zwischen verschiedenen Symbolen.
 
-Als nächstes benutzen wir einen Algorithmus zur Bestimmung des maximalen Flusses. Wie mit dem Max-Flow-Min-Cut-Satz gezeigt, bestimmen wir durch die Bestimmung des maximalen Flusses auch gleichzeitig einen minimalen Schnitt. Das ist die \enquote{schmalste} Verbindungsstelle zwischen der Quelle und der Senke und wir hoffen durch Löschen der dazugehörigen Kanten die Mehrdeutigkeit aufzulösen und die dichtbesetzten Untergraphen zu erhalten. Im Original wird der Algorithmus von Edmonds-Karp benutzt, während wir stattdessen einen Push-Relabel-Algorithmus mit Laufzeit $\oh(|V|^2\cdot \sqrt{|E|})$ für die Komplexität betrachten und in unserer Implementierung verwenden beziehungsweise ihn verwendet hätten, wenn die Zeit dafür gereicht hätte. Nachdem der minimale Schnitt bestimmt wurde, löschen wir alle Kanten zwischen den Mengen $A$ und $B$. Auf diese Art und Weise wird unsere Zusammenhangskomponente $C$ in zwei neue Zusammenhangskomponenten $A$ und $B$ aufgeteilt. Dieses Verfahren wiederholen wir solange, bis es keine mehrdeutigen Äquivalenzklassen mehr gibt.  \improvement{Graphik aus CPM10 mit Zusammenhangskomponenten einfügen.}
+Das können wir beispielsweise erreichen, indem wir uns an den Ähnlichkeitswerten unserer Substitutionsmatrix orientieren. Weil Flussnetzwerke nicht-negative Kapazitäten erwarten, müssen die Werte gegebenenfalls modifiziert werden, indem wir den betragsmäßig größten Eintrag der Matrix zu allen Einträgen addieren. Das bedeutet, dass bei unserer $(+3/-1)$-Substitutionsmatrix aus dem Beispiel zwischen übereinstimmenden Symbolen eine Kapazität von 6 und zwischen nicht übereinstimmendes eine von 2 benutzt wird. Leider war es aufgrund der begrenzten Zeit und des hohen Aufwands nicht möglich das ganze Verfahren zu implementieren. Eine Evaluierung mit echten Alignments fehlt also. Weil der Ansatz mit den nicht-einheitlichen Kapazitäten aber vielversprechend erscheint, wurde er in den weiteren Beispielen verwendet.
+
+Als nächstes benutzen wir einen Algorithmus zur Bestimmung des maximalen Flusses. Wie mit dem Max-Flow-Min-Cut-Satz gezeigt, bestimmen wir durch die Bestimmung des maximalen Flusses auch gleichzeitig einen minimalen Schnitt. Das ist die \enquote{schmalste} Verbindungsstelle zwischen der Quelle und der Senke und wir hoffen durch Löschen der dazugehörigen Kanten die Mehrdeutigkeit aufzulösen und die dichtbesetzten Untergraphen zu erhalten. Im Original wird der Algorithmus von Edmonds-Karp benutzt, während wir stattdessen einen Push-Relabel-Algorithmus mit Laufzeit $\oh(|V|^2\cdot \sqrt{|E|})$ für die Komplexität betrachten und in unserer Implementierung verwendet hätten. Nachdem der minimale Schnitt bestimmt wurde, löschen wir alle Kanten zwischen den Mengen $A$ und $B$. Auf diese Art und Weise wird unsere Zusammenhangskomponente $C$ in zwei neue Zusammenhangskomponenten $A$ und $B$ aufgeteilt. Dieses Verfahren wiederholen wir solange, bis es keine mehrdeutigen Äquivalenzklassen mehr gibt.  \improvement{Graphik aus CPM10 mit Zusammenhangskomponenten einfügen.}
 
 
-\begin{algorithm}
+\begin{breakablealgorithm}
 	\caption{Algorithmus zum Auflösen von Mehrdeutigkeiten in einem Inzidenzgraphen}
 	\label{alg:amb_res}
 	\begin{algorithmic}[1]
@@ -412,13 +428,13 @@ Als nächstes benutzen wir einen Algorithmus zur Bestimmung des maximalen Flusse
 		\State{\textbf{return} nicht-mehrdeutigen Subgraphen $(\mathcal{S},E)$ von $G_{\mathcal{F}}$}
 		\EndProcedure
 	\end{algorithmic}
-\end{algorithm}
+\end{breakablealgorithm}
 
-Unglücklicherweise können die Zusammenhangskomponenten bei Alignments zwischen vielen langen Sequenzen sehr groß werden. \cite{cpm10} haben daher eine Grenze $k = \max\{\deg(v)| v \in \mathcal{S}\}$ eingeführt, die sukzessive gesenkt wird, bis alle Mehrdeutigkeiten aufgelöst wurden. $k$ wird so benutzt, dass alle Kanten zwischen Knoten mit Grad $< k$ zunächst nicht betrachtet werden, sodass andere kleinere Zusammenhangskomponenten vorliegen. Als erstes werden für den reduzierten Kantensatz $E_k = \{(u,v) \in E|\min\{\deg(u),\deg(v)\}\}$ solange minimale Schnitte berechnet und Kanten gelöscht, bis für den Graph mit weniger Kanten keine mehrdeutigen Zusammenhangskomponenten mehr existierten. Danach wird $k$ um eins reduziert und das Vorgehen auf dem neuen Kantensatz wiederholt. Sobald $k$ auf null gesetzt wurde, hat man alle Knoten betrachtet und es liegen nur noch partielle Zuweisungsspalten vor. \improvement{keine eigene Implementierung, also Text über k anpassen.}
+Unglücklicherweise können die Zusammenhangskomponenten bei Alignments zwischen vielen langen Sequenzen sehr groß werden. \cite{cpm10} haben daher eine Grenze $k = \max\{\deg(v)| v \in \mathcal{S}\}$ eingeführt, die sukzessive gesenkt wird, bis alle Mehrdeutigkeiten aufgelöst wurden. $k$ wird so benutzt, dass alle Kanten zwischen Knoten mit Grad $< k$ zunächst nicht betrachtet werden, sodass andere kleinere Zusammenhangskomponenten vorliegen. Als erstes werden für den reduzierten Kantensatz $E_k = \{(u,v) \in E|\min\{\deg(u),\deg(v)\}\}$ solange minimale Schnitte berechnet und Kanten gelöscht, bis für den Graph mit weniger Kanten keine mehrdeutigen Zusammenhangskomponenten mehr existierten. Danach wird $k$ um eins reduziert und das Vorgehen auf dem neuen Kantensatz wiederholt. Sobald $k$ auf 0 gesetzt wurde, hat man alle Knoten betrachtet und es liegen nur noch partielle Zuweisungsspalten vor. \improvement{Algorithmus für diesen Abschnitt anpassen und im Text auf Algorithmus verweisen.}
 
-Abgesehen von der verbesserten Laufzeit scheint dieses Vorgehen aber keine Vorteile zu bieten und falls doch, werden diese in \cite{cpm10} nicht genannt. Deshalb verzichte ich auf die Grenze $k$ und gehe davon aus, dass aufgrund des deutlich effizienteren Algorithmus für den maximalen Flusses und die Verwendung einer schnellen Graphimplementierung aus einer Bibliothek keine Laufzeitprobleme für die üblichen Anwendungsgrößen auftreten. \improvement{Dieser Abschnitt muss noch ein bisschen umformuliert werden, weil das Verfahren nicht implementiert wurde. Also lieber den ursprünglichen Algorithmus mit Grenze k zeigen.}
+Bis jetzt wurde nur festgelegt, dass wir mehrdeutige Zusammenhangskomponenten auswählen und für diese jeweils einen Knoten aus derselben Sequenz als Quelle und Senke wählen. Es fehlt allerdings noch eine Regel, in welcher Reihenfolge diese gewählt werden. Für die Zusammenhangskomponenten benötigen wir keine feste Reihenfolge, weil diese unabhängig voneinander sind.
 
-Bis jetzt wurde nur gesagt, dass wir mehrdeutige Zusammenhangskomponenten auswählen und für diese jeweils einen Knoten aus der selben Sequenz als Quelle und Senke wählen. Abschließend müssen wir also noch festlegen in welcher Reihenfolge diese gewählt werden. Für die Zusammenhangskomponenten müssen wir keine Reihenfolge festlegen, weil diese unabhängig voneinander sind. Sei eine mehrdeutige Zusammenhangskomponente $C$ gegeben. Dann mag es mehrere Sequenzen geben, die alle zu mehr als einem Knoten in $C$ korrespondieren. Außerdem muss es nicht unbedingt einen eindeutigen minimalen Schnitt geben, sondern es kann mehrere solche geben. Wir entscheiden uns für dieses Vorgehen:
+Sei eine mehrdeutige Zusammenhangskomponente $C$ gegeben. Dann mag es mehrere Sequenzen geben, die alle zu mehr als einem Knoten in $C$ korrespondieren. Außerdem muss es nicht unbedingt einen eindeutigen minimalen Schnitt geben. Wir entscheiden uns für dieses Vorgehen:
 
 \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
 	\item Falls es mehrere Sequenzen gibt, die zwei oder mehr mehrdeutige Stellen in $C$ enthalten, wähle die Sequenz $S_i$ mit den meisten mehrdeutigen Knoten in dieser Zusammenhangskomponente.
@@ -428,7 +444,9 @@ Bis jetzt wurde nur gesagt, dass wir mehrdeutige Zusammenhangskomponenten auswä
 
 \subsection{Beispiel von \textrm{ResolveAmbiguities}}
 
-Exemplarisch betrachten wir die grüne Zusammenhangskomponente, weil diese die meisten Knoten enthält und werden an ihrem Beispiel solange den minimalen Schnitt durchführen, bis keine Inkonsistenzen mehr vorliegen. Die Quelle ist grün, während die Senke rot dargestellt ist.
+Exemplarisch betrachten wir die grüne Zusammenhangskomponente, weil diese die meisten Knoten enthält, und werden an ihrem Beispiel solange den minimalen Schnitt durchführen, bis keine Inkonsistenzen mehr vorliegen. Die Quelle ist grün, während die Senke rot dargestellt ist.
+
+Beim ersten Schritt haben sowohl $S_2$, als auch $S_4$ drei Knoten in $C$. Wir wählen $S_4[7]$ als Quelle und $S_4[4]$ als Senke, weil diese den kleinsten bzw. größten Knotengrad haben. In diesem Fall passiert nichts Spannendes, weil der minimale Schnitt aufgrund der Kante mit Kapazität 2 direkt die Quelle vom Rest der Zusammenhangskomponente trennt (gestrichelte Kante).
 
 \begin{center}
 	\begin{tikzpicture}[
@@ -503,6 +521,12 @@ Exemplarisch betrachten wir die grüne Zusammenhangskomponente, weil diese die m
 	\node[myquelle,right=of c46] (c47) {A};
 	\node[mycircle,right=of c47] (c48) {T};
 	\node[mycircle,right=of c48] (c49) {C};
+	
+	% Sequenznummer:
+	\node[left=of c11] (c10) {$S_1$};
+	\node[left=of c21] (c20) {$S_2$};
+	\node[left=of c31] (c30) {$S_3$};
+	\node[left=of c41] (c40) {$S_4$};
 
 	% Zweite Zusammenhangskomponente
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
@@ -524,9 +548,7 @@ Exemplarisch betrachten wir die grüne Zusammenhangskomponente, weil diese die m
 	\end{tikzpicture}
 \end{center}
 
-Sowohl $S_2$, als auch $S_4$ haben drei Knoten in $C$. Wir wählen hier $S_4[7]$ als Quelle und $S_4[4]$ als Senke, weil diese den kleinsten bzw. größten Knotengrad haben. In diesem Fall passiert nichts spannendes, weil der minimale Schnitt aufgrund der Kante mit Kapazität 2 direkt die Quelle vom Rest der Zusammenhangskomponente trennt.
-
-Im nächsten Schritt hat $S_2$ mit 3 die meisten Knoten in $C$. Da alle zwei der Knoten Grad 2 haben, entscheiden wir uns für $S_2[6]$ als Quelle und $S_2[8]$ als Senke. Auch hier wird direkt die erste Kante an der Quelle gelöscht.
+Im nächsten Schritt hat $S_2$ mit drei Knoten die meisten Knoten in $C$. Da sowohl $S_2[3]$ als auch $S_2[8]$ Knotengrad 2 haben, gibt es keine Regel, welchen der beiden wir als Senke wählen. Wir entscheiden uns für $S_2[6]$ als Quelle und $S_2[8]$ als Senke. Auch hier wird direkt die erste Kante an der Quelle gelöscht.
 
 \begin{center}
 	\begin{tikzpicture}[
@@ -602,6 +624,12 @@ Im nächsten Schritt hat $S_2$ mit 3 die meisten Knoten in $C$. Da alle zwei der
 	\node[mycircle,right=of c47] (c48) {T};
 	\node[mycircle,right=of c48] (c49) {C};
 	
+	% Sequenznummer:
+	\node[left=of c11] (c10) {$S_1$};
+	\node[left=of c21] (c20) {$S_2$};
+	\node[left=of c31] (c30) {$S_3$};
+	\node[left=of c41] (c40) {$S_4$};
+	
 	% Zweite Zusammenhangskomponente
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
 		c17/c34/{0,6}/above,
@@ -621,7 +649,7 @@ Im nächsten Schritt hat $S_2$ mit 3 die meisten Knoten in $C$. Da alle zwei der
 	\end{tikzpicture}
 \end{center}
 
-Gehen nun wieder zu Sequenz $S_4$ und wählen $S_4[9]$ als Quelle und $S_4[4]$ als Senke. Hier haben wir zwei relativ dichte Subgraphen, die nur durch die eine Kante $(S_1[7] \rightarrow S_3[4])$ miteinander verbunden sind. Diese löschen wir und danach gibt es in der rechten Zusammenhangskomponente keine Mehrdeutigkeiten mehr. 
+Da es wieder mehrere Sequenzen mit zwei mehrdeutigen Knoten in $C$ gibt, entscheiden wir uns für Sequenz $S_4$. Wir wählen $S_4[9]$ als Quelle und $S_4[4]$ als Senke. Hier liegen zwei relativ dichte Subgraphen vor, die nur durch die eine Kante $(S_1[7] \rightarrow S_3[4])$ miteinander verbunden sind. Diese löschen wir und danach gibt es in der rechten Zusammenhangskomponente keine Mehrdeutigkeiten mehr. 
 
 \begin{center}
 	\begin{tikzpicture}[
@@ -697,6 +725,13 @@ Gehen nun wieder zu Sequenz $S_4$ und wählen $S_4[9]$ als Quelle und $S_4[4]$ a
 	\node[mycircle,right=of c47] (c48) {T};
 	\node[myquelle,right=of c48] (c49) {C};
 	
+	% Sequenznummer:
+	\node[left=of c11] (c10) {$S_1$};
+	\node[left=of c21] (c20) {$S_2$};
+	\node[left=of c31] (c30) {$S_3$};
+	\node[left=of c41] (c40) {$S_4$};
+	
+	
 	% Zweite Zusammenhangskomponente
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
 		c15/c32/{0,2}/above,
@@ -715,7 +750,7 @@ Gehen nun wieder zu Sequenz $S_4$ und wählen $S_4[9]$ als Quelle und $S_4[4]$ a
 	\end{tikzpicture}
 \end{center}
 
-Abschließend wird noch die Verbindung zwischen dem \texttt{A} aus der zweiten Sequenz und dem \texttt{C} an der fünften Stelle der ersten gelöscht, was hier nicht mehr graphisch dargestellt wurde. Danach sind alle Mehrdeutigkeiten aufgelöst und es liegen nur noch partielle Zuweisungsspalten vor.
+Abschließend wird die Verbindung zwischen dem \texttt{A} aus der zweiten Sequenz und dem \texttt{C} an der fünften Stelle der ersten gelöscht, was hier nicht mehr graphisch dargestellt wurde. Danach sind alle Mehrdeutigkeiten aufgelöst und es liegen nur noch partielle Zuweisungsspalten vor.
 
 Wenn wir den Algorithmus auch auf allen anderen Zusammenhangskomponenten anwenden, dann kommen wir zu folgendem Inzidenzgraphen ohne Mehrdeutigkeiten:
  
@@ -731,7 +766,7 @@ Wenn wir den Algorithmus auch auf allen anderen Zusammenhangskomponenten anwende
 		minimum size=15pt,
 		font=\tiny},
 	myarrow/.style={-Stealth},
-	node distance=0.6cm and 1.1cm
+	node distance=0.6cm and 0.9cm
 	]
 	% erste Sequenz
 	\node[mycircle] (c11) {A};
@@ -774,6 +809,12 @@ Wenn wir den Algorithmus auch auf allen anderen Zusammenhangskomponenten anwende
 	\node[mycircle,right=of c46] (c47) {A};
 	\node[mycircle,right=of c47] (c48) {T};
 	\node[mycircle,right=of c48] (c49) {C};
+	
+	% Sequenznummer:
+	\node[left=of c11] (c10) {$S_1$};
+	\node[left=of c21] (c20) {$S_2$};
+	\node[left=of c31] (c30) {$S_3$};
+	\node[left=of c41] (c40) {$S_4$};
 	
 	
 	% Erste Zusammenhangskomponente
@@ -832,15 +873,15 @@ Obwohl in diesem Graphen keine Mehrdeutigkeiten mehr existieren, ist die Zuordnu
 
 \subsection{Komplexität}\label{ch:ra_kompl}
 
-Der Inzidenzgraph lässt sich aus den Fragmenten der paarweisen Alignments in $\oh(n^2\cdot L)$ berechnen, weil es $\oh(n^2)$ davon gibt, die bis zu $\oh(L)$ Verbindungen enthalten.
+Der Inzidenzgraph lässt sich aus den Fragmenten der paarweisen Alignments in $\oh(n^2\cdot L)$ berechnen, weil es $\oh(n^2)$ Paare gibt, die bis zu $\oh(L)$ Verbindungen enthalten.
 
-Die Laufzeit von \textrm{ResolveAmbiguities} wird von der Laufzeit zur Berechnung des minimalen Schnitt durch \textrm{PushRelabel} dominiert \cite{cpm10}. Diese hängt von der Größe unserer Zusammenhangskomponenten ab. Im schlimmsten Fall besteht der Inzidenzgraph aus einer einzigen Zusammenhangskomponente bei der jeder Knoten mit mindestens einem Knoten aus jeder anderen Sequenz verbunden ist. In diesem Fall muss sie in vielen Schritten zerkleinert werden muss, bis nur noch partielle Zuweisungsspalten übrig bleiben. Eine Zusammenhangskomponente kann $n\cdot L$ Knoten und $\oh(n^2\cdot L)$ Kanten haben. Das liegt daran, dass wir als Grundlage unsere paarweisen Alignments benutzen, bei denen jede Stelle für jede andere Sequenz mit höchstens einer Stelle aus dieser verbunden ist. 
+Die Laufzeit von \textrm{ResolveAmbiguities} wird von der Laufzeit zur Berechnung des minimalen Schnitt durch \textrm{PushRelabel} dominiert \cite{cpm10}. Diese hängt von der Größe unserer Zusammenhangskomponenten ab. Im schlimmsten Fall besteht der Inzidenzgraph aus einer einzigen Zusammenhangskomponente, bei der jeder Knoten mit mindestens einem Knoten aus jeder anderen Sequenz verbunden ist. In diesem Fall muss sie in vielen Schritten zerkleinert werden, bis nur noch partielle Zuweisungsspalten übrig bleiben. Eine Zusammenhangskomponente kann $n\cdot L$ Knoten und $\oh(n^2\cdot L)$ Kanten haben. Das liegt daran, dass wir als Grundlage unsere paarweisen Alignments benutzen, bei denen jede Stelle für jede andere Sequenz mit höchstens einer Stelle aus dieser verbunden ist. 
 
-\textrm{PushRelabel} hat eine Komplexität von $\oh(|V|^2\cdot \sqrt{|E|})$, um einen minimalen Schnitt zu berechnen. Weil $|V| \in \oh(n\cdot L)$ und $|E| \in \oh(n^2\cdot L)$ gelten, braucht man für einen Durchlauf also $\oh(n^3\cdot L^{5/2})$. Wenn wir Pech haben, entfernt jeder Aufruf unseres Algorithmus für den maximalen Fluss nur einen einzigen Knoten aus der Zusammenhangskomponente. Das resultiert in $n\cdot L$ Aufrufen und einer Gesamtlaufzeit von $\oh(n^4\cdot L^{7/2})$. Die Kosten für das Bestimmen der Zusammenhangskomponenten, das Finden der Quellen und Senken und das Löschen von Kanten liegen jeweils in linearer Größe zur Größe des Graphen und werden daher hier nicht weiter betrachtet. Für ersteres benutzt man beispielsweise eine Tiefensuche, fürs zweite eine Breitensuche und letzteres ist simples Iterieren über alle Kanten.
+\textrm{PushRelabel} hat eine Komplexität von $\oh(|V|^2\cdot \sqrt{|E|})$, um einen minimalen Schnitt zu berechnen. Weil $|V| \in \oh(n\cdot L)$ und $|E| \in \oh(n^2\cdot L)$ gelten, braucht man für einen Durchlauf also $\oh(n^3\cdot L^{5/2})$. Im schlimmsten Fall entfernt jeder Aufruf unseres Algorithmus für den maximalen Fluss nur einen einzigen Knoten aus der Zusammenhangskomponente. Das resultiert in $n\cdot L$ Aufrufen und einer Gesamtlaufzeit von $\oh(n^4\cdot L^{7/2})$. Die Kosten für das Bestimmen der Zusammenhangskomponenten, das Finden der Quellen und Senken und das Löschen von Kanten liegen jeweils in linearer Größe zur Größe des Graphen und werden daher hier nicht weiter betrachtet. Für ersteres benutzt man beispielsweise eine Tiefensuche, für das zweite eine Breitensuche und letzteres wird per Iteration über alle Kanten gelöst.
 
 Möglicherweise lässt sich eine bessere Laufzeit erreichen, wenn alle Kanten eine uniforme Kapazität haben, wie das bei der Variante der Autoren der Fall ist. Es lässt sich zeigen, dass das ein deutlich leichteres Problem ist \cite{gt14} und nach Karzanov und Even hat eine Variante des Algorithmus von Dinic in diesem Fall gute Laufzeiten.
 
-Glücklicherweise sind die Zusammenhangskomponenten im Allgemeinen nicht so groß und in den meisten Fällen trennt man mit dem minimalen Schnitt auch nicht nur einzelne Knoten ab. Bei Testläufen auf der Protein-Referenzdatenbank BAliBASE haben \cite{cpm10} die Referenzmenge RV12 genauer betrachtet. Sie besteht aus 88 Sequenzfamilien, die im Schnitt zehn Sequenzen enthielten. Messungen haben ergeben, dass die Inzidenzgraphen auf diesen Sequenzfamilien im Schnitt 2877 Knoten und 10952 in 223 Zusammenhangskomponenten enthalten haben. Auf diesen Sequenzen lassen sich in guten Laufzeiten von weniger als einer Minute multiple Sequenzalignments berechnen. Anders sah es auf der Sequenzfamilie BB30003 aus. Diese besteht aus 142 Sequenzen und resultiert in einem monströsen Inzidenzgraphen, der nur aus einer einzigen Zusammenhangskomponente besteht. Nach einer Laufzeit von 20 Stunden ohne Ergebnis wurde der Lauf auf Graphen, der $1,5\cdot 10^6$ Kanten enthält, erfolglos abgebrochen. Erst mit einer Begrenzung des minimalen Fragmentgewichts auf 4 ließ sich in 13 Stunden ein Ergebnis erzielen. 
+Glücklicherweise sind die Zusammenhangskomponenten im Allgemeinen nicht so groß und in den meisten Fällen trennt man mit dem minimalen Schnitt auch nicht nur einzelne Knoten ab. Bei Testläufen auf der Protein-Referenzdatenbank BAliBASE haben \cite{cpm10} die Referenzmenge RV12 genauer betrachtet. Sie besteht aus 88 Sequenzfamilien, die im Schnitt zehn Sequenzen enthielten. Messungen haben ergeben, dass die Inzidenzgraphen auf diesen Sequenzfamilien im Schnitt 2877 Knoten und 10952 Kanten in 223 Zusammenhangskomponenten enthalten haben. Auf diesen Sequenzen lassen sich in guten Laufzeiten von weniger als einer Minute multiple Sequenzalignments berechnen. Anders sah es auf der Sequenzfamilie BB30003 aus. Diese besteht aus 142 Sequenzen und resultiert in einem sehr großen und dichten Inzidenzgraphen, der nur aus einer einzigen Zusammenhangskomponente besteht. Nach einer Laufzeit von 20 Stunden ohne Ergebnis wurde der Lauf auf dem Graphen, der $1,5\cdot 10^6$ Kanten enthält, erfolglos abgebrochen. Erst mit einer Begrenzung des minimalen Fragmentgewichts auf 4 ließ sich in 13 Stunden ein Ergebnis erzielen. 
 
 \section{Sukzessionsgraphen und der Algorithmus von Pitschi}
 
@@ -848,16 +889,18 @@ Glücklicherweise sind die Zusammenhangskomponenten im Allgemeinen nicht so gro�
 
 Wie wir gesehen haben, ist die Menge an Zuweisungen nach dem \textrm{ResolveAmbiguities}-Aufruf noch nicht konsistent, aber es liegen keine Mehrdeutigkeiten mehr vor. Das zwingt uns dazu weitere Verbindungen aus der Äquivalenzrelation zu löschen, bis diese ein Alignment, also konsistent ist. Wir führen dazu eine Datenstruktur ein, die die Zusammenhangskomponenten des reduzierten Inzidenzgraphen nach ihrer Ordnung in den beteiligten Sequenzen ordnet.
 
-\begin{definition}[Sukzessionsgraph]
-	Es sei eine Menge an Sequenzen $S$ mit Stellenraum $\mathcal{S}$ gegeben. Für diese Sequenzen liegt eine Menge $\mathcal{C}$ von Zusammenhangskomponenten vor, die alle partielle Zuweisungsspalten sind. Dann definieren wir den Sukzessionsgraph $SG(\mathcal{C}) = (\mathcal{C},E)$ als gerichteten, gewichteten Graphen. In $SG(\mathcal{C})$ fügen wir genau dann eine Kante $e = (C,C')$ für $C,C' \in \mathcal{C}$ ein, wenn eine Sequenz $S_i \in S$ existiert, für die Stellen $s = (i,p) \in C$ und $s' = (i,p') \in C'$ vorliegen mit $p < p'$ und außerdem keine Stelle $s = (i,p'')$ in einem anderen Knoten $C''$ mit $p < p'' < p'$ vorhanden ist. Das Gewicht von $e$ ist die Anzahl an Sequenzen für die die obige Bedingung gilt. Des Weiteren setzen wir voraus, dass alle Zusammenhangskomponenten mindestens zwei Knoten enthalten.
-	Außerdem fügen wir zwei zusätzliche Knoten $v_{start}$ und $v_{end}$ ein. $v_{start}$ ist mit allen Knoten verbunden, die die erste Stelle einer Sequenz enthalten. Zusätzlich sind alle Knoten, die die letzte Stelle einer Sequenz enthalten mit $v_{end}$ über eine Kante verbunden.
+Es sei eine Menge an Sequenzen $S$ mit Stellenraum $\mathcal{S}$ gegeben. Für diese Sequenzen liegt eine Menge $\mathcal{C}$ von Zusammenhangskomponenten vor, die alle partielle Zuweisungsspalten sind. Wir definieren einen Graphen $SG(\mathcal{C}) = (\mathcal{C},E)$ als gerichteten, gewichteten Graphen. In $SG(\mathcal{C})$ fügen wir genau dann eine Kante $e = (C,C')$ für $C,C' \in \mathcal{C}$ ein, wenn eine Sequenz $S_i \in S$ existiert, für die Stellen $s = (i,p) \in C$ und $s' = (i,p') \in C'$ vorliegen mit $p < p'$ und außerdem keine Stelle $s = (i,p'')$ in einem anderen Knoten $C''$ mit $p < p'' < p'$ vorhanden ist. Das Gewicht von $e$ ist die Anzahl an Sequenzen für die die obige Bedingung gilt. Des Weiteren setzen wir voraus, dass alle Zusammenhangskomponenten mindestens zwei Knoten enthalten. Außerdem fügen wir zwei zusätzliche Knoten $v_{\mathrm{start}}$ und $v_{\mathrm{end}}$ ein. $v_{\mathrm{start}}$ ist mit allen Knoten verbunden, die die erste Stelle einer Sequenz enthalten. Zusätzlich sind alle Knoten, die die letzte Stelle einer Sequenz enthalten mit $v_{\mathrm{end}}$ über eine Kante verbunden.
+
+\begin{definition}[Sukzessionsgraph\cite{cpm10}]
+	Den soeben konstruierten Graphen $SG(\mathcal{C})$ bezeichnen wir als \emph{Sukzessionsgraphen}.
 \end{definition}
 
 
-Wie man sieht sind zwei Knoten $C$ und $C'$ aus dem Sukzessionsgraphen genau dann miteinander verbunden, wenn es in diesen Stellen aus der selben Sequenz gibt, bei denen die aus $C$ links von der in $C'$ stehen. Die zusätzlich eingefügten Knoten $v_{start}$ und $v_{end}$ brauchen wir im Algorithmus von Pitschi, um die Konnektivität des Graphen zu erhalten, wenn wir Kanten aus dem Graph löschen. Das werden wir später tun, um Inkonsistenzen zu entfernen. Setzen wir nicht voraus, dass die Knoten von $SG$ mindestens zwei Stellen enthalten, dann liefert der Algorithmus von Pitschi suboptimale Ergebnisse, wie wir später sehen werden. \cite{cpm10} und \cite{pdc10} sind an dieser Stelle nicht eindeutig. 
+Wie man sieht sind zwei Knoten $C$ und $C'$ aus dem Sukzessionsgraphen genau dann miteinander verbunden, wenn es in diesen Stellen aus der selben Sequenz gibt, bei denen die aus $C$ links von der in $C'$ stehen. Die zusätzlich eingefügten Knoten $v_{\mathrm{start}}$ und $v_{\mathrm{end}}$ brauchen wir im Algorithmus von Pitschi, um die Konnektivität des Graphen zu erhalten, wenn wir Kanten aus dem Graph löschen. Das werden wir später tun, um Inkonsistenzen zu entfernen. Setzen wir nicht voraus, dass die Knoten von $SG$ mindestens zwei Stellen enthalten, dann liefert der Algorithmus von Pitschi suboptimale Ergebnisse, wie wir später sehen werden. \cite{cpm10} und \cite{pdc10} sind an dieser Stelle nicht eindeutig. 
 
-Als Beispiel konstruieren wir aus dem reduzierten Inzidenzgraphen des letzten Schritts einen Sukzessionsgraphen. Die Knotenfarben wurden in der Farbe der Zusammenhangskomponenten des Inzidenzgraphen aus dem letzten Schritt gewählt.
+Als Beispiel konstruieren wir aus dem reduzierten Inzidenzgraphen des letzten Schritts einen Sukzessionsgraphen in Abbildung \ref{bsp:suk_graph}. Die Knotenfarben wurden in der Farbe der Zusammenhangskomponenten des Inzidenzgraphen aus dem letzten Schritt gewählt.
 
+\begin{figure}
 \begin{center}
 	\begin{tikzpicture}[
 	mycircle/.style={
@@ -872,7 +915,7 @@ Als Beispiel konstruieren wir aus dem reduzierten Inzidenzgraphen des letzten Sc
 	node distance=0.6cm and 1.1cm
 	]
 	
-	\node[mycircle,fill=gray] at (0.5,-0.5) (c1) {$v_{start}$};
+	\node[mycircle,fill=gray] at (0.5,-0.5) (c1) {$v_{\mathrm{start}}$};
 	\node[mycircle,fill=magenta] at (2,1.5) (c2) {\begin{tabular}{c}
 		$(1,2)$ \\ $(4,1)$
 		\end{tabular}};
@@ -897,7 +940,7 @@ Als Beispiel konstruieren wir aus dem reduzierten Inzidenzgraphen des letzten Sc
 	\node[mycircle,fill=green] at (10,1.5) (c9) {\begin{tabular}{c}
 		$(1,7)$ \\ $(2,8)$ \\ $(4,9)$
 		\end{tabular}};
-	\node[mycircle, fill=gray] at (12,-0.5) (c10) {$v_{end}$};
+	\node[mycircle, fill=gray] at (12,-0.5) (c10) {$v_{\mathrm{end}}$};
 	% Kanten ohne Cycle
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
 		c1/c2/2/above,
@@ -924,20 +967,22 @@ Als Beispiel konstruieren wir aus dem reduzierten Inzidenzgraphen des letzten Sc
 	\draw [myarrow, draw=red] (c9) -- node[sloped,font=\tiny,above, pos=0.25] {1} (c6);		
 	\end{tikzpicture}
 \end{center}
+\caption{Sukzessiongraph der Beispielsequenzen. Wegen des rot hervorgehobenen Zykluses ist die gegenwärtige Relation nicht konsistent.}\label{bsp:suk_graph}
+\end{figure}
 
-\begin{lemma}
+\begin{lemma}[{\cite{pdc10}}]
 	Die Menge $\mathcal{C}$ ist genau dann konsistent, wenn $SG(\mathcal{C})$ ein gerichteter, azyklischer Graph (DAG) ist.
 \end{lemma}
 
 \begin{beweis}
-	\bewhin \hspace{2pt} Sei $\mathcal{C}$ eine konsistente Menge von Zusammenhangskomponenten mit der induzierten Äquivalenzrelation $\mathcal{R}$. Dann folgt aus $x \preceq_{\mathcal{R}} y$ auch $x \preceq y$ für alle Sequenzen. Angenommen es gibt in $SG(\mathcal{C})$ einen Zyklus. Dann gibt es Knoten $C, C'$ mit Stellen $s_1, s_2 \in C$ und $s_1',s_2' \in C'$ mit folgenden Eigenschaften:
+	\bewhin \hspace{2pt} Sei $\mathcal{C}$ eine konsistente Menge von Zusammenhangskomponenten mit der induzierten Äquivalenzrelation $\mathcal{R}$. Dann folgt aus $x \preceq_{\mathcal{R}} y$ auch $x \preceq y$ für alle Sequenzen. Angenommen, es gibt in $SG(\mathcal{C})$ einen Zyklus. Dann gibt es Knoten $C, C'$ mit Stellen $s_1, s_2 \in C$ und $s_1',s_2' \in C'$ mit folgenden Eigenschaften:
 	\begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
 		\item $s_1, s_1' \in S_1$ und $s_2,s_2' \in S_2$ 
 		\item $pos(s_1) < pos(s_1')$ und $pos(s_2') < pos(s_2)$
 	\end{enumerate}
-	Diese muss es geben, sonst gäbe es keinen Zyklus im Graphen. Für diese Stellen gelten $s_1' \mathcal{R} s_2'$, $s_2' \preceq s_2$ und $s_2 \mathcal{R} s_1$, woraus $s_1' \preceq_{\mathcal{R}} s_1$ folgt. Es gilt aufgrund von $pos(s_1) < pos(s_1')$, weshalb $s_1 \npreceq s_1'$ folgt. Das steht im Widerspruch dazu, dass $\mathcal{C}$ konsistent war.
+	Diese muss es geben, sonst gäbe es keinen Zyklus im Graphen. Für diese Stellen gelten $s_1' \mathcal{R} s_2'$, $s_2' \preceq s_2$ und $s_2 \mathcal{R} s_1$, woraus $s_1' \preceq_{\mathcal{R}} s_1$ folgt. Es gilt aufgrund von $pos(s_1) < pos(s_1')$, weshalb $s_1 \npreceq s_1'$ folgt. Das steht im Widerspruch dazu, dass $\mathcal{C}$ konsistent ist.
 	
-	\bewrueck \hspace{2pt} Wir benutzen einen Kontrapositionsbeweis und es sei eine inkonsistente Menge $\mathcal{C}$ gegeben. Dann existiert eine Sequenz $S_1$, die Stellen $s_1,s_1' \in S_1$ mit folgenden Eigenschaften enthält:
+	\bewrueck \hspace{2pt} Wir benutzen einen Kontrapositionsbeweis. Dafür sei eine inkonsistente Menge $\mathcal{C}$ gegeben. Dann existiert eine Sequenz $S_1$, die Stellen $s_1,s_1' \in S_1$ mit folgenden Eigenschaften enthält:
 	\begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
 		\item $s_1 \preceq_{\mathcal{R}} s_1'$
 		\item $s_1 \npreceq s_1'$
@@ -947,7 +992,7 @@ Als Beispiel konstruieren wir aus dem reduzierten Inzidenzgraphen des letzten Sc
 
 \subsection{Der Algorithmus von Pitschi}
 
-Aufgrund des gerade gezeigten Lemmas folgt, dass wir eine konsistente Menge von partiellen Zuweisungsspalten finden, wenn deren Sukzessionsgraph azyklisch ist. Der Algorithmus von \cite{pdc10} sieht zwei Schritte vor, um aus dem potentiell zyklischen Sukzessionsgraphen einen kreisfreien zu konstruieren, der mit einer konsistenten Menge von partiellen Zuweisungsspalten korrespondiert:
+Aufgrund des gerade gezeigten Lemmas folgt, dass wir eine konsistente Menge von partiellen Zuweisungsspalten finden, wenn deren Sukzessionsgraph azyklisch ist. Der Algorithmus von \cite{pdc10} sieht zwei Schritte vor, um aus dem potentiell zyklischen Sukzessionsgraphen einen azyklischen Graphen zu konstruieren, der mit einer konsistenten Menge von partiellen Zuweisungsspalten korrespondiert:
 
 \begin{enumerate}[topsep=0pt,itemsep=-1ex,partopsep=1ex,parsep=1ex]
 	\item Lösche Kanten aus dem Sukzessionsgraphen, bis dieser kreisfrei ist.
@@ -956,20 +1001,21 @@ Aufgrund des gerade gezeigten Lemmas folgt, dass wir eine konsistente Menge von 
 
 \subsubsection{Entfernen der Kanten}
 
-Wir beginnen mit der Transformation des zyklischen Graphen in einen azyklischen, indem wir Kanten entfernen. Optimal wäre es Kanten mit einer minimalen Summe von Kantengewichten zu entfernen. Leider ist dieses Problem, das auch als \enquote{minimal weighted feedback arc set}-Problem bekannt ist, NP-schwer. Als Folge bedienen wir uns einfach einer einfachen Heuristik, indem wir sukzessive eine Grenze $k$ erhöhen und in jedem Schritt alle Kanten mit einem Gewicht kleiner als $k$ löschen, bis es keinen Zyklus im Graphen mehr gibt. Formal definieren wir die Menge an Kanten, die mindestens das Gewicht $k\in \mathbb{N}$ hat als 
+Wir beginnen mit der Transformation des zyklischen Graphen in einen azyklischen Sukzessionsgraphen, indem wir Kanten entfernen. Optimal wäre es, Kanten mit einer minimalen Summe von Kantengewichten zu entfernen. Dieses Problem, das auch als \enquote{minimal weighted feedback arc set}-Problem bekannt ist, NP-schwer. Als Folge bedienen wir uns einer einfachen Heuristik, indem wir sukzessive eine Grenze $k$ erhöhen und in jedem Schritt alle Kanten mit einem Gewicht kleiner als $k$ löschen, bis es keinen Zyklus im Graphen mehr gibt. Formal definieren wir die Menge an Kanten, die mindestens das Gewicht $k\in \mathbb{N}$ hat als 
 \begin{equation}
 \begin{split}
-	& E_k \coloneqq \{(u,v)\in E | w(u,v) > k\: \text{oder}\: u = v_{start}\: \text{oder}\: v = v_{end}\}\: \text{mit} \\
+	& E_k \coloneqq \{(u,v)\in E | w(u,v) > k\: \text{oder}\: u = v_{\mathrm{start}}\: \text{oder}\: v = v_{\mathrm{end}}\}\: \text{mit} \\
 	& k^* \coloneqq \min\{k > 0 | (V,E_k)\: \text{ist azyklisch}\}
 \end{split}
 \end{equation}
 
-Für den Fall, dass durch das Löschen von Kanten der Graph nicht mehr zusammenhängend ist, fügen wir für jede Zusammenhangskomponente und jede an dieser beteiligten Sequenz eine Kante vom Startzustand $v_{start}$ zum Knoten mit der kleinsten Stelle aus der gewählten Sequenz ein. Analog gehen wir mit den größten Stellen und dem Endzustand $v_{end}$ vor. Diese Menge dieser Kanten nennen wir $E_c$. Auf diese Weise ist sichergestellt, dass der azyklische Graph $G^* = (V,E_{k^*}\cup E_c)$ zusammenhängend ist und über jeden Knoten ein Pfad vom Start- zum Endzustand führt.
+Für den Fall, dass der Graph durch das Löschen von Kanten nicht mehr zusammenhängend ist, fügen wir für jede Zusammenhangskomponente und jede an dieser beteiligten Sequenz eine Kante vom Startzustand $v_{\mathrm{start}}$ zum Knoten mit der kleinsten Stelle aus der gewählten Sequenz ein. Analog gehen wir mit den größten Stellen und dem Endzustand $v_{\mathrm{end}}$ vor. Diese Menge dieser Kanten nennen wir $E_c$. Auf diese Weise ist sichergestellt, dass der azyklische Graph $G^* = (V,E_{k^*}\cup E_c)$ zusammenhängend ist und über jeden Knoten ein Pfad vom Start- zum Endzustand führt.
 
 \subsubsection{Beispiel zum Entfernen von Kanten}
 
-Bei unserem Beispiel ist glücklicherweise nur Zyklus vorhanden, der bereits in $(V,E_1)$ nicht mehr vorhanden ist. Wir löschen also alle Kanten mit Kantengewicht 1 oder weniger, die nicht zum Start- oder Endknoten gehören. Entfernte Kanten wurden gestrichelt dargestellt. Das sieht dann so aus:  
+Bei unserem Beispiel ist glücklicherweise nur ein einziger Zyklus vorhanden, der bereits in $(V,E_1)$ nicht mehr vorhanden ist. Wir löschen also alle Kanten mit Kantengewicht 1 oder weniger, die nicht zum Start- oder Endknoten gehören. Entfernte Kanten wurden in Abbildung \ref{bsp:del_kanten} gestrichelt dargestellt.   
 
+\begin{figure}
 \begin{center}
 	\begin{tikzpicture}[
 	mycircle/.style={
@@ -984,7 +1030,7 @@ Bei unserem Beispiel ist glücklicherweise nur Zyklus vorhanden, der bereits in 
 	node distance=0.6cm and 1.1cm
 	]
 	
-	\node[mycircle,fill=gray] at (0.5,-0.5) (c1) {$v_{start}$};
+	\node[mycircle,fill=gray] at (0.5,-0.5) (c1) {$v_{\mathrm{start}}$};
 	\node[mycircle,fill=magenta] at (2,1.5) (c2) {\begin{tabular}{c}
 		$(1,2)$ \\ $(4,1)$
 		\end{tabular}};
@@ -1009,7 +1055,7 @@ Bei unserem Beispiel ist glücklicherweise nur Zyklus vorhanden, der bereits in 
 	\node[mycircle,fill=green] at (10,1.5) (c9) {\begin{tabular}{c}
 		$(1,7)$ \\ $(2,8)$ \\ $(4,9)$
 		\end{tabular}};
-	\node[mycircle, fill=gray] at (12,-0.5) (c10) {$v_{end}$};
+	\node[mycircle, fill=gray] at (12,-0.5) (c10) {$v_{\mathrm{end}}$};
 	% Kanten ohne Cycle
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
 		c1/c2/2/above,
@@ -1037,30 +1083,33 @@ Bei unserem Beispiel ist glücklicherweise nur Zyklus vorhanden, der bereits in 
 	\draw [myarrow, draw=red, dotted] (c9) -- node[font=\tiny,above, pos=0.25] {1} (c6);		
 	\end{tikzpicture}
 \end{center}
+\caption{Azyklischer Sukzessionsgraph mit reduziertem Kantensatz $E_1$.}\label{bsp:del_kanten}
+\end{figure}
 
 \subsubsection{Entfernen von Stellen}
 
 Als nächstes lernen wir einen von \cite{pdc10} entwickelten Algorithmus kennen, der eine minimale Anzahl an Stellen aus dem verkleinerten Sukzessionsgraphen $G^{*}$ löscht, um alle Inkonsistenzen zu entfernen. Dabei orientiert sich der Algorithmus an der linearen Halbordnung $\preceq$ über $\mathcal{S}$ und der Halbordnung auf dem DAG, die ersterer angepasst werden soll. Wir bezeichnen die Halbordnung auf $\mathcal{C}$, die durch den Graph $G^{*}$ induziert wird, als $\preceq^{*}$.
 
-Sei eine Sequenz $S_i \in S$ gegeben. Dann ist $\mathcal{C}_{S_i}$ die Teilmenge von Zusammenhangskomponenten aus $\mathcal{C}$, die Stellen aus $S_i$ enthalten. Wir definieren außerdem eine Beschränkung der Knoten aus $G^{*}$ von $\mathcal{C}_{S_i}$ als $V_{S_i} = \mathcal{C}_{S_i} \cup \{v_{start},v_{end}\}$. Auf diesen existiert eine Ordnung $\preceq_{S_i}$, die durch die natürliche Ordnung auf $S_i$ gegeben ist, und die Halbordnung $\preceq_{S_i}^{*}$ des Graphen mit reduzierter Knotenmenge. Wir definieren $\mathcal{R}_{S_i} = \preceq_{S_i}\, \cap\, \preceq_{S_i}^{*}$. Diese Relation entspricht genau den Verbindungen der transitiven Hülle im ursprünglichen Graph, wenn man $G^{*}$ auf die Knoten aus $\mathcal{C}_{S_i}$ beschränkt. Sei dafür $G^{+} = (V,E^{+})$ die transitive Hülle $TC(G^{*})$ des DAG. Weil $G^{*}$ keine Zyklen enthält, kann auch $TC(G^{*})$ keine enthalten. Wir können $G^{*}$ auf jede unserer Sequenzen $S_i$ beschränken, indem wir den reduzierten Knotensatz $V_{S_i}$ benutzen und genau dann eine Kante zwischen zwei Knoten einfügen, falls diese in unserer Relation $\mathcal{R}_{S_i}$ liegen.
+Sei eine Sequenz $S_i \in S$ gegeben. Dann ist $\mathcal{C}_{S_i}$ die größtmögliche Teilmenge von Zusammenhangskomponenten aus $\mathcal{C}$, die Stellen aus $S_i$ enthalten. Wir definieren außerdem eine Beschränkung der Knoten aus $G^{*}$ von $\mathcal{C}_{S_i}$ als $V_{S_i} = \mathcal{C}_{S_i} \cup \{v_{\mathrm{start}},v_{\mathrm{end}}\}$. Auf diesen existiert eine Ordnung $\preceq_{S_i}$, die durch die natürliche Ordnung auf $S_i$ gegeben ist, und die Halbordnung $\preceq_{S_i}^{*}$ des Graphen mit reduzierter Knotenmenge. Wir definieren $\mathcal{R}_{S_i} = \preceq_{S_i}\, \cap\, \preceq_{S_i}^{*}$. Diese Relation entspricht genau den Verbindungen der transitiven Hülle im ursprünglichen Graph, wenn man $G^{*}$ auf die Knoten aus $\mathcal{C}_{S_i}$ beschränkt. Sei dafür $G^{+} = (V,E^{+})$ die transitive Hülle $TC(G^{*})$ des DAG. Weil $G^{*}$ keine Zyklen enthält, kann auch $TC(G^{*})$ keine enthalten. Wir können $G^{*}$ auf jede unserer Sequenzen $S_i$ beschränken, indem wir den reduzierten Knotensatz $V_{S_i}$ benutzen und genau dann eine Kante zwischen zwei Knoten einfügen, falls diese in unserer Relation $\mathcal{R}_{S_i}$ liegen.
 
-\begin{definition}
+\begin{definition}[{\cite{cpm10}}]
 	Der Graph $G_{S_i}$ einer Sequenz $S_i$ ist definiert als Graph über der Knotenmenge $V_{S_i}$ und den Kanten $E_{S_i}$. Es gilt
 	\begin{equation}
 		(u,v) \in E_{S_i} \Longleftrightarrow u,v \in V_{S_i}, (u,v) \in E^{+}\: \text{und}\: u \preceq_{S_i} v \Longleftrightarrow u\: \mathcal{R}_{S_i}\: v
 	\end{equation}
 \end{definition}
 
-Pfade von $v_{start}$ nach $v_{end}$ in $G_{S_i}$ sind genau die Teilmengen von partiellen Zuweisungsspalten, die bezüglich $S_i$ konsistent sind. Das liegt daran, dass für zwei Knoten $u,v \in V_{S_i}$ auf einem solchen Pfad sowohl $u \preceq_{S_i} v$, als auch $u \preceq_{S_i}^{*} v$ gelten und damit $u \preceq_{S_i}^{*} v \implies u \preceq_{S_i} v$. Das war aber genau die Definition für Konsistenz: dass die Relation die natürliche Ordnung auf den Sequenzen erhält. Wie entfernen daher alle Stellen unserer Sequenz aus den Knoten, die nicht auf dem gewählten Pfad liegen, weil diese die Konsistenz verletzen würden.
+Pfade von $v_{\mathrm{start}}$ nach $v_{\mathrm{end}}$ in $G_{S_i}$ sind genau die Teilmengen von partiellen Zuweisungsspalten, die bezüglich $S_i$ konsistent sind. Das liegt daran, dass für zwei Knoten $u,v \in V_{S_i}$ auf einem solchen Pfad sowohl $u \preceq_{S_i} v$, als auch $u \preceq_{S_i}^{*} v$ gelten und damit $u \preceq_{S_i}^{*} v \implies u \preceq_{S_i} v$. Der Erhalt der natürlichen Ordnung entspricht aber genau der Definition eines Alignments. Wir entfernen daher alle Stellen unserer Sequenz aus den Knoten, die nicht auf dem gewählten Pfad liegen, weil diese die Konsistenz verletzen würden.
 
-Wenn wir jetzt für jede unserer Sequenzen $S_j$ einen Pfad von $v_{start}$ nach $v_{end}$ in $G_{S_j}$ wählen und alle nicht-besuchten Stellen  aus ihren Knoten entfernen, dann hält die Konsistenzbedingung auf der Relation, die durch die übriggebliebenen Zusammenhangskomponenten induziert wird. Das Resultat ist also ein Alignment. Da wir aber nicht irgendein Alignment erhalten wollen, sondern ein möglichst großes, wählen wir für jede Sequenz $S_i \in S$ den Pfad maximaler Länge durch $G_{S_i}$. Auf diese Weise löschen wir die minimale Anzahl an Stellen aus ihren Zusammenhangskomponenten. Formal: Sei für eine Sequenz $S_i$ $g_{S_i}$ ein Pfad maximaler Länge $(v_{start}, u_1, \dots, u_n, v_{end})$ gegeben. Wir iterieren über alle Knoten $C \in \mathcal{C}_{S_i}$ und entfernen Stellen $(i,p) \in C$, falls $C \notin g_{S_i}$. Wenn wir das für alle Sequenzen tun, dann nennen wir die Menge der reduzierten Zusammenhangskomponenten $C°$. Weil die mit $C°$ korrespondierende Relation ein Alignment ist, wäre der Sukzessionsgraph $SG(C°)$ ein DAG. Da die Pfade für jede Sequenz unabhängig voneinander sind, können wir diese in beliebiger Reihenfolge wählen, ohne dass dies einen Einfluss auf unser Ergebnis hat.
+Wenn wir jetzt für jede unserer Sequenzen $S_j$ einen Pfad von $v_{\mathrm{start}}$ nach $v_{\mathrm{end}}$ in $G_{S_j}$ wählen und alle nicht besuchten Stellen  aus ihren Knoten entfernen, dann wird die Konsistenzbedingung auf der Relation, die durch die übriggebliebenen Zusammenhangskomponenten induziert wird, erfüllt. Das Resultat ist dementsprechend ein Alignment. Da das Ziel aber nicht die Bestimmung eines beliebigen Alignments ist, sondern eines möglichst großen, wählen wir für jede Sequenz $S_i \in S$ den Pfad maximaler Länge durch $G_{S_i}$. Auf diese Weise löschen wir die minimale Anzahl an Stellen aus ihren Zusammenhangskomponenten. Formal: Sei für eine Sequenz $S_i$ ein Pfad $g_{S_i}$ maximaler Länge $(v_{\mathrm{start}}, u_1, \dots, u_n, v_{\mathrm{end}})$ gegeben. Wir iterieren über alle Knoten $C \in \mathcal{C}_{S_i}$ und entfernen Stellen $(i,p) \in C$, falls $C \notin g_{S_i}$. Wenn wir das für alle Sequenzen tun, dann nennen wir die Menge der reduzierten Zusammenhangskomponenten $C^\circ$. Weil die mit $C^\circ$ korrespondierende Relation ein Alignment ist, wäre der Sukzessionsgraph $SG(C^\circ)$ ein DAG. Da die Pfade für jede Sequenz unabhängig voneinander sind, können wir diese in beliebiger Reihenfolge wählen, ohne dass dies einen Einfluss auf unser Ergebnis hat.
 
-Letztendlich folgt, dass das Problem die partiellen Zuweisungsspalten auf konsistente Zuweisungsspalten zu reduzieren auf die Suche nach Pfaden maximaler Länge durch gerichtete azyklische Graphen abbildbar ist \cite{cpm10}.
+Letztendlich folgt, dass das Problem, die partiellen Zuweisungsspalten auf konsistente Zuweisungsspalten zu reduzieren, auf die Suche nach Pfaden maximaler Länge durch gerichtete azyklische Graphen abbildbar ist \cite{cpm10}.
 
 \subsubsection{Beispiel zum Entfernen von Stellen mit dem Algorithmus von Pitschi}
 
-Bevor wir im nächsten Abschnitt genauer kennenlernen, wie man einen längsten Pfad im DAG eigentlich genau berechnet, betrachten wir unser Beispiel, in diesem Fall nur für die Sequenz $S_1$. Weil der Algorithmus zum Berechnen des längsten Pfades die Kantengewichte ignoriert und nur Knoten zählt, wurden diese nicht mehr angegeben. Formal handelt es sich hierbei um die Suche nach einem längsten Pfad in einem ungewichteten Graphen. Die Pfade, die über die Bildung der transitiven Hülle neu dazu kamen, sind grau angedeutet.
+Bevor wir im nächsten Abschnitt genauer kennenlernen, wie man einen längsten Pfad im DAG eigentlich genau berechnet, betrachten wir unser Beispiel in Abbildung \ref{bsp:dag_s1}, in diesem Fall nur für die Sequenz $S_1$. Weil der Algorithmus zum Berechnen des längsten Pfades die Kantengewichte ignoriert und nur Knoten zählt, wurden diese nicht mehr angegeben. Formal handelt es sich hierbei um die Suche nach einem längsten Pfad in einem ungewichteten Graphen. Die Pfade, die über die Bildung der transitiven Hülle neu dazu kamen, sind grau angedeutet.
 
+\begin{figure}
 \begin{center}
 	\begin{tikzpicture}[
 	mycircle/.style={
@@ -1075,7 +1124,7 @@ Bevor wir im nächsten Abschnitt genauer kennenlernen, wie man einen längsten P
 	node distance=0.6cm and 1.1cm
 	]
 	
-	\node[mycircle,fill=gray] at (0.5,-0.5) (c1) {$v_{start}$};
+	\node[mycircle,fill=gray] at (0.5,-0.5) (c1) {$v_{\mathrm{start}}$};
 	\node[mycircle,fill=magenta] at (2,2) (c2) {\begin{tabular}{c}
 		$(1,2)$ \\ $(4,1)$
 		\end{tabular}};
@@ -1097,7 +1146,7 @@ Bevor wir im nächsten Abschnitt genauer kennenlernen, wie man einen längsten P
 	\node[mycircle,fill=green] at (10,2) (c9) {\begin{tabular}{c}
 		$(1,7)$ \\ $(2,8)$ \\ $(4,9)$
 		\end{tabular}};
-	\node[mycircle, fill=gray] at (12,-0.5) (c10) {$v_{end}$};
+	\node[mycircle, fill=gray] at (12,-0.5) (c10) {$v_{\mathrm{end}}$};
 	
 	\foreach \i/\j/\txt/\p in {% start node/end node/text/position
 		c1/c8//above,
@@ -1150,67 +1199,69 @@ Bevor wir im nächsten Abschnitt genauer kennenlernen, wie man einen längsten P
 	
 	\end{tikzpicture}
 \end{center}
+\caption{Der auf Sequenz eingeschränkt und um die transitive Hülle erweiterte DAG $G_{S_1}$.}\label{bsp:dag_s1}
+\end{figure}
 
-\vspace{-5pt}
-
-Im Graphen $G_{S_1}$ gibt es eine Kante vom $(1,5)$er-Knoten zum $(1,6)$er, obwohl diese direkte Kante in $G^{*}$ gelöscht wurde. Das liegt an der Verbindung $(2,3) \rightarrow (2,4) \rightarrow (2,5) \rightarrow (2,7)$ und $(1,5) \preceq_{S_1} (1,6)$. Die Kante von $(1,8) \rightarrow (1,6)$ gibt es aber nicht, obwohl diese in der transitiven Hülle verbunden sind. Das liegt an $(1,8) \npreceq_{S_i} (1,6)$. Der hellblaue Knoten enthält keine Stelle aus $S_1$ und ist daher nicht Teil von $V_{S_1}$.
+Im Graphen $G_{S_1}$ gibt es eine Kante vom grünen Knoten $(1,5)$ zum blauen $(1,6)$, obwohl diese direkte Kante in $G^{*}$ gelöscht wurde. Das liegt an der Verbindung $(2,3) \rightarrow (2,4) \rightarrow (2,5) \rightarrow (2,7)$ und $(1,5) \preceq_{S_1} (1,6)$. Die Kante $(1,8) \rightarrow (1,6)$ gibt es aber nicht, obwohl diese in der transitiven Hülle verbunden sind. Das liegt an $(1,8) \npreceq_{S_i} (1,6)$. Der hellblaue Knoten enthält keine Stelle aus $S_1$ und ist daher nicht Teil von $V_{S_1}$.
 
 Wie schon beim Blick auf den ersten Sukzessionsgraphen vermutet, ist das Problem die Stelle $(1,8)$, die für Überkreuzungen sorgt. Sie liegt nicht auf dem längsten Pfad (rot markiert) und wird daher aus der Zusammenhangskomponente des Knoten entfernt. Die längsten Pfade aller anderen Sequenzen besuchen auch alle Knoten der jeweiligen Graphen, weshalb keine weiteren Knoten modifiziert werden müssen.
 
-\subsection{Algorithmus zur Bestimmung des längsten Pfads}
+\subsection{Algorithmus zur Bestimmung eines längsten Pfads}
 
-Es sei ein gerichteter, azyklischer Graph $G = V,E$ gegeben. Ein einfacher Ansatz wäre es einen Algorithmus, der auch mit negativen Kantengewichten rechnen kann zu benutzen, um im Graphen mit negierten Kantengewichten $G^{-} = (V,E^{-})$ den kürzesten Pfad zu berechnen. Der kürzeste Pfad mit umgedrehten Kantengewichten entspricht genau dem längsten Pfad im Ursprungsgraph. Der Algorithmus von Bellman-Ford berechnet den kürzesten Pfad eines Ausgangsknotens (hier $v_start$) zu allen anderen Knoten im Graphen in $\oh(|V|\cdot |E|) = \oh(n^3\cdot L^3)$ in unserem Fall \cite[S.651ff.]{clrs09}. Anders als beispielsweise der gierige Algorithmus von Dijkstra kann Bellman-Ford auch mit negativen Kanten umgehen, solange der Graph keine negativen Zyklen enthält. 
+Es sei ein gerichteter, azyklischer Graph $G = (V,E)$ gegeben. Ein einfacher Ansatz für die Bestimmung eines längsten Pfades wäre es einen Algorithmus, der auch mit negativen Kantengewichten rechnen kann, zu benutzen, um im Graphen mit negierten Kantengewichten $G^{-} = (V,E^{-})$ den kürzesten Pfad zu berechnen. Der kürzeste Pfad mit umgedrehten Kantengewichten entspricht genau dem längsten Pfad im Ursprungsgraphen. Mit dem Algorithmus von Bellman-Ford lässt sich ein kürzester Pfad von einem Ausgangsknoten (hier $v_{\mathrm{start}}$) zu allen anderen Knoten im Graphen in $\oh(|V|\cdot |E|) = \oh(n^3\cdot L^3)$ berechnen \cite[S.651ff.]{clrs09}. Anders als beispielsweise der gierige Algorithmus von Dijkstra kann Bellman-Ford auch mit negativen Kanten umgehen, solange der Graph keine negativen Zyklen enthält. 
 
-Weil unsere Graphen $G_{S_i}$ azyklisch sind lässt sich die Berechnung der längsten Pfade mit der \emph{topologischen Sortierung} der Knoten effizienter umsetzen.
+Weil unsere Graphen $G_{S_i}$ azyklisch sind, lässt sich die Berechnung der längsten Pfade mit der \emph{topologischen Sortierung} der Knoten effizienter umsetzen. 
 
-\begin{definition}[Topologische Sortierung]
+\begin{definition}[Topologische Sortierung{\cite[S.612]{clrs09}}]
 	Eine \emph{topologische Sortierung} von DAG $G = (V,E)$ ist eine lineare Aufzählung der Knoten in $V$ bei der ein Knoten $v$ hinter einem Knoten $u$ auftaucht, wenn es eine Kante $(u,v)\in E$ gibt.
 \end{definition}
 
-Die topologische Sortierung liefert eine mögliche Aufzählung der Knoten, die die Halbordnung des Graphen erhält. Im Allgemeinen ist sie nicht eindeutig. Das Standardmotivation dafür ist das Anziehen von Kleidungsstücken: Ich muss meine Socken anziehen, bevor ich in meine Schuhe schlüpfen kann und es kommt zuerst die Unterwäsche und dann die Hose. Erst muss ich Unterhemd und oder T-Shirt anziehen, bevor der Pullover kommt. Diese Reihenfolgen lassen sich als DAG modellieren, wobei jede Kante zwischen Kleidungsstück $a$ und $b$ bedeutet, dass $a$ vor $b$ angezogen werden muss. Gültige topologische Sortierungen für dieses vereinfachte Beispiel \footnote{Mr. Bean hat mit seiner Badehose bewiesen, dass die übliche Reihenfolge des An- und Ausziehens nicht unbedingt eingehalten werden muss.} sind also beispielsweise diese: \enquote{(Socken, Schuhe, Unterhose, Hose, Unterhemd, T-Shirt,Pullover)}, \enquote{(Socken, Unterhose, Schuhe, Unterhemd, T-Shirt, Pullover, Hose)} oder \enquote{(Unterhose, Hose, Socken, Unterhemd, T-Shirt, Pullover, Schuhe)}. 
+Die topologische Sortierung liefert eine mögliche Aufzählung der Knoten, die die Halbordnung des Graphen erhält. Im Allgemeinen ist sie nicht eindeutig.
 
-Mit Hilfe einer Tiefensuche lässt sich die topologische Sortierung in $\theta(|V| + |E|)$ berechnen \cite[S.612ff.]{clrs09}. Das Ergebnis ist eine Liste der Knoten in topologischer Reihenfolge. Die Liste können wir zur Berechnung des längsten Pfades nutzen, indem wir zusätzlich für jeden Knoten die Länge des längsten Pfades und den Vorgänger in diesem speichern. Wir starten bei $v_{start}$ mit Länge 0 und Vorgänger \enquote{NIL}. Aufgrund der gegebenen topologischen Sortierung wissen wir, dass jeder Knoten erst dann bearbeitet wird, wenn seine Vorgänger bereits behandelt wurden. Vorgänger und längster Pfad bis zu diesem Knoten lassen sich also rekursiv berechnen:
+Mit Hilfe einer Tiefensuche lässt sich die topologische Sortierung in $\Theta(|V| + |E|)$ berechnen \cite[S.612ff.]{clrs09}. Das Ergebnis ist eine Liste der Knoten in topologischer Reihenfolge. Die Liste können wir zur Berechnung des längsten Pfades nutzen, indem wir zusätzlich für jeden Knoten die Länge des längsten Pfades und den Vorgänger in diesem speichern. Wir starten bei $v_{\mathrm{start}}$ mit Länge 0 und Vorgänger \enquote{NIL}. Aufgrund der gegebenen topologischen Sortierung wissen wir, dass jeder Knoten erst dann bearbeitet wird, wenn seine Vorgänger bereits behandelt wurden. Vorgänger und längster Pfad bis zu diesem Knoten lassen sich also rekursiv berechnen:
 
 \begin{equation}
 \begin{split}
-	distance(v_{start}) & = 0 \\
-	distance(v)       & = \max\{distance(u) + w((u,v))\:|\:(u,v) \in E\ \wedge v \neq v_{start}\} 
+	\operatorname{distance}(v_{\mathrm{start}}) & = 0 \\
+	\operatorname{distance}(v)       & = \max\{\operatorname{distance}(u) + w((u,v))\:|\:(u,v) \in E\ \wedge v \neq v_{\mathrm{start}}\} 
 \end{split}
 \end{equation} 
 
-Der Vorgänger für die Knoten wird dann abhängig von der gewählten Kante gesetzt, die die größte Gesamtlänge liefert. Das Kantengewicht $w((u,v))$ ist in unserem Fall 1, weil wir nur die Anzahl der Knoten von $v_{start}$ bis $v_{end}$. Die Korrektheit des Algorithmus folgt aufgrund der Korrektheit der Rekursionsgleichung und weil $distance(u)$ wegen der topologischen Sortierung bereits berechnet wurde für Knoten $v$, wenn eine Kante $(u,v)$ existiert.
+Der Vorgänger für die Knoten wird dann abhängig von der gewählten Kante gesetzt, die die größte Gesamtlänge liefert. Das Kantengewicht $w(u,v)$ ist in unserem Fall 1, weil wir wie in einem ungewichteten Graphen nur die Anzahl der Knoten von $v_{\mathrm{start}}$ bis $v_{\mathrm{end}}$ zählen. Die Korrektheit des Algorithmus folgt aufgrund der Korrektheit der Rekursionsgleichung und weil $\operatorname{distance}(u)$ wegen der topologischen Sortierung bereits berechnet wurde für Knoten $v$, wenn eine Kante $(u,v)$ existiert.
 
-Jetzt kennen wir die Länge des längsten Pfades, müssen aber noch die Knoten, die zu diesem gehören, berechnen. Dazu nutzen wir einen Backtracking-Algorithmus, indem wir mit dem letzten Knoten starten und solange den Vorgänger auswählen, bis es keinen mehr gibt. Bei unserem Graphen $G_{S_i}$ ist das einfach, weil mit $v_{start}$ und $v_{end}$ auf jeden Fall der erste und letzte Knoten unseres längsten Pfads bekannt sind. In allgemeinen DAGs muss man zuerst in linearer Zeit einmal über die Liste iterieren und den Knoten mit der maximalen gespeicherten Länge als Endknoten des Pfads und Startknoten des Backtrackings wählen.
+Jetzt kennen wir die Länge des längsten Pfades, müssen aber noch die Knoten, die zu diesem gehören, berechnen. Dazu nutzen wir einen Backtracking-Algorithmus, indem wir mit dem letzten Knoten starten und solange den Vorgänger auswählen, bis es keinen mehr gibt. Bei unserem Graphen $G_{S_i}$ ist das einfach, weil mit $v_{\mathrm{start}}$ und $v_{\mathrm{end}}$ auf jeden Fall der erste und letzte Knoten unseres längsten Pfads bekannt sind. In allgemeinen DAGs muss man zuerst in linearer Zeit über die Liste iterieren und den Knoten mit der maximalen gespeicherten Länge als Endknoten des Pfads und Startknoten des Backtrackings wählen.
 
-\begin{algorithm}
-	\caption{Algorithmus zum berechnen des längsten Pfads in einem Graphen $G_{S_i}$}
+\begin{breakablealgorithm}
+	\caption{Algorithmus zum Berechnen eines längsten Pfads in einem Graphen $G_{S_i}$}.
 	\label{alg:longestpath}
 	\begin{algorithmic}[1]
-		\Require DAG $G = (V,E)$ mit $v_{start}$ und $v_{end}$
+		\Require DAG $G = (V,E)$ mit $v_{\mathrm{start}}$ und $v_{\mathrm{end}}$
 		\Procedure{LongestPath}{$G$}
-			\State {$list_{ts} \gets topologicalSort(G)$}
-			\State {$v_{start}.distance \gets 0$}
-			\State {$v_{start}.pred \gets $ NIL}
-			\State {$current \gets list_{ts}.head$}
-			\While {$current.next \neq $ NIL} \Comment {Berechne Distanz zu $v_{end}$}
-				\State {$current \gets current.next$}
-				\State {$maxPred \gets argmax\{u.distance\:|\:(u,current.key) \in E\}$}
-				\State {$current.key.distance \gets maxPred.distance + 1$}
-				\State {$current.key.pred \gets maxPred$}			
+			\State {$\operatorname{topoSortList} \gets \operatorname{topologicalSort}(G)$}
+			\State {$\operatorname{distance}(v_{\mathrm{start}}) \gets 0$}
+			\State {$\operatorname{predecessor}(v_{\mathrm{start}}) \gets $ NIL}
+			\State {$\operatorname{currentNode} \gets v_{\mathrm{start}}$}
+			\While {$\operatorname{currentNode} \neq $ NIL} \Comment {Max. Distanz zu $v_{\mathrm{start}}$ über akt. Knoten}
+				\For {$(\operatorname{currentNode},v)\in E$}
+					\If {$\operatorname{distance}(\operatorname{currentNode}) + 1 > \operatorname{distance}(v)$}
+						\State {$\operatorname{distance}(v) \gets \operatorname{distance}(\operatorname{currentNode}) + 1$}
+						\State {$\operatorname{predecessor}(v) \gets \operatorname{currentNode}$}
+					\EndIf
+				\EndFor
+				\State {$\operatorname{currentNode} \gets \operatorname{currentNode.next}$}	
 			\EndWhile
-			\State {$longestPath \gets empty$} \Comment {initialisiere Ausgabeliste}
-			\State {$longestPath.addFirst(v_{end}$}	
-			\State {$currentNode \gets v_{end}$}		
-			\While {$currentNode.pred \neq $ NIL} \Comment {Backtracking}
-				\State {$currentNode \gets currentNode.pred$}
-				\State {$longestPath.addFirst(currentNode)$}	
+			\State {$\operatorname{longestPath} \gets \operatorname{empty}$} \Comment {initialisiere Ausgabeliste}	
+			\State {$\operatorname{currentNode} \gets v_{\mathrm{end}}$}		
+			\While {$\operatorname{currentNode} \neq $ NIL} \Comment {Backtracking}
+				\State {$\operatorname{longestPath.addFirst(currentNode)}$}
+				\State {$\operatorname{currentNode} \gets \operatorname{predecessor(currentNode)}$}	
 			\EndWhile
-			\Return {$longestPath$}
+			\State{\textbf{Return} $\operatorname{longestPath}$}
 		\EndProcedure
 	\end{algorithmic}
-\end{algorithm}
+\end{breakablealgorithm}
 
-Im kommenden Kapitel wird die Implementierung dieses Algorithmus beispielhaft für das ganze Verfahren beschrieben. Da dort auch ein konkretes Beispiel behandelt wird, verzichte ich darauf an dieser Stelle.
+Im nächsten Kapitel wird die Implementierung dieses Algorithmus beispielhaft für das ganze Verfahren beschrieben. Da dort auch ein konkretes Beispiel behandelt wird, wird an dieser Stelle darauf verzichtet.
 
 \subsubsection{Laufzeit}
 

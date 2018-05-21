@@ -6,7 +6,7 @@ Anders als der im letzten Kapitel vorgestellte Algorithmus von Needleman-Wunsch 
 
 DIALIGN	kann genau wie Needleman-Wunsch im Sinne der jeweiligen Zielfunktion mathematisch optimale paarweise Alignments berechnen. Anders als bei letzterem, kann man aber auch mit Hilfe einer Heuristik für drei oder mehr Sequenzen effizient multiple Alignments bestimmen. Der Algorithmus funktioniert im weitesten Sinne wie folgt:
 
-\begin{algorithm}
+\begin{breakablealgorithm}
 	\caption{DIALIGN-Algorithmus zur Berechnung eines multiplen Alignments einer Menge von Sequenzen $S = \{S_1,\dots,S_n\}$}
 	\label{alg:dialign}
 	\begin{algorithmic}[1]
@@ -27,7 +27,7 @@ DIALIGN	kann genau wie Needleman-Wunsch im Sinne der jeweiligen Zielfunktion mat
 		\State \textbf{return} $A$
 		\EndProcedure
 	\end{algorithmic}
-\end{algorithm}
+\end{breakablealgorithm}
 
 Unter \emph{Konsistenz} können wir uns zunächst informell vorstellen, dass es bei einer Zuweisung weder zu Überkreuzungen kommt, noch dazu, dass ein Symbol einer Sequenz gleichzeitig mehreren einer anderen zugewiesen wird.
 
@@ -45,7 +45,7 @@ Um multiple Sequenzalignments genauer zu verstehen und die dazu nötigen Algorit
 
 Nachdem Alignments und \emph{Konsistenz} bis jetzt nur umgangssprachlich vorgestellt wurden, werden wir diese Begriffe nun formalisiert.
 
-\begin{definition}[Alignment und Konsistenz\cite{mdw96}]
+\begin{definition}[Alignment und Konsistenz\cite{mdw96}]\label{def:konsistenz}
 	Ein \emph{Alignment} $\mathcal{A}$ ist eine Äquivalenzrelation auf der Menge $\mathcal{S}$, die das folgende \emph{Konsistenzkriterium} erfüllt. Sei zunächst $\mathcal{R}$ eine beliebige binäre Relation auf $\mathcal{S}$. Wir können diese mit `$\preceq$' zu der Präordnung (auch Quasiordnung genannt) $\preceq_{\mathcal{R}}=(\preceq \cup \mathcal{R})_t$ erweitern, also einer zweistelligen Relation, die reflexiv und transitiv, aber nicht antisymmetrisch ist. Hierbei bezeichnet $\mathcal{X}_t$ die transitive Hülle einer Relation $\mathcal{X}$. 
 	
 	Wir bezeichnen $\mathcal{R}$ als \emph{konsistent}, wenn $\preceq_{\mathcal{R}}=(\preceq \cup\: \mathcal{R})_t$ die natürliche Ordnung auf jeder Sequenz erhält, also $x \preceq_{\mathcal{R}} y \implies x \preceq y$ für alle $x,y \in S_i und 1\leq i\leq n$ gilt. Außerdem nennen wir eine Menge von Relationen $\{\mathcal{R}_1, \dots, \mathcal{R}_n\}$ \emph{konsistent}, wenn ihre Vereinigung $\cup_i \mathcal{R}_i$ \emph{konsistent} ist, sowie ein Paar $(x,y) \in \mathcal{S}^2$ \emph{konsistent} mit einer Relation $\mathcal{R}$, falls $\mathcal{R} \cup \{(x,y)\}$ \emph{konsistent} ist.
@@ -247,7 +247,7 @@ In diesem Abschnitt beschäftigen wir uns mit einer sehr speichereffizienten und
 
 Zunächst beschränken wir die maximale Länge eines Fragments $l_{\max}$ auf eine kleine, feste Zahl, beispielsweise 40. Je nach gewünschter Genauigkeit und benötigter Geschwindigkeit kann man diesen Wert vergrößern oder verkleinern. Auch wenn diese Einschränkung den maximal zu erreichenden Score senkt und wir daher keine perfekten Alignments mehr berechnen, hat $l_{\max}$ in der Praxis kaum einen Einfluss auf die Güte der Ergebnisse. Das liegt daran, dass wir im Fall von geringen Ähnlichkeiten zwischen Sequenzen nur selten Fragmente mit Längen haben, die $l_{\max}$ überschreiten und im Fall von sehr ähnlichen Sequenzen können wir lange Fragmente auch in mehrere kleinere in der Größenordnung unserer Begrenzung aufteilen. Wir werden zeigen, dass mit dieser Einschränkung ein paarweises Alignment in $\oh(L^2)$ Zeit und $\oh(L+N_{\max})$ Speicherplatz berechnet werden kann, wobei $N_{\max}$ die Anzahl an gleichzeitig gespeicherten Fragmenten ist, die durch $|F|$ begrenzt wird \cite{m02}.
 
-\begin{algorithm}[H]
+\begin{breakablealgorithm}
 	\caption{Speichereffizientes paarweises DIALIGN}
 	\label{alg:speichereffizient}
 	\begin{algorithmic}[1]
@@ -271,7 +271,7 @@ Zunächst beschränken wir die maximale Länge eines Fragments $l_{\max}$ auf ei
 		Sc[i,j\!-\!1], \\
 		\max{W(f): f\: \text{endet in}\: (i,j)}
 		\end{cases}$\label{algl:praefix}
-		\State Setze $Pr[i,j]$ analog zu $Sc[i,j]$
+		\State Setze $Pr[i,j]$ analog zu $Sc[i,j]$\label{algl:ende_opt_kette}
 		\State Lösche $Sc[i,j\!-\!1]$ und $Pr[i,j\!-\!1]$\Comment{{\small Lösche alte Spalteneinträge}}\label{algl:del_frags}
 		\ForAll{$f_{i,j,k} \in F_j$ mit $f \neq Pr[i,j]$}
 		\State lösche $F_{i,j,k}$\Comment{{\small Lösche die, die in keiner opt. Kette in $(i,j)$ enden}}
@@ -285,7 +285,7 @@ Zunächst beschränken wir die maximale Länge eines Fragments $l_{\max}$ auf ei
 		\EndWhile 
 		\EndProcedure
 	\end{algorithmic}
-\end{algorithm}
+\end{breakablealgorithm}
 
 Der Algorithmus \ref{alg:speichereffizient} geht die Scorematrix $Sc$ Spalte für Spalte von links nach rechts durch (Zeile \ref{algl:start_loop} bis \ref{algl:end_loop}). An jeder Position $(i,j)$ berechnet er mit \eqref{eq:praefixgewicht2} und \eqref{eq:vorgaenger} $W(f)$ und $P(f)$ für alle Fragmente $f \in \{f_{i+k,j+k,k} : 1 \leq k \leq l_{\max}\}$, die an der Stelle $(i,j)$ beginnen (Zeile \ref{algl:praefixgew} und \ref{algl:vorgaenger}). Dabei speichern wir Verweise auf $W(f)$ und $P(f)$ in den Listen $F_{j+k}$, die mit der Spalte $j+k$ assoziiert werden, in denen die jeweiligen Fragmente enden. Alles, was wir dafür an Informationen benötigen, sind $Sc[i\!-\!1,j\!-\!1]$ und $Pr[i\!-\!1,j\!-\!1]$. Deshalb müssen wir nicht permanent die ganze Matrix vorhalten, sondern benötigen nur die zuletzt berechnete und die aktuelle Spalte für $Sc$ und $Pr$, also vier eindimensionale Arrays der Länge $L_1$.
 
@@ -303,7 +303,7 @@ Da wir wissen, dass nur Fragmente mit positiven Gewichten Teil unseres Alignment
 
 Guckt man sich Zeile \algref{alg:speichereffizient}{algl:praefix} genauer an, stellt man fest, dass man gar nicht alle Fragmente kennen muss, die in $(i,j)$ enden. Es reicht das zu kennen, welches das Präfixgewicht $W(f)$ aller dort endenden Ketten maximiert. Anstatt alle dieser Fragmente in $F_j$ zu speichern reicht es zu überprüfen, ob der dritte Fall von Zeile \algref{alg:speichereffizient}{algl:praefix} eintritt und erst dann in Zeile \algref{alg:speichereffizient}{algl:fragmentliste} zu sichern. Das bedeutet, dass wir keine ganze Liste von Fragmenten für jede Stelle unserer Tabelle speichern müssen, sondern nur ein einziges.
 
-Widmen wir uns nun $N_{\max}$, der Anzahl an Fragmenten, die maximal gleichzeitig gespeichert werden. Diese Anzahl wird gleich für die Berechnung des Speicherbedarfs benötigt. Die Anzahl an gesicherten Fragmenten, die wir noch nicht für $Sc[i,j]$ betrachtet haben, beträgt $l_{\max} \cdot L_1 \in \oh(L)$, weil wir für jede der nächsten $l_{\max}$ Spalten und dort jede der $L_1$-vielen Zeilen das Fragment speichern, das $W(f)$ für alle dort endenden maximiert. Zusätzlich wird die Reihe von Vorgängern für jeden aktuellen Tabelleneintrag der Spalte gesichert, indem wir in $Pr[i,j]$ einen Verweis auf das letzte Fragment einer optimalen Kette für die Teilsequenzen bis zu den Stellen $i$ und $j$ in den beiden Sequenzen speichern (Zeile \algref{algl:speichereff}). Dieses wiederum speichert einen Pointer auf seinen eigenen Vorgänger und so weiter. Im schlimmsten Fall befinden wir uns in der letzten Spalte der Tabelle und die in den Einträgen endenden optimalen Ketten sind alle unabhängig voneinander. Dann kann es sein, dass diese jeweils aus $\oh(L_2)$ nah aufeinanderfolgenden Fragmenten der Länge $\oh(1)$ bestehen. In diesem Fall ist $N_{\max} \in \oh(L^2)$, genau wie der insgesamt benötigte Speicherplatz. In der Praxis kann man aber erwarten, dass $N_{\max}$ deutlich kleiner ist. 
+Widmen wir uns nun $N_{\max}$, der Anzahl an Fragmenten, die maximal gleichzeitig gespeichert werden. Diese Anzahl wird gleich für die Berechnung des Speicherbedarfs benötigt. Die Anzahl an gesicherten Fragmenten, die wir noch nicht für $Sc[i,j]$ betrachtet haben, beträgt $l_{\max} \cdot L_1 \in \oh(L)$, weil wir für jede der nächsten $l_{\max}$ Spalten und dort jede der $L_1$-vielen Zeilen das Fragment speichern, das $W(f)$ für alle dort endenden maximiert. Zusätzlich wird die Reihe von Vorgängern für jeden aktuellen Tabelleneintrag der Spalte gesichert, indem wir in $Pr[i,j]$ einen Verweis auf das letzte Fragment einer optimalen Kette für die Teilsequenzen bis zu den Stellen $i$ und $j$ in den beiden Sequenzen speichern (Zeile \ref{algl:ende_opt_kette}). Dieses wiederum speichert einen Pointer auf seinen eigenen Vorgänger und so weiter. Im schlimmsten Fall befinden wir uns in der letzten Spalte der Tabelle und die in den Einträgen endenden optimalen Ketten sind alle unabhängig voneinander. Dann kann es sein, dass diese jeweils aus $\oh(L_2)$ nah aufeinanderfolgenden Fragmenten der Länge $\oh(1)$ bestehen. In diesem Fall ist $N_{\max} \in \oh(L^2)$, genau wie der insgesamt benötigte Speicherplatz. In der Praxis kann man aber erwarten, dass $N_{\max}$ deutlich kleiner ist. 
 
 \cite{m02} hat sein Verfahren mit verschiedenen Sequenzen getestet. Dabei hat er festgestellt, dass $N_{\max}$ für unabhängige zufällig erstellte Sequenzen im Vergleich zur Größe $L$ zu vernachlässigen ist. Selbst wenn sehr ähnliche Sequenzen miteinander aligniert wurden, befand sich $N_{\max}$ in der Größenordnung von $L \cdot l_{\max}$. So gesehen bietet dieser Ansatz einen großen Vorteil gegenüber der naiven Umsetzung der Rekursionsformel für paarweise Alignments.
 
@@ -479,7 +479,7 @@ Genau genommen brauchen wir keine quadratische Tabelle, weil der Eintrag $A_{i,j
 Widmen wir uns der Berechnung von Überlappgewichten nach Satz \ref{satz:ueberlapp} in unserem Beispiel und betrachten dazu das Alignment zwischen den Sequenzen $S_1$ und $S_3$. Um das Gewicht zu aktualisieren, müssen wir alle Alignments auf Überlappungen überprüfen, in denen eine der beiden Sequenzen vorkommt. 
 
 %\setlength\intextsep{2pt}
-\begin{wraptable}{r}{6cm}\label{tab:ueberlapp_bsp}
+\begin{wraptable}{r}{6cm}
 	\centering
 	\begin{tabular}{|r|ccc|}
 		\hline
@@ -490,7 +490,7 @@ Widmen wir uns der Berechnung von Überlappgewichten nach Satz \ref{satz:ueberla
 		\diagbox[dir=NE]{i}{j} & 1 & 2 & 3 \\
 		\hline
 	\end{tabular}
-	\caption{\unskip}
+	\caption{\unskip}\label{tab:ueberlapp_bsp}
 	Auf Überlappungen zu überprüfende Alignments
 \end{wraptable}
 
@@ -668,7 +668,7 @@ Mit diesen zwei Formeln können wir für ein $u \in P_i$ und jeden Pfad $P_j$ di
 
 Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die transitive Hülle nicht verändert und dass wir die Transitivitätsgrenzen dementsprechend nicht anpassen müssen. Die obigen Beobachtungen können wir jetzt direkt in den Algorithmus \ref{alg:edgeaddition} \textrm{EdgeAddition} münden lassen, indem wir über alle Paarkombinationen von Pfaden iterieren und dabei für jeden in Frage kommenden Knoten im jeweiligen Pfad die obigen Formeln anwenden. Wir wählen dabei die Knoten für die Nachfolgergrenze in absteigender und die für die Vorgängergrenze in aufsteigender Reihenfolge. Weil wir wissen, dass die Nachfolgergrenze immer nur sinken kann und wir die in Frage kommenden Knoten sortiert betrachten, folgt, dass der aktuelle Schleifendurchlauf abgebrochen werden kann, wenn die Nachfolgergrenze kleiner oder genauso groß ist wie die von $y$. In diesem Fall würde sie nicht mehr aktualisiert werden und wir können uns die Berechnung sparen. Für die Vorgängergrenzen gehen wir analog vor. Jetzt haben sind wir in der Lage Satz \ref{satz:ssdp} zu beweisen.
 
-\begin{algorithm}
+\begin{breakablealgorithm}
 	\caption{Algorithmus EdgeAddition, der die transitive Hülle eines Graphen mit SSDP nach dem Hinzufügen einer Kante aktualisiert.}
 	\label{alg:edgeaddition}
 	\begin{algorithmic}[1]
@@ -694,7 +694,7 @@ Falls bereits ein Pfad zwischen $x$ und $y$ existiert, wissen wir, dass sich die
 			\EndIf
 		\EndProcedure
 	\end{algorithmic}
-\end{algorithm}
+\end{breakablealgorithm}
 %\caption{Algorithmus zum Aktualisieren der transitiven Hülle, nachdem eine Kante $(x,y)$ zum Graphen hinzugefügt wurde}
 
 \begin{beweis}

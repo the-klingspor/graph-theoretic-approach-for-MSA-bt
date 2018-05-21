@@ -61,6 +61,11 @@
 \newblock A fast and effective heuristic for the feedback arc set problem.
 \newblock {In: }\emph{Information Processing Letters} 47 (1993), S. 319--323
 
+\bibitem[FF56]{ff56}
+\textsc{Ford}, L. ; \textsc{Fulkerson}, D.:
+\newblock Maximal flow through a network.
+\newblock {In: }\emph{Canadian Journal of Mathematics} 8 (1956), S. 399--404
+
 \bibitem[GT88]{gt88}
 \textsc{Goldberg}, A. ; \textsc{Tarjan}, R.:
 \newblock A new approach to the maximum-flow problem.
@@ -145,7 +150,7 @@
 \textsc{Subramanian}, A. ; \textsc{Kaufman}, M.  ; \textsc{Morgenstern}, B.:
 \newblock \emph{{DIALIGN TX} download}.
 \newblock \url{http://dialign-tx.gobics.de/download}, 2008. --
-\newblock Accessed: 2018-03-31
+\newblock Besucht: 2018-03-31
 
 \bibitem[SKM08b]{skm08}
 \textsc{Subramanian}, A. ; \textsc{Kaufman}, M.  ; \textsc{Morgenstern}, B.:
@@ -166,7 +171,7 @@
 \newblock
   \url{http://www.summarization.com/~radev/767w10/papers/Week12/msa/msa.pdf},
   2010. --
-\newblock Accessed: 2018-05-07
+\newblock Besucht: 2018-05-07
 
 \bibitem[VS93]{vs93}
 \textsc{Vingron}, M. ; \textsc{Sibbald}, P.:

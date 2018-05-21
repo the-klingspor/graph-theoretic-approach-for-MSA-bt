@@ -41,22 +41,22 @@
 \contentsline {section}{\numberline {4.1}Flussnetzwerke}{47}{section.4.1}
 \contentsline {subsection}{\numberline {4.1.1}Einf\IeC {\"u}hrung}{47}{subsection.4.1.1}
 \contentsline {subsection}{\numberline {4.1.2}Wichtige Algorithmen}{49}{subsection.4.1.2}
-\contentsline {subsection}{\numberline {4.1.3}Schnitte und der \emph {Max-Flow-Min-Cut-Satz}}{51}{subsection.4.1.3}
+\contentsline {subsection}{\numberline {4.1.3}Schnitte und der \emph {Max-Flow-Min-Cut-Satz}}{50}{subsection.4.1.3}
 \contentsline {section}{\numberline {4.2}Inzidenzgraphen und das Aufl\IeC {\"o}sen von Inkonsistenzen mit Hilfe von Flussnetzwerken}{52}{section.4.2}
 \contentsline {subsection}{\numberline {4.2.1}Konstruieren des Inzidenzgraphen}{52}{subsection.4.2.1}
 \contentsline {subsection}{\numberline {4.2.2}Beispiel Inzidenzgraph}{53}{subsection.4.2.2}
-\contentsline {subsection}{\numberline {4.2.3}Mehrdeutigkeiten Aufl\IeC {\"o}sen}{54}{subsection.4.2.3}
-\contentsline {subsection}{\numberline {4.2.4}Beispiel von \textrm {ResolveAmbiguities}}{56}{subsection.4.2.4}
+\contentsline {subsection}{\numberline {4.2.3}Aufl\IeC {\"o}sen von Mehrdeutigkeiten}{54}{subsection.4.2.3}
+\contentsline {subsection}{\numberline {4.2.4}Beispiel von \textrm {ResolveAmbiguities}}{55}{subsection.4.2.4}
 \contentsline {subsection}{\numberline {4.2.5}Komplexit\IeC {\"a}t}{57}{subsection.4.2.5}
 \contentsline {section}{\numberline {4.3}Sukzessionsgraphen und der Algorithmus von Pitschi}{58}{section.4.3}
 \contentsline {subsection}{\numberline {4.3.1}Aufbau des Sukzessionsgraphen}{58}{subsection.4.3.1}
 \contentsline {subsection}{\numberline {4.3.2}Der Algorithmus von Pitschi}{59}{subsection.4.3.2}
-\contentsline {subsubsection}{\nonumberline Entfernen der Kanten}{60}{section*.20}
-\contentsline {subsubsection}{\nonumberline Beispiel zum Entfernen von Kanten}{60}{section*.21}
-\contentsline {subsubsection}{\nonumberline Entfernen von Stellen}{60}{section*.22}
-\contentsline {subsubsection}{\nonumberline Beispiel zum Entfernen von Stellen mit dem Algorithmus von Pitschi}{61}{section*.23}
-\contentsline {subsection}{\numberline {4.3.3}Algorithmus zur Bestimmung des l\IeC {\"a}ngsten Pfads}{62}{subsection.4.3.3}
-\contentsline {subsubsection}{\nonumberline Laufzeit}{63}{section*.24}
+\contentsline {subsubsection}{\nonumberline Entfernen der Kanten}{60}{section*.23}
+\contentsline {subsubsection}{\nonumberline Beispiel zum Entfernen von Kanten}{60}{section*.24}
+\contentsline {subsubsection}{\nonumberline Entfernen von Stellen}{60}{section*.26}
+\contentsline {subsubsection}{\nonumberline Beispiel zum Entfernen von Stellen mit dem Algorithmus von Pitschi}{61}{section*.27}
+\contentsline {subsection}{\numberline {4.3.3}Algorithmus zur Bestimmung eines l\IeC {\"a}ngsten Pfads}{62}{subsection.4.3.3}
+\contentsline {subsubsection}{\nonumberline Laufzeit}{64}{section*.29}
 \contentsline {subsection}{\numberline {4.3.4}Verankerungen}{64}{subsection.4.3.4}
 \contentsline {subsection}{\numberline {4.3.5}Komplexit\IeC {\"a}t}{65}{subsection.4.3.5}
 \contentsline {section}{\numberline {4.4}Abschluss und Zusammenfassung}{66}{section.4.4}
@@ -64,9 +64,9 @@
 \contentsline {subsection}{\numberline {4.4.2}Gesamtkomplexit\IeC {\"a}t}{67}{subsection.4.4.2}
 \contentsline {subsection}{\numberline {4.4.3}Probleme bei der Heuristik zum Entfernen von Kanten}{67}{subsection.4.4.3}
 \contentsline {subsection}{\numberline {4.4.4}Evaluierung}{68}{subsection.4.4.4}
-\contentsline {subsubsection}{\nonumberline Lokale Alignments auf IRMBASE2 und DIRMBASE1}{68}{section*.26}
-\contentsline {subsubsection}{\nonumberline BALiBASE3}{69}{section*.27}
-\contentsline {subsubsection}{\nonumberline Betrachtung der Scores im Vergleich}{69}{section*.28}
+\contentsline {subsubsection}{\nonumberline Lokale Alignments auf IRMBASE2 und DIRMBASE1}{68}{section*.31}
+\contentsline {subsubsection}{\nonumberline BALiBASE3}{69}{section*.32}
+\contentsline {subsubsection}{\nonumberline Betrachtung der Scores im Vergleich}{69}{section*.33}
 \contentsline {chapter}{\numberline {5}Programmierung}{71}{chapter.5}
 \contentsline {chapter}{\numberline {6}Fazit}{73}{chapter.6}
 \contentsline {section}{\numberline {6.1}Zusammenfassung}{73}{section.6.1}
